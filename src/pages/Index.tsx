@@ -1,14 +1,13 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Heart, Users, MessageSquare, Home, User, Search } from "lucide-react";
+import { Heart, Users, MessageSquare, Home, User, Search, Newspaper } from "lucide-react";
 import WelcomeScreen from "@/components/WelcomeScreen";
 import ProfileCard from "@/components/ProfileCard";
 import ChatInterface from "@/components/ChatInterface";
 import RoommateMatching from "@/components/RoommateMatching";
 import SwipeCards from "@/components/SwipeCards";
+import CommunityBoard from "@/components/CommunityBoard";
 
 const Index = () => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -22,11 +21,15 @@ const Index = () => {
     college: "UCLA",
     year: "Freshman",
     major: "Computer Science",
+    dorm: "Warren Hall",
     bio: "Love hiking, coding, and bubble tea! Looking for study buddies and new friends 🌟",
     interests: ["Programming", "Hiking", "Photography", "Music"],
     photos: ["photo-1649972904349-6e44c42644a7"],
     lookingFor: ["Friends", "Study Buddy", "Roommate"],
-    location: "Los Angeles, CA"
+    location: "Los Angeles, CA",
+    instagram: "@sarah_chen",
+    snapchat: "sarah_c22",
+    phoneNumber: "(555) 123-4567"
   };
 
   const mockProfiles = [
@@ -37,6 +40,7 @@ const Index = () => {
       college: "UCLA",
       year: "Freshman",
       major: "Business",
+      dorm: "North Campus",
       bio: "Entrepreneur at heart, love meeting new people and exploring LA!",
       interests: ["Business", "Networking", "Basketball", "Travel"],
       photos: ["photo-1581091226825-a6a2a5aee158"],
@@ -50,6 +54,7 @@ const Index = () => {
       college: "UCLA",
       year: "Freshman",
       major: "Pre-Med",
+      dorm: "South Campus",
       bio: "Future doctor, current coffee addict ☕ Looking for study partners!",
       interests: ["Medicine", "Yoga", "Reading", "Volunteering"],
       photos: ["photo-1581092795360-fd1ca04f0952"],
@@ -59,7 +64,6 @@ const Index = () => {
   ];
 
   const getSchoolLogo = (college) => {
-    // Simple colored circle as logo placeholder
     const colors = {
       "UCLA": "from-blue-600 to-yellow-400",
       "Harvard University": "from-red-700 to-red-900",
@@ -81,6 +85,8 @@ const Index = () => {
         return <SwipeCards profiles={mockProfiles} />;
       case "roommates":
         return <RoommateMatching currentUser={mockUser} />;
+      case "community":
+        return <CommunityBoard />;
       case "chats":
         return <ChatInterface />;
       case "profile":
@@ -128,6 +134,7 @@ const Index = () => {
             {[
               { id: "discover", icon: Search, label: "Discover" },
               { id: "roommates", icon: Home, label: "Roommates" },
+              { id: "community", icon: Newspaper, label: "Community" },
               { id: "chats", icon: MessageSquare, label: "Chats" },
               { id: "profile", icon: User, label: "Profile" }
             ].map((tab) => (
@@ -136,13 +143,13 @@ const Index = () => {
                 variant={activeTab === tab.id ? "default" : "ghost"}
                 size="sm"
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex flex-col items-center space-y-1 h-auto py-3 px-4 transition-all duration-200 ${
+                className={`flex flex-col items-center space-y-1 h-auto py-3 px-3 transition-all duration-200 ${
                   activeTab === tab.id 
                     ? "bg-slate-900 text-white shadow-lg" 
                     : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
                 }`}
               >
-                <tab.icon className="h-5 w-5" />
+                <tab.icon className="h-4 w-4" />
                 <span className="text-xs font-medium">{tab.label}</span>
               </Button>
             ))}

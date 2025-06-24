@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Users, Heart, MessageSquare, X } from "lucide-react";
+import { Users, Heart, MessageSquare, X, Instagram, Phone } from "lucide-react";
 
 const WelcomeScreen = ({ onUserCreate }) => {
   const [step, setStep] = useState(1);
@@ -15,9 +15,14 @@ const WelcomeScreen = ({ onUserCreate }) => {
     age: "",
     college: "",
     major: "",
+    year: "Freshman",
+    dorm: "",
     bio: "",
     interests: [],
-    lookingFor: []
+    lookingFor: [],
+    instagram: "",
+    snapchat: "",
+    phoneNumber: ""
   });
 
   const colleges = [
@@ -80,7 +85,7 @@ const WelcomeScreen = ({ onUserCreate }) => {
   };
 
   const handleNext = () => {
-    if (step < 3) {
+    if (step < 4) {
       setStep(step + 1);
     } else {
       onUserCreate(formData);
@@ -99,11 +104,12 @@ const WelcomeScreen = ({ onUserCreate }) => {
           </CardTitle>
           <p className="text-slate-600 font-medium">
             {step === 1 && "Let's start with the basics"}
-            {step === 2 && "Tell us about yourself"}
-            {step === 3 && "What are you looking for?"}
+            {step === 2 && "Your academic info"}
+            {step === 3 && "Tell us about yourself"}
+            {step === 4 && "Connect your socials (optional)"}
           </p>
           <div className="flex justify-center mt-4">
-            {[1, 2, 3].map((stepNum) => (
+            {[1, 2, 3, 4].map((stepNum) => (
               <div
                 key={stepNum}
                 className={`w-3 h-3 rounded-full mx-1 transition-all duration-300 ${
@@ -153,6 +159,11 @@ const WelcomeScreen = ({ onUserCreate }) => {
                   </SelectContent>
                 </Select>
               </div>
+            </>
+          )}
+
+          {step === 2 && (
+            <>
               <div className="space-y-2">
                 <Label htmlFor="major">Major</Label>
                 <Input
@@ -162,10 +173,33 @@ const WelcomeScreen = ({ onUserCreate }) => {
                   placeholder="Computer Science"
                 />
               </div>
+              <div className="space-y-2">
+                <Label htmlFor="year">Year</Label>
+                <Select value={formData.year} onValueChange={(value) => setFormData(prev => ({ ...prev, year: value }))}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Freshman">Freshman</SelectItem>
+                    <SelectItem value="Sophomore">Sophomore</SelectItem>
+                    <SelectItem value="Junior">Junior</SelectItem>
+                    <SelectItem value="Senior">Senior</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="dorm">Dorm/Residence</Label>
+                <Input
+                  id="dorm"
+                  value={formData.dorm}
+                  onChange={(e) => setFormData(prev => ({ ...prev, dorm: e.target.value }))}
+                  placeholder="e.g., Warren Hall, Off-campus"
+                />
+              </div>
             </>
           )}
 
-          {step === 2 && (
+          {step === 3 && (
             <>
               <div className="space-y-2">
                 <Label htmlFor="bio">Bio</Label>
@@ -203,13 +237,8 @@ const WelcomeScreen = ({ onUserCreate }) => {
                   </SelectContent>
                 </Select>
               </div>
-            </>
-          )}
-
-          {step === 3 && (
-            <>
               <div className="space-y-2">
-                <Label>What are you looking for?</Label>
+                <Label>Looking for</Label>
                 <div className="flex flex-wrap gap-2 mb-2">
                   {formData.lookingFor.map((item) => (
                     <Badge key={item} variant="secondary" className="bg-slate-100 text-slate-700">
@@ -234,6 +263,53 @@ const WelcomeScreen = ({ onUserCreate }) => {
                   </SelectContent>
                 </Select>
               </div>
+            </>
+          )}
+
+          {step === 4 && (
+            <>
+              <div className="text-center mb-4">
+                <p className="text-sm text-slate-600">
+                  Add your social media (optional). Only share with people you trust!
+                </p>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="instagram" className="flex items-center gap-2">
+                  <Instagram className="h-4 w-4" />
+                  Instagram Username
+                </Label>
+                <Input
+                  id="instagram"
+                  value={formData.instagram}
+                  onChange={(e) => setFormData(prev => ({ ...prev, instagram: e.target.value }))}
+                  placeholder="@username"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="snapchat" className="flex items-center gap-2">
+                  <div className="w-4 h-4 bg-yellow-400 rounded-full"></div>
+                  Snapchat Username
+                </Label>
+                <Input
+                  id="snapchat"
+                  value={formData.snapchat}
+                  onChange={(e) => setFormData(prev => ({ ...prev, snapchat: e.target.value }))}
+                  placeholder="username"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="phoneNumber" className="flex items-center gap-2">
+                  <Phone className="h-4 w-4" />
+                  Phone Number
+                </Label>
+                <Input
+                  id="phoneNumber"
+                  type="tel"
+                  value={formData.phoneNumber}
+                  onChange={(e) => setFormData(prev => ({ ...prev, phoneNumber: e.target.value }))}
+                  placeholder="(555) 123-4567"
+                />
+              </div>
               <div className="space-y-3 pt-4">
                 <div className="flex items-center space-x-3 p-3 bg-slate-50 rounded-lg">
                   <Users className="h-5 w-5 text-slate-600" />
@@ -245,15 +321,15 @@ const WelcomeScreen = ({ onUserCreate }) => {
                 <div className="flex items-center space-x-3 p-3 bg-slate-50 rounded-lg">
                   <MessageSquare className="h-5 w-5 text-slate-600" />
                   <div>
-                    <p className="font-medium">Join group chats</p>
-                    <p className="text-sm text-slate-600">Connect based on interests</p>
+                    <p className="font-medium">Smart matching</p>
+                    <p className="text-sm text-slate-600">Based on classes, dorms & interests</p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-3 p-3 bg-slate-50 rounded-lg">
                   <Heart className="h-5 w-5 text-slate-600" />
                   <div>
-                    <p className="font-medium">Find your perfect roommate</p>
-                    <p className="text-sm text-slate-600">Compatible living arrangements</p>
+                    <p className="font-medium">Safe & secure</p>
+                    <p className="text-sm text-slate-600">Privacy controls & verified students</p>
                   </div>
                 </div>
               </div>
@@ -264,12 +340,12 @@ const WelcomeScreen = ({ onUserCreate }) => {
             onClick={handleNext}
             className="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3 transition-colors duration-200"
             disabled={
-              (step === 1 && (!formData.name || !formData.age || !formData.college || !formData.major)) ||
-              (step === 2 && (!formData.bio || formData.interests.length === 0)) ||
-              (step === 3 && formData.lookingFor.length === 0)
+              (step === 1 && (!formData.name || !formData.age || !formData.college)) ||
+              (step === 2 && (!formData.major || !formData.dorm)) ||
+              (step === 3 && (!formData.bio || formData.interests.length === 0 || formData.lookingFor.length === 0))
             }
           >
-            {step === 3 ? "Get Started" : "Next"}
+            {step === 4 ? "Get Started" : "Next"}
           </Button>
         </CardContent>
       </Card>

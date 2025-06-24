@@ -1,253 +1,303 @@
 
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { MessageSquare, Users, Send, Plus } from "lucide-react";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { MessageSquare, Send, Share2, AlertTriangle, Instagram, Phone, Users } from "lucide-react";
 
 const ChatInterface = () => {
   const [selectedChat, setSelectedChat] = useState(null);
-  const [newMessage, setNewMessage] = useState("");
+  const [message, setMessage] = useState("");
+  const [showSocialShare, setShowSocialShare] = useState(false);
+  const [agreedToWarning, setAgreedToWarning] = useState(false);
 
-  const chats = [
+  const mockChats = [
     {
       id: 1,
-      name: "UCLA CS Study Group",
-      type: "group",
-      members: 12,
-      lastMessage: "Anyone want to study for the midterm tomorrow?",
-      lastTime: "2 min ago",
-      unread: 3,
-      avatar: "👥"
+      name: "Alex Rivera",
+      lastMessage: "Hey! I saw we're both in CS 101",
+      time: "2m ago",
+      unread: 2,
+      avatar: "photo-1581091226825-a6a2a5aee158",
+      major: "Business",
+      dorm: "Warren Hall"
     },
     {
       id: 2,
-      name: "Sarah Chen",
-      type: "direct",
-      lastMessage: "Hey! Want to grab coffee later?",
-      lastTime: "10 min ago",
-      unread: 1,
-      avatar: "photo-1649972904349-6e44c42644a7"
+      name: "Maya Patel",
+      lastMessage: "Want to study together?",
+      time: "1h ago",
+      unread: 0,
+      avatar: "photo-1581092795360-fd1ca04f0952",
+      major: "Pre-Med",
+      dorm: "North Campus"
     },
     {
       id: 3,
-      name: "Westwood Roommate Search",
-      type: "group",
-      members: 24,
-      lastMessage: "Found a great 2BR apartment near campus!",
-      lastTime: "1 hour ago",
-      unread: 0,
-      avatar: "🏠"
-    },
-    {
-      id: 4,
-      name: "Alex Rivera",
-      type: "direct",
-      lastMessage: "Thanks for the study notes!",
-      lastTime: "3 hours ago",
-      unread: 0,
-      avatar: "photo-1581091226825-a6a2a5aee158"
-    },
-    {
-      id: 5,
-      name: "UCLA Hiking Club",
-      type: "group",
-      members: 8,
-      lastMessage: "Weekend hike to Malibu Creek?",
-      lastTime: "1 day ago",
-      unread: 0,
-      avatar: "⛰️"
+      name: "Study Group - CS 101",
+      lastMessage: "Assignment due tomorrow!",
+      time: "3h ago",
+      unread: 5,
+      avatar: null,
+      isGroup: true
     }
   ];
 
-  const mockMessages = [
-    {
-      id: 1,
-      sender: "Sarah Chen",
-      message: "Hey everyone! Who's ready for the algorithms exam?",
-      time: "10:30 AM",
-      isOwn: false
-    },
-    {
-      id: 2,
-      sender: "You",
-      message: "I'm so nervous! Been studying all week 😅",
-      time: "10:32 AM",
-      isOwn: true
-    },
-    {
-      id: 3,
-      sender: "Alex Rivera",
-      message: "Same here! Want to do a quick review session before?",
-      time: "10:35 AM",
-      isOwn: false
-    },
-    {
-      id: 4,
-      sender: "Maya Patel",
-      message: "Count me in! Library 3rd floor?",
-      time: "10:36 AM",
-      isOwn: false
-    },
-    {
-      id: 5,
-      sender: "You",
-      message: "Perfect! See you there in 30 mins",
-      time: "10:38 AM",
-      isOwn: true
-    }
+  const icebreakers = [
+    "What's your favorite spot on campus so far?",
+    "How are you finding your classes?",
+    "Want to grab coffee and study together?",
+    "What's the best thing about being a freshman?",
+    "Any favorite campus events you've been to?",
+    "What made you choose this college?"
   ];
 
   const getUnsplashUrl = (photoId) => {
-    return `https://images.unsplash.com/${photoId}?w=40&h=40&fit=crop&crop=face`;
+    return `https://images.unsplash.com/${photoId}?w=100&h=100&fit=crop&crop=face`;
   };
 
   const handleSendMessage = () => {
-    if (newMessage.trim()) {
-      console.log("Sending message:", newMessage);
-      setNewMessage("");
+    if (message.trim()) {
+      console.log("Sending message:", message);
+      setMessage("");
     }
   };
 
-  return (
-    <div className="grid md:grid-cols-3 gap-6 h-[70vh]">
-      {/* Chat List */}
-      <Card className="md:col-span-1 bg-white/80 backdrop-blur-sm">
-        <CardHeader className="pb-3">
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-lg">Messages</CardTitle>
-            <Button size="sm" className="bg-gradient-to-r from-blue-600 to-purple-600">
-              <Plus className="h-4 w-4" />
-            </Button>
+  const SocialShareModal = ({ contact }) => (
+    <Sheet open={showSocialShare} onOpenChange={setShowSocialShare}>
+      <SheetContent>
+        <SheetHeader>
+          <SheetTitle>Share Your Socials</SheetTitle>
+        </SheetHeader>
+        <div className="space-y-6 mt-6">
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+            <div className="flex items-start space-x-3">
+              <AlertTriangle className="h-5 w-5 text-red-500 mt-0.5" />
+              <div>
+                <h4 className="font-medium text-red-800">Safety First!</h4>
+                <p className="text-sm text-red-700 mt-1">
+                  Only share your personal information with people you trust. 
+                  Be cautious about meeting strangers and always meet in public places.
+                </p>
+              </div>
+            </div>
           </div>
-        </CardHeader>
-        <CardContent className="p-0">
-          <div className="space-y-1">
-            {chats.map((chat) => (
-              <div
-                key={chat.id}
-                onClick={() => setSelectedChat(chat)}
-                className={`p-3 cursor-pointer hover:bg-gray-50 transition-colors ${
-                  selectedChat?.id === chat.id ? "bg-blue-50 border-r-2 border-blue-600" : ""
-                }`}
+
+          <div className="space-y-4">
+            <h4 className="font-medium">Choose what to share with {contact?.name}:</h4>
+            
+            <div className="space-y-3">
+              <Button
+                variant="outline"
+                className="w-full justify-start h-auto p-4"
+                onClick={() => {
+                  if (agreedToWarning) {
+                    console.log("Sharing Instagram");
+                    setShowSocialShare(false);
+                  }
+                }}
               >
-                <div className="flex items-center space-x-3">
+                <Instagram className="h-5 w-5 mr-3" />
+                <div className="text-left">
+                  <p className="font-medium">Instagram</p>
+                  <p className="text-sm text-muted-foreground">@sarah_chen</p>
+                </div>
+              </Button>
+
+              <Button
+                variant="outline"
+                className="w-full justify-start h-auto p-4"
+                onClick={() => {
+                  if (agreedToWarning) {
+                    console.log("Sharing Snapchat");
+                    setShowSocialShare(false);
+                  }
+                }}
+              >
+                <div className="w-5 h-5 bg-yellow-400 rounded-full mr-3"></div>
+                <div className="text-left">
+                  <p className="font-medium">Snapchat</p>
+                  <p className="text-sm text-muted-foreground">sarah_c22</p>
+                </div>
+              </Button>
+
+              <Button
+                variant="outline"
+                className="w-full justify-start h-auto p-4"
+                onClick={() => {
+                  if (agreedToWarning) {
+                    console.log("Sharing Phone");
+                    setShowSocialShare(false);
+                  }
+                }}
+              >
+                <Phone className="h-5 w-5 mr-3" />
+                <div className="text-left">
+                  <p className="font-medium">Phone Number</p>
+                  <p className="text-sm text-muted-foreground">(555) 123-4567</p>
+                </div>
+              </Button>
+            </div>
+
+            <div className="flex items-center space-x-2 mt-6">
+              <input
+                type="checkbox"
+                id="safety-agreement"
+                checked={agreedToWarning}
+                onChange={(e) => setAgreedToWarning(e.target.checked)}
+                className="rounded"
+              />
+              <label htmlFor="safety-agreement" className="text-sm">
+                I understand the safety guidelines and want to share my information
+              </label>
+            </div>
+          </div>
+        </div>
+      </SheetContent>
+    </Sheet>
+  );
+
+  if (!selectedChat) {
+    return (
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-6">
+          <h2 className="text-2xl font-bold text-slate-800 mb-2">Messages</h2>
+          <p className="text-slate-600">Connect with your matches and study groups</p>
+        </div>
+
+        <div className="grid gap-4">
+          {mockChats.map((chat) => (
+            <Card 
+              key={chat.id}
+              className="cursor-pointer hover:shadow-lg transition-shadow duration-200"
+              onClick={() => setSelectedChat(chat)}
+            >
+              <CardContent className="p-4">
+                <div className="flex items-center space-x-4">
                   <div className="relative">
-                    {chat.avatar.startsWith("photo-") ? (
+                    {chat.isGroup ? (
+                      <div className="w-12 h-12 bg-slate-200 rounded-full flex items-center justify-center">
+                        <Users className="h-6 w-6 text-slate-600" />
+                      </div>
+                    ) : (
                       <img
                         src={getUnsplashUrl(chat.avatar)}
                         alt={chat.name}
-                        className="w-10 h-10 rounded-full object-cover"
+                        className="w-12 h-12 rounded-full object-cover"
                       />
-                    ) : (
-                      <div className="w-10 h-10 bg-gradient-to-r from-blue-100 to-purple-100 rounded-full flex items-center justify-center text-lg">
-                        {chat.avatar}
-                      </div>
                     )}
                     {chat.unread > 0 && (
-                      <div className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
-                        {chat.unread}
+                      <div className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
+                        <span className="text-xs text-white font-bold">{chat.unread}</span>
                       </div>
                     )}
                   </div>
+                  
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between">
-                      <p className="font-medium text-sm truncate">{chat.name}</p>
-                      <span className="text-xs text-muted-foreground">{chat.lastTime}</span>
+                    <div className="flex justify-between items-start">
+                      <h4 className="font-medium text-slate-800 truncate">{chat.name}</h4>
+                      <span className="text-xs text-slate-500">{chat.time}</span>
                     </div>
-                    <div className="flex items-center justify-between">
-                      <p className="text-xs text-muted-foreground truncate">{chat.lastMessage}</p>
-                      {chat.type === "group" && (
-                        <Badge variant="outline" className="text-xs">
-                          <Users className="h-3 w-3 mr-1" />
-                          {chat.members}
-                        </Badge>
-                      )}
-                    </div>
+                    <p className="text-sm text-slate-600 truncate">{chat.lastMessage}</p>
+                    {!chat.isGroup && (
+                      <div className="flex space-x-2 mt-1">
+                        <Badge variant="outline" className="text-xs">{chat.major}</Badge>
+                        <Badge variant="outline" className="text-xs">{chat.dorm}</Badge>
+                      </div>
+                    )}
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
-      {/* Chat Messages */}
-      <Card className="md:col-span-2 bg-white/80 backdrop-blur-sm">
-        {selectedChat ? (
-          <>
-            <CardHeader className="pb-3 border-b">
-              <div className="flex items-center space-x-3">
-                {selectedChat.avatar.startsWith("photo-") ? (
-                  <img
-                    src={getUnsplashUrl(selectedChat.avatar)}
-                    alt={selectedChat.name}
-                    className="w-10 h-10 rounded-full object-cover"
-                  />
-                ) : (
-                  <div className="w-10 h-10 bg-gradient-to-r from-blue-100 to-purple-100 rounded-full flex items-center justify-center text-lg">
-                    {selectedChat.avatar}
-                  </div>
-                )}
-                <div>
-                  <CardTitle className="text-lg">{selectedChat.name}</CardTitle>
-                  {selectedChat.type === "group" && (
-                    <p className="text-sm text-muted-foreground">{selectedChat.members} members</p>
-                  )}
+  return (
+    <div className="max-w-4xl mx-auto">
+      <Card className="h-[600px] flex flex-col">
+        <CardHeader className="border-b">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setSelectedChat(null)}
+              >
+                ← Back
+              </Button>
+              {selectedChat.isGroup ? (
+                <div className="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center">
+                  <Users className="h-5 w-5 text-slate-600" />
                 </div>
+              ) : (
+                <img
+                  src={getUnsplashUrl(selectedChat.avatar)}
+                  alt={selectedChat.name}
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+              )}
+              <div>
+                <h3 className="font-medium">{selectedChat.name}</h3>
+                {!selectedChat.isGroup && (
+                  <p className="text-sm text-slate-600">{selectedChat.major} • {selectedChat.dorm}</p>
+                )}
               </div>
-            </CardHeader>
-            <CardContent className="flex-1 p-4 overflow-y-auto">
-              <div className="space-y-4">
-                {mockMessages.map((msg) => (
-                  <div
-                    key={msg.id}
-                    className={`flex ${msg.isOwn ? "justify-end" : "justify-start"}`}
+            </div>
+            {!selectedChat.isGroup && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowSocialShare(true)}
+              >
+                <Share2 className="h-4 w-4 mr-2" />
+                Share Socials
+              </Button>
+            )}
+          </div>
+        </CardHeader>
+
+        <CardContent className="flex-1 p-4 overflow-y-auto">
+          <div className="space-y-4">
+            <div className="text-center">
+              <p className="text-sm text-slate-500 mb-4">Start a conversation!</p>
+              <div className="grid grid-cols-1 gap-2">
+                {icebreakers.slice(0, 3).map((icebreaker, index) => (
+                  <Button
+                    key={index}
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setMessage(icebreaker)}
+                    className="text-left justify-start h-auto p-3"
                   >
-                    <div
-                      className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
-                        msg.isOwn
-                          ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white"
-                          : "bg-gray-100 text-gray-900"
-                      }`}
-                    >
-                      {!msg.isOwn && (
-                        <p className="text-xs font-medium mb-1 opacity-75">{msg.sender}</p>
-                      )}
-                      <p className="text-sm">{msg.message}</p>
-                      <p className={`text-xs mt-1 ${msg.isOwn ? "text-blue-100" : "text-gray-500"}`}>
-                        {msg.time}
-                      </p>
-                    </div>
-                  </div>
+                    💬 {icebreaker}
+                  </Button>
                 ))}
               </div>
-            </CardContent>
-            <div className="p-4 border-t">
-              <div className="flex space-x-2">
-                <Input
-                  value={newMessage}
-                  onChange={(e) => setNewMessage(e.target.value)}
-                  placeholder="Type a message..."
-                  onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
-                  className="flex-1"
-                />
-                <Button onClick={handleSendMessage} className="bg-gradient-to-r from-blue-600 to-purple-600">
-                  <Send className="h-4 w-4" />
-                </Button>
-              </div>
             </div>
-          </>
-        ) : (
-          <CardContent className="flex-1 flex items-center justify-center">
-            <div className="text-center">
-              <MessageSquare className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-              <p className="text-muted-foreground">Select a chat to start messaging</p>
-            </div>
-          </CardContent>
-        )}
+          </div>
+        </CardContent>
+
+        <div className="border-t p-4">
+          <div className="flex space-x-2">
+            <Input
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder="Type a message..."
+              onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+            />
+            <Button onClick={handleSendMessage}>
+              <Send className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
       </Card>
+
+      <SocialShareModal contact={selectedChat} />
     </div>
   );
 };
