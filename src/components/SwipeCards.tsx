@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Heart, X, MessageSquare, MapPin, BookOpen, RotateCcw } from "lucide-react";
 
-const SwipeCards = ({ profiles }) => {
+const SwipeCards = ({ profiles, onShowIcebreakers }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [swipeDirection, setSwipeDirection] = useState(null);
 
@@ -49,7 +49,7 @@ const SwipeCards = ({ profiles }) => {
       </div>
 
       {/* Card Stack */}
-      <div className="relative h-[600px] mb-6">
+      <div className="relative h-[500px] mb-6">
         {/* Background cards for depth */}
         {profiles.slice(currentIndex + 1, currentIndex + 3).map((_, index) => (
           <Card 
@@ -71,7 +71,7 @@ const SwipeCards = ({ profiles }) => {
           style={{ zIndex: 3 }}
         >
           {/* Profile Image */}
-          <div className="relative h-96">
+          <div className="relative h-80">
             <img
               src={getUnsplashUrl(currentProfile.photos[0])}
               alt={currentProfile.name}
@@ -85,7 +85,7 @@ const SwipeCards = ({ profiles }) => {
             {/* Class badge */}
             <div className="absolute top-4 right-4">
               <Badge className="bg-white/90 text-slate-800 font-semibold">
-                Class of {currentProfile.classOf || "2028"}
+                Class of {currentProfile.classOf || "2029"}
               </Badge>
             </div>
 
@@ -166,6 +166,7 @@ const SwipeCards = ({ profiles }) => {
         <Button
           size="lg"
           variant="outline"
+          onClick={onShowIcebreakers}
           className="w-16 h-16 rounded-full border-2 border-slate-300 hover:border-blue-300 hover:bg-blue-50 transition-colors duration-200"
         >
           <MessageSquare className="h-6 w-6 text-slate-600" />

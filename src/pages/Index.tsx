@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -15,7 +14,6 @@ const Index = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [activeTab, setActiveTab] = useState("meet");
 
-  // Mock user data for demonstration
   const mockUser = {
     id: 1,
     name: "Sarah Chen",
@@ -116,7 +114,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
       {/* Header */}
-      <header className="bg-white/95 backdrop-blur-xl border-b border-slate-200/50 sticky top-0 z-50 shadow-sm">
+      <header className="bg-white/95 backdrop-blur-xl border-b border-slate-200/50 sticky top-0 z-40 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className={`w-10 h-10 bg-gradient-to-r ${getSchoolLogo(mockUser.college)} rounded-xl shadow-lg flex items-center justify-center`}>
@@ -144,8 +142,8 @@ const Index = () => {
         {renderContent()}
       </main>
 
-      {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-xl border-t border-slate-200/50 shadow-lg">
+      {/* Bottom Navigation - Fixed with higher z-index */}
+      <nav className="fixed bottom-0 left-0 right-0 bg-white/98 backdrop-blur-xl border-t border-slate-200/50 shadow-2xl z-50">
         <div className="max-w-md mx-auto px-4 py-2">
           <div className="flex justify-around">
             {[
@@ -175,7 +173,7 @@ const Index = () => {
       </nav>
 
       {/* Bottom padding to account for fixed nav */}
-      <div className="h-24"></div>
+      <div className="h-20"></div>
     </div>
   );
 };

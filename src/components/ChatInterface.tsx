@@ -1,17 +1,36 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { MessageSquare, Send, Share2, AlertTriangle, Instagram, Phone, Users } from "lucide-react";
+import { MessageSquare, Send, Share2, AlertTriangle, Instagram, Phone, Users, ArrowLeft } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import IncomingRequests from "./IncomingRequests";
 
 const ChatInterface = () => {
   const [selectedChat, setSelectedChat] = useState(null);
   const [message, setMessage] = useState("");
   const [showSocialShare, setShowSocialShare] = useState(false);
   const [agreedToWarning, setAgreedToWarning] = useState(false);
+  const [incomingRequests, setIncomingRequests] = useState([
+    {
+      id: 1,
+      name: "Jordan Smith",
+      message: "Hey! 👋",
+      avatar: "photo-1507003211169-0a1dd7228f2d",
+      major: "Engineering",
+      dorm: "East Campus"
+    },
+    {
+      id: 2,
+      name: "Emma Wilson",
+      message: "Where are you from?",
+      avatar: "photo-1494790108755-2616b612b47c",
+      major: "Psychology",
+      dorm: "West Hall"
+    }
+  ]);
 
   const mockChats = [
     {
@@ -33,29 +52,37 @@ const ChatInterface = () => {
       avatar: "photo-1581092795360-fd1ca04f0952",
       major: "Pre-Med",
       dorm: "North Campus"
-    },
-    {
-      id: 3,
-      name: "Study Group - CS 101",
-      lastMessage: "Assignment due tomorrow!",
-      time: "3h ago",
-      unread: 5,
-      avatar: null,
-      isGroup: true
     }
   ];
 
-  const icebreakers = [
-    "What's your favorite spot on campus so far?",
-    "How are you finding your classes?",
-    "Want to grab coffee and study together?",
-    "What's the best thing about being a freshman?",
-    "Any favorite campus events you've been to?",
-    "What made you choose this college?"
+  const mockMessages = [
+    {
+      id: 1,
+      text: "Hey! I saw we're both in CS 101",
+      sender: "them",
+      time: "2m ago"
+    },
+    {
+      id: 2,
+      text: "Yeah! Are you finding it challenging?",
+      sender: "me",
+      time: "1m ago"
+    }
   ];
 
   const getUnsplashUrl = (photoId) => {
     return `https://images.unsplash.com/${photoId}?w=100&h=100&fit=crop&crop=face`;
+  };
+
+  const handleAcceptRequest = (request) => {
+    // Move request to active chats
+    setIncomingRequests(prev => prev.filter(r => r.id !== request.id));
+    console.log("Accepted request from:", request.name);
+  };
+
+  const handleRejectRequest = (requestId) => {
+    setIncomingRequests(prev => prev.filter(r => r.id !== requestId));
+    console.log("Rejected request:", requestId);
   };
 
   const handleSendMessage = () => {
@@ -161,64 +188,73 @@ const ChatInterface = () => {
 
   if (!selectedChat) {
     return (
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto pb-32">
         <div className="text-center mb-6">
           <h2 className="text-2xl font-bold text-slate-800 mb-2">Messages</h2>
           <p className="text-slate-600">Connect with your matches and study groups</p>
         </div>
 
-        <div className="grid gap-4">
-          {mockChats.map((chat) => (
-            <Card 
-              key={chat.id}
-              className="cursor-pointer hover:shadow-lg transition-shadow duration-200"
-              onClick={() => setSelectedChat(chat)}
-            >
-              <CardContent className="p-4">
-                <div className="flex items-center space-x-4">
-                  <div className="relative">
-                    {chat.isGroup ? (
-                      <div className="w-12 h-12 bg-slate-200 rounded-full flex items-center justify-center">
-                        <Users className="h-6 w-6 text-slate-600" />
+        <Tabs defaultValue="requests" className="w-full">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="requests">Requests ({incomingRequests.length})</TabsTrigger>
+            <TabsTrigger value="chats">Conversations</TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="requests" className="mt-6">
+            <IncomingRequests 
+              requests={incomingRequests}
+              onAccept={handleAcceptRequest}
+              onReject={handleRejectRequest}
+            />
+          </TabsContent>
+          
+          <TabsContent value="chats" className="mt-6">
+            <div className="grid gap-4">
+              {mockChats.map((chat) => (
+                <Card 
+                  key={chat.id}
+                  className="cursor-pointer hover:shadow-lg transition-shadow duration-200"
+                  onClick={() => setSelectedChat(chat)}
+                >
+                  <CardContent className="p-4">
+                    <div className="flex items-center space-x-4">
+                      <div className="relative">
+                        <img
+                          src={getUnsplashUrl(chat.avatar)}
+                          alt={chat.name}
+                          className="w-12 h-12 rounded-full object-cover"
+                        />
+                        {chat.unread > 0 && (
+                          <div className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
+                            <span className="text-xs text-white font-bold">{chat.unread}</span>
+                          </div>
+                        )}
                       </div>
-                    ) : (
-                      <img
-                        src={getUnsplashUrl(chat.avatar)}
-                        alt={chat.name}
-                        className="w-12 h-12 rounded-full object-cover"
-                      />
-                    )}
-                    {chat.unread > 0 && (
-                      <div className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
-                        <span className="text-xs text-white font-bold">{chat.unread}</span>
+                      
+                      <div className="flex-1 min-w-0">
+                        <div className="flex justify-between items-start">
+                          <h4 className="font-medium text-slate-800 truncate">{chat.name}</h4>
+                          <span className="text-xs text-slate-500">{chat.time}</span>
+                        </div>
+                        <p className="text-sm text-slate-600 truncate">{chat.lastMessage}</p>
+                        <div className="flex space-x-2 mt-1">
+                          <Badge variant="outline" className="text-xs">{chat.major}</Badge>
+                          <Badge variant="outline" className="text-xs">{chat.dorm}</Badge>
+                        </div>
                       </div>
-                    )}
-                  </div>
-                  
-                  <div className="flex-1 min-w-0">
-                    <div className="flex justify-between items-start">
-                      <h4 className="font-medium text-slate-800 truncate">{chat.name}</h4>
-                      <span className="text-xs text-slate-500">{chat.time}</span>
                     </div>
-                    <p className="text-sm text-slate-600 truncate">{chat.lastMessage}</p>
-                    {!chat.isGroup && (
-                      <div className="flex space-x-2 mt-1">
-                        <Badge variant="outline" className="text-xs">{chat.major}</Badge>
-                        <Badge variant="outline" className="text-xs">{chat.dorm}</Badge>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </TabsContent>
+        </Tabs>
       </div>
     );
   }
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto pb-32">
       <Card className="h-[600px] flex flex-col">
         <CardHeader className="border-b">
           <div className="flex items-center justify-between">
@@ -228,57 +264,49 @@ const ChatInterface = () => {
                 size="sm"
                 onClick={() => setSelectedChat(null)}
               >
-                ← Back
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Back
               </Button>
-              {selectedChat.isGroup ? (
-                <div className="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center">
-                  <Users className="h-5 w-5 text-slate-600" />
-                </div>
-              ) : (
-                <img
-                  src={getUnsplashUrl(selectedChat.avatar)}
-                  alt={selectedChat.name}
-                  className="w-10 h-10 rounded-full object-cover"
-                />
-              )}
+              <img
+                src={getUnsplashUrl(selectedChat.avatar)}
+                alt={selectedChat.name}
+                className="w-10 h-10 rounded-full object-cover"
+              />
               <div>
                 <h3 className="font-medium">{selectedChat.name}</h3>
-                {!selectedChat.isGroup && (
-                  <p className="text-sm text-slate-600">{selectedChat.major} • {selectedChat.dorm}</p>
-                )}
+                <p className="text-sm text-slate-600">{selectedChat.major} • {selectedChat.dorm}</p>
               </div>
             </div>
-            {!selectedChat.isGroup && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setShowSocialShare(true)}
-              >
-                <Share2 className="h-4 w-4 mr-2" />
-                Share Socials
-              </Button>
-            )}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowSocialShare(true)}
+            >
+              <Share2 className="h-4 w-4 mr-2" />
+              Share Socials
+            </Button>
           </div>
         </CardHeader>
 
         <CardContent className="flex-1 p-4 overflow-y-auto">
           <div className="space-y-4">
-            <div className="text-center">
-              <p className="text-sm text-slate-500 mb-4">Start a conversation!</p>
-              <div className="grid grid-cols-1 gap-2">
-                {icebreakers.slice(0, 3).map((icebreaker, index) => (
-                  <Button
-                    key={index}
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setMessage(icebreaker)}
-                    className="text-left justify-start h-auto p-3"
-                  >
-                    💬 {icebreaker}
-                  </Button>
-                ))}
+            {mockMessages.map((msg) => (
+              <div
+                key={msg.id}
+                className={`flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'}`}
+              >
+                <div
+                  className={`max-w-xs px-4 py-2 rounded-lg ${
+                    msg.sender === 'me'
+                      ? 'bg-slate-900 text-white'
+                      : 'bg-slate-100 text-slate-800'
+                  }`}
+                >
+                  <p className="text-sm">{msg.text}</p>
+                  <p className="text-xs opacity-70 mt-1">{msg.time}</p>
+                </div>
               </div>
-            </div>
+            ))}
           </div>
         </CardContent>
 

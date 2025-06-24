@@ -2,11 +2,19 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { Heart, Users } from "lucide-react";
+import { Heart, Users, MessageSquare } from "lucide-react";
 import SwipeCards from "./SwipeCards";
 
 const MeetTab = ({ profiles }) => {
   const [meetMode, setMeetMode] = useState("general");
+  const [showIcebreakers, setShowIcebreakers] = useState(false);
+
+  const icebreakers = [
+    "Hey! 👋",
+    "Hi there!",
+    "Where are you from?",
+    "What dorm are you in?"
+  ];
 
   const filteredProfiles = profiles.filter(profile => {
     if (meetMode === "roommate") {
@@ -15,8 +23,14 @@ const MeetTab = ({ profiles }) => {
     return true;
   });
 
+  const handleSendIcebreaker = (message) => {
+    console.log("Sending icebreaker:", message);
+    // Here you would implement the logic to send the message
+    setShowIcebreakers(false);
+  };
+
   return (
-    <div className="max-w-lg mx-auto">
+    <div className="max-w-lg mx-auto pb-32">
       <div className="text-center mb-6">
         <h2 className="text-2xl font-bold text-slate-800 mb-4">Meet New People</h2>
         
@@ -49,7 +63,35 @@ const MeetTab = ({ profiles }) => {
         </p>
       </div>
 
-      <SwipeCards profiles={filteredProfiles} />
+      {showIcebreakers && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-end">
+          <div className="bg-white w-full rounded-t-3xl p-6 space-y-4 max-h-[50vh] overflow-y-auto">
+            <h3 className="text-lg font-semibold text-center mb-4">Send an icebreaker</h3>
+            {icebreakers.map((icebreaker, index) => (
+              <Button
+                key={index}
+                variant="outline"
+                onClick={() => handleSendIcebreaker(icebreaker)}
+                className="w-full text-left justify-start h-auto p-4"
+              >
+                {icebreaker}
+              </Button>
+            ))}
+            <Button
+              variant="ghost"
+              onClick={() => setShowIcebreakers(false)}
+              className="w-full"
+            >
+              Cancel
+            </Button>
+          </div>
+        </div>
+      )}
+
+      <SwipeCards 
+        profiles={filteredProfiles} 
+        onShowIcebreakers={() => setShowIcebreakers(true)}
+      />
     </div>
   );
 };
