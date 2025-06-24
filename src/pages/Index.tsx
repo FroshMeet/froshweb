@@ -8,6 +8,7 @@ import WelcomeScreen from "@/components/WelcomeScreen";
 import ProfileCard from "@/components/ProfileCard";
 import ChatInterface from "@/components/ChatInterface";
 import RoommateMatching from "@/components/RoommateMatching";
+import SwipeCards from "@/components/SwipeCards";
 
 const Index = () => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -57,6 +58,19 @@ const Index = () => {
     }
   ];
 
+  const getSchoolLogo = (college) => {
+    // Simple colored circle as logo placeholder
+    const colors = {
+      "UCLA": "from-blue-600 to-yellow-400",
+      "Harvard University": "from-red-700 to-red-900",
+      "Stanford University": "from-red-600 to-red-800",
+      "MIT": "from-gray-700 to-gray-900",
+      "UC Berkeley": "from-blue-700 to-yellow-500",
+      "Arizona State University (ASU)": "from-yellow-400 to-red-600"
+    };
+    return colors[college] || "from-blue-600 to-purple-600";
+  };
+
   if (!currentUser) {
     return <WelcomeScreen onUserCreate={setCurrentUser} />;
   }
@@ -64,19 +78,7 @@ const Index = () => {
   const renderContent = () => {
     switch (activeTab) {
       case "discover":
-        return (
-          <div className="space-y-6">
-            <div className="text-center">
-              <h2 className="text-2xl font-bold mb-2">Discover New Friends</h2>
-              <p className="text-muted-foreground">Connect with fellow UCLA freshmen</p>
-            </div>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {mockProfiles.map((profile) => (
-                <ProfileCard key={profile.id} profile={profile} />
-              ))}
-            </div>
-          </div>
-        );
+        return <SwipeCards profiles={mockProfiles} />;
       case "roommates":
         return <RoommateMatching currentUser={mockUser} />;
       case "chats":
@@ -89,29 +91,38 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
       {/* Header */}
-      <header className="bg-white/80 backdrop-blur-md border-b sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg"></div>
-            <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              FreshConnect
-            </h1>
+      <header className="bg-white/95 backdrop-blur-xl border-b border-slate-200/50 sticky top-0 z-50 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <div className={`w-10 h-10 bg-gradient-to-r ${getSchoolLogo(mockUser.college)} rounded-xl shadow-lg flex items-center justify-center`}>
+              <span className="text-white font-bold text-lg">
+                {mockUser.college.charAt(0)}
+              </span>
+            </div>
+            <div>
+              <h1 className="text-xl font-bold text-slate-800">
+                FroshMeet
+              </h1>
+              <p className="text-xs text-slate-500 font-medium">
+                {mockUser.college}
+              </p>
+            </div>
           </div>
-          <Badge variant="secondary" className="bg-blue-100 text-blue-700">
-            {mockUser.college}
+          <Badge variant="secondary" className="bg-slate-100 text-slate-700 font-medium">
+            Class of 2028
           </Badge>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 py-8">
+      <main className="max-w-7xl mx-auto px-4 py-6">
         {renderContent()}
       </main>
 
       {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t">
+      <nav className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-xl border-t border-slate-200/50 shadow-lg">
         <div className="max-w-md mx-auto px-4 py-2">
           <div className="flex justify-around">
             {[
@@ -125,14 +136,14 @@ const Index = () => {
                 variant={activeTab === tab.id ? "default" : "ghost"}
                 size="sm"
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex flex-col items-center space-y-1 h-auto py-2 ${
+                className={`flex flex-col items-center space-y-1 h-auto py-3 px-4 transition-all duration-200 ${
                   activeTab === tab.id 
-                    ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white" 
-                    : ""
+                    ? "bg-slate-900 text-white shadow-lg" 
+                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
                 }`}
               >
-                <tab.icon className="h-4 w-4" />
-                <span className="text-xs">{tab.label}</span>
+                <tab.icon className="h-5 w-5" />
+                <span className="text-xs font-medium">{tab.label}</span>
               </Button>
             ))}
           </div>
@@ -140,7 +151,7 @@ const Index = () => {
       </nav>
 
       {/* Bottom padding to account for fixed nav */}
-      <div className="h-20"></div>
+      <div className="h-24"></div>
     </div>
   );
 };

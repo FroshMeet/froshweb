@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -89,16 +88,16 @@ const WelcomeScreen = ({ onUserCreate }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md mx-auto shadow-2xl">
-        <CardHeader className="text-center">
-          <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full mx-auto mb-4 flex items-center justify-center">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-4">
+      <Card className="w-full max-w-md mx-auto shadow-2xl border-0 bg-white/95 backdrop-blur-xl">
+        <CardHeader className="text-center pb-6">
+          <div className="w-16 h-16 bg-gradient-to-r from-slate-700 to-slate-900 rounded-2xl mx-auto mb-4 flex items-center justify-center shadow-lg">
             <Users className="h-8 w-8 text-white" />
           </div>
-          <CardTitle className="text-2xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            Welcome to FreshConnect
+          <CardTitle className="text-3xl font-bold text-slate-800">
+            FroshMeet
           </CardTitle>
-          <p className="text-muted-foreground">
+          <p className="text-slate-600 font-medium">
             {step === 1 && "Let's start with the basics"}
             {step === 2 && "Tell us about yourself"}
             {step === 3 && "What are you looking for?"}
@@ -107,8 +106,8 @@ const WelcomeScreen = ({ onUserCreate }) => {
             {[1, 2, 3].map((stepNum) => (
               <div
                 key={stepNum}
-                className={`w-3 h-3 rounded-full mx-1 transition-colors ${
-                  stepNum <= step ? "bg-blue-600" : "bg-gray-200"
+                className={`w-3 h-3 rounded-full mx-1 transition-all duration-300 ${
+                  stepNum <= step ? "bg-slate-800 scale-110" : "bg-slate-200"
                 }`}
               />
             ))}
@@ -182,7 +181,7 @@ const WelcomeScreen = ({ onUserCreate }) => {
                 <Label>Interests</Label>
                 <div className="flex flex-wrap gap-2 mb-2">
                   {formData.interests.map((interest) => (
-                    <Badge key={interest} variant="secondary" className="bg-blue-100 text-blue-700">
+                    <Badge key={interest} variant="secondary" className="bg-slate-100 text-slate-700">
                       {interest}
                       <X 
                         className="h-3 w-3 ml-1 cursor-pointer" 
@@ -213,7 +212,7 @@ const WelcomeScreen = ({ onUserCreate }) => {
                 <Label>What are you looking for?</Label>
                 <div className="flex flex-wrap gap-2 mb-2">
                   {formData.lookingFor.map((item) => (
-                    <Badge key={item} variant="secondary" className="bg-purple-100 text-purple-700">
+                    <Badge key={item} variant="secondary" className="bg-slate-100 text-slate-700">
                       {item}
                       <X 
                         className="h-3 w-3 ml-1 cursor-pointer" 
@@ -236,25 +235,25 @@ const WelcomeScreen = ({ onUserCreate }) => {
                 </Select>
               </div>
               <div className="space-y-3 pt-4">
-                <div className="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg">
-                  <Users className="h-5 w-5 text-blue-600" />
+                <div className="flex items-center space-x-3 p-3 bg-slate-50 rounded-lg">
+                  <Users className="h-5 w-5 text-slate-600" />
                   <div>
                     <p className="font-medium">Connect with peers</p>
-                    <p className="text-sm text-muted-foreground">Find study buddies and friends</p>
+                    <p className="text-sm text-slate-600">Find study buddies and friends</p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-3 p-3 bg-purple-50 rounded-lg">
-                  <MessageSquare className="h-5 w-5 text-purple-600" />
+                <div className="flex items-center space-x-3 p-3 bg-slate-50 rounded-lg">
+                  <MessageSquare className="h-5 w-5 text-slate-600" />
                   <div>
                     <p className="font-medium">Join group chats</p>
-                    <p className="text-sm text-muted-foreground">Connect based on interests</p>
+                    <p className="text-sm text-slate-600">Connect based on interests</p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-3 p-3 bg-pink-50 rounded-lg">
-                  <Heart className="h-5 w-5 text-pink-600" />
+                <div className="flex items-center space-x-3 p-3 bg-slate-50 rounded-lg">
+                  <Heart className="h-5 w-5 text-slate-600" />
                   <div>
                     <p className="font-medium">Find your perfect roommate</p>
-                    <p className="text-sm text-muted-foreground">Compatible living arrangements</p>
+                    <p className="text-sm text-slate-600">Compatible living arrangements</p>
                   </div>
                 </div>
               </div>
@@ -263,7 +262,7 @@ const WelcomeScreen = ({ onUserCreate }) => {
 
           <Button 
             onClick={handleNext}
-            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+            className="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3 transition-colors duration-200"
             disabled={
               (step === 1 && (!formData.name || !formData.age || !formData.college || !formData.major)) ||
               (step === 2 && (!formData.bio || formData.interests.length === 0)) ||
