@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
+import { Switch } from "@/components/ui/switch";
 import { Users, Heart, MessageSquare, X, Instagram, Phone } from "lucide-react";
 
 const WelcomeScreen = ({ onUserCreate }) => {
@@ -15,14 +16,17 @@ const WelcomeScreen = ({ onUserCreate }) => {
     age: "",
     college: "",
     major: "",
-    year: "Freshman",
+    classOf: "2028",
     dorm: "",
     bio: "",
     interests: [],
     lookingFor: [],
     instagram: "",
     snapchat: "",
-    phoneNumber: ""
+    phoneNumber: "",
+    instagramPublic: false,
+    snapchatPublic: false,
+    phonePublic: false
   });
 
   const colleges = [
@@ -174,16 +178,17 @@ const WelcomeScreen = ({ onUserCreate }) => {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="year">Year</Label>
-                <Select value={formData.year} onValueChange={(value) => setFormData(prev => ({ ...prev, year: value }))}>
+                <Label htmlFor="classOf">Class of</Label>
+                <Select value={formData.classOf} onValueChange={(value) => setFormData(prev => ({ ...prev, classOf: value }))}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Freshman">Freshman</SelectItem>
-                    <SelectItem value="Sophomore">Sophomore</SelectItem>
-                    <SelectItem value="Junior">Junior</SelectItem>
-                    <SelectItem value="Senior">Senior</SelectItem>
+                    <SelectItem value="2028">2028</SelectItem>
+                    <SelectItem value="2029">2029</SelectItem>
+                    <SelectItem value="2030">2030</SelectItem>
+                    <SelectItem value="2031">2031</SelectItem>
+                    <SelectItem value="2032">2032</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -270,46 +275,78 @@ const WelcomeScreen = ({ onUserCreate }) => {
             <>
               <div className="text-center mb-4">
                 <p className="text-sm text-slate-600">
-                  Add your social media (optional). Only share with people you trust!
+                  Add your social media (optional). Choose whether to make them public or private.
                 </p>
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="instagram" className="flex items-center gap-2">
-                  <Instagram className="h-4 w-4" />
-                  Instagram Username
-                </Label>
-                <Input
-                  id="instagram"
-                  value={formData.instagram}
-                  onChange={(e) => setFormData(prev => ({ ...prev, instagram: e.target.value }))}
-                  placeholder="@username"
-                />
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="instagram" className="flex items-center gap-2">
+                    <Instagram className="h-4 w-4" />
+                    Instagram Username
+                  </Label>
+                  <Input
+                    id="instagram"
+                    value={formData.instagram}
+                    onChange={(e) => setFormData(prev => ({ ...prev, instagram: e.target.value }))}
+                    placeholder="@username"
+                  />
+                  {formData.instagram && (
+                    <div className="flex items-center space-x-2">
+                      <Switch
+                        checked={formData.instagramPublic}
+                        onCheckedChange={(checked) => setFormData(prev => ({ ...prev, instagramPublic: checked }))}
+                      />
+                      <Label className="text-sm text-slate-600">Make public</Label>
+                    </div>
+                  )}
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="snapchat" className="flex items-center gap-2">
+                    <div className="w-4 h-4 bg-yellow-400 rounded-full"></div>
+                    Snapchat Username
+                  </Label>
+                  <Input
+                    id="snapchat"
+                    value={formData.snapchat}
+                    onChange={(e) => setFormData(prev => ({ ...prev, snapchat: e.target.value }))}
+                    placeholder="username"
+                  />
+                  {formData.snapchat && (
+                    <div className="flex items-center space-x-2">
+                      <Switch
+                        checked={formData.snapchatPublic}
+                        onCheckedChange={(checked) => setFormData(prev => ({ ...prev, snapchatPublic: checked }))}
+                      />
+                      <Label className="text-sm text-slate-600">Make public</Label>
+                    </div>
+                  )}
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="phoneNumber" className="flex items-center gap-2">
+                    <Phone className="h-4 w-4" />
+                    Phone Number
+                  </Label>
+                  <Input
+                    id="phoneNumber"
+                    type="tel"
+                    value={formData.phoneNumber}
+                    onChange={(e) => setFormData(prev => ({ ...prev, phoneNumber: e.target.value }))}
+                    placeholder="(555) 123-4567"
+                  />
+                  {formData.phoneNumber && (
+                    <div className="flex items-center space-x-2">
+                      <Switch
+                        checked={formData.phonePublic}
+                        onCheckedChange={(checked) => setFormData(prev => ({ ...prev, phonePublic: checked }))}
+                      />
+                      <Label className="text-sm text-slate-600">Make public</Label>
+                    </div>
+                  )}
+                </div>
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="snapchat" className="flex items-center gap-2">
-                  <div className="w-4 h-4 bg-yellow-400 rounded-full"></div>
-                  Snapchat Username
-                </Label>
-                <Input
-                  id="snapchat"
-                  value={formData.snapchat}
-                  onChange={(e) => setFormData(prev => ({ ...prev, snapchat: e.target.value }))}
-                  placeholder="username"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="phoneNumber" className="flex items-center gap-2">
-                  <Phone className="h-4 w-4" />
-                  Phone Number
-                </Label>
-                <Input
-                  id="phoneNumber"
-                  type="tel"
-                  value={formData.phoneNumber}
-                  onChange={(e) => setFormData(prev => ({ ...prev, phoneNumber: e.target.value }))}
-                  placeholder="(555) 123-4567"
-                />
-              </div>
+              
               <div className="space-y-3 pt-4">
                 <div className="flex items-center space-x-3 p-3 bg-slate-50 rounded-lg">
                   <Users className="h-5 w-5 text-slate-600" />

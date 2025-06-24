@@ -1,17 +1,19 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Heart, Users, MessageSquare, Home, User, Search, Newspaper } from "lucide-react";
+import { Heart, Users, MessageSquare, Home, User, Search, Newspaper, Grid } from "lucide-react";
 import WelcomeScreen from "@/components/WelcomeScreen";
 import ProfileCard from "@/components/ProfileCard";
 import ChatInterface from "@/components/ChatInterface";
 import RoommateMatching from "@/components/RoommateMatching";
-import SwipeCards from "@/components/SwipeCards";
+import MeetTab from "@/components/MeetTab";
+import DiscoverGrid from "@/components/DiscoverGrid";
 import CommunityBoard from "@/components/CommunityBoard";
 
 const Index = () => {
   const [currentUser, setCurrentUser] = useState(null);
-  const [activeTab, setActiveTab] = useState("discover");
+  const [activeTab, setActiveTab] = useState("meet");
 
   // Mock user data for demonstration
   const mockUser = {
@@ -19,7 +21,7 @@ const Index = () => {
     name: "Sarah Chen",
     age: 18,
     college: "UCLA",
-    year: "Freshman",
+    classOf: "2028",
     major: "Computer Science",
     dorm: "Warren Hall",
     bio: "Love hiking, coding, and bubble tea! Looking for study buddies and new friends 🌟",
@@ -29,7 +31,10 @@ const Index = () => {
     location: "Los Angeles, CA",
     instagram: "@sarah_chen",
     snapchat: "sarah_c22",
-    phoneNumber: "(555) 123-4567"
+    phoneNumber: "(555) 123-4567",
+    instagramPublic: true,
+    snapchatPublic: false,
+    phonePublic: false
   };
 
   const mockProfiles = [
@@ -38,28 +43,40 @@ const Index = () => {
       name: "Alex Rivera",
       age: 18,
       college: "UCLA",
-      year: "Freshman",
+      classOf: "2028",
       major: "Business",
       dorm: "North Campus",
       bio: "Entrepreneur at heart, love meeting new people and exploring LA!",
       interests: ["Business", "Networking", "Basketball", "Travel"],
       photos: ["photo-1581091226825-a6a2a5aee158"],
       lookingFor: ["Friends", "Networking"],
-      location: "Los Angeles, CA"
+      location: "Los Angeles, CA",
+      instagram: "@alex_rivera",
+      snapchat: "alex_r2028",
+      phoneNumber: "(555) 234-5678",
+      instagramPublic: true,
+      snapchatPublic: true,
+      phonePublic: false
     },
     {
       id: 3,
       name: "Maya Patel",
       age: 18,
       college: "UCLA",
-      year: "Freshman",
+      classOf: "2028",
       major: "Pre-Med",
       dorm: "South Campus",
       bio: "Future doctor, current coffee addict ☕ Looking for study partners!",
       interests: ["Medicine", "Yoga", "Reading", "Volunteering"],
       photos: ["photo-1581092795360-fd1ca04f0952"],
-      lookingFor: ["Study Buddy", "Friends"],
-      location: "Los Angeles, CA"
+      lookingFor: ["Study Buddy", "Friends", "Roommate"],
+      location: "Los Angeles, CA",
+      instagram: "@maya_patel_md",
+      snapchat: "",
+      phoneNumber: "(555) 345-6789",
+      instagramPublic: false,
+      snapchatPublic: false,
+      phonePublic: true
     }
   ];
 
@@ -81,10 +98,10 @@ const Index = () => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case "meet":
+        return <MeetTab profiles={mockProfiles} />;
       case "discover":
-        return <SwipeCards profiles={mockProfiles} />;
-      case "roommates":
-        return <RoommateMatching currentUser={mockUser} />;
+        return <DiscoverGrid profiles={mockProfiles} />;
       case "community":
         return <CommunityBoard />;
       case "chats":
@@ -117,7 +134,7 @@ const Index = () => {
             </div>
           </div>
           <Badge variant="secondary" className="bg-slate-100 text-slate-700 font-medium">
-            Class of 2028
+            Class of {mockUser.classOf}
           </Badge>
         </div>
       </header>
@@ -132,8 +149,8 @@ const Index = () => {
         <div className="max-w-md mx-auto px-4 py-2">
           <div className="flex justify-around">
             {[
-              { id: "discover", icon: Search, label: "Discover" },
-              { id: "roommates", icon: Home, label: "Roommates" },
+              { id: "meet", icon: Heart, label: "Meet" },
+              { id: "discover", icon: Grid, label: "Discover" },
               { id: "community", icon: Newspaper, label: "Community" },
               { id: "chats", icon: MessageSquare, label: "Chats" },
               { id: "profile", icon: User, label: "Profile" }

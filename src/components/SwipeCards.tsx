@@ -45,7 +45,6 @@ const SwipeCards = ({ profiles }) => {
   return (
     <div className="max-w-sm mx-auto relative">
       <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold text-slate-800 mb-2">Discover New Friends</h2>
         <p className="text-slate-600">Swipe right to connect, left to pass</p>
       </div>
 
@@ -83,10 +82,10 @@ const SwipeCards = ({ profiles }) => {
             {/* Gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
             
-            {/* Year badge */}
+            {/* Class badge */}
             <div className="absolute top-4 right-4">
               <Badge className="bg-white/90 text-slate-800 font-semibold">
-                {currentProfile.year}
+                Class of {currentProfile.classOf || "2028"}
               </Badge>
             </div>
 
