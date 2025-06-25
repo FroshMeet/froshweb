@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -37,18 +38,27 @@ const SwipeCards = ({ profiles, onShowIcebreakers, onSwipeAction, isGuest = fals
 
   const currentProfile = profiles[currentIndex];
 
+  // Add null check for currentProfile
+  if (!currentProfile) {
+    return (
+      <div className="text-center py-8">
+        <p className="text-slate-600">Loading profile...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-sm mx-auto">
       <Card className="overflow-hidden bg-white/80 backdrop-blur-sm">
         <div className="relative">
           <img
             src={getUnsplashUrl(currentProfile.photos?.[0] || "photo-1649972904349-6e44c42644a7")}
-            alt={currentProfile.name}
+            alt={currentProfile.name || "Profile"}
             className="w-full h-96 object-cover"
           />
           <div className="absolute top-4 right-4">
             <Badge className="bg-white/90 text-black">
-              Class of {currentProfile.classOf}
+              Class of {currentProfile.classOf || "2029"}
             </Badge>
           </div>
         </div>
@@ -56,21 +66,21 @@ const SwipeCards = ({ profiles, onShowIcebreakers, onSwipeAction, isGuest = fals
         <CardContent className="p-4">
           <div className="space-y-3">
             <div>
-              <h3 className="text-xl font-bold">{currentProfile.name}, {currentProfile.age}</h3>
+              <h3 className="text-xl font-bold">{currentProfile.name || "Unknown"}, {currentProfile.age || "18"}</h3>
               <div className="flex items-center text-muted-foreground text-sm space-x-4">
                 <div className="flex items-center space-x-1">
                   <BookOpen className="h-4 w-4" />
-                  <span>{currentProfile.major}</span>
+                  <span>{currentProfile.major || "Undeclared"}</span>
                 </div>
                 <div className="flex items-center space-x-1">
                   <MapPin className="h-4 w-4" />
-                  <span>{currentProfile.location}</span>
+                  <span>{currentProfile.location || "Unknown"}</span>
                 </div>
               </div>
             </div>
 
             <p className="text-sm text-muted-foreground line-clamp-2">
-              {currentProfile.bio}
+              {currentProfile.bio || "No bio available"}
             </p>
 
             {/* Public Social Media */}
@@ -108,7 +118,7 @@ const SwipeCards = ({ profiles, onShowIcebreakers, onSwipeAction, isGuest = fals
                     <Badge key={interest} variant="outline" className="text-xs">
                       {interest}
                     </Badge>
-                  ))}
+                  )) || <span className="text-xs text-muted-foreground">No interests listed</span>}
                   {currentProfile.interests?.length > 4 && (
                     <Badge variant="outline" className="text-xs">
                       +{currentProfile.interests.length - 4}
@@ -124,7 +134,7 @@ const SwipeCards = ({ profiles, onShowIcebreakers, onSwipeAction, isGuest = fals
                     <Badge key={item} className="text-xs bg-purple-100 text-purple-700">
                       {item}
                     </Badge>
-                  ))}
+                  )) || <span className="text-xs text-muted-foreground">Not specified</span>}
                 </div>
               </div>
             </div>
