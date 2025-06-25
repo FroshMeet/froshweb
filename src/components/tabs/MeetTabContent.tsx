@@ -13,14 +13,6 @@ interface MeetTabContentProps {
 
 const MeetTabContent = ({ profiles, isGuest = false, onGuestAction }: MeetTabContentProps) => {
   const [meetMode, setMeetMode] = useState("general");
-  const [showIcebreakers, setShowIcebreakers] = useState(false);
-
-  const icebreakers = [
-    "Hey! 👋",
-    "Hi there!",
-    "Where are you from?",
-    "What dorm are you in?"
-  ];
 
   const filteredProfiles = profiles.filter(profile => {
     if (meetMode === "roommate") {
@@ -28,15 +20,6 @@ const MeetTabContent = ({ profiles, isGuest = false, onGuestAction }: MeetTabCon
     }
     return true;
   });
-
-  const handleSendIcebreaker = (message: string) => {
-    if (isGuest && onGuestAction) {
-      onGuestAction();
-      return;
-    }
-    console.log("Sending icebreaker:", message);
-    setShowIcebreakers(false);
-  };
 
   const handleSwipeAction = (action: string) => {
     if (isGuest && onGuestAction && action === "like") {
@@ -86,36 +69,12 @@ const MeetTabContent = ({ profiles, isGuest = false, onGuestAction }: MeetTabCon
         )}
       </div>
 
-      {showIcebreakers && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-end">
-          <div className="bg-white w-full rounded-t-3xl p-6 space-y-4 max-h-[50vh] overflow-y-auto">
-            <h3 className="text-lg font-semibold text-center mb-4">Send an icebreaker</h3>
-            {icebreakers.map((icebreaker, index) => (
-              <Button
-                key={index}
-                variant="outline"
-                onClick={() => handleSendIcebreaker(icebreaker)}
-                className="w-full text-left justify-start h-auto p-4"
-              >
-                {icebreaker}
-              </Button>
-            ))}
-            <Button
-              variant="ghost"
-              onClick={() => setShowIcebreakers(false)}
-              className="w-full"
-            >
-              Cancel
-            </Button>
-          </div>
-        </div>
-      )}
-
       <SwipeCards 
         profiles={filteredProfiles} 
-        onShowIcebreakers={() => setShowIcebreakers(true)}
+        onShowIcebreakers={() => {}} // This prop is no longer used since SwipeCards handles its own modal
         onSwipeAction={handleSwipeAction}
         isGuest={isGuest}
+        onGuestAction={onGuestAction}
       />
     </div>
   );

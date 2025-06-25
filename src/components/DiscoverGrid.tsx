@@ -5,12 +5,28 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Heart, MessageSquare, MapPin, BookOpen, Instagram, Phone } from "lucide-react";
+import IcebreakerModal from "./IcebreakerModal";
 
-const DiscoverGrid = ({ profiles }) => {
+const DiscoverGrid = ({ profiles, isGuest = false, onGuestAction }: { profiles: any[], isGuest?: boolean, onGuestAction?: () => void }) => {
   const [selectedProfile, setSelectedProfile] = useState(null);
+  const [showIcebreakers, setShowIcebreakers] = useState(false);
+  const [messageTarget, setMessageTarget] = useState(null);
 
   const getUnsplashUrl = (photoId) => {
     return `https://images.unsplash.com/${photoId}?w=300&h=400&fit=crop&crop=face`;
+  };
+
+  const handleMessage = (profile) => {
+    setMessageTarget(profile);
+    setShowIcebreakers(true);
+  };
+
+  const handleSendMessage = (message: string) => {
+    if (isGuest && onGuestAction) {
+      onGuestAction();
+      return;
+    }
+    console.log("Sending message:", message, "to", messageTarget?.name);
   };
 
   return (
@@ -164,6 +180,7 @@ const DiscoverGrid = ({ profiles }) => {
                   <Button 
                     size="sm" 
                     className="flex-1 bg-slate-900 hover:bg-slate-800"
+                    onClick={() => handleMessage(selectedProfile)}
                   >
                     <MessageSquare className="h-4 w-4 mr-1" />
                     Message
@@ -174,6 +191,18 @@ const DiscoverGrid = ({ profiles }) => {
           )}
         </DialogContent>
       </Dialog>
+
+      <IcebreakerModal
+        isOpen={showIcebreakers}
+        onClose={() => {
+          setShowIcebreakers(false);
+          setMessageTarget(null);
+        }}
+        onSendMessage={handleSendMessage}
+        targetName={messageTarget?.name}
+        isGuest={isGuest}
+        onGuestAction={onGuestAction}
+      />
     </div>
   );
 };

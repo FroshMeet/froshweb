@@ -4,16 +4,19 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Heart, X, MessageSquare, MapPin, BookOpen, Instagram, MessageCircle, Phone } from "lucide-react";
+import IcebreakerModal from "./IcebreakerModal";
 
 interface SwipeCardsProps {
   profiles: any[];
   onShowIcebreakers: () => void;
   onSwipeAction: (action: string) => void;
   isGuest?: boolean;
+  onGuestAction?: () => void;
 }
 
-const SwipeCards = ({ profiles, onShowIcebreakers, onSwipeAction, isGuest = false }: SwipeCardsProps) => {
+const SwipeCards = ({ profiles, onShowIcebreakers, onSwipeAction, isGuest = false, onGuestAction }: SwipeCardsProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [showIcebreakers, setShowIcebreakers] = useState(false);
 
   const getUnsplashUrl = (photoId: string) => {
     return `https://images.unsplash.com/${photoId}?w=400&h=500&fit=crop&crop=face`;
@@ -26,6 +29,14 @@ const SwipeCards = ({ profiles, onShowIcebreakers, onSwipeAction, isGuest = fals
     } else {
       setCurrentIndex(0);
     }
+  };
+
+  const handleSendMessage = (message: string) => {
+    if (isGuest && onGuestAction) {
+      onGuestAction();
+      return;
+    }
+    console.log("Sending message:", message, "to", currentProfile?.name);
   };
 
   if (!profiles || profiles.length === 0) {
@@ -151,6 +162,15 @@ const SwipeCards = ({ profiles, onShowIcebreakers, onSwipeAction, isGuest = fals
               </Button>
               <Button 
                 size="sm" 
+                variant="outline"
+                className="flex-1 hover:bg-blue-50 hover:border-blue-200"
+                onClick={() => setShowIcebreakers(true)}
+              >
+                <MessageSquare className="h-4 w-4 mr-1" />
+                Message
+              </Button>
+              <Button 
+                size="sm" 
                 className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
                 onClick={() => handleSwipe('like')}
               >
@@ -161,6 +181,15 @@ const SwipeCards = ({ profiles, onShowIcebreakers, onSwipeAction, isGuest = fals
           </div>
         </CardContent>
       </Card>
+
+      <IcebreakerModal
+        isOpen={showIcebreakers}
+        onClose={() => setShowIcebreakers(false)}
+        onSendMessage={handleSendMessage}
+        targetName={currentProfile?.name}
+        isGuest={isGuest}
+        onGuestAction={onGuestAction}
+      />
     </div>
   );
 };
