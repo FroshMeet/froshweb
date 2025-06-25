@@ -1,13 +1,12 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
-import { Switch } from "@/components/ui/switch";
-import { Users, Heart, MessageSquare, X, Instagram, Phone } from "lucide-react";
+import { Users } from "lucide-react";
+import OnboardingStep1 from "./onboarding/OnboardingStep1";
+import OnboardingStep2 from "./onboarding/OnboardingStep2";
+import OnboardingStep3 from "./onboarding/OnboardingStep3";
+import OnboardingStep4 from "./onboarding/OnboardingStep4";
 
 const WelcomeScreen = ({ onUserCreate }) => {
   const [step, setStep] = useState(1);
@@ -16,7 +15,7 @@ const WelcomeScreen = ({ onUserCreate }) => {
     age: "",
     college: "",
     major: "",
-    classOf: "2028",
+    classOf: "2029",
     dorm: "",
     bio: "",
     interests: [],
@@ -126,251 +125,38 @@ const WelcomeScreen = ({ onUserCreate }) => {
 
         <CardContent className="space-y-4">
           {step === 1 && (
-            <>
-              <div className="space-y-2">
-                <Label htmlFor="name">Full Name</Label>
-                <Input
-                  id="name"
-                  value={formData.name}
-                  onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                  placeholder="Enter your full name"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="age">Age</Label>
-                <Input
-                  id="age"
-                  type="number"
-                  value={formData.age}
-                  onChange={(e) => setFormData(prev => ({ ...prev, age: e.target.value }))}
-                  placeholder="18"
-                  min="16"
-                  max="25"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="college">College/University</Label>
-                <Select onValueChange={(value) => setFormData(prev => ({ ...prev, college: value }))}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select your college" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {colleges.map((college) => (
-                      <SelectItem key={college} value={college}>
-                        {college}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </>
+            <OnboardingStep1 
+              formData={formData}
+              setFormData={setFormData}
+              colleges={colleges}
+            />
           )}
 
           {step === 2 && (
-            <>
-              <div className="space-y-2">
-                <Label htmlFor="major">Major</Label>
-                <Input
-                  id="major"
-                  value={formData.major}
-                  onChange={(e) => setFormData(prev => ({ ...prev, major: e.target.value }))}
-                  placeholder="Computer Science"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="classOf">Class of</Label>
-                <Select value={formData.classOf} onValueChange={(value) => setFormData(prev => ({ ...prev, classOf: value }))}>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="2028">2028</SelectItem>
-                    <SelectItem value="2029">2029</SelectItem>
-                    <SelectItem value="2030">2030</SelectItem>
-                    <SelectItem value="2031">2031</SelectItem>
-                    <SelectItem value="2032">2032</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="dorm">Dorm/Residence</Label>
-                <Input
-                  id="dorm"
-                  value={formData.dorm}
-                  onChange={(e) => setFormData(prev => ({ ...prev, dorm: e.target.value }))}
-                  placeholder="e.g., Warren Hall, Off-campus"
-                />
-              </div>
-            </>
+            <OnboardingStep2 
+              formData={formData}
+              setFormData={setFormData}
+            />
           )}
 
           {step === 3 && (
-            <>
-              <div className="space-y-2">
-                <Label htmlFor="bio">Bio</Label>
-                <Textarea
-                  id="bio"
-                  value={formData.bio}
-                  onChange={(e) => setFormData(prev => ({ ...prev, bio: e.target.value }))}
-                  placeholder="Tell others about yourself..."
-                  rows={3}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>Interests</Label>
-                <div className="flex flex-wrap gap-2 mb-2">
-                  {formData.interests.map((interest) => (
-                    <Badge key={interest} variant="secondary" className="bg-slate-100 text-slate-700">
-                      {interest}
-                      <X 
-                        className="h-3 w-3 ml-1 cursor-pointer" 
-                        onClick={() => removeInterest(interest)}
-                      />
-                    </Badge>
-                  ))}
-                </div>
-                <Select onValueChange={addInterest}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Add interests" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {interestOptions.map((interest) => (
-                      <SelectItem key={interest} value={interest}>
-                        {interest}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
-                <Label>Looking for</Label>
-                <div className="flex flex-wrap gap-2 mb-2">
-                  {formData.lookingFor.map((item) => (
-                    <Badge key={item} variant="secondary" className="bg-slate-100 text-slate-700">
-                      {item}
-                      <X 
-                        className="h-3 w-3 ml-1 cursor-pointer" 
-                        onClick={() => removeLookingFor(item)}
-                      />
-                    </Badge>
-                  ))}
-                </div>
-                <Select onValueChange={addLookingFor}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select what you're looking for" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {lookingForOptions.map((option) => (
-                      <SelectItem key={option} value={option}>
-                        {option}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </>
+            <OnboardingStep3 
+              formData={formData}
+              setFormData={setFormData}
+              interestOptions={interestOptions}
+              lookingForOptions={lookingForOptions}
+              addInterest={addInterest}
+              removeInterest={removeInterest}
+              addLookingFor={addLookingFor}
+              removeLookingFor={removeLookingFor}
+            />
           )}
 
           {step === 4 && (
-            <>
-              <div className="text-center mb-4">
-                <p className="text-sm text-slate-600">
-                  Add your social media (optional). Choose whether to make them public or private.
-                </p>
-              </div>
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="instagram" className="flex items-center gap-2">
-                    <Instagram className="h-4 w-4" />
-                    Instagram Username
-                  </Label>
-                  <Input
-                    id="instagram"
-                    value={formData.instagram}
-                    onChange={(e) => setFormData(prev => ({ ...prev, instagram: e.target.value }))}
-                    placeholder="@username"
-                  />
-                  {formData.instagram && (
-                    <div className="flex items-center space-x-2">
-                      <Switch
-                        checked={formData.instagramPublic}
-                        onCheckedChange={(checked) => setFormData(prev => ({ ...prev, instagramPublic: checked }))}
-                      />
-                      <Label className="text-sm text-slate-600">Make public</Label>
-                    </div>
-                  )}
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="snapchat" className="flex items-center gap-2">
-                    <div className="w-4 h-4 bg-yellow-400 rounded-full"></div>
-                    Snapchat Username
-                  </Label>
-                  <Input
-                    id="snapchat"
-                    value={formData.snapchat}
-                    onChange={(e) => setFormData(prev => ({ ...prev, snapchat: e.target.value }))}
-                    placeholder="username"
-                  />
-                  {formData.snapchat && (
-                    <div className="flex items-center space-x-2">
-                      <Switch
-                        checked={formData.snapchatPublic}
-                        onCheckedChange={(checked) => setFormData(prev => ({ ...prev, snapchatPublic: checked }))}
-                      />
-                      <Label className="text-sm text-slate-600">Make public</Label>
-                    </div>
-                  )}
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="phoneNumber" className="flex items-center gap-2">
-                    <Phone className="h-4 w-4" />
-                    Phone Number
-                  </Label>
-                  <Input
-                    id="phoneNumber"
-                    type="tel"
-                    value={formData.phoneNumber}
-                    onChange={(e) => setFormData(prev => ({ ...prev, phoneNumber: e.target.value }))}
-                    placeholder="(555) 123-4567"
-                  />
-                  {formData.phoneNumber && (
-                    <div className="flex items-center space-x-2">
-                      <Switch
-                        checked={formData.phonePublic}
-                        onCheckedChange={(checked) => setFormData(prev => ({ ...prev, phonePublic: checked }))}
-                      />
-                      <Label className="text-sm text-slate-600">Make public</Label>
-                    </div>
-                  )}
-                </div>
-              </div>
-              
-              <div className="space-y-3 pt-4">
-                <div className="flex items-center space-x-3 p-3 bg-slate-50 rounded-lg">
-                  <Users className="h-5 w-5 text-slate-600" />
-                  <div>
-                    <p className="font-medium">Connect with peers</p>
-                    <p className="text-sm text-slate-600">Find study buddies and friends</p>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3 p-3 bg-slate-50 rounded-lg">
-                  <MessageSquare className="h-5 w-5 text-slate-600" />
-                  <div>
-                    <p className="font-medium">Smart matching</p>
-                    <p className="text-sm text-slate-600">Based on classes, dorms & interests</p>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3 p-3 bg-slate-50 rounded-lg">
-                  <Heart className="h-5 w-5 text-slate-600" />
-                  <div>
-                    <p className="font-medium">Safe & secure</p>
-                    <p className="text-sm text-slate-600">Privacy controls & verified students</p>
-                  </div>
-                </div>
-              </div>
-            </>
+            <OnboardingStep4 
+              formData={formData}
+              setFormData={setFormData}
+            />
           )}
 
           <Button 

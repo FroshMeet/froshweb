@@ -1,14 +1,14 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Heart, Users, MessageSquare, Home, User, Search, Newspaper, Grid } from "lucide-react";
+import { Heart, Users, MessageSquare, User, Grid, Newspaper } from "lucide-react";
 import WelcomeScreen from "@/components/WelcomeScreen";
-import ProfileCard from "@/components/ProfileCard";
-import ChatInterface from "@/components/ChatInterface";
-import RoommateMatching from "@/components/RoommateMatching";
-import MeetTab from "@/components/MeetTab";
-import DiscoverGrid from "@/components/DiscoverGrid";
-import CommunityBoard from "@/components/CommunityBoard";
+import MeetTabContent from "@/components/tabs/MeetTabContent";
+import DiscoverTabContent from "@/components/tabs/DiscoverTabContent";
+import CommunityTabContent from "@/components/tabs/CommunityTabContent";
+import ChatsTabContent from "@/components/tabs/ChatsTabContent";
+import ProfileTabContent from "@/components/tabs/ProfileTabContent";
 
 const Index = () => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -19,7 +19,7 @@ const Index = () => {
     name: "Sarah Chen",
     age: 18,
     college: "UCLA",
-    classOf: "2028",
+    classOf: "2029",
     major: "Computer Science",
     dorm: "Warren Hall",
     bio: "Love hiking, coding, and bubble tea! Looking for study buddies and new friends 🌟",
@@ -28,7 +28,7 @@ const Index = () => {
     lookingFor: ["Friends", "Study Buddy", "Roommate"],
     location: "Los Angeles, CA",
     instagram: "@sarah_chen",
-    snapchat: "sarah_c22",
+    snapchat: "@sarah_c22",
     phoneNumber: "(555) 123-4567",
     instagramPublic: true,
     snapchatPublic: false,
@@ -41,7 +41,7 @@ const Index = () => {
       name: "Alex Rivera",
       age: 18,
       college: "UCLA",
-      classOf: "2028",
+      classOf: "2029",
       major: "Business",
       dorm: "North Campus",
       bio: "Entrepreneur at heart, love meeting new people and exploring LA!",
@@ -50,7 +50,7 @@ const Index = () => {
       lookingFor: ["Friends", "Networking"],
       location: "Los Angeles, CA",
       instagram: "@alex_rivera",
-      snapchat: "alex_r2028",
+      snapchat: "@alex_r2029",
       phoneNumber: "(555) 234-5678",
       instagramPublic: true,
       snapchatPublic: true,
@@ -61,7 +61,7 @@ const Index = () => {
       name: "Maya Patel",
       age: 18,
       college: "UCLA",
-      classOf: "2028",
+      classOf: "2029",
       major: "Pre-Med",
       dorm: "South Campus",
       bio: "Future doctor, current coffee addict ☕ Looking for study partners!",
@@ -97,15 +97,15 @@ const Index = () => {
   const renderContent = () => {
     switch (activeTab) {
       case "meet":
-        return <MeetTab profiles={mockProfiles} />;
+        return <MeetTabContent profiles={mockProfiles} />;
       case "discover":
-        return <DiscoverGrid profiles={mockProfiles} />;
+        return <DiscoverTabContent profiles={mockProfiles} />;
       case "community":
-        return <CommunityBoard />;
+        return <CommunityTabContent />;
       case "chats":
-        return <ChatInterface />;
+        return <ChatsTabContent />;
       case "profile":
-        return <ProfileCard profile={mockUser} isOwnProfile />;
+        return <ProfileTabContent currentUser={mockUser} />;
       default:
         return null;
     }
@@ -138,7 +138,7 @@ const Index = () => {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 py-6">
+      <main className="max-w-7xl mx-auto px-4 py-6 pb-24">
         {renderContent()}
       </main>
 
@@ -171,9 +171,6 @@ const Index = () => {
           </div>
         </div>
       </nav>
-
-      {/* Bottom padding to account for fixed nav */}
-      <div className="h-20"></div>
     </div>
   );
 };

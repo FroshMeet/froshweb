@@ -2,10 +2,14 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { Heart, Users, MessageSquare } from "lucide-react";
-import SwipeCards from "./SwipeCards";
+import { Heart, Users } from "lucide-react";
+import SwipeCards from "../SwipeCards";
 
-const MeetTab = ({ profiles }) => {
+interface MeetTabContentProps {
+  profiles: any[];
+}
+
+const MeetTabContent = ({ profiles }: MeetTabContentProps) => {
   const [meetMode, setMeetMode] = useState("general");
   const [showIcebreakers, setShowIcebreakers] = useState(false);
 
@@ -23,9 +27,8 @@ const MeetTab = ({ profiles }) => {
     return true;
   });
 
-  const handleSendIcebreaker = (message) => {
+  const handleSendIcebreaker = (message: string) => {
     console.log("Sending icebreaker:", message);
-    // Here you would implement the logic to send the message
     setShowIcebreakers(false);
   };
 
@@ -96,4 +99,4 @@ const MeetTab = ({ profiles }) => {
   );
 };
 
-export default MeetTab;
+export default MeetTabContent;
