@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -9,9 +8,10 @@ interface SwipeCardsProps {
   profiles: any[];
   onShowIcebreakers: () => void;
   onSwipeAction: (action: string) => void;
+  isGuest?: boolean;
 }
 
-const SwipeCards = ({ profiles, onShowIcebreakers, onSwipeAction }: SwipeCardsProps) => {
+const SwipeCards = ({ profiles, onShowIcebreakers, onSwipeAction, isGuest = false }: SwipeCardsProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const getUnsplashUrl = (photoId: string) => {
