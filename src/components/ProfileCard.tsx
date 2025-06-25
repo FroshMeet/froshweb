@@ -9,17 +9,20 @@ const ProfileCard = ({ profile, isOwnProfile = false }) => {
     return `https://images.unsplash.com/${photoId}?w=400&h=500&fit=crop&crop=face`;
   };
 
+  // Handle case where photos might be undefined
+  const profilePhoto = profile?.photos?.[0] || "photo-1649972904349-6e44c42644a7";
+
   return (
     <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-white/80 backdrop-blur-sm">
       <div className="relative">
         <img
-          src={getUnsplashUrl(profile.photos[0])}
-          alt={profile.name}
+          src={getUnsplashUrl(profilePhoto)}
+          alt={profile?.name || "Profile"}
           className="w-full h-64 object-cover"
         />
         <div className="absolute top-4 right-4">
           <Badge className="bg-white/90 text-black">
-            Class of {profile.classOf}
+            Class of {profile?.classOf || "2029"}
           </Badge>
         </div>
       </div>
@@ -27,41 +30,41 @@ const ProfileCard = ({ profile, isOwnProfile = false }) => {
       <CardContent className="p-4">
         <div className="space-y-3">
           <div>
-            <h3 className="text-xl font-bold">{profile.name}, {profile.age}</h3>
+            <h3 className="text-xl font-bold">{profile?.name || "Unknown"}, {profile?.age || "18"}</h3>
             <div className="flex items-center text-muted-foreground text-sm space-x-4">
               <div className="flex items-center space-x-1">
                 <BookOpen className="h-4 w-4" />
-                <span>{profile.major}</span>
+                <span>{profile?.major || "Undeclared"}</span>
               </div>
               <div className="flex items-center space-x-1">
                 <MapPin className="h-4 w-4" />
-                <span>{profile.location}</span>
+                <span>{profile?.location || "Unknown"}</span>
               </div>
             </div>
           </div>
 
           <p className="text-sm text-muted-foreground line-clamp-2">
-            {profile.bio}
+            {profile?.bio || "No bio available"}
           </p>
 
           {/* Public Social Media */}
-          {(profile.instagramPublic || profile.snapchatPublic || profile.phonePublic) && (
+          {(profile?.instagramPublic || profile?.snapchatPublic || profile?.phonePublic) && (
             <div className="space-y-2">
               <p className="text-xs font-medium text-muted-foreground mb-1">CONNECT</p>
               <div className="flex flex-wrap gap-2">
-                {profile.instagramPublic && profile.instagram && (
+                {profile?.instagramPublic && profile?.instagram && (
                   <Badge variant="outline" className="flex items-center gap-1">
                     <Instagram className="h-3 w-3" />
                     {profile.instagram}
                   </Badge>
                 )}
-                {profile.snapchatPublic && profile.snapchat && (
+                {profile?.snapchatPublic && profile?.snapchat && (
                   <Badge variant="outline" className="flex items-center gap-1">
                     <MessageCircle className="h-3 w-3" />
                     {profile.snapchat}
                   </Badge>
                 )}
-                {profile.phonePublic && profile.phoneNumber && (
+                {profile?.phonePublic && profile?.phoneNumber && (
                   <Badge variant="outline" className="flex items-center gap-1">
                     <Phone className="h-3 w-3" />
                     {profile.phoneNumber}
@@ -75,12 +78,12 @@ const ProfileCard = ({ profile, isOwnProfile = false }) => {
             <div>
               <p className="text-xs font-medium text-muted-foreground mb-1">INTERESTS</p>
               <div className="flex flex-wrap gap-1">
-                {profile.interests.slice(0, 4).map((interest) => (
+                {profile?.interests?.slice(0, 4).map((interest) => (
                   <Badge key={interest} variant="outline" className="text-xs">
                     {interest}
                   </Badge>
-                ))}
-                {profile.interests.length > 4 && (
+                )) || <span className="text-xs text-muted-foreground">No interests listed</span>}
+                {profile?.interests?.length > 4 && (
                   <Badge variant="outline" className="text-xs">
                     +{profile.interests.length - 4}
                   </Badge>
@@ -91,11 +94,11 @@ const ProfileCard = ({ profile, isOwnProfile = false }) => {
             <div>
               <p className="text-xs font-medium text-muted-foreground mb-1">LOOKING FOR</p>
               <div className="flex flex-wrap gap-1">
-                {profile.lookingFor.map((item) => (
+                {profile?.lookingFor?.map((item) => (
                   <Badge key={item} className="text-xs bg-purple-100 text-purple-700">
                     {item}
                   </Badge>
-                ))}
+                )) || <span className="text-xs text-muted-foreground">Not specified</span>}
               </div>
             </div>
           </div>
