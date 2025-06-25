@@ -27,9 +27,9 @@ const Index = () => {
     dorm: "Warren Hall",
     bio: "Love hiking, coding, and bubble tea! Looking for study buddies and new friends 🌟",
     interests: ["Programming", "Hiking", "Photography", "Music"],
-    photos: ["photo-1649972904349-6e44c42644a7"],
+    photos: [], // Start with no photos
     lookingFor: ["Friends", "Study Buddy", "Roommate"],
-    location: "Los Angeles, CA",
+    location: null, // Start with no location
     instagram: "@sarah_chen",
     snapchat: "@sarah_c22",
     phoneNumber: "(555) 123-4567",
@@ -130,7 +130,15 @@ const Index = () => {
           />
         );
       case "discover":
-        return <DiscoverTabContent profiles={mockProfiles} />;
+        return (
+          <DiscoverTabContent 
+            profiles={mockProfiles} 
+            isGuest={isGuest}
+            onGuestAction={handleGuestAction}
+            currentUser={currentUser}
+            onUpdateUser={setCurrentUser}
+          />
+        );
       case "community":
         return <CommunityTabContent />;
       case "chats":

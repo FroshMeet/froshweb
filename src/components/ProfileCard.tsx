@@ -9,17 +9,24 @@ const ProfileCard = ({ profile, isOwnProfile = false }) => {
     return `https://images.unsplash.com/${photoId}?w=400&h=500&fit=crop&crop=face`;
   };
 
-  // Handle case where photos might be undefined
-  const profilePhoto = profile?.photos?.[0] || "photo-1649972904349-6e44c42644a7";
+  // Handle case where photos might be undefined or empty
+  const profilePhoto = profile?.photos?.[0];
+  const hasProfilePhoto = profilePhoto && profilePhoto !== "";
 
   return (
     <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-white/80 backdrop-blur-sm">
       <div className="relative">
-        <img
-          src={getUnsplashUrl(profilePhoto)}
-          alt={profile?.name || "Profile"}
-          className="w-full h-64 object-cover"
-        />
+        {hasProfilePhoto ? (
+          <img
+            src={getUnsplashUrl(profilePhoto)}
+            alt={profile?.name || "Profile"}
+            className="w-full h-64 object-cover"
+          />
+        ) : (
+          <div className="w-full h-64 bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
+            <User className="h-16 w-16 text-slate-400" />
+          </div>
+        )}
         <div className="absolute top-4 right-4">
           <Badge className="bg-white/90 text-black">
             Class of {profile?.classOf || "2029"}
@@ -36,10 +43,12 @@ const ProfileCard = ({ profile, isOwnProfile = false }) => {
                 <BookOpen className="h-4 w-4" />
                 <span>{profile?.major || "Undeclared"}</span>
               </div>
-              <div className="flex items-center space-x-1">
-                <MapPin className="h-4 w-4" />
-                <span>{profile?.location || "Unknown"}</span>
-              </div>
+              {profile?.location && (
+                <div className="flex items-center space-x-1">
+                  <MapPin className="h-4 w-4" />
+                  <span>{profile.location}</span>
+                </div>
+              )}
             </div>
           </div>
 

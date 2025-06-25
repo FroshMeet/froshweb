@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
-import { X, Plus, Edit } from "lucide-react";
+import { X, Plus, Edit, Upload, MapPin, Camera } from "lucide-react";
 
 interface EditProfileDialogProps {
   user: any;
@@ -26,13 +26,21 @@ const EditProfileDialog = ({ user, onSave }: EditProfileDialogProps) => {
     phoneNumber: user.phoneNumber,
     instagramPublic: user.instagramPublic,
     snapchatPublic: user.snapchatPublic,
-    phonePublic: user.phonePublic
+    phonePublic: user.phonePublic,
+    location: user.location || "",
+    photos: user.photos || []
   });
   const [newInterest, setNewInterest] = useState("");
   const [newLookingFor, setNewLookingFor] = useState("");
 
   const handleSave = () => {
-    onSave({ ...user, ...formData });
+    const updatedUser = { 
+      ...user, 
+      ...formData,
+      // Only include location if it's not empty
+      location: formData.location.trim() || null
+    };
+    onSave(updatedUser);
     setIsOpen(false);
   };
 
@@ -70,6 +78,32 @@ const EditProfileDialog = ({ user, onSave }: EditProfileDialogProps) => {
     }));
   };
 
+  const addPhoto = () => {
+    // For demo purposes, we'll add a random photo ID
+    const photoIds = [
+      "photo-1649972904349-6e44c42644a7",
+      "photo-1581091226825-a6a2a5aee158",
+      "photo-1581092795360-fd1ca04f0952",
+      "photo-1507003211169-0a1dd7228f2d",
+      "photo-1494790108755-2616c9f42db8"
+    ];
+    const randomPhoto = photoIds[Math.floor(Math.random() * photoIds.length)];
+    
+    if (formData.photos.length < 10) {
+      setFormData(prev => ({
+        ...prev,
+        photos: [...prev.photos, randomPhoto]
+      }));
+    }
+  };
+
+  const removePhoto = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      photos: prev.photos.filter((_, i) => i !== index)
+    }));
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
@@ -84,6 +118,38 @@ const EditProfileDialog = ({ user, onSave }: EditProfileDialogProps) => {
         </DialogHeader>
         
         <div className="space-y-6">
+          {/* Photos */}
+          <div className="space-y-2">
+            <Label>Profile Photos ({formData.photos.length}/10)</Label>
+            <div className="grid grid-cols-3 gap-2 mb-2">
+              {formData.photos.map((photo, index) => (
+                <div key={index} className="relative">
+                  <img
+                    src={`https://images.unsplash.com/${photo}?w=150&h=150&fit=crop&crop=face`}
+                    alt={`Photo ${index + 1}`}
+                    className="w-full h-20 object-cover rounded-lg"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removePhoto(index)}
+                    className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </div>
+              ))}
+            </div>
+            {formData.photos.length < 10 && (
+              <Button type="button" onClick={addPhoto} variant="outline" size="sm">
+                <Camera className="h-4 w-4 mr-2" />
+                Add Photo
+              </Button>
+            )}
+            <p className="text-xs text-muted-foreground">
+              Add 3-10 photos to post your profile in Meet and Discover
+            </p>
+          </div>
+
           {/* Bio */}
           <div className="space-y-2">
             <Label htmlFor="bio">Bio</Label>
@@ -105,6 +171,21 @@ const EditProfileDialog = ({ user, onSave }: EditProfileDialogProps) => {
               onChange={(e) => setFormData(prev => ({ ...prev, major: e.target.value }))}
               placeholder="Your major"
             />
+          </div>
+
+          {/* Location */}
+          <div className="space-y-2">
+            <Label htmlFor="location">Location (Optional)</Label>
+            <div className="relative">
+              <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                id="location"
+                value={formData.location}
+                onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))}
+                placeholder="e.g. Sacramento, CA"
+                className="pl-10"
+              />
+            </div>
           </div>
 
           {/* Interests */}
