@@ -105,7 +105,7 @@ const Index = () => {
       case "chats":
         return <ChatsTabContent />;
       case "profile":
-        return <ProfileTabContent currentUser={mockUser} />;
+        return <ProfileTabContent currentUser={mockUser} onUpdateUser={setCurrentUser} />;
       default:
         return null;
     }
@@ -142,8 +142,8 @@ const Index = () => {
         {renderContent()}
       </main>
 
-      {/* Bottom Navigation - Fixed with higher z-index */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white/98 backdrop-blur-xl border-t border-slate-200/50 shadow-2xl z-50">
+      {/* Bottom Navigation - Fixed with solid white background */}
+      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200/50 shadow-2xl z-50">
         <div className="max-w-md mx-auto px-4 py-2">
           <div className="flex justify-around">
             {[

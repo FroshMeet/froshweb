@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Heart, MessageSquare, User, MapPin, BookOpen } from "lucide-react";
+import { Heart, MessageSquare, User, MapPin, BookOpen, Instagram, MessageCircle, Phone } from "lucide-react";
 
 const ProfileCard = ({ profile, isOwnProfile = false }) => {
   const getUnsplashUrl = (photoId) => {
@@ -19,7 +19,7 @@ const ProfileCard = ({ profile, isOwnProfile = false }) => {
         />
         <div className="absolute top-4 right-4">
           <Badge className="bg-white/90 text-black">
-            {profile.year}
+            Class of {profile.classOf}
           </Badge>
         </div>
       </div>
@@ -43,6 +43,33 @@ const ProfileCard = ({ profile, isOwnProfile = false }) => {
           <p className="text-sm text-muted-foreground line-clamp-2">
             {profile.bio}
           </p>
+
+          {/* Public Social Media */}
+          {(profile.instagramPublic || profile.snapchatPublic || profile.phonePublic) && (
+            <div className="space-y-2">
+              <p className="text-xs font-medium text-muted-foreground mb-1">CONNECT</p>
+              <div className="flex flex-wrap gap-2">
+                {profile.instagramPublic && profile.instagram && (
+                  <Badge variant="outline" className="flex items-center gap-1">
+                    <Instagram className="h-3 w-3" />
+                    {profile.instagram}
+                  </Badge>
+                )}
+                {profile.snapchatPublic && profile.snapchat && (
+                  <Badge variant="outline" className="flex items-center gap-1">
+                    <MessageCircle className="h-3 w-3" />
+                    {profile.snapchat}
+                  </Badge>
+                )}
+                {profile.phonePublic && profile.phoneNumber && (
+                  <Badge variant="outline" className="flex items-center gap-1">
+                    <Phone className="h-3 w-3" />
+                    {profile.phoneNumber}
+                  </Badge>
+                )}
+              </div>
+            </div>
+          )}
 
           <div className="space-y-2">
             <div>
@@ -91,17 +118,6 @@ const ProfileCard = ({ profile, isOwnProfile = false }) => {
                 Chat
               </Button>
             </div>
-          )}
-
-          {isOwnProfile && (
-            <Button 
-              size="sm" 
-              variant="outline" 
-              className="w-full"
-            >
-              <User className="h-4 w-4 mr-1" />
-              Edit Profile
-            </Button>
           )}
         </div>
       </CardContent>
