@@ -7,9 +7,11 @@ import SwipeCards from "../SwipeCards";
 
 interface MeetTabContentProps {
   profiles: any[];
+  isGuest?: boolean;
+  onGuestAction?: () => void;
 }
 
-const MeetTabContent = ({ profiles }: MeetTabContentProps) => {
+const MeetTabContent = ({ profiles, isGuest = false, onGuestAction }: MeetTabContentProps) => {
   const [meetMode, setMeetMode] = useState("general");
   const [showIcebreakers, setShowIcebreakers] = useState(false);
 
@@ -28,8 +30,20 @@ const MeetTabContent = ({ profiles }: MeetTabContentProps) => {
   });
 
   const handleSendIcebreaker = (message: string) => {
+    if (isGuest && onGuestAction) {
+      onGuestAction();
+      return;
+    }
     console.log("Sending icebreaker:", message);
     setShowIcebreakers(false);
+  };
+
+  const handleSwipeAction = (action: string) => {
+    if (isGuest && onGuestAction && action === "like") {
+      onGuestAction();
+      return;
+    }
+    console.log("Swipe action:", action);
   };
 
   return (
@@ -64,6 +78,12 @@ const MeetTabContent = ({ profiles }: MeetTabContentProps) => {
             ? "Swipe to discover new friends and connections" 
             : "Find your perfect roommate match"}
         </p>
+        
+        {isGuest && (
+          <p className="text-xs text-amber-600 bg-amber-50 px-3 py-2 rounded-lg">
+            Browsing as guest - create an account to message people
+          </p>
+        )}
       </div>
 
       {showIcebreakers && (
@@ -94,6 +114,8 @@ const MeetTabContent = ({ profiles }: MeetTabContentProps) => {
       <SwipeCards 
         profiles={filteredProfiles} 
         onShowIcebreakers={() => setShowIcebreakers(true)}
+        onSwipeAction={handleSwipeAction}
+        isGuest={isGuest}
       />
     </div>
   );

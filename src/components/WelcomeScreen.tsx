@@ -7,13 +7,16 @@ import OnboardingStep1 from "./onboarding/OnboardingStep1";
 import OnboardingStep2 from "./onboarding/OnboardingStep2";
 import OnboardingStep3 from "./onboarding/OnboardingStep3";
 import OnboardingStep4 from "./onboarding/OnboardingStep4";
+import PhoneVerification from "./onboarding/PhoneVerification";
 
-const WelcomeScreen = ({ onUserCreate }) => {
+const WelcomeScreen = ({ onUserCreate, onGuestContinue }) => {
+  const [showOnboarding, setShowOnboarding] = useState(false);
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     name: "",
     age: "",
     college: "",
+    phoneNumber: "",
     major: "",
     classOf: "2029",
     dorm: "",
@@ -22,10 +25,9 @@ const WelcomeScreen = ({ onUserCreate }) => {
     lookingFor: [],
     instagram: "",
     snapchat: "",
-    phoneNumber: "",
     instagramPublic: false,
     snapchatPublic: false,
-    phonePublic: false
+    verificationCode: ""
   });
 
   const colleges = [
@@ -88,12 +90,59 @@ const WelcomeScreen = ({ onUserCreate }) => {
   };
 
   const handleNext = () => {
-    if (step < 4) {
+    if (step < 6) {
       setStep(step + 1);
     } else {
       onUserCreate(formData);
     }
   };
+
+  const handleBack = () => {
+    if (step > 1) {
+      setStep(step - 1);
+    } else {
+      setShowOnboarding(false);
+    }
+  };
+
+  if (!showOnboarding) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-4">
+        <Card className="w-full max-w-md mx-auto shadow-2xl border-0 bg-white/95 backdrop-blur-xl">
+          <CardHeader className="text-center pb-6">
+            <div className="w-16 h-16 bg-gradient-to-r from-slate-700 to-slate-900 rounded-2xl mx-auto mb-4 flex items-center justify-center shadow-lg">
+              <Users className="h-8 w-8 text-white" />
+            </div>
+            <CardTitle className="text-3xl font-bold text-slate-800">
+              FroshMeet
+            </CardTitle>
+            <p className="text-slate-600 font-medium">
+              Connect with your college classmates
+            </p>
+          </CardHeader>
+
+          <CardContent className="space-y-4">
+            <Button 
+              onClick={() => setShowOnboarding(true)}
+              className="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3 transition-colors duration-200"
+            >
+              Create Account
+            </Button>
+            <Button 
+              onClick={onGuestContinue}
+              variant="outline"
+              className="w-full border-slate-300 text-slate-700 hover:bg-slate-50 font-semibold py-3 transition-colors duration-200"
+            >
+              Continue as Guest
+            </Button>
+            <p className="text-xs text-slate-500 text-center mt-4">
+              Create an account to message classmates and build your profile
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-4">
@@ -107,12 +156,13 @@ const WelcomeScreen = ({ onUserCreate }) => {
           </CardTitle>
           <p className="text-slate-600 font-medium">
             {step === 1 && "Let's start with the basics"}
-            {step === 2 && "Your academic info"}
-            {step === 3 && "Tell us about yourself"}
-            {step === 4 && "Connect your socials (optional)"}
+            {step === 2 && "Verify your phone number"}
+            {step === 3 && "Your academic info"}
+            {step === 4 && "Tell us about yourself"}
+            {step === 5 && "Connect your socials (optional)"}
           </p>
           <div className="flex justify-center mt-4">
-            {[1, 2, 3, 4].map((stepNum) => (
+            {[1, 2, 3, 4, 5].map((stepNum) => (
               <div
                 key={stepNum}
                 className={`w-3 h-3 rounded-full mx-1 transition-all duration-300 ${
@@ -133,13 +183,20 @@ const WelcomeScreen = ({ onUserCreate }) => {
           )}
 
           {step === 2 && (
-            <OnboardingStep2 
+            <PhoneVerification 
               formData={formData}
               setFormData={setFormData}
             />
           )}
 
           {step === 3 && (
+            <OnboardingStep2 
+              formData={formData}
+              setFormData={setFormData}
+            />
+          )}
+
+          {step === 4 && (
             <OnboardingStep3 
               formData={formData}
               setFormData={setFormData}
@@ -152,24 +209,34 @@ const WelcomeScreen = ({ onUserCreate }) => {
             />
           )}
 
-          {step === 4 && (
+          {step === 5 && (
             <OnboardingStep4 
               formData={formData}
               setFormData={setFormData}
             />
           )}
 
-          <Button 
-            onClick={handleNext}
-            className="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3 transition-colors duration-200"
-            disabled={
-              (step === 1 && (!formData.name || !formData.age || !formData.college)) ||
-              (step === 2 && (!formData.major || !formData.dorm)) ||
-              (step === 3 && (!formData.bio || formData.interests.length === 0 || formData.lookingFor.length === 0))
-            }
-          >
-            {step === 4 ? "Get Started" : "Next"}
-          </Button>
+          <div className="flex space-x-2">
+            <Button 
+              onClick={handleBack}
+              variant="outline"
+              className="flex-1"
+            >
+              Back
+            </Button>
+            <Button 
+              onClick={handleNext}
+              className="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3 transition-colors duration-200"
+              disabled={
+                (step === 1 && (!formData.name || !formData.age || !formData.college || !formData.phoneNumber)) ||
+                (step === 2 && !formData.verificationCode) ||
+                (step === 3 && (!formData.major || !formData.dorm)) ||
+                (step === 4 && (!formData.bio || formData.interests.length === 0 || formData.lookingFor.length === 0))
+              }
+            >
+              {step === 5 ? "Get Started" : "Next"}
+            </Button>
+          </div>
         </CardContent>
       </Card>
     </div>

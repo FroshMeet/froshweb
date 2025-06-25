@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -9,10 +8,14 @@ import DiscoverTabContent from "@/components/tabs/DiscoverTabContent";
 import CommunityTabContent from "@/components/tabs/CommunityTabContent";
 import ChatsTabContent from "@/components/tabs/ChatsTabContent";
 import ProfileTabContent from "@/components/tabs/ProfileTabContent";
+import GuestProfile from "@/components/GuestProfile";
+import GuestMessageDialog from "@/components/GuestMessageDialog";
 
 const Index = () => {
   const [currentUser, setCurrentUser] = useState(null);
+  const [isGuest, setIsGuest] = useState(false);
   const [activeTab, setActiveTab] = useState("meet");
+  const [showGuestDialog, setShowGuestDialog] = useState(false);
 
   const mockUser = {
     id: 1,
@@ -90,22 +93,60 @@ const Index = () => {
     return colors[college] || "from-blue-600 to-purple-600";
   };
 
-  if (!currentUser) {
-    return <WelcomeScreen onUserCreate={setCurrentUser} />;
+  const handleGuestContinue = () => {
+    setIsGuest(true);
+    setCurrentUser(null);
+  };
+
+  const handleCreateAccount = () => {
+    setIsGuest(false);
+    setCurrentUser(null);
+    setShowGuestDialog(false);
+  };
+
+  const handleGuestAction = () => {
+    setShowGuestDialog(true);
+  };
+
+  if (!currentUser && !isGuest) {
+    return (
+      <WelcomeScreen 
+        onUserCreate={setCurrentUser} 
+        onGuestContinue={handleGuestContinue}
+      />
+    );
   }
+
+  const displayUser = currentUser || mockUser;
 
   const renderContent = () => {
     switch (activeTab) {
       case "meet":
-        return <MeetTabContent profiles={mockProfiles} />;
+        return (
+          <MeetTabContent 
+            profiles={mockProfiles} 
+            isGuest={isGuest}
+            onGuestAction={handleGuestAction}
+          />
+        );
       case "discover":
         return <DiscoverTabContent profiles={mockProfiles} />;
       case "community":
         return <CommunityTabContent />;
       case "chats":
-        return <ChatsTabContent />;
+        return isGuest ? (
+          <div className="max-w-lg mx-auto pb-32 text-center">
+            <p className="text-slate-600 mt-8">Create an account to view your chats</p>
+          </div>
+        ) : (
+          <ChatsTabContent />
+        );
       case "profile":
-        return <ProfileTabContent currentUser={mockUser} onUpdateUser={setCurrentUser} />;
+        return isGuest ? (
+          <GuestProfile onCreateAccount={handleCreateAccount} />
+        ) : (
+          <ProfileTabContent currentUser={displayUser} onUpdateUser={setCurrentUser} />
+        );
       default:
         return null;
     }
@@ -117,9 +158,9 @@ const Index = () => {
       <header className="bg-white/95 backdrop-blur-xl border-b border-slate-200/50 sticky top-0 z-40 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className={`w-10 h-10 bg-gradient-to-r ${getSchoolLogo(mockUser.college)} rounded-xl shadow-lg flex items-center justify-center`}>
+            <div className={`w-10 h-10 bg-gradient-to-r ${getSchoolLogo(displayUser.college)} rounded-xl shadow-lg flex items-center justify-center`}>
               <span className="text-white font-bold text-lg">
-                {mockUser.college.charAt(0)}
+                {displayUser.college.charAt(0)}
               </span>
             </div>
             <div>
@@ -127,12 +168,12 @@ const Index = () => {
                 FroshMeet
               </h1>
               <p className="text-xs text-slate-500 font-medium">
-                {mockUser.college}
+                {displayUser.college}
               </p>
             </div>
           </div>
           <Badge variant="secondary" className="bg-slate-100 text-slate-700 font-medium">
-            Class of {mockUser.classOf}
+            {isGuest ? "Guest" : `Class of ${displayUser.classOf}`}
           </Badge>
         </div>
       </header>
@@ -142,7 +183,7 @@ const Index = () => {
         {renderContent()}
       </main>
 
-      {/* Bottom Navigation - Fixed with solid white background */}
+      {/* Bottom Navigation */}
       <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200/50 shadow-2xl z-50">
         <div className="max-w-md mx-auto px-4 py-2">
           <div className="flex justify-around">
@@ -171,6 +212,12 @@ const Index = () => {
           </div>
         </div>
       </nav>
+
+      <GuestMessageDialog 
+        isOpen={showGuestDialog}
+        onClose={() => setShowGuestDialog(false)}
+        onCreateAccount={handleCreateAccount}
+      />
     </div>
   );
 };

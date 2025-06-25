@@ -10,6 +10,23 @@ interface OnboardingStep1Props {
 }
 
 const OnboardingStep1 = ({ formData, setFormData, colleges }: OnboardingStep1Props) => {
+  const formatPhoneNumber = (value: string) => {
+    const phoneNumber = value.replace(/\D/g, '');
+    
+    if (phoneNumber.length <= 3) {
+      return `(${phoneNumber}`;
+    } else if (phoneNumber.length <= 6) {
+      return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`;
+    } else {
+      return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3, 6)}-${phoneNumber.slice(6, 10)}`;
+    }
+  };
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatPhoneNumber(e.target.value);
+    setFormData(prev => ({ ...prev, phoneNumber: formatted }));
+  };
+
   return (
     <>
       <div className="space-y-2">
@@ -47,6 +64,16 @@ const OnboardingStep1 = ({ formData, setFormData, colleges }: OnboardingStep1Pro
             ))}
           </SelectContent>
         </Select>
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="phoneNumber">Phone Number</Label>
+        <Input
+          id="phoneNumber"
+          type="tel"
+          value={formData.phoneNumber}
+          onChange={handlePhoneChange}
+          placeholder="(555) 123-4567"
+        />
       </div>
     </>
   );

@@ -2,7 +2,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { Instagram, Phone } from "lucide-react";
+import { Instagram } from "lucide-react";
 import { Users, MessageSquare, Heart } from "lucide-react";
 
 interface OnboardingStep4Props {
@@ -11,28 +11,8 @@ interface OnboardingStep4Props {
 }
 
 const OnboardingStep4 = ({ formData, setFormData }: OnboardingStep4Props) => {
-  const formatPhoneNumber = (value: string) => {
-    // Remove all non-digits
-    const phoneNumber = value.replace(/\D/g, '');
-    
-    // Format as (XXX) XXX-XXXX
-    if (phoneNumber.length <= 3) {
-      return `(${phoneNumber}`;
-    } else if (phoneNumber.length <= 6) {
-      return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`;
-    } else {
-      return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3, 6)}-${phoneNumber.slice(6, 10)}`;
-    }
-  };
-
-  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const formatted = formatPhoneNumber(e.target.value);
-    setFormData(prev => ({ ...prev, phoneNumber: formatted }));
-  };
-
   const handleInstagramChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value;
-    // Ensure it starts with @ and add it if user removes it
     if (!value.startsWith('@') && value.length > 0) {
       value = '@' + value.replace('@', '');
     }
@@ -43,7 +23,7 @@ const OnboardingStep4 = ({ formData, setFormData }: OnboardingStep4Props) => {
     <>
       <div className="text-center mb-4">
         <p className="text-sm text-slate-600">
-          Add your social media (optional). Choose whether to make them public or private.
+          Add your social media (optional). Choose whether to make them public on your profile.
         </p>
       </div>
       <div className="space-y-4">
@@ -64,7 +44,7 @@ const OnboardingStep4 = ({ formData, setFormData }: OnboardingStep4Props) => {
                 checked={formData.instagramPublic}
                 onCheckedChange={(checked) => setFormData(prev => ({ ...prev, instagramPublic: checked }))}
               />
-              <Label className="text-sm text-slate-600">Make public</Label>
+              <Label className="text-sm text-slate-600">Make public on profile</Label>
             </div>
           )}
         </div>
@@ -79,7 +59,6 @@ const OnboardingStep4 = ({ formData, setFormData }: OnboardingStep4Props) => {
             value={formData.snapchat}
             onChange={(e) => {
               let value = e.target.value;
-              // Ensure it starts with @ and add it if user removes it
               if (!value.startsWith('@') && value.length > 0) {
                 value = '@' + value.replace('@', '');
               }
@@ -93,30 +72,7 @@ const OnboardingStep4 = ({ formData, setFormData }: OnboardingStep4Props) => {
                 checked={formData.snapchatPublic}
                 onCheckedChange={(checked) => setFormData(prev => ({ ...prev, snapchatPublic: checked }))}
               />
-              <Label className="text-sm text-slate-600">Make public</Label>
-            </div>
-          )}
-        </div>
-        
-        <div className="space-y-2">
-          <Label htmlFor="phoneNumber" className="flex items-center gap-2">
-            <Phone className="h-4 w-4" />
-            Phone Number
-          </Label>
-          <Input
-            id="phoneNumber"
-            type="tel"
-            value={formData.phoneNumber}
-            onChange={handlePhoneChange}
-            placeholder="(555) 123-4567"
-          />
-          {formData.phoneNumber && (
-            <div className="flex items-center space-x-2">
-              <Switch
-                checked={formData.phonePublic}
-                onCheckedChange={(checked) => setFormData(prev => ({ ...prev, phonePublic: checked }))}
-              />
-              <Label className="text-sm text-slate-600">Make public</Label>
+              <Label className="text-sm text-slate-600">Make public on profile</Label>
             </div>
           )}
         </div>
