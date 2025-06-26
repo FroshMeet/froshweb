@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Heart, MessageSquare, MapPin, BookOpen, Instagram, Phone } from "lucide-react";
+import { Heart, MessageSquare, MapPin, BookOpen, Instagram, Phone, User, MessageCircle } from "lucide-react";
 import IcebreakerModal from "./IcebreakerModal";
 
 const DiscoverGrid = ({ profiles, isGuest = false, onGuestAction }: { profiles: any[], isGuest?: boolean, onGuestAction?: () => void }) => {
@@ -14,6 +14,18 @@ const DiscoverGrid = ({ profiles, isGuest = false, onGuestAction }: { profiles: 
 
   const getUnsplashUrl = (photoId) => {
     return `https://images.unsplash.com/${photoId}?w=300&h=400&fit=crop&crop=face`;
+  };
+
+  const getSchoolColors = (college) => {
+    const colors = {
+      "UCLA": "border-blue-500",
+      "Harvard University": "border-red-700",
+      "Stanford University": "border-red-600",
+      "MIT": "border-gray-700",
+      "UC Berkeley": "border-blue-700",
+      "Arizona State University": "border-yellow-500"
+    };
+    return colors[college] || "border-blue-600";
   };
 
   const handleMessage = (profile) => {
@@ -29,48 +41,57 @@ const DiscoverGrid = ({ profiles, isGuest = false, onGuestAction }: { profiles: 
     console.log("Sending message:", message, "to", messageTarget?.name);
   };
 
+  const handleLike = (profile) => {
+    if (isGuest && onGuestAction) {
+      onGuestAction();
+      return;
+    }
+    console.log("Liked profile:", profile.name);
+  };
+
   return (
     <div className="max-w-6xl mx-auto">
-      <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold text-slate-800 mb-2">Discover Students</h2>
-        <p className="text-slate-600">Browse profiles and connect with fellow students</p>
+      <div className="text-center mb-8">
+        <h2 className="text-3xl font-bold text-slate-800 mb-3">Discover Students</h2>
+        <p className="text-slate-600 text-lg">Browse profiles and connect with fellow students</p>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-3 gap-4 mb-8">
         {profiles.map((profile) => (
           <Card 
             key={profile.id}
-            className="cursor-pointer hover:shadow-lg transition-all duration-200 hover:-translate-y-1"
+            className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:scale-105 bg-white/90 backdrop-blur-sm"
             onClick={() => setSelectedProfile(profile)}
           >
             <div className="relative">
+              {/* Cover Photo */}
               <img
-                src={getUnsplashUrl(profile.photos[0])}
+                src={getUnsplashUrl(profile.photos?.[0] || "photo-1649972904349-6e44c42644a7")}
                 alt={profile.name}
-                className="w-full h-48 object-cover rounded-t-lg"
+                className="w-full h-32 object-cover rounded-t-lg"
               />
-              <div className="absolute top-2 right-2">
-                <Badge className="bg-white/90 text-slate-800 font-semibold">
-                  Class of {profile.classOf || "2028"}
-                </Badge>
+              
+              {/* Profile Picture with School Color Border */}
+              <div className={`absolute -bottom-6 left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full border-4 ${getSchoolColors(profile.college)} bg-white p-0.5`}>
+                {profile.photos?.[0] ? (
+                  <img
+                    src={getUnsplashUrl(profile.photos[0])}
+                    alt={profile.name}
+                    className="w-full h-full object-cover rounded-full"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 rounded-full flex items-center justify-center">
+                    <User className="h-4 w-4 text-slate-400" />
+                  </div>
+                )}
               </div>
             </div>
             
-            <CardContent className="p-3">
-              <h3 className="font-bold text-slate-800 mb-1">{profile.name}, {profile.age}</h3>
-              <p className="text-sm text-slate-600 mb-2">{profile.major}</p>
-              <div className="flex flex-wrap gap-1">
-                {profile.interests.slice(0, 2).map((interest) => (
-                  <Badge key={interest} variant="outline" className="text-xs">
-                    {interest}
-                  </Badge>
-                ))}
-                {profile.interests.length > 2 && (
-                  <Badge variant="outline" className="text-xs">
-                    +{profile.interests.length - 2}
-                  </Badge>
-                )}
-              </div>
+            <CardContent className="pt-8 pb-3 text-center">
+              {/* Class Year */}
+              <Badge className="bg-slate-900 text-white font-bold">
+                {profile.classOf || "2029"}
+              </Badge>
             </CardContent>
           </Card>
         ))}
@@ -78,63 +99,65 @@ const DiscoverGrid = ({ profiles, isGuest = false, onGuestAction }: { profiles: 
 
       {/* Profile Detail Modal */}
       <Dialog open={!!selectedProfile} onOpenChange={() => setSelectedProfile(null)}>
-        <DialogContent className="max-w-md">
+        <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
           {selectedProfile && (
             <>
               <DialogHeader>
-                <DialogTitle className="text-center">{selectedProfile.name}'s Profile</DialogTitle>
+                <DialogTitle className="text-center text-2xl font-bold">{selectedProfile.name}'s Profile</DialogTitle>
               </DialogHeader>
               
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <div className="relative">
                   <img
-                    src={getUnsplashUrl(selectedProfile.photos[0])}
+                    src={getUnsplashUrl(selectedProfile.photos?.[0] || "photo-1649972904349-6e44c42644a7")}
                     alt={selectedProfile.name}
                     className="w-full h-64 object-cover rounded-lg"
                   />
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-bold text-slate-800 mb-2">
+                  <h3 className="text-2xl font-bold text-slate-800 mb-3">
                     {selectedProfile.name}, {selectedProfile.age}
                   </h3>
-                  <div className="flex items-center text-slate-600 text-sm space-x-4 mb-3">
+                  <div className="flex items-center text-slate-600 text-sm space-x-4 mb-4">
                     <div className="flex items-center space-x-1">
                       <BookOpen className="h-4 w-4" />
-                      <span>{selectedProfile.major}</span>
+                      <span className="font-semibold">{selectedProfile.major}</span>
                     </div>
-                    <div className="flex items-center space-x-1">
-                      <MapPin className="h-4 w-4" />
-                      <span>{selectedProfile.location}</span>
-                    </div>
+                    {selectedProfile.location && (
+                      <div className="flex items-center space-x-1">
+                        <MapPin className="h-4 w-4" />
+                        <span>{selectedProfile.location}</span>
+                      </div>
+                    )}
                   </div>
-                  <Badge className="mb-3">Class of {selectedProfile.classOf || "2028"}</Badge>
+                  <Badge className="mb-4 text-lg px-3 py-1">Class of {selectedProfile.classOf || "2029"}</Badge>
                 </div>
 
                 <div>
-                  <p className="text-slate-700 mb-4">{selectedProfile.bio}</p>
+                  <p className="text-slate-700 mb-6 text-base leading-relaxed">{selectedProfile.bio}</p>
                 </div>
 
-                <div className="space-y-3">
+                <div className="space-y-4">
                   <div>
-                    <p className="text-xs font-bold text-slate-500 mb-2 tracking-wide">INTERESTS</p>
+                    <p className="text-sm font-bold text-slate-500 mb-3 tracking-wide">INTERESTS</p>
                     <div className="flex flex-wrap gap-2">
-                      {selectedProfile.interests.map((interest) => (
-                        <Badge key={interest} variant="outline" className="text-xs">
+                      {selectedProfile.interests?.map((interest) => (
+                        <Badge key={interest} variant="outline" className="text-sm py-1 px-3">
                           {interest}
                         </Badge>
-                      ))}
+                      )) || <span className="text-sm text-slate-500">No interests listed</span>}
                     </div>
                   </div>
 
                   <div>
-                    <p className="text-xs font-bold text-slate-500 mb-2 tracking-wide">LOOKING FOR</p>
+                    <p className="text-sm font-bold text-slate-500 mb-3 tracking-wide">LOOKING FOR</p>
                     <div className="flex flex-wrap gap-2">
-                      {selectedProfile.lookingFor.map((item) => (
-                        <Badge key={item} className="text-xs bg-slate-900 text-white">
+                      {selectedProfile.lookingFor?.map((item) => (
+                        <Badge key={item} className="text-sm bg-slate-900 text-white py-1 px-3">
                           {item}
                         </Badge>
-                      ))}
+                      )) || <span className="text-sm text-slate-500">Not specified</span>}
                     </div>
                   </div>
 
@@ -143,24 +166,18 @@ const DiscoverGrid = ({ profiles, isGuest = false, onGuestAction }: { profiles: 
                    (selectedProfile.snapchatPublic && selectedProfile.snapchat) ||
                    (selectedProfile.phonePublic && selectedProfile.phoneNumber) ? (
                     <div>
-                      <p className="text-xs font-bold text-slate-500 mb-2 tracking-wide">CONNECT</p>
-                      <div className="space-y-2">
+                      <p className="text-sm font-bold text-slate-500 mb-3 tracking-wide">CONNECT</p>
+                      <div className="space-y-3">
                         {selectedProfile.instagramPublic && selectedProfile.instagram && (
-                          <div className="flex items-center space-x-2 text-sm">
-                            <Instagram className="h-4 w-4" />
-                            <span>{selectedProfile.instagram}</span>
+                          <div className="flex items-center space-x-3 text-sm">
+                            <Instagram className="h-5 w-5 text-pink-500" />
+                            <span className="font-semibold">{selectedProfile.instagram}</span>
                           </div>
                         )}
                         {selectedProfile.snapchatPublic && selectedProfile.snapchat && (
-                          <div className="flex items-center space-x-2 text-sm">
-                            <div className="w-4 h-4 bg-yellow-400 rounded-full"></div>
-                            <span>{selectedProfile.snapchat}</span>
-                          </div>
-                        )}
-                        {selectedProfile.phonePublic && selectedProfile.phoneNumber && (
-                          <div className="flex items-center space-x-2 text-sm">
-                            <Phone className="h-4 w-4" />
-                            <span>{selectedProfile.phoneNumber}</span>
+                          <div className="flex items-center space-x-3 text-sm">
+                            <MessageCircle className="h-5 w-5 text-yellow-500" />
+                            <span className="font-semibold">{selectedProfile.snapchat}</span>
                           </div>
                         )}
                       </div>
@@ -168,21 +185,22 @@ const DiscoverGrid = ({ profiles, isGuest = false, onGuestAction }: { profiles: 
                   ) : null}
                 </div>
 
-                <div className="flex space-x-2 pt-4">
+                <div className="flex space-x-3 pt-6">
                   <Button 
-                    size="sm" 
+                    size="lg" 
                     variant="outline" 
-                    className="flex-1 hover:bg-red-50 hover:border-red-200"
+                    className="flex-1 hover:bg-red-50 hover:border-red-200 hover:text-red-600 transition-all duration-200"
+                    onClick={() => handleLike(selectedProfile)}
                   >
-                    <Heart className="h-4 w-4 mr-1" />
+                    <Heart className="h-5 w-5 mr-2" />
                     Like
                   </Button>
                   <Button 
-                    size="sm" 
-                    className="flex-1 bg-slate-900 hover:bg-slate-800"
+                    size="lg" 
+                    className="flex-1 bg-slate-900 hover:bg-slate-800 transition-all duration-200"
                     onClick={() => handleMessage(selectedProfile)}
                   >
-                    <MessageSquare className="h-4 w-4 mr-1" />
+                    <MessageSquare className="h-5 w-5 mr-2" />
                     Message
                   </Button>
                 </div>

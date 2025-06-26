@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Heart, Users, MessageSquare, User, Grid, Newspaper } from "lucide-react";
+import { Heart, Users, MessageSquare, User, Grid, Newspaper, ArrowDown } from "lucide-react";
 import WelcomeScreen from "@/components/WelcomeScreen";
 import MeetTabContent from "@/components/tabs/MeetTabContent";
 import DiscoverTabContent from "@/components/tabs/DiscoverTabContent";
@@ -14,6 +14,7 @@ import GuestMessageDialog from "@/components/GuestMessageDialog";
 const Index = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [isGuest, setIsGuest] = useState(false);
+  const [guestSchool, setGuestSchool] = useState("");
   const [activeTab, setActiveTab] = useState("meet");
   const [showGuestDialog, setShowGuestDialog] = useState(false);
 
@@ -27,15 +28,17 @@ const Index = () => {
     dorm: "Warren Hall",
     bio: "Love hiking, coding, and bubble tea! Looking for study buddies and new friends 🌟",
     interests: ["Programming", "Hiking", "Photography", "Music"],
-    photos: [], // Start with no photos
+    photos: [],
     lookingFor: ["Friends", "Study Buddy", "Roommate"],
-    location: null, // Start with no location
+    location: null,
     instagram: "@sarah_chen",
     snapchat: "@sarah_c22",
     phoneNumber: "(555) 123-4567",
     instagramPublic: true,
     snapchatPublic: false,
-    phonePublic: false
+    phonePublic: false,
+    isInMeet: false,
+    isInDiscover: false
   };
 
   const mockProfiles = [
@@ -77,7 +80,7 @@ const Index = () => {
       phoneNumber: "(555) 345-6789",
       instagramPublic: false,
       snapchatPublic: false,
-      phonePublic: true
+      phonePublic: false
     }
   ];
 
@@ -88,13 +91,14 @@ const Index = () => {
       "Stanford University": "from-red-600 to-red-800",
       "MIT": "from-gray-700 to-gray-900",
       "UC Berkeley": "from-blue-700 to-yellow-500",
-      "Arizona State University (ASU)": "from-yellow-400 to-red-600"
+      "Arizona State University": "from-yellow-400 to-red-600"
     };
     return colors[college] || "from-blue-600 to-purple-600";
   };
 
-  const handleGuestContinue = () => {
+  const handleGuestContinue = (selectedSchool) => {
     setIsGuest(true);
+    setGuestSchool(selectedSchool);
     setCurrentUser(null);
   };
 
@@ -117,7 +121,7 @@ const Index = () => {
     );
   }
 
-  const displayUser = currentUser || mockUser;
+  const displayUser = currentUser || { ...mockUser, college: guestSchool || "UCLA" };
 
   const renderContent = () => {
     switch (activeTab) {
@@ -144,7 +148,7 @@ const Index = () => {
       case "chats":
         return isGuest ? (
           <div className="max-w-lg mx-auto pb-32 text-center">
-            <p className="text-slate-600 mt-8">Create an account to view your chats</p>
+            <p className="text-slate-600 mt-8 text-lg">Create an account to view your chats</p>
           </div>
         ) : (
           <ChatsTabContent />
@@ -163,60 +167,127 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
       {/* Header */}
-      <header className="bg-white/95 backdrop-blur-xl border-b border-slate-200/50 sticky top-0 z-40 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className={`w-10 h-10 bg-gradient-to-r ${getSchoolLogo(displayUser.college)} rounded-xl shadow-lg flex items-center justify-center`}>
-              <span className="text-white font-bold text-lg">
+      <header className="bg-white/95 backdrop-blur-xl border-b border-slate-200/50 sticky top-0 z-40 shadow-lg">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <div className={`w-12 h-12 bg-gradient-to-r ${getSchoolLogo(displayUser.college)} rounded-xl shadow-lg flex items-center justify-center`}>
+              <span className="text-white font-bold text-xl">
                 {displayUser.college.charAt(0)}
               </span>
             </div>
             <div>
-              <h1 className="text-xl font-bold text-slate-800">
+              <h1 className="text-2xl font-bold text-slate-800">
                 FroshMeet
               </h1>
-              <p className="text-xs text-slate-500 font-medium">
+              <p className="text-sm text-slate-600 font-semibold">
                 {displayUser.college}
               </p>
             </div>
           </div>
-          <Badge variant="secondary" className="bg-slate-100 text-slate-700 font-medium">
+          <Badge variant="secondary" className="bg-slate-100 text-slate-700 font-semibold px-4 py-2 text-sm">
             {isGuest ? "Guest" : `Class of ${displayUser.classOf}`}
           </Badge>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 py-6 pb-24">
+      <main className="max-w-7xl mx-auto px-6 py-8 pb-32">
         {renderContent()}
       </main>
 
-      {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200/50 shadow-2xl z-50">
-        <div className="max-w-md mx-auto px-4 py-2">
-          <div className="flex justify-around">
-            {[
-              { id: "meet", icon: Heart, label: "Meet" },
-              { id: "discover", icon: Grid, label: "Discover" },
-              { id: "community", icon: Newspaper, label: "Community" },
-              { id: "chats", icon: MessageSquare, label: "Chats" },
-              { id: "profile", icon: User, label: "Profile" }
-            ].map((tab) => (
+      {/* Bottom Navigation - Semicircle Design */}
+      <nav className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-xl border-t border-slate-200/50 shadow-2xl z-50">
+        <div className="max-w-md mx-auto px-6 py-4">
+          {/* Tooltip for Meet */}
+          {activeTab !== "meet" && (
+            <div className="absolute -top-16 left-1/2 transform -translate-x-1/2 bg-slate-900 text-white px-4 py-2 rounded-lg shadow-lg">
+              <div className="flex items-center space-x-2">
+                <ArrowDown className="h-4 w-4" />
+                <span className="text-sm font-bold">Tap to meet students from your school!</span>
+              </div>
+              <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-slate-900"></div>
+            </div>
+          )}
+          
+          <div className="relative">
+            {/* Meet Button - Center Top */}
+            <div className="flex justify-center mb-4">
               <Button
-                key={tab.id}
-                variant={activeTab === tab.id ? "default" : "ghost"}
+                variant={activeTab === "meet" ? "default" : "ghost"}
+                size="lg"
+                onClick={() => setActiveTab("meet")}
+                className={`relative rounded-full w-16 h-16 shadow-lg transition-all duration-300 ${
+                  activeTab === "meet" 
+                    ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white animate-pulse shadow-xl scale-110" 
+                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100 hover:scale-105"
+                }`}
+              >
+                <Heart className="h-6 w-6" />
+              </Button>
+            </div>
+            
+            {/* Other Buttons - Bottom Semicircle */}
+            <div className="flex justify-between items-center">
+              <Button
+                variant={activeTab === "discover" ? "default" : "ghost"}
                 size="sm"
-                onClick={() => setActiveTab(tab.id)}
-                className={`flex flex-col items-center space-y-1 h-auto py-3 px-3 transition-all duration-200 ${
-                  activeTab === tab.id 
-                    ? "bg-slate-900 text-white shadow-lg" 
+                onClick={() => setActiveTab("discover")}
+                className={`flex flex-col items-center space-y-1 h-auto py-3 px-4 transition-all duration-200 ${
+                  activeTab === "discover" 
+                    ? "bg-slate-900 text-white shadow-lg scale-105" 
                     : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
                 }`}
               >
-                <tab.icon className="h-4 w-4" />
-                <span className="text-xs font-medium">{tab.label}</span>
+                <Grid className="h-5 w-5" />
+                <span className="text-xs font-bold">Discover</span>
               </Button>
-            ))}
+              
+              <Button
+                variant={activeTab === "community" ? "default" : "ghost"}
+                size="sm"
+                onClick={() => setActiveTab("community")}
+                className={`flex flex-col items-center space-y-1 h-auto py-3 px-4 transition-all duration-200 ${
+                  activeTab === "community" 
+                    ? "bg-slate-900 text-white shadow-lg scale-105" 
+                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+                }`}
+              >
+                <Newspaper className="h-5 w-5" />
+                <span className="text-xs font-bold">Community</span>
+              </Button>
+              
+              <div className="text-center">
+                <span className="text-xs font-bold text-slate-800 block mb-1">Meet</span>
+              </div>
+              
+              <Button
+                variant={activeTab === "chats" ? "default" : "ghost"}
+                size="sm"
+                onClick={() => setActiveTab("chats")}
+                className={`flex flex-col items-center space-y-1 h-auto py-3 px-4 transition-all duration-200 ${
+                  activeTab === "chats" 
+                    ? "bg-slate-900 text-white shadow-lg scale-105" 
+                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+                }`}
+              >
+                <MessageSquare className="h-5 w-5" />
+                <span className="text-xs font-bold">Chats</span>
+              </Button>
+              
+              <Button
+                variant={activeTab === "profile" ? "default" : "ghost"}
+                size="sm"
+                onClick={() => setActiveTab("profile")}
+                className={`flex flex-col items-center space-y-1 h-auto py-3 px-4 transition-all duration-200 ${
+                  activeTab === "profile" 
+                    ? "bg-slate-900 text-white shadow-lg scale-105" 
+                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+                }`}
+              >
+                <User className="h-5 w-5" />
+                <span className="text-xs font-bold">Profile</span>
+              </Button>
+            </div>
           </div>
         </div>
       </nav>

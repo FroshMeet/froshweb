@@ -23,13 +23,14 @@ const DiscoverTabContent = ({
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-8">
+      <DiscoverGrid profiles={profiles} isGuest={isGuest} onGuestAction={onGuestAction} />
+      
       {!isGuest && currentUser && (
         <div className="max-w-sm mx-auto">
           <PostProfileButton user={currentUser} onPost={handlePost} />
         </div>
       )}
-      <DiscoverGrid profiles={profiles} isGuest={isGuest} onGuestAction={onGuestAction} />
     </div>
   );
 };

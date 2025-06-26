@@ -8,9 +8,12 @@ import OnboardingStep2 from "./onboarding/OnboardingStep2";
 import OnboardingStep3 from "./onboarding/OnboardingStep3";
 import OnboardingStep4 from "./onboarding/OnboardingStep4";
 import PhoneVerification from "./onboarding/PhoneVerification";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const WelcomeScreen = ({ onUserCreate, onGuestContinue }) => {
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [showGuestSchoolSelection, setShowGuestSchoolSelection] = useState(false);
+  const [selectedSchool, setSelectedSchool] = useState("");
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     name: "",
@@ -31,20 +34,56 @@ const WelcomeScreen = ({ onUserCreate, onGuestContinue }) => {
   });
 
   const colleges = [
-    "Arizona State University (ASU)",
-    "Harvard University",
-    "UCLA",
-    "Stanford University",
-    "University of Michigan",
-    "UC Berkeley",
-    "MIT",
-    "Yale University",
-    "Princeton University",
+    "Arizona State University",
+    "Boston University", 
+    "Brown University",
+    "Caltech",
+    "Carnegie Mellon University",
     "Columbia University",
-    "University of Texas at Austin",
+    "Dartmouth College",
+    "Duke University",
+    "Emory University",
+    "Florida State University",
+    "Georgetown University",
+    "Harvard University",
+    "Indiana University Bloomington",
+    "Massachusetts Institute of Technology (MIT)",
+    "Michigan State University",
+    "Northwestern University",
+    "New York University (NYU)",
+    "Ohio State University",
+    "Penn State",
+    "Princeton University",
+    "Purdue University",
+    "Rice University",
+    "Stanford University",
+    "Texas A&M University",
+    "UC Berkeley",
+    "UC Davis",
+    "UC Irvine",
+    "UC Merced",
+    "UC Santa Barbara",
+    "UC Santa Cruz",
+    "UC San Diego (UCSD)",
+    "UC Los Angeles (UCLA)",
+    "University of Alabama",
+    "University of Arizona",
+    "University of Chicago",
     "University of Florida",
-    "NYU",
-    "USC"
+    "University of Georgia",
+    "University of Michigan",
+    "University of Minnesota",
+    "University of North Carolina at Chapel Hill (UNC Chapel Hill)",
+    "University of Oregon",
+    "University of Pennsylvania (UPenn)",
+    "University of South Carolina",
+    "University of Texas",
+    "University of Virginia",
+    "University of Washington",
+    "University of Southern California (USC)",
+    "Vanderbilt University",
+    "Virginia Tech",
+    "Yale University"
   ];
 
   const interestOptions = [
@@ -90,7 +129,7 @@ const WelcomeScreen = ({ onUserCreate, onGuestContinue }) => {
   };
 
   const handleNext = () => {
-    if (step < 6) {
+    if (step < 5) {
       setStep(step + 1);
     } else {
       onUserCreate(formData);
@@ -104,6 +143,66 @@ const WelcomeScreen = ({ onUserCreate, onGuestContinue }) => {
       setShowOnboarding(false);
     }
   };
+
+  const handleGuestSchoolSelect = () => {
+    if (selectedSchool) {
+      onGuestContinue(selectedSchool);
+    }
+  };
+
+  if (showGuestSchoolSelection) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-4">
+        <Card className="w-full max-w-md mx-auto shadow-2xl border-0 bg-white/95 backdrop-blur-xl">
+          <CardHeader className="text-center pb-6">
+            <div className="w-16 h-16 bg-gradient-to-r from-slate-700 to-slate-900 rounded-2xl mx-auto mb-4 flex items-center justify-center shadow-lg">
+              <Users className="h-8 w-8 text-white" />
+            </div>
+            <CardTitle className="text-3xl font-bold text-slate-800">
+              Choose Your School
+            </CardTitle>
+            <p className="text-slate-600 font-medium">
+              Select which school you'd like to explore
+            </p>
+          </CardHeader>
+
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Select onValueChange={setSelectedSchool}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select your school" />
+                </SelectTrigger>
+                <SelectContent>
+                  {colleges.map((college) => (
+                    <SelectItem key={college} value={college}>
+                      {college}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="flex space-x-2">
+              <Button 
+                onClick={() => setShowGuestSchoolSelection(false)}
+                variant="outline"
+                className="flex-1"
+              >
+                Back
+              </Button>
+              <Button 
+                onClick={handleGuestSchoolSelect}
+                className="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3 transition-colors duration-200"
+                disabled={!selectedSchool}
+              >
+                Continue
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   if (!showOnboarding) {
     return (
@@ -129,7 +228,7 @@ const WelcomeScreen = ({ onUserCreate, onGuestContinue }) => {
               Create Account
             </Button>
             <Button 
-              onClick={onGuestContinue}
+              onClick={() => setShowGuestSchoolSelection(true)}
               variant="outline"
               className="w-full border-slate-300 text-slate-700 hover:bg-slate-50 font-semibold py-3 transition-colors duration-200"
             >

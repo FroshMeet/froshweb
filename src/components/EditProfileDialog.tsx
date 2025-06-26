@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -7,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
-import { X, Plus, Edit, Upload, MapPin, Camera } from "lucide-react";
+import { X, Plus, Edit, Camera, MapPin } from "lucide-react";
 
 interface EditProfileDialogProps {
   user: any;
@@ -26,18 +25,30 @@ const EditProfileDialog = ({ user, onSave }: EditProfileDialogProps) => {
     phoneNumber: user.phoneNumber,
     instagramPublic: user.instagramPublic,
     snapchatPublic: user.snapchatPublic,
-    phonePublic: user.phonePublic,
     location: user.location || "",
-    photos: user.photos || []
+    photos: user.photos || [],
+    isInMeet: user.isInMeet || false,
+    isInDiscover: user.isInDiscover || false
   });
   const [newInterest, setNewInterest] = useState("");
   const [newLookingFor, setNewLookingFor] = useState("");
+
+  const getSchoolColors = (college) => {
+    const colors = {
+      "UCLA": "from-blue-600 to-yellow-400",
+      "Harvard University": "from-red-700 to-red-900",
+      "Stanford University": "from-red-600 to-red-800",
+      "MIT": "from-gray-700 to-gray-900",
+      "UC Berkeley": "from-blue-700 to-yellow-500",
+      "Arizona State University": "from-yellow-400 to-red-600"
+    };
+    return colors[college] || "from-blue-600 to-purple-600";
+  };
 
   const handleSave = () => {
     const updatedUser = { 
       ...user, 
       ...formData,
-      // Only include location if it's not empty
       location: formData.location.trim() || null
     };
     onSave(updatedUser);
@@ -79,7 +90,6 @@ const EditProfileDialog = ({ user, onSave }: EditProfileDialogProps) => {
   };
 
   const addPhoto = () => {
-    // For demo purposes, we'll add a random photo ID
     const photoIds = [
       "photo-1649972904349-6e44c42644a7",
       "photo-1581091226825-a6a2a5aee158",
@@ -114,25 +124,57 @@ const EditProfileDialog = ({ user, onSave }: EditProfileDialogProps) => {
       </DialogTrigger>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Edit Profile</DialogTitle>
+          <DialogTitle className="text-2xl font-bold">Edit Profile</DialogTitle>
         </DialogHeader>
         
-        <div className="space-y-6">
+        <div className="space-y-8">
+          {/* Profile Visibility Toggles */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-slate-800">Profile Visibility</h3>
+            <div className="grid grid-cols-2 gap-4">
+              <Button
+                type="button"
+                onClick={() => setFormData(prev => ({ ...prev, isInMeet: !prev.isInMeet }))}
+                className={`h-16 text-sm font-bold transition-all duration-200 ${
+                  formData.isInMeet 
+                    ? `bg-gradient-to-r ${getSchoolColors(user.college)} text-white shadow-lg scale-105` 
+                    : "bg-gray-200 text-gray-600 hover:bg-gray-300"
+                }`}
+              >
+                {formData.isInMeet ? "✓ In Meet" : "Join Meet"}
+              </Button>
+              <Button
+                type="button"
+                onClick={() => setFormData(prev => ({ ...prev, isInDiscover: !prev.isInDiscover }))}
+                className={`h-16 text-sm font-bold transition-all duration-200 ${
+                  formData.isInDiscover 
+                    ? `bg-gradient-to-r ${getSchoolColors(user.college)} text-white shadow-lg scale-105` 
+                    : "bg-gray-200 text-gray-600 hover:bg-gray-300"
+                }`}
+              >
+                {formData.isInDiscover ? "✓ In Discover" : "Join Discover"}
+              </Button>
+            </div>
+            <p className="text-xs text-slate-600">
+              Toggle to show your profile in Meet (swipe cards) and Discover (profile grid) sections
+            </p>
+          </div>
+
           {/* Photos */}
-          <div className="space-y-2">
-            <Label>Profile Photos ({formData.photos.length}/10)</Label>
-            <div className="grid grid-cols-3 gap-2 mb-2">
+          <div className="space-y-3">
+            <Label className="text-base font-semibold">Profile Photos ({formData.photos.length}/10)</Label>
+            <div className="grid grid-cols-4 gap-3 mb-3">
               {formData.photos.map((photo, index) => (
-                <div key={index} className="relative">
+                <div key={index} className="relative group">
                   <img
                     src={`https://images.unsplash.com/${photo}?w=150&h=150&fit=crop&crop=face`}
                     alt={`Photo ${index + 1}`}
-                    className="w-full h-20 object-cover rounded-lg"
+                    className="w-full h-20 object-cover rounded-lg transition-transform duration-200 group-hover:scale-105"
                   />
                   <button
                     type="button"
                     onClick={() => removePhoto(index)}
-                    className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs"
+                    className="absolute -top-2 -right-2 bg-red-500 hover:bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs transition-colors duration-200"
                   >
                     <X className="h-3 w-3" />
                   </button>
@@ -140,31 +182,31 @@ const EditProfileDialog = ({ user, onSave }: EditProfileDialogProps) => {
               ))}
             </div>
             {formData.photos.length < 10 && (
-              <Button type="button" onClick={addPhoto} variant="outline" size="sm">
+              <Button type="button" onClick={addPhoto} variant="outline" size="sm" className="w-full">
                 <Camera className="h-4 w-4 mr-2" />
                 Add Photo
               </Button>
             )}
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-slate-600">
               Add 3-10 photos to post your profile in Meet and Discover
             </p>
           </div>
 
           {/* Bio */}
-          <div className="space-y-2">
-            <Label htmlFor="bio">Bio</Label>
+          <div className="space-y-3">
+            <Label htmlFor="bio" className="text-base font-semibold">Bio</Label>
             <Textarea
               id="bio"
               value={formData.bio}
               onChange={(e) => setFormData(prev => ({ ...prev, bio: e.target.value }))}
               placeholder="Tell others about yourself..."
-              className="min-h-[100px]"
+              className="min-h-[120px] resize-none"
             />
           </div>
 
           {/* Major */}
-          <div className="space-y-2">
-            <Label htmlFor="major">Major</Label>
+          <div className="space-y-3">
+            <Label htmlFor="major" className="text-base font-semibold">Major</Label>
             <Input
               id="major"
               value={formData.major}
@@ -174,10 +216,10 @@ const EditProfileDialog = ({ user, onSave }: EditProfileDialogProps) => {
           </div>
 
           {/* Location */}
-          <div className="space-y-2">
-            <Label htmlFor="location">Location (Optional)</Label>
+          <div className="space-y-3">
+            <Label htmlFor="location" className="text-base font-semibold">Location (Optional)</Label>
             <div className="relative">
-              <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
               <Input
                 id="location"
                 value={formData.location}
@@ -189,14 +231,14 @@ const EditProfileDialog = ({ user, onSave }: EditProfileDialogProps) => {
           </div>
 
           {/* Interests */}
-          <div className="space-y-2">
-            <Label>Interests</Label>
-            <div className="flex flex-wrap gap-2 mb-2">
+          <div className="space-y-3">
+            <Label className="text-base font-semibold">Interests</Label>
+            <div className="flex flex-wrap gap-2 mb-3">
               {formData.interests.map((interest) => (
-                <Badge key={interest} variant="outline" className="flex items-center gap-1">
+                <Badge key={interest} variant="outline" className="flex items-center gap-1 px-3 py-1">
                   {interest}
                   <X
-                    className="h-3 w-3 cursor-pointer hover:text-red-500"
+                    className="h-3 w-3 cursor-pointer hover:text-red-500 transition-colors duration-200"
                     onClick={() => removeInterest(interest)}
                   />
                 </Badge>
@@ -216,14 +258,14 @@ const EditProfileDialog = ({ user, onSave }: EditProfileDialogProps) => {
           </div>
 
           {/* Looking For */}
-          <div className="space-y-2">
-            <Label>Looking For</Label>
-            <div className="flex flex-wrap gap-2 mb-2">
+          <div className="space-y-3">
+            <Label className="text-base font-semibold">Looking For</Label>
+            <div className="flex flex-wrap gap-2 mb-3">
               {formData.lookingFor.map((item) => (
-                <Badge key={item} className="flex items-center gap-1 bg-purple-100 text-purple-700">
+                <Badge key={item} className="flex items-center gap-1 bg-purple-100 text-purple-700 px-3 py-1">
                   {item}
                   <X
-                    className="h-3 w-3 cursor-pointer hover:text-red-500"
+                    className="h-3 w-3 cursor-pointer hover:text-red-500 transition-colors duration-200"
                     onClick={() => removeLookingFor(item)}
                   />
                 </Badge>
@@ -243,13 +285,13 @@ const EditProfileDialog = ({ user, onSave }: EditProfileDialogProps) => {
           </div>
 
           {/* Social Media */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Social Media</h3>
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold text-slate-800">Social Media</h3>
             
             {/* Instagram */}
-            <div className="space-y-2">
+            <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <Label htmlFor="instagram">Instagram</Label>
+                <Label htmlFor="instagram" className="text-base font-semibold">Instagram</Label>
                 <div className="flex items-center space-x-2">
                   <Label htmlFor="instagram-public" className="text-sm">Public</Label>
                   <Switch
@@ -276,9 +318,9 @@ const EditProfileDialog = ({ user, onSave }: EditProfileDialogProps) => {
             </div>
 
             {/* Snapchat */}
-            <div className="space-y-2">
+            <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <Label htmlFor="snapchat">Snapchat</Label>
+                <Label htmlFor="snapchat" className="text-base font-semibold">Snapchat</Label>
                 <div className="flex items-center space-x-2">
                   <Label htmlFor="snapchat-public" className="text-sm">Public</Label>
                   <Switch
@@ -304,21 +346,9 @@ const EditProfileDialog = ({ user, onSave }: EditProfileDialogProps) => {
               />
             </div>
 
-            {/* Phone Number */}
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <Label htmlFor="phone">Phone Number</Label>
-                <div className="flex items-center space-x-2">
-                  <Label htmlFor="phone-public" className="text-sm">Public</Label>
-                  <Switch
-                    id="phone-public"
-                    checked={formData.phonePublic}
-                    onCheckedChange={(checked) => 
-                      setFormData(prev => ({ ...prev, phonePublic: checked }))
-                    }
-                  />
-                </div>
-              </div>
+            {/* Phone Number - Always Private */}
+            <div className="space-y-3">
+              <Label htmlFor="phone" className="text-base font-semibold">Phone Number (Private)</Label>
               <Input
                 id="phone"
                 value={formData.phoneNumber}
@@ -335,15 +365,18 @@ const EditProfileDialog = ({ user, onSave }: EditProfileDialogProps) => {
                 placeholder="(999) 555-4555"
                 maxLength={14}
               />
+              <p className="text-xs text-slate-600">
+                Your phone number is always kept private and never shown to other users
+              </p>
             </div>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex gap-2 pt-4">
-            <Button onClick={handleSave} className="flex-1">
+          <div className="flex gap-3 pt-6">
+            <Button onClick={handleSave} className="flex-1 bg-slate-900 hover:bg-slate-800 font-semibold py-3">
               Save Changes
             </Button>
-            <Button variant="outline" onClick={() => setIsOpen(false)} className="flex-1">
+            <Button variant="outline" onClick={() => setIsOpen(false)} className="flex-1 font-semibold py-3">
               Cancel
             </Button>
           </div>
