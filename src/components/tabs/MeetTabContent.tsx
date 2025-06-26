@@ -30,15 +30,15 @@ const MeetTabContent = ({ profiles, isGuest = false, onGuestAction }: MeetTabCon
   };
 
   return (
-    <div className="max-w-lg mx-auto pb-32">
-      <div className="text-center mb-6">
+    <div className="h-full flex flex-col">
+      <div className="flex-shrink-0 text-center py-4 px-4">
         <h2 className="text-2xl font-bold text-slate-800 mb-4">Meet New People</h2>
         
         <ToggleGroup 
           type="single" 
           value={meetMode} 
           onValueChange={(value) => value && setMeetMode(value)}
-          className="mb-6"
+          className="mb-4"
         >
           <ToggleGroupItem 
             value="general" 
@@ -69,13 +69,15 @@ const MeetTabContent = ({ profiles, isGuest = false, onGuestAction }: MeetTabCon
         )}
       </div>
 
-      <SwipeCards 
-        profiles={filteredProfiles} 
-        onShowIcebreakers={() => {}} // This prop is no longer used since SwipeCards handles its own modal
-        onSwipeAction={handleSwipeAction}
-        isGuest={isGuest}
-        onGuestAction={onGuestAction}
-      />
+      <div className="flex-1 min-h-0">
+        <SwipeCards 
+          profiles={filteredProfiles} 
+          onShowIcebreakers={() => {}}
+          onSwipeAction={handleSwipeAction}
+          isGuest={isGuest}
+          onGuestAction={onGuestAction}
+        />
+      </div>
     </div>
   );
 };

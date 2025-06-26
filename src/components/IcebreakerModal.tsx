@@ -65,13 +65,13 @@ const IcebreakerModal = ({
           </DialogTitle>
         </DialogHeader>
 
-        <Tabs defaultValue="icebreakers" className="w-full">
+        <Tabs defaultValue="recommended" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="icebreakers">Icebreakers</TabsTrigger>
+            <TabsTrigger value="recommended">Recommended Messages</TabsTrigger>
             <TabsTrigger value="custom">Custom</TabsTrigger>
           </TabsList>
           
-          <TabsContent value="icebreakers" className="mt-4">
+          <TabsContent value="recommended" className="mt-4">
             <div className="space-y-2 max-h-64 overflow-y-auto">
               {allIcebreakers.map((icebreaker, index) => (
                 <Button
