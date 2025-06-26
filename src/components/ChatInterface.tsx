@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -75,7 +76,6 @@ const ChatInterface = () => {
   };
 
   const handleAcceptRequest = (request) => {
-    // Move request to active chats
     setIncomingRequests(prev => prev.filter(r => r.id !== request.id));
     console.log("Accepted request from:", request.name);
   };
@@ -277,10 +277,12 @@ const ChatInterface = () => {
                 <p className="text-sm text-slate-600">{selectedChat.major} • {selectedChat.dorm}</p>
               </div>
             </div>
+            {/* Desktop Share Socials Button */}
             <Button
               variant="outline"
               size="sm"
               onClick={() => setShowSocialShare(true)}
+              className="hidden md:flex"
             >
               <Share2 className="h-4 w-4 mr-2" />
               Share Socials
@@ -310,7 +312,19 @@ const ChatInterface = () => {
           </div>
         </CardContent>
 
-        <div className="border-t p-4">
+        <div className="border-t p-4 space-y-3">
+          {/* Mobile Share Socials Button - Above text input */}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowSocialShare(true)}
+            className="md:hidden w-full"
+          >
+            <Share2 className="h-4 w-4 mr-2" />
+            Share Socials
+          </Button>
+          
+          {/* Message Input */}
           <div className="flex space-x-2">
             <Input
               value={message}

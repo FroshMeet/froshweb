@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Heart, X, MessageSquare, MapPin, BookOpen, Instagram, MessageCircle, Phone } from "lucide-react";
+import { Heart, X, MessageSquare, MapPin, BookOpen, Instagram, MessageCircle, Phone, ChevronLeft, ChevronRight } from "lucide-react";
 import IcebreakerModal from "./IcebreakerModal";
 
 interface SwipeCardsProps {
@@ -16,14 +16,16 @@ interface SwipeCardsProps {
 
 const SwipeCards = ({ profiles, onShowIcebreakers, onSwipeAction, isGuest = false, onGuestAction }: SwipeCardsProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [showIcebreakers, setShowIcebreakers] = useState(false);
 
   const getUnsplashUrl = (photoId: string) => {
-    return `https://images.unsplash.com/${photoId}?w=400&h=500&fit=crop&crop=face`;
+    return `https://images.unsplash.com/${photoId}?w=400&h=600&fit=crop&crop=face`;
   };
 
   const handleSwipe = (action: 'like' | 'pass') => {
     onSwipeAction(action);
+    setCurrentPhotoIndex(0); // Reset photo index when switching profiles
     if (currentIndex < profiles.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
@@ -39,6 +41,22 @@ const SwipeCards = ({ profiles, onShowIcebreakers, onSwipeAction, isGuest = fals
     console.log("Sending message:", message, "to", currentProfile?.name);
   };
 
+  const nextPhoto = () => {
+    if (currentProfile?.photos && currentPhotoIndex < currentProfile.photos.length - 1) {
+      setCurrentPhotoIndex(currentPhotoIndex + 1);
+    } else {
+      setCurrentPhotoIndex(0);
+    }
+  };
+
+  const prevPhoto = () => {
+    if (currentProfile?.photos && currentPhotoIndex > 0) {
+      setCurrentPhotoIndex(currentPhotoIndex - 1);
+    } else if (currentProfile?.photos) {
+      setCurrentPhotoIndex(currentProfile.photos.length - 1);
+    }
+  };
+
   if (!profiles || profiles.length === 0) {
     return (
       <div className="text-center py-8">
@@ -49,7 +67,6 @@ const SwipeCards = ({ profiles, onShowIcebreakers, onSwipeAction, isGuest = fals
 
   const currentProfile = profiles[currentIndex];
 
-  // Add null check for currentProfile
   if (!currentProfile) {
     return (
       <div className="text-center py-8">
@@ -58,15 +75,52 @@ const SwipeCards = ({ profiles, onShowIcebreakers, onSwipeAction, isGuest = fals
     );
   }
 
+  const photos = currentProfile.photos || ["photo-1649972904349-6e44c42644a7"];
+  const currentPhoto = photos[currentPhotoIndex];
+
   return (
-    <div className="max-w-sm mx-auto">
-      <Card className="overflow-hidden bg-white/80 backdrop-blur-sm">
-        <div className="relative">
+    <div className="w-full max-w-md mx-auto h-screen flex flex-col">
+      <Card className="flex-1 overflow-hidden bg-white/80 backdrop-blur-sm flex flex-col">
+        {/* Photo Section - Takes most of the screen */}
+        <div className="relative flex-1 min-h-[60vh]">
           <img
-            src={getUnsplashUrl(currentProfile.photos?.[0] || "photo-1649972904349-6e44c42644a7")}
+            src={getUnsplashUrl(currentPhoto)}
             alt={currentProfile.name || "Profile"}
-            className="w-full h-96 object-cover"
+            className="w-full h-full object-cover cursor-pointer"
+            onClick={nextPhoto}
           />
+          
+          {/* Photo Navigation */}
+          {photos.length > 1 && (
+            <>
+              <button
+                onClick={prevPhoto}
+                className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </button>
+              <button
+                onClick={nextPhoto}
+                className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </button>
+              
+              {/* Photo indicators */}
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
+                {photos.map((_, index) => (
+                  <div
+                    key={index}
+                    className={`w-2 h-2 rounded-full ${
+                      index === currentPhotoIndex ? 'bg-white' : 'bg-white/50'
+                    }`}
+                  />
+                ))}
+              </div>
+            </>
+          )}
+          
+          {/* Class Year Badge */}
           <div className="absolute top-4 right-4">
             <Badge className="bg-white/90 text-black">
               Class of {currentProfile.classOf || "2029"}
@@ -74,7 +128,8 @@ const SwipeCards = ({ profiles, onShowIcebreakers, onSwipeAction, isGuest = fals
           </div>
         </div>
         
-        <CardContent className="p-4">
+        {/* Profile Info Section - Compact but complete */}
+        <CardContent className="p-4 bg-white">
           <div className="space-y-3">
             <div>
               <h3 className="text-xl font-bold">{currentProfile.name || "Unknown"}, {currentProfile.age || "18"}</h3>
@@ -90,7 +145,7 @@ const SwipeCards = ({ profiles, onShowIcebreakers, onSwipeAction, isGuest = fals
               </div>
             </div>
 
-            <p className="text-sm text-muted-foreground line-clamp-2">
+            <p className="text-sm text-muted-foreground">
               {currentProfile.bio || "No bio available"}
             </p>
 
@@ -125,16 +180,11 @@ const SwipeCards = ({ profiles, onShowIcebreakers, onSwipeAction, isGuest = fals
               <div>
                 <p className="text-xs font-medium text-muted-foreground mb-1">INTERESTS</p>
                 <div className="flex flex-wrap gap-1">
-                  {currentProfile.interests?.slice(0, 4).map((interest: string) => (
+                  {currentProfile.interests?.map((interest: string) => (
                     <Badge key={interest} variant="outline" className="text-xs">
                       {interest}
                     </Badge>
                   )) || <span className="text-xs text-muted-foreground">No interests listed</span>}
-                  {currentProfile.interests?.length > 4 && (
-                    <Badge variant="outline" className="text-xs">
-                      +{currentProfile.interests.length - 4}
-                    </Badge>
-                  )}
                 </div>
               </div>
 
@@ -150,6 +200,7 @@ const SwipeCards = ({ profiles, onShowIcebreakers, onSwipeAction, isGuest = fals
               </div>
             </div>
 
+            {/* Action Buttons */}
             <div className="flex space-x-2 pt-2">
               <Button 
                 size="sm" 
