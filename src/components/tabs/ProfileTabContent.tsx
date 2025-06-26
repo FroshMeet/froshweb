@@ -34,19 +34,26 @@ const ProfileTabContent = ({ currentUser, onUpdateUser }: ProfileTabContentProps
       </div>
       
       {/* Right side - Actions */}
-      <div className="flex-1 space-y-4">
-        <div className="flex justify-end">
-          <Button variant="outline" size="sm" className="flex items-center space-x-2">
-            <Settings className="h-4 w-4" />
-            <span>Settings</span>
-          </Button>
-        </div>
+      <div className="flex-1 max-w-md space-y-6">
+        <Button 
+          variant="outline" 
+          size="lg" 
+          className="w-full h-16 flex items-center justify-center space-x-3 text-lg font-semibold border-2"
+        >
+          <Settings className="h-6 w-6" />
+          <span>Settings</span>
+        </Button>
         
-        <div className="space-y-4">
-          <EditProfileDialog user={currentUser} onSave={onUpdateUser} />
+        <div className="space-y-6">
+          <EditProfileDialog 
+            user={currentUser} 
+            onSave={onUpdateUser}
+            className="w-full h-16 text-lg font-semibold"
+          />
           <Button 
             onClick={() => setShowPostModal(true)}
-            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3"
+            size="lg"
+            className="w-full h-16 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white text-lg font-semibold"
           >
             Post Your Profile
           </Button>

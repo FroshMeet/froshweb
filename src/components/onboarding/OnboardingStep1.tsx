@@ -2,6 +2,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface OnboardingStep1Props {
   formData: any;
@@ -56,12 +57,14 @@ const OnboardingStep1 = ({ formData, setFormData, colleges }: OnboardingStep1Pro
           <SelectTrigger>
             <SelectValue placeholder="Select your college" />
           </SelectTrigger>
-          <SelectContent>
-            {colleges.map((college) => (
-              <SelectItem key={college} value={college}>
-                {college}
-              </SelectItem>
-            ))}
+          <SelectContent className="max-h-[300px]">
+            <ScrollArea className="h-[300px]">
+              {colleges.map((college) => (
+                <SelectItem key={college} value={college}>
+                  {college}
+                </SelectItem>
+              ))}
+            </ScrollArea>
           </SelectContent>
         </Select>
       </div>

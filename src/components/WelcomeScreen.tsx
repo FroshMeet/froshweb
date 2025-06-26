@@ -9,6 +9,7 @@ import OnboardingStep3 from "./onboarding/OnboardingStep3";
 import OnboardingStep4 from "./onboarding/OnboardingStep4";
 import PhoneVerification from "./onboarding/PhoneVerification";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const WelcomeScreen = ({ onUserCreate, onGuestContinue }) => {
   const [showOnboarding, setShowOnboarding] = useState(false);
@@ -172,12 +173,14 @@ const WelcomeScreen = ({ onUserCreate, onGuestContinue }) => {
                 <SelectTrigger>
                   <SelectValue placeholder="Select your school" />
                 </SelectTrigger>
-                <SelectContent>
-                  {colleges.map((college) => (
-                    <SelectItem key={college} value={college}>
-                      {college}
-                    </SelectItem>
-                  ))}
+                <SelectContent className="max-h-[300px]">
+                  <ScrollArea className="h-[300px]">
+                    {colleges.map((college) => (
+                      <SelectItem key={college} value={college}>
+                        {college}
+                      </SelectItem>
+                    ))}
+                  </ScrollArea>
                 </SelectContent>
               </Select>
             </div>
