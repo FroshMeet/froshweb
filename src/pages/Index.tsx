@@ -86,12 +86,56 @@ const Index = () => {
 
   const getSchoolLogo = (college) => {
     const colors = {
-      "UCLA": "from-blue-600 to-yellow-400",
+      "Arizona State University": "from-yellow-400 to-red-600",
+      "Boston University": "from-red-700 to-red-900",
+      "Brown University": "from-red-700 to-yellow-600",
+      "Caltech": "from-orange-500 to-red-600",
+      "Carnegie Mellon University": "from-red-600 to-gray-700",
+      "Columbia University": "from-blue-600 to-blue-800",
+      "Dartmouth College": "from-green-600 to-green-800",
+      "Duke University": "from-blue-600 to-blue-800",
+      "Emory University": "from-blue-500 to-yellow-400",
+      "Florida State University": "from-yellow-400 to-red-600",
+      "Georgetown University": "from-blue-600 to-gray-600",
       "Harvard University": "from-red-700 to-red-900",
+      "Indiana University Bloomington": "from-red-600 to-white",
+      "Massachusetts Institute of Technology (MIT)": "from-gray-700 to-gray-900",
+      "Michigan State University": "from-green-600 to-white",
+      "Northwestern University": "from-purple-600 to-purple-800",
+      "New York University (NYU)": "from-purple-600 to-purple-800",
+      "Ohio State University": "from-red-600 to-gray-600",
+      "Penn State": "from-blue-600 to-blue-800",
+      "Princeton University": "from-orange-500 to-black",
+      "Purdue University": "from-yellow-400 to-black",
+      "Rice University": "from-blue-600 to-gray-600",
       "Stanford University": "from-red-600 to-red-800",
-      "MIT": "from-gray-700 to-gray-900",
+      "Texas A&M University": "from-red-700 to-red-900",
       "UC Berkeley": "from-blue-700 to-yellow-500",
-      "Arizona State University": "from-yellow-400 to-red-600"
+      "UC Davis": "from-blue-600 to-yellow-400",
+      "UC Irvine": "from-blue-600 to-yellow-400",
+      "UC Merced": "from-blue-600 to-yellow-400",
+      "UC Santa Barbara": "from-blue-600 to-yellow-400",
+      "UC Santa Cruz": "from-blue-600 to-yellow-400",
+      "UC San Diego (UCSD)": "from-blue-600 to-yellow-400",
+      "UC Los Angeles (UCLA)": "from-blue-600 to-yellow-400",
+      "University of Alabama": "from-red-700 to-red-900",
+      "University of Arizona": "from-red-600 to-blue-600",
+      "University of Chicago": "from-red-700 to-red-900",
+      "University of Florida": "from-blue-600 to-orange-500",
+      "University of Georgia": "from-red-600 to-black",
+      "University of Michigan": "from-blue-600 to-yellow-400",
+      "University of Minnesota": "from-yellow-400 to-red-600",
+      "University of North Carolina at Chapel Hill (UNC Chapel Hill)": "from-blue-600 to-blue-800",
+      "University of Oregon": "from-green-600 to-yellow-400",
+      "University of Pennsylvania (UPenn)": "from-blue-600 to-red-600",
+      "University of South Carolina": "from-red-700 to-red-900",
+      "University of Texas": "from-orange-500 to-orange-700",
+      "University of Virginia": "from-blue-600 to-orange-500",
+      "University of Washington": "from-purple-600 to-yellow-400",
+      "University of Southern California (USC)": "from-red-700 to-yellow-400",
+      "Vanderbilt University": "from-yellow-400 to-black",
+      "Virginia Tech": "from-red-700 to-orange-500",
+      "Yale University": "from-blue-600 to-blue-800"
     };
     return colors[college] || "from-blue-600 to-purple-600";
   };
@@ -121,7 +165,7 @@ const Index = () => {
     );
   }
 
-  const displayUser = currentUser || { ...mockUser, college: guestSchool || "UCLA" };
+  const displayUser = currentUser || { ...mockUser, college: guestSchool || "Arizona State University" };
 
   const renderContent = () => {
     switch (activeTab) {
@@ -195,7 +239,7 @@ const Index = () => {
         {renderContent()}
       </main>
 
-      {/* Bottom Navigation - Semicircle Design */}
+      {/* Bottom Navigation */}
       <nav className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-xl border-t border-slate-200/50 shadow-2xl z-50">
         <div className="max-w-md mx-auto px-6 py-4">
           {/* Tooltip for Meet */}
@@ -209,85 +253,76 @@ const Index = () => {
             </div>
           )}
           
-          <div className="relative">
-            {/* Meet Button - Center Top */}
-            <div className="flex justify-center mb-4">
-              <Button
-                variant={activeTab === "meet" ? "default" : "ghost"}
-                size="lg"
-                onClick={() => setActiveTab("meet")}
-                className={`relative rounded-full w-16 h-16 shadow-lg transition-all duration-300 ${
-                  activeTab === "meet" 
-                    ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white animate-pulse shadow-xl scale-110" 
-                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100 hover:scale-105"
-                }`}
-              >
-                <Heart className="h-6 w-6" />
-              </Button>
-            </div>
+          <div className="flex justify-between items-center">
+            <Button
+              variant={activeTab === "discover" ? "default" : "ghost"}
+              size="sm"
+              onClick={() => setActiveTab("discover")}
+              className={`flex flex-col items-center space-y-1 h-auto py-3 px-4 transition-all duration-200 ${
+                activeTab === "discover" 
+                  ? "bg-slate-900 text-white shadow-lg scale-105" 
+                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+              }`}
+            >
+              <Grid className="h-5 w-5" />
+              <span className="text-xs font-bold">Discover</span>
+            </Button>
             
-            {/* Other Buttons - Bottom Semicircle */}
-            <div className="flex justify-between items-center">
-              <Button
-                variant={activeTab === "discover" ? "default" : "ghost"}
-                size="sm"
-                onClick={() => setActiveTab("discover")}
-                className={`flex flex-col items-center space-y-1 h-auto py-3 px-4 transition-all duration-200 ${
-                  activeTab === "discover" 
-                    ? "bg-slate-900 text-white shadow-lg scale-105" 
-                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
-                }`}
-              >
-                <Grid className="h-5 w-5" />
-                <span className="text-xs font-bold">Discover</span>
-              </Button>
-              
-              <Button
-                variant={activeTab === "community" ? "default" : "ghost"}
-                size="sm"
-                onClick={() => setActiveTab("community")}
-                className={`flex flex-col items-center space-y-1 h-auto py-3 px-4 transition-all duration-200 ${
-                  activeTab === "community" 
-                    ? "bg-slate-900 text-white shadow-lg scale-105" 
-                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
-                }`}
-              >
-                <Newspaper className="h-5 w-5" />
-                <span className="text-xs font-bold">Community</span>
-              </Button>
-              
-              <div className="text-center">
-                <span className="text-xs font-bold text-slate-800 block mb-1">Meet</span>
-              </div>
-              
-              <Button
-                variant={activeTab === "chats" ? "default" : "ghost"}
-                size="sm"
-                onClick={() => setActiveTab("chats")}
-                className={`flex flex-col items-center space-y-1 h-auto py-3 px-4 transition-all duration-200 ${
-                  activeTab === "chats" 
-                    ? "bg-slate-900 text-white shadow-lg scale-105" 
-                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
-                }`}
-              >
-                <MessageSquare className="h-5 w-5" />
-                <span className="text-xs font-bold">Chats</span>
-              </Button>
-              
-              <Button
-                variant={activeTab === "profile" ? "default" : "ghost"}
-                size="sm"
-                onClick={() => setActiveTab("profile")}
-                className={`flex flex-col items-center space-y-1 h-auto py-3 px-4 transition-all duration-200 ${
-                  activeTab === "profile" 
-                    ? "bg-slate-900 text-white shadow-lg scale-105" 
-                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
-                }`}
-              >
-                <User className="h-5 w-5" />
-                <span className="text-xs font-bold">Profile</span>
-              </Button>
-            </div>
+            <Button
+              variant={activeTab === "community" ? "default" : "ghost"}
+              size="sm"
+              onClick={() => setActiveTab("community")}
+              className={`flex flex-col items-center space-y-1 h-auto py-3 px-4 transition-all duration-200 ${
+                activeTab === "community" 
+                  ? "bg-slate-900 text-white shadow-lg scale-105" 
+                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+              }`}
+            >
+              <Newspaper className="h-5 w-5" />
+              <span className="text-xs font-bold">Community</span>
+            </Button>
+            
+            <Button
+              variant={activeTab === "meet" ? "default" : "ghost"}
+              size="lg"
+              onClick={() => setActiveTab("meet")}
+              className={`flex flex-col items-center space-y-1 h-auto py-3 px-4 transition-all duration-200 ${
+                activeTab === "meet" 
+                  ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg scale-105" 
+                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+              }`}
+            >
+              <Heart className="h-6 w-6" />
+              <span className="text-xs font-bold">Meet</span>
+            </Button>
+            
+            <Button
+              variant={activeTab === "chats" ? "default" : "ghost"}
+              size="sm"
+              onClick={() => setActiveTab("chats")}
+              className={`flex flex-col items-center space-y-1 h-auto py-3 px-4 transition-all duration-200 ${
+                activeTab === "chats" 
+                  ? "bg-slate-900 text-white shadow-lg scale-105" 
+                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+              }`}
+            >
+              <MessageSquare className="h-5 w-5" />
+              <span className="text-xs font-bold">Chats</span>
+            </Button>
+            
+            <Button
+              variant={activeTab === "profile" ? "default" : "ghost"}
+              size="sm"
+              onClick={() => setActiveTab("profile")}
+              className={`flex flex-col items-center space-y-1 h-auto py-3 px-4 transition-all duration-200 ${
+                activeTab === "profile" 
+                  ? "bg-slate-900 text-white shadow-lg scale-105" 
+                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+              }`}
+            >
+              <User className="h-5 w-5" />
+              <span className="text-xs font-bold">Profile</span>
+            </Button>
           </div>
         </div>
       </nav>
