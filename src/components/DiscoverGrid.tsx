@@ -13,7 +13,7 @@ const DiscoverGrid = ({ profiles, isGuest = false, onGuestAction }: { profiles: 
   const [messageTarget, setMessageTarget] = useState(null);
 
   const getUnsplashUrl = (photoId) => {
-    return `https://images.unsplash.com/${photoId}?w=300&h=400&fit=crop&crop=face`;
+    return `https://images.unsplash.com/${photoId}?w=300&h=300&fit=crop&crop=face`;
   };
 
   const getSchoolColors = (college) => {
@@ -60,39 +60,23 @@ const DiscoverGrid = ({ profiles, isGuest = false, onGuestAction }: { profiles: 
         {profiles.map((profile) => (
           <Card 
             key={profile.id}
-            className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:scale-105 bg-white/90 backdrop-blur-sm"
+            className={`cursor-pointer hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:scale-105 bg-white/90 backdrop-blur-sm border-4 ${getSchoolColors(profile.college)} overflow-hidden`}
             onClick={() => setSelectedProfile(profile)}
           >
-            <div className="relative">
-              {/* Cover Photo */}
+            <div className="relative aspect-square">
               <img
                 src={getUnsplashUrl(profile.photos?.[0] || "photo-1649972904349-6e44c42644a7")}
                 alt={profile.name}
-                className="w-full h-32 object-cover rounded-t-lg"
+                className="w-full h-full object-cover"
               />
               
-              {/* Profile Picture with School Color Border */}
-              <div className={`absolute -bottom-6 left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full border-4 ${getSchoolColors(profile.college)} bg-white p-0.5`}>
-                {profile.photos?.[0] ? (
-                  <img
-                    src={getUnsplashUrl(profile.photos[0])}
-                    alt={profile.name}
-                    className="w-full h-full object-cover rounded-full"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 rounded-full flex items-center justify-center">
-                    <User className="h-4 w-4 text-slate-400" />
-                  </div>
-                )}
+              {/* Class Year Badge */}
+              <div className="absolute bottom-2 right-2">
+                <Badge className="bg-white/90 text-slate-900 font-bold text-sm px-2 py-1">
+                  {profile.classOf || "2029"}
+                </Badge>
               </div>
             </div>
-            
-            <CardContent className="pt-8 pb-3 text-center">
-              {/* Class Year */}
-              <Badge className="bg-slate-900 text-white font-bold">
-                {profile.classOf || "2029"}
-              </Badge>
-            </CardContent>
           </Card>
         ))}
       </div>

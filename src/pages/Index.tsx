@@ -244,7 +244,10 @@ const Index = () => {
         <div className="max-w-md mx-auto px-6 py-4">
           {/* Tooltip for Meet */}
           {activeTab !== "meet" && (
-            <div className="absolute -top-16 left-1/2 transform -translate-x-1/2 bg-slate-900 text-white px-4 py-2 rounded-lg shadow-lg">
+            <div 
+              className="absolute -top-16 left-1/2 transform -translate-x-1/2 bg-slate-900 text-white px-4 py-2 rounded-lg shadow-lg cursor-pointer"
+              onClick={() => setActiveTab("meet")}
+            >
               <div className="flex items-center space-x-2">
                 <ArrowDown className="h-4 w-4" />
                 <span className="text-sm font-bold">Tap to meet students from your school!</span>
@@ -258,7 +261,7 @@ const Index = () => {
               variant={activeTab === "discover" ? "default" : "ghost"}
               size="sm"
               onClick={() => setActiveTab("discover")}
-              className={`flex flex-col items-center space-y-1 h-auto py-3 px-4 transition-all duration-200 ${
+              className={`flex flex-col items-center space-y-1 h-auto py-3 transition-all duration-200 w-[20%] ${
                 activeTab === "discover" 
                   ? "bg-slate-900 text-white shadow-lg scale-105" 
                   : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
@@ -272,7 +275,7 @@ const Index = () => {
               variant={activeTab === "community" ? "default" : "ghost"}
               size="sm"
               onClick={() => setActiveTab("community")}
-              className={`flex flex-col items-center space-y-1 h-auto py-3 px-4 transition-all duration-200 ${
+              className={`flex flex-col items-center space-y-1 h-auto py-3 transition-all duration-200 w-[20%] ${
                 activeTab === "community" 
                   ? "bg-slate-900 text-white shadow-lg scale-105" 
                   : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
@@ -286,7 +289,7 @@ const Index = () => {
               variant={activeTab === "meet" ? "default" : "ghost"}
               size="lg"
               onClick={() => setActiveTab("meet")}
-              className={`flex flex-col items-center space-y-1 h-auto py-3 px-4 transition-all duration-200 ${
+              className={`flex flex-col items-center space-y-1 h-auto py-3 transition-all duration-200 w-[20%] ${
                 activeTab === "meet" 
                   ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg scale-105" 
                   : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
@@ -300,7 +303,7 @@ const Index = () => {
               variant={activeTab === "chats" ? "default" : "ghost"}
               size="sm"
               onClick={() => setActiveTab("chats")}
-              className={`flex flex-col items-center space-y-1 h-auto py-3 px-4 transition-all duration-200 ${
+              className={`flex flex-col items-center space-y-1 h-auto py-3 transition-all duration-200 w-[20%] ${
                 activeTab === "chats" 
                   ? "bg-slate-900 text-white shadow-lg scale-105" 
                   : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
@@ -314,7 +317,7 @@ const Index = () => {
               variant={activeTab === "profile" ? "default" : "ghost"}
               size="sm"
               onClick={() => setActiveTab("profile")}
-              className={`flex flex-col items-center space-y-1 h-auto py-3 px-4 transition-all duration-200 ${
+              className={`flex flex-col items-center space-y-1 h-auto py-3 transition-all duration-200 w-[20%] ${
                 activeTab === "profile" 
                   ? "bg-slate-900 text-white shadow-lg scale-105" 
                   : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"

@@ -1,6 +1,5 @@
 
 import DiscoverGrid from "../DiscoverGrid";
-import PostProfileButton from "../PostProfileButton";
 
 interface DiscoverTabContentProps {
   profiles: any[];
@@ -17,20 +16,9 @@ const DiscoverTabContent = ({
   currentUser,
   onUpdateUser 
 }: DiscoverTabContentProps) => {
-  const handlePost = () => {
-    console.log("Profile posted to Discover");
-    // Here you would typically add the user to the profiles list
-  };
-
   return (
     <div className="space-y-8">
       <DiscoverGrid profiles={profiles} isGuest={isGuest} onGuestAction={onGuestAction} />
-      
-      {!isGuest && currentUser && (
-        <div className="max-w-sm mx-auto">
-          <PostProfileButton user={currentUser} onPost={handlePost} />
-        </div>
-      )}
     </div>
   );
 };
