@@ -1,25 +1,30 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Heart, Users } from "lucide-react";
 import SwipeCards from "../SwipeCards";
+
 interface MeetTabContentProps {
   profiles: any[];
   isGuest?: boolean;
   onGuestAction?: () => void;
 }
+
 const MeetTabContent = ({
   profiles,
   isGuest = false,
   onGuestAction
 }: MeetTabContentProps) => {
   const [meetMode, setMeetMode] = useState("general");
+
   const filteredProfiles = profiles.filter(profile => {
     if (meetMode === "roommate") {
       return profile.lookingFor.includes("Roommate");
     }
     return true;
   });
+
   const handleSwipeAction = (action: string) => {
     if (isGuest && onGuestAction && action === "like") {
       onGuestAction();
@@ -27,33 +32,52 @@ const MeetTabContent = ({
     }
     console.log("Swipe action:", action);
   };
-  return <div className="fixed inset-0 top-[73px] bottom-[97px] overflow-hidden">
-      <div className="h-full flex flex-col">
-        <div className="flex-shrink-0 text-center py-4 px-4 bg-white border-b border-slate-200/50">
-          
-          
-          <ToggleGroup type="single" value={meetMode} onValueChange={value => value && setMeetMode(value)} className="mb-4">
-            <ToggleGroupItem value="general" className="flex items-center space-x-2 px-6 py-2 data-[state=on]:bg-slate-900 data-[state=on]:text-white">
-              <Heart className="h-4 w-4" />
-              <span>General</span>
-            </ToggleGroupItem>
-            <ToggleGroupItem value="roommate" className="flex items-center space-x-2 px-6 py-2 data-[state=on]:bg-slate-900 data-[state=on]:text-white">
-              <Users className="h-4 w-4" />
-              <span>Roommates</span>
-            </ToggleGroupItem>
-          </ToggleGroup>
 
-          
-          
-          {isGuest && <p className="text-xs text-amber-600 bg-amber-50 px-3 py-2 rounded-lg">
-              Browsing as guest - create an account to message people
-            </p>}
-        </div>
+  return (
+    <div className="h-screen w-full overflow-hidden flex flex-col">
+      {/* Toggle Group - Fixed at top */}
+      <div className="flex-shrink-0 bg-white border-b border-slate-200/50 px-4 py-3">
+        <ToggleGroup 
+          type="single" 
+          value={meetMode} 
+          onValueChange={value => value && setMeetMode(value)} 
+          className="w-full justify-center"
+        >
+          <ToggleGroupItem 
+            value="general" 
+            className="flex items-center space-x-2 px-6 py-2 data-[state=on]:bg-slate-900 data-[state=on]:text-white"
+          >
+            <Heart className="h-4 w-4" />
+            <span>General</span>
+          </ToggleGroupItem>
+          <ToggleGroupItem 
+            value="roommate" 
+            className="flex items-center space-x-2 px-6 py-2 data-[state=on]:bg-slate-900 data-[state=on]:text-white"
+          >
+            <Users className="h-4 w-4" />
+            <span>Roommates</span>
+          </ToggleGroupItem>
+        </ToggleGroup>
 
-        <div className="flex-1 min-h-0 bg-white">
-          <SwipeCards profiles={filteredProfiles} onShowIcebreakers={() => {}} onSwipeAction={handleSwipeAction} isGuest={isGuest} onGuestAction={onGuestAction} />
-        </div>
+        {isGuest && (
+          <p className="text-xs text-amber-600 bg-amber-50 px-3 py-2 rounded-lg mt-2 text-center">
+            Browsing as guest - create an account to message people
+          </p>
+        )}
       </div>
-    </div>;
+
+      {/* Profile Content - Flexible height */}
+      <div className="flex-1 min-h-0 bg-white">
+        <SwipeCards 
+          profiles={filteredProfiles} 
+          onShowIcebreakers={() => {}} 
+          onSwipeAction={handleSwipeAction} 
+          isGuest={isGuest} 
+          onGuestAction={onGuestAction} 
+        />
+      </div>
+    </div>
+  );
 };
+
 export default MeetTabContent;
