@@ -261,70 +261,65 @@ const Index = () => {
               variant={activeTab === "discover" ? "default" : "ghost"}
               size="sm"
               onClick={() => setActiveTab("discover")}
-              className={`flex flex-col items-center space-y-1 h-auto py-3 transition-all duration-200 w-[20%] ${
+              className={`flex flex-col items-center justify-center h-16 w-16 transition-all duration-200 ${
                 activeTab === "discover" 
                   ? "bg-slate-900 text-white shadow-lg scale-105" 
                   : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
               }`}
             >
-              <Grid className="h-5 w-5" />
-              <span className="text-xs font-bold">Discover</span>
+              <Grid className="h-8 w-8" />
             </Button>
             
             <Button
               variant={activeTab === "community" ? "default" : "ghost"}
               size="sm"
               onClick={() => setActiveTab("community")}
-              className={`flex flex-col items-center space-y-1 h-auto py-3 transition-all duration-200 w-[20%] ${
+              className={`flex flex-col items-center justify-center h-16 w-16 transition-all duration-200 ${
                 activeTab === "community" 
                   ? "bg-slate-900 text-white shadow-lg scale-105" 
                   : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
               }`}
             >
-              <Newspaper className="h-5 w-5" />
-              <span className="text-xs font-bold">Community</span>
+              <Newspaper className="h-8 w-8" />
             </Button>
             
             <Button
               variant={activeTab === "meet" ? "default" : "ghost"}
               size="lg"
               onClick={() => setActiveTab("meet")}
-              className={`flex flex-col items-center space-y-1 h-auto py-3 transition-all duration-200 w-[20%] ${
+              className={`flex flex-col items-center justify-center h-16 w-16 transition-all duration-200 ${
                 activeTab === "meet" 
                   ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg scale-105" 
                   : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
               }`}
             >
-              <Heart className="h-6 w-6" />
-              <span className="text-xs font-bold">Meet</span>
+              <Heart className="h-8 w-8" />
             </Button>
             
             <Button
               variant={activeTab === "chats" ? "default" : "ghost"}
               size="sm"
               onClick={() => setActiveTab("chats")}
-              className={`flex flex-col items-center space-y-1 h-auto py-3 transition-all duration-200 w-[20%] ${
+              className={`flex flex-col items-center justify-center h-16 w-16 transition-all duration-200 ${
                 activeTab === "chats" 
                   ? "bg-slate-900 text-white shadow-lg scale-105" 
                   : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
               }`}
             >
-              <MessageSquare className="h-5 w-5" />
-              <span className="text-xs font-bold">Chats</span>
+              <MessageSquare className="h-8 w-8" />
             </Button>
             
             <Button
               variant={activeTab === "profile" ? "default" : "ghost"}
               size="sm"
               onClick={() => setActiveTab("profile")}
-              className={`flex flex-col items-center space-y-1 h-auto py-3 transition-all duration-200 w-[20%] ${
+              className={`flex flex-col items-center justify-center h-16 w-16 transition-all duration-200 ${
                 activeTab === "profile" 
                   ? "bg-slate-900 text-white shadow-lg scale-105" 
                   : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
               }`}
             >
-              <User className="h-5 w-5" />
-              <span className="text-xs font-bold">Profile</span>
+              <User className="h-8 w-8" />
             </Button>
           </div>
         </div>

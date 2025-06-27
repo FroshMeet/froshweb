@@ -13,7 +13,7 @@ const DiscoverGrid = ({ profiles, isGuest = false, onGuestAction }: { profiles: 
   const [messageTarget, setMessageTarget] = useState(null);
 
   const getUnsplashUrl = (photoId) => {
-    return `https://images.unsplash.com/${photoId}?w=300&h=300&fit=crop&crop=face`;
+    return `https://images.unsplash.com/${photoId}?w=400&h=400&fit=crop&crop=face`;
   };
 
   const getSchoolColors = (college) => {
@@ -51,12 +51,7 @@ const DiscoverGrid = ({ profiles, isGuest = false, onGuestAction }: { profiles: 
 
   return (
     <div className="max-w-6xl mx-auto">
-      <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-slate-800 mb-3">Discover Students</h2>
-        <p className="text-slate-600 text-lg">Browse profiles and connect with fellow students</p>
-      </div>
-
-      <div className="grid grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8">
         {profiles.map((profile) => (
           <Card 
             key={profile.id}
