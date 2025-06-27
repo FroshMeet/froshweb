@@ -10,14 +10,12 @@ import ChatsTabContent from "@/components/tabs/ChatsTabContent";
 import ProfileTabContent from "@/components/tabs/ProfileTabContent";
 import GuestProfile from "@/components/GuestProfile";
 import GuestMessageDialog from "@/components/GuestMessageDialog";
-
 const Index = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [isGuest, setIsGuest] = useState(false);
   const [guestSchool, setGuestSchool] = useState("");
   const [activeTab, setActiveTab] = useState("meet");
   const [showGuestDialog, setShowGuestDialog] = useState(false);
-
   const mockUser = {
     id: 1,
     name: "Sarah Chen",
@@ -40,51 +38,46 @@ const Index = () => {
     isInMeet: false,
     isInDiscover: false
   };
-
-  const mockProfiles = [
-    {
-      id: 2,
-      name: "Alex Rivera",
-      age: 18,
-      college: "UCLA",
-      classOf: "2029",
-      major: "Business",
-      dorm: "North Campus",
-      bio: "Entrepreneur at heart, love meeting new people and exploring LA!",
-      interests: ["Business", "Networking", "Basketball", "Travel"],
-      photos: ["photo-1581091226825-a6a2a5aee158"],
-      lookingFor: ["Friends", "Networking"],
-      location: "Los Angeles, CA",
-      instagram: "@alex_rivera",
-      snapchat: "@alex_r2029",
-      phoneNumber: "(555) 234-5678",
-      instagramPublic: true,
-      snapchatPublic: true,
-      phonePublic: false
-    },
-    {
-      id: 3,
-      name: "Maya Patel",
-      age: 18,
-      college: "UCLA",
-      classOf: "2029",
-      major: "Pre-Med",
-      dorm: "South Campus",
-      bio: "Future doctor, current coffee addict ☕ Looking for study partners!",
-      interests: ["Medicine", "Yoga", "Reading", "Volunteering"],
-      photos: ["photo-1581092795360-fd1ca04f0952"],
-      lookingFor: ["Study Buddy", "Friends", "Roommate"],
-      location: "Los Angeles, CA",
-      instagram: "@maya_patel_md",
-      snapchat: "",
-      phoneNumber: "(555) 345-6789",
-      instagramPublic: false,
-      snapchatPublic: false,
-      phonePublic: false
-    }
-  ];
-
-  const getSchoolLogo = (college) => {
+  const mockProfiles = [{
+    id: 2,
+    name: "Alex Rivera",
+    age: 18,
+    college: "UCLA",
+    classOf: "2029",
+    major: "Business",
+    dorm: "North Campus",
+    bio: "Entrepreneur at heart, love meeting new people and exploring LA!",
+    interests: ["Business", "Networking", "Basketball", "Travel"],
+    photos: ["photo-1581091226825-a6a2a5aee158"],
+    lookingFor: ["Friends", "Networking"],
+    location: "Los Angeles, CA",
+    instagram: "@alex_rivera",
+    snapchat: "@alex_r2029",
+    phoneNumber: "(555) 234-5678",
+    instagramPublic: true,
+    snapchatPublic: true,
+    phonePublic: false
+  }, {
+    id: 3,
+    name: "Maya Patel",
+    age: 18,
+    college: "UCLA",
+    classOf: "2029",
+    major: "Pre-Med",
+    dorm: "South Campus",
+    bio: "Future doctor, current coffee addict ☕ Looking for study partners!",
+    interests: ["Medicine", "Yoga", "Reading", "Volunteering"],
+    photos: ["photo-1581092795360-fd1ca04f0952"],
+    lookingFor: ["Study Buddy", "Friends", "Roommate"],
+    location: "Los Angeles, CA",
+    instagram: "@maya_patel_md",
+    snapchat: "",
+    phoneNumber: "(555) 345-6789",
+    instagramPublic: false,
+    snapchatPublic: false,
+    phonePublic: false
+  }];
+  const getSchoolLogo = college => {
     const colors = {
       "Arizona State University": "from-yellow-400 to-red-600",
       "Boston University": "from-red-700 to-red-900",
@@ -139,77 +132,45 @@ const Index = () => {
     };
     return colors[college] || "from-blue-600 to-purple-600";
   };
-
-  const handleGuestContinue = (selectedSchool) => {
+  const handleGuestContinue = selectedSchool => {
     setIsGuest(true);
     setGuestSchool(selectedSchool);
     setCurrentUser(null);
   };
-
   const handleCreateAccount = () => {
     setIsGuest(false);
     setCurrentUser(null);
     setShowGuestDialog(false);
   };
-
   const handleGuestAction = () => {
     setShowGuestDialog(true);
   };
-
   if (!currentUser && !isGuest) {
-    return (
-      <WelcomeScreen 
-        onUserCreate={setCurrentUser} 
-        onGuestContinue={handleGuestContinue}
-      />
-    );
+    return <WelcomeScreen onUserCreate={setCurrentUser} onGuestContinue={handleGuestContinue} />;
   }
-
-  const displayUser = currentUser || { ...mockUser, college: guestSchool || "Arizona State University" };
-
+  const displayUser = currentUser || {
+    ...mockUser,
+    college: guestSchool || "Arizona State University"
+  };
   const renderContent = () => {
     switch (activeTab) {
       case "meet":
-        return (
-          <MeetTabContent 
-            profiles={mockProfiles} 
-            isGuest={isGuest}
-            onGuestAction={handleGuestAction}
-          />
-        );
+        return <MeetTabContent profiles={mockProfiles} isGuest={isGuest} onGuestAction={handleGuestAction} />;
       case "discover":
-        return (
-          <DiscoverTabContent 
-            profiles={mockProfiles} 
-            isGuest={isGuest}
-            onGuestAction={handleGuestAction}
-            currentUser={currentUser}
-            onUpdateUser={setCurrentUser}
-          />
-        );
+        return <DiscoverTabContent profiles={mockProfiles} isGuest={isGuest} onGuestAction={handleGuestAction} currentUser={currentUser} onUpdateUser={setCurrentUser} />;
       case "community":
         return <CommunityTabContent />;
       case "chats":
-        return isGuest ? (
-          <div className="max-w-lg mx-auto pb-32 text-center">
+        return isGuest ? <div className="max-w-lg mx-auto pb-32 text-center">
             <p className="text-slate-600 mt-8 text-lg">Create an account to view your chats</p>
-          </div>
-        ) : (
-          <ChatsTabContent />
-        );
+          </div> : <ChatsTabContent />;
       case "profile":
-        return isGuest ? (
-          <GuestProfile onCreateAccount={handleCreateAccount} />
-        ) : (
-          <ProfileTabContent currentUser={displayUser} onUpdateUser={setCurrentUser} />
-        );
+        return isGuest ? <GuestProfile onCreateAccount={handleCreateAccount} /> : <ProfileTabContent currentUser={displayUser} onUpdateUser={setCurrentUser} />;
       default:
         return null;
     }
   };
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
+  return <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
       {/* Header */}
       <header className="bg-white/95 backdrop-blur-xl border-b border-slate-200/50 sticky top-0 z-40 shadow-lg">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -243,95 +204,39 @@ const Index = () => {
       <nav className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-xl border-t border-slate-200/50 shadow-2xl z-50">
         <div className="max-w-md mx-auto px-6 py-4">
           {/* Tooltip for Meet */}
-          {activeTab !== "meet" && (
-            <div 
-              className="absolute -top-16 left-1/2 transform -translate-x-1/2 bg-slate-900 text-white px-4 py-2 rounded-lg shadow-lg cursor-pointer"
-              onClick={() => setActiveTab("meet")}
-            >
+          {activeTab !== "meet" && <div className="absolute -top-16 left-1/2 transform -translate-x-1/2 bg-slate-900 text-white px-4 py-2 rounded-lg shadow-lg cursor-pointer" onClick={() => setActiveTab("meet")}>
               <div className="flex items-center space-x-2">
                 <ArrowDown className="h-4 w-4" />
                 <span className="text-sm font-bold">Tap to meet students from your school!</span>
               </div>
               <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-slate-900"></div>
-            </div>
-          )}
+            </div>}
           
           <div className="flex justify-between items-center">
-            <Button
-              variant={activeTab === "discover" ? "default" : "ghost"}
-              size="sm"
-              onClick={() => setActiveTab("discover")}
-              className={`flex flex-col items-center justify-center h-16 w-16 transition-all duration-200 ${
-                activeTab === "discover" 
-                  ? "bg-slate-900 text-white shadow-lg scale-105" 
-                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
-              }`}
-            >
+            <Button variant={activeTab === "discover" ? "default" : "ghost"} size="sm" onClick={() => setActiveTab("discover")} className={`flex flex-col items-center justify-center h-16 w-16 transition-all duration-200 ${activeTab === "discover" ? "bg-slate-900 text-white shadow-lg scale-105" : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"}`}>
               <Grid className="h-8 w-8" />
             </Button>
             
-            <Button
-              variant={activeTab === "community" ? "default" : "ghost"}
-              size="sm"
-              onClick={() => setActiveTab("community")}
-              className={`flex flex-col items-center justify-center h-16 w-16 transition-all duration-200 ${
-                activeTab === "community" 
-                  ? "bg-slate-900 text-white shadow-lg scale-105" 
-                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
-              }`}
-            >
+            <Button variant={activeTab === "community" ? "default" : "ghost"} size="sm" onClick={() => setActiveTab("community")} className={`flex flex-col items-center justify-center h-16 w-16 transition-all duration-200 ${activeTab === "community" ? "bg-slate-900 text-white shadow-lg scale-105" : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"}`}>
               <Newspaper className="h-8 w-8" />
             </Button>
             
-            <Button
-              variant={activeTab === "meet" ? "default" : "ghost"}
-              size="lg"
-              onClick={() => setActiveTab("meet")}
-              className={`flex flex-col items-center justify-center h-16 w-16 transition-all duration-200 ${
-                activeTab === "meet" 
-                  ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg scale-105" 
-                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
-              }`}
-            >
+            <Button variant={activeTab === "meet" ? "default" : "ghost"} size="lg" onClick={() => setActiveTab("meet")} className={`flex flex-col items-center justify-center h-16 w-16 transition-all duration-200 ${activeTab === "meet" ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg scale-105" : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"}`}>
               <Heart className="h-8 w-8" />
             </Button>
             
-            <Button
-              variant={activeTab === "chats" ? "default" : "ghost"}
-              size="sm"
-              onClick={() => setActiveTab("chats")}
-              className={`flex flex-col items-center justify-center h-16 w-16 transition-all duration-200 ${
-                activeTab === "chats" 
-                  ? "bg-slate-900 text-white shadow-lg scale-105" 
-                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
-              }`}
-            >
+            <Button variant={activeTab === "chats" ? "default" : "ghost"} size="sm" onClick={() => setActiveTab("chats")} className={`flex flex-col items-center justify-center h-16 w-16 transition-all duration-200 ${activeTab === "chats" ? "bg-slate-900 text-white shadow-lg scale-105" : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"}`}>
               <MessageSquare className="h-8 w-8" />
             </Button>
             
-            <Button
-              variant={activeTab === "profile" ? "default" : "ghost"}
-              size="sm"
-              onClick={() => setActiveTab("profile")}
-              className={`flex flex-col items-center justify-center h-16 w-16 transition-all duration-200 ${
-                activeTab === "profile" 
-                  ? "bg-slate-900 text-white shadow-lg scale-105" 
-                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
-              }`}
-            >
+            <Button variant={activeTab === "profile" ? "default" : "ghost"} size="sm" onClick={() => setActiveTab("profile")} className={`flex flex-col items-center justify-center h-16 w-16 transition-all duration-200 ${activeTab === "profile" ? "bg-slate-900 text-white shadow-lg scale-105" : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"}`}>
               <User className="h-8 w-8" />
             </Button>
           </div>
         </div>
       </nav>
 
-      <GuestMessageDialog 
-        isOpen={showGuestDialog}
-        onClose={() => setShowGuestDialog(false)}
-        onCreateAccount={handleCreateAccount}
-      />
-    </div>
-  );
+      <GuestMessageDialog isOpen={showGuestDialog} onClose={() => setShowGuestDialog(false)} onCreateAccount={handleCreateAccount} />
+    </div>;
 };
-
 export default Index;
