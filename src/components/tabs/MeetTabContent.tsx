@@ -34,9 +34,9 @@ const MeetTabContent = ({
   };
 
   return (
-    <div className="h-screen w-full overflow-hidden flex flex-col">
-      {/* Toggle Group - Fixed at top */}
-      <div className="flex-shrink-0 bg-white border-b border-slate-200/50 px-4 py-3">
+    <div className="h-screen w-full overflow-hidden flex flex-col" style={{ height: '100vh', boxSizing: 'border-box' }}>
+      {/* Toggle Group - Mobile only */}
+      <div className="md:hidden flex-shrink-0 bg-white px-4 py-2">
         <ToggleGroup 
           type="single" 
           value={meetMode} 
@@ -45,14 +45,14 @@ const MeetTabContent = ({
         >
           <ToggleGroupItem 
             value="general" 
-            className="flex items-center space-x-2 px-6 py-2 data-[state=on]:bg-slate-900 data-[state=on]:text-white"
+            className="flex items-center space-x-2 px-4 py-1 text-sm data-[state=on]:bg-slate-900 data-[state=on]:text-white"
           >
             <Heart className="h-4 w-4" />
             <span>General</span>
           </ToggleGroupItem>
           <ToggleGroupItem 
             value="roommate" 
-            className="flex items-center space-x-2 px-6 py-2 data-[state=on]:bg-slate-900 data-[state=on]:text-white"
+            className="flex items-center space-x-2 px-4 py-1 text-sm data-[state=on]:bg-slate-900 data-[state=on]:text-white"
           >
             <Users className="h-4 w-4" />
             <span>Roommates</span>
@@ -60,20 +60,22 @@ const MeetTabContent = ({
         </ToggleGroup>
 
         {isGuest && (
-          <p className="text-xs text-amber-600 bg-amber-50 px-3 py-2 rounded-lg mt-2 text-center">
+          <p className="text-xs text-amber-600 bg-amber-50 px-2 py-1 rounded-lg mt-1 text-center">
             Browsing as guest - create an account to message people
           </p>
         )}
       </div>
 
-      {/* Profile Content - Flexible height */}
-      <div className="flex-1 min-h-0 bg-white">
+      {/* Profile Content - Full remaining height */}
+      <div className="flex-1 min-h-0 bg-white overflow-hidden">
         <SwipeCards 
           profiles={filteredProfiles} 
           onShowIcebreakers={() => {}} 
           onSwipeAction={handleSwipeAction} 
           isGuest={isGuest} 
-          onGuestAction={onGuestAction} 
+          onGuestAction={onGuestAction}
+          meetMode={meetMode}
+          setMeetMode={setMeetMode}
         />
       </div>
     </div>
