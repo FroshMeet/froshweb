@@ -1,8 +1,8 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users } from "lucide-react";
+import { Users, Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
 import OnboardingStep1 from "./onboarding/OnboardingStep1";
 import OnboardingStep2 from "./onboarding/OnboardingStep2";
 import OnboardingStep3 from "./onboarding/OnboardingStep3";
@@ -15,6 +15,7 @@ const WelcomeScreen = ({ onUserCreate, onGuestContinue }) => {
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [showGuestSchoolSelection, setShowGuestSchoolSelection] = useState(false);
   const [selectedSchool, setSelectedSchool] = useState("");
+  const [guestSchoolSearch, setGuestSchoolSearch] = useState("");
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     name: "",
@@ -145,6 +146,10 @@ const WelcomeScreen = ({ onUserCreate, onGuestContinue }) => {
     }
   };
 
+  const filteredCollegesForGuest = colleges.filter(college =>
+    college.toLowerCase().includes(guestSchoolSearch.toLowerCase())
+  );
+
   const handleGuestSchoolSelect = () => {
     if (selectedSchool) {
       onGuestContinue(selectedSchool);
@@ -168,6 +173,16 @@ const WelcomeScreen = ({ onUserCreate, onGuestContinue }) => {
           </CardHeader>
 
           <CardContent className="space-y-4">
+            <div className="relative">
+              <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+              <Input
+                placeholder="Search schools..."
+                value={guestSchoolSearch}
+                onChange={(e) => setGuestSchoolSearch(e.target.value)}
+                className="pl-10"
+              />
+            </div>
+            
             <div className="space-y-2">
               <Select onValueChange={setSelectedSchool}>
                 <SelectTrigger>
@@ -175,7 +190,7 @@ const WelcomeScreen = ({ onUserCreate, onGuestContinue }) => {
                 </SelectTrigger>
                 <SelectContent className="max-h-[300px]">
                   <ScrollArea className="h-[300px]">
-                    {colleges.map((college) => (
+                    {filteredCollegesForGuest.map((college) => (
                       <SelectItem key={college} value={college}>
                         {college}
                       </SelectItem>

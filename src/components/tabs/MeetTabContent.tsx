@@ -30,53 +30,55 @@ const MeetTabContent = ({ profiles, isGuest = false, onGuestAction }: MeetTabCon
   };
 
   return (
-    <div className="h-full flex flex-col">
-      <div className="flex-shrink-0 text-center py-4 px-4">
-        <h2 className="text-2xl font-bold text-slate-800 mb-4">Meet New People</h2>
-        
-        <ToggleGroup 
-          type="single" 
-          value={meetMode} 
-          onValueChange={(value) => value && setMeetMode(value)}
-          className="mb-4"
-        >
-          <ToggleGroupItem 
-            value="general" 
-            className="flex items-center space-x-2 px-6 py-2 data-[state=on]:bg-slate-900 data-[state=on]:text-white"
+    <div className="fixed inset-0 top-[73px] bottom-[97px] overflow-hidden">
+      <div className="h-full flex flex-col">
+        <div className="flex-shrink-0 text-center py-4 px-4 bg-white border-b border-slate-200/50">
+          <h2 className="text-2xl font-bold text-slate-800 mb-4">Meet New People</h2>
+          
+          <ToggleGroup 
+            type="single" 
+            value={meetMode} 
+            onValueChange={(value) => value && setMeetMode(value)}
+            className="mb-4"
           >
-            <Heart className="h-4 w-4" />
-            <span>General</span>
-          </ToggleGroupItem>
-          <ToggleGroupItem 
-            value="roommate" 
-            className="flex items-center space-x-2 px-6 py-2 data-[state=on]:bg-slate-900 data-[state=on]:text-white"
-          >
-            <Users className="h-4 w-4" />
-            <span>Roommates</span>
-          </ToggleGroupItem>
-        </ToggleGroup>
+            <ToggleGroupItem 
+              value="general" 
+              className="flex items-center space-x-2 px-6 py-2 data-[state=on]:bg-slate-900 data-[state=on]:text-white"
+            >
+              <Heart className="h-4 w-4" />
+              <span>General</span>
+            </ToggleGroupItem>
+            <ToggleGroupItem 
+              value="roommate" 
+              className="flex items-center space-x-2 px-6 py-2 data-[state=on]:bg-slate-900 data-[state=on]:text-white"
+            >
+              <Users className="h-4 w-4" />
+              <span>Roommates</span>
+            </ToggleGroupItem>
+          </ToggleGroup>
 
-        <p className="text-slate-600 mb-2">
-          {meetMode === "general" 
-            ? "Swipe to discover new friends and connections" 
-            : "Find your perfect roommate match"}
-        </p>
-        
-        {isGuest && (
-          <p className="text-xs text-amber-600 bg-amber-50 px-3 py-2 rounded-lg">
-            Browsing as guest - create an account to message people
+          <p className="text-slate-600 mb-2">
+            {meetMode === "general" 
+              ? "Swipe to discover new friends and connections" 
+              : "Find your perfect roommate match"}
           </p>
-        )}
-      </div>
+          
+          {isGuest && (
+            <p className="text-xs text-amber-600 bg-amber-50 px-3 py-2 rounded-lg">
+              Browsing as guest - create an account to message people
+            </p>
+          )}
+        </div>
 
-      <div className="flex-1 min-h-0">
-        <SwipeCards 
-          profiles={filteredProfiles} 
-          onShowIcebreakers={() => {}}
-          onSwipeAction={handleSwipeAction}
-          isGuest={isGuest}
-          onGuestAction={onGuestAction}
-        />
+        <div className="flex-1 min-h-0 bg-white">
+          <SwipeCards 
+            profiles={filteredProfiles} 
+            onShowIcebreakers={() => {}}
+            onSwipeAction={handleSwipeAction}
+            isGuest={isGuest}
+            onGuestAction={onGuestAction}
+          />
+        </div>
       </div>
     </div>
   );

@@ -1,8 +1,10 @@
 
+import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Search } from "lucide-react";
 
 interface OnboardingStep1Props {
   formData: any;
@@ -11,6 +13,8 @@ interface OnboardingStep1Props {
 }
 
 const OnboardingStep1 = ({ formData, setFormData, colleges }: OnboardingStep1Props) => {
+  const [collegeSearch, setCollegeSearch] = useState("");
+
   const formatPhoneNumber = (value: string) => {
     const phoneNumber = value.replace(/\D/g, '');
     
@@ -27,6 +31,10 @@ const OnboardingStep1 = ({ formData, setFormData, colleges }: OnboardingStep1Pro
     const formatted = formatPhoneNumber(e.target.value);
     setFormData(prev => ({ ...prev, phoneNumber: formatted }));
   };
+
+  const filteredColleges = colleges.filter(college =>
+    college.toLowerCase().includes(collegeSearch.toLowerCase())
+  );
 
   return (
     <>
@@ -53,13 +61,22 @@ const OnboardingStep1 = ({ formData, setFormData, colleges }: OnboardingStep1Pro
       </div>
       <div className="space-y-2">
         <Label htmlFor="college">College/University</Label>
+        <div className="relative mb-2">
+          <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+          <Input
+            placeholder="Search colleges..."
+            value={collegeSearch}
+            onChange={(e) => setCollegeSearch(e.target.value)}
+            className="pl-10"
+          />
+        </div>
         <Select onValueChange={(value) => setFormData(prev => ({ ...prev, college: value }))}>
           <SelectTrigger>
             <SelectValue placeholder="Select your college" />
           </SelectTrigger>
           <SelectContent className="max-h-[300px]">
             <ScrollArea className="h-[300px]">
-              {colleges.map((college) => (
+              {filteredColleges.map((college) => (
                 <SelectItem key={college} value={college}>
                   {college}
                 </SelectItem>
