@@ -173,23 +173,24 @@ const WelcomeScreen = ({ onUserCreate, onGuestContinue }) => {
           </CardHeader>
 
           <CardContent className="space-y-4">
-            <div className="relative">
-              <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-              <Input
-                placeholder="Search schools..."
-                value={guestSchoolSearch}
-                onChange={(e) => setGuestSchoolSearch(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-            
             <div className="space-y-2">
               <Select onValueChange={setSelectedSchool}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select your school" />
                 </SelectTrigger>
-                <SelectContent className="max-h-[300px]">
-                  <ScrollArea className="h-[300px]">
+                <SelectContent className="max-h-[300px] bg-white z-50">
+                  <div className="sticky top-0 bg-white p-2 border-b">
+                    <div className="relative">
+                      <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                      <Input
+                        placeholder="Search schools..."
+                        value={guestSchoolSearch}
+                        onChange={(e) => setGuestSchoolSearch(e.target.value)}
+                        className="pl-10"
+                      />
+                    </div>
+                  </div>
+                  <ScrollArea className="h-[250px]">
                     {filteredCollegesForGuest.map((college) => (
                       <SelectItem key={college} value={college}>
                         {college}

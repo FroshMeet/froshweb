@@ -61,21 +61,23 @@ const OnboardingStep1 = ({ formData, setFormData, colleges }: OnboardingStep1Pro
       </div>
       <div className="space-y-2">
         <Label htmlFor="college">College/University</Label>
-        <div className="relative mb-2">
-          <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-          <Input
-            placeholder="Search colleges..."
-            value={collegeSearch}
-            onChange={(e) => setCollegeSearch(e.target.value)}
-            className="pl-10"
-          />
-        </div>
         <Select onValueChange={(value) => setFormData(prev => ({ ...prev, college: value }))}>
           <SelectTrigger>
             <SelectValue placeholder="Select your college" />
           </SelectTrigger>
-          <SelectContent className="max-h-[300px]">
-            <ScrollArea className="h-[300px]">
+          <SelectContent className="max-h-[300px] bg-white z-50">
+            <div className="sticky top-0 bg-white p-2 border-b">
+              <div className="relative">
+                <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                <Input
+                  placeholder="Search colleges..."
+                  value={collegeSearch}
+                  onChange={(e) => setCollegeSearch(e.target.value)}
+                  className="pl-10"
+                />
+              </div>
+            </div>
+            <ScrollArea className="h-[250px]">
               {filteredColleges.map((college) => (
                 <SelectItem key={college} value={college}>
                   {college}

@@ -109,19 +109,51 @@ const SwipeCards = ({
   const photos = currentProfile.photos || ["photo-1649972904349-6e44c42644a7"];
   const currentPhoto = photos[currentPhotoIndex];
   const onlineStatus = getOnlineStatus();
+  const isLastPhoto = currentPhotoIndex === photos.length - 1;
 
   return (
-    <div className="h-full w-full overflow-hidden" style={{ height: '100%', boxSizing: 'border-box' }}>
+    <div className="h-full w-full" style={{ height: '100vh', overflow: 'hidden', boxSizing: 'border-box' }}>
       {/* Mobile Layout */}
-      <div className="md:hidden h-full flex flex-col overflow-hidden">
+      <div className="md:hidden h-full flex flex-col" style={{ height: '100vh', overflow: 'hidden' }}>
+        {/* Toggle Group */}
+        <div className="flex-shrink-0 bg-white px-4 py-1">
+          <ToggleGroup 
+            type="single" 
+            value={meetMode} 
+            onValueChange={value => value && setMeetMode && setMeetMode(value)} 
+            className="w-full justify-center"
+          >
+            <ToggleGroupItem 
+              value="general" 
+              className="flex items-center space-x-1 px-3 py-1 text-xs data-[state=on]:bg-slate-900 data-[state=on]:text-white"
+            >
+              <Heart className="h-3 w-3" />
+              <span>General</span>
+            </ToggleGroupItem>
+            <ToggleGroupItem 
+              value="roommate" 
+              className="flex items-center space-x-1 px-3 py-1 text-xs data-[state=on]:bg-slate-900 data-[state=on]:text-white"
+            >
+              <Users className="h-3 w-3" />
+              <span>Roommates</span>
+            </ToggleGroupItem>
+          </ToggleGroup>
+
+          {isGuest && (
+            <p className="text-xs text-amber-600 bg-amber-50 px-2 py-1 rounded-lg text-center">
+              Browsing as guest - create an account to message people
+            </p>
+          )}
+        </div>
+
         {/* Photo Section */}
-        <div className="flex-1 relative min-h-0 overflow-hidden">
+        <div className="flex-1 relative" style={{ minHeight: 0 }}>
           <img
             src={getUnsplashUrl(currentPhoto)}
             alt={currentProfile.name || "Profile"}
             className="w-full h-full object-cover cursor-pointer"
             onClick={handlePhotoTap}
-            style={{ objectFit: 'cover' }}
+            style={{ objectFit: 'cover', height: '100%' }}
           />
           
           {/* Photo indicators */}
@@ -130,7 +162,7 @@ const SwipeCards = ({
               {photos.map((_, index) => (
                 <div
                   key={index}
-                  className={`w-1.5 h-1.5 rounded-full ${
+                  className={`w-1 h-1 rounded-full ${
                     index === currentPhotoIndex ? 'bg-white' : 'bg-white/50'
                   }`}
                 />
@@ -138,120 +170,74 @@ const SwipeCards = ({
             </div>
           )}
 
+          {/* Profile info overlay - only on last photo */}
+          {isLastPhoto && (
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3 text-white">
+              <div className="space-y-1">
+                <h3 className="text-sm font-bold">{currentProfile.name}, {currentProfile.age}</h3>
+                <div className="flex items-center text-xs space-x-2">
+                  <div className="flex items-center space-x-1">
+                    <BookOpen className="h-3 w-3" />
+                    <span>{currentProfile.major}</span>
+                  </div>
+                  <div className="flex items-center space-x-1">
+                    <MapPin className="h-3 w-3" />
+                    <span>{currentProfile.location}</span>
+                  </div>
+                </div>
+                <p className="text-xs line-clamp-2">{currentProfile.bio}</p>
+                <div className="flex flex-wrap gap-1">
+                  {currentProfile.interests?.slice(0, 3).map((interest: string) => (
+                    <Badge key={interest} variant="outline" className="text-xs px-1 py-0 h-auto bg-white/20 text-white border-white/30">
+                      {interest}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Class Year and Online Status */}
           <div className="absolute top-2 right-2 flex flex-col gap-1 z-10">
-            <Badge className="bg-white/90 text-black text-xs px-2 py-0.5">
+            <Badge className="bg-white/90 text-black text-xs px-1.5 py-0.5">
               Class of {currentProfile.classOf || "2029"}
             </Badge>
-            <div className="flex items-center gap-1 bg-white/90 px-2 py-0.5 rounded-full">
-              <div className={`w-1.5 h-1.5 rounded-full ${onlineStatus.color}`} />
+            <div className="flex items-center gap-1 bg-white/90 px-1.5 py-0.5 rounded-full">
+              <div className={`w-1 h-1 rounded-full ${onlineStatus.color}`} />
               <span className="text-xs text-black">{onlineStatus.text}</span>
             </div>
           </div>
         </div>
 
-        {/* Profile Info - Compact */}
-        <div className="flex-shrink-0 bg-white px-3 py-2 space-y-1 overflow-hidden">
-          <div>
-            <h3 className="text-base font-bold truncate">{currentProfile.name || "Unknown"}, {currentProfile.age || "18"}</h3>
-            <div className="flex items-center text-muted-foreground text-xs space-x-3">
-              <div className="flex items-center space-x-1">
-                <BookOpen className="h-3 w-3" />
-                <span className="truncate">{currentProfile.major || "Undeclared"}</span>
-              </div>
-              <div className="flex items-center space-x-1">
-                <MapPin className="h-3 w-3" />
-                <span className="truncate">{currentProfile.location || "Unknown"}</span>
-              </div>
-            </div>
-          </div>
-
-          <p className="text-xs text-muted-foreground line-clamp-2">
-            {currentProfile.bio || "No bio available"}
-          </p>
-
-          {/* Interests and Looking For - Compact */}
-          <div className="space-y-1">
-            {currentProfile.interests && currentProfile.interests.length > 0 && (
-              <div className="flex flex-wrap gap-1">
-                {currentProfile.interests.slice(0, 4).map((interest: string) => (
-                  <Badge key={interest} variant="outline" className="text-xs px-1.5 py-0.5 h-auto">
-                    {interest}
-                  </Badge>
-                ))}
-                {currentProfile.interests.length > 4 && (
-                  <Badge variant="outline" className="text-xs px-1.5 py-0.5 h-auto">
-                    +{currentProfile.interests.length - 4}
-                  </Badge>
-                )}
-              </div>
-            )}
-
-            {currentProfile.lookingFor && currentProfile.lookingFor.length > 0 && (
-              <div className="flex flex-wrap gap-1">
-                {currentProfile.lookingFor.map((item: string) => (
-                  <Badge key={item} className="text-xs bg-purple-100 text-purple-700 px-1.5 py-0.5 h-auto">
-                    {item}
-                  </Badge>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Social Media - Compact */}
-          {(currentProfile.instagramPublic || currentProfile.snapchatPublic || currentProfile.phonePublic) && (
-            <div className="flex flex-wrap gap-1">
-              {currentProfile.instagramPublic && currentProfile.instagram && (
-                <Badge variant="outline" className="flex items-center gap-1 text-xs px-1.5 py-0.5 h-auto">
-                  <Instagram className="h-2.5 w-2.5" />
-                  <span className="truncate max-w-16">{currentProfile.instagram}</span>
-                </Badge>
-              )}
-              {currentProfile.snapchatPublic && currentProfile.snapchat && (
-                <Badge variant="outline" className="flex items-center gap-1 text-xs px-1.5 py-0.5 h-auto">
-                  <MessageCircle className="h-2.5 w-2.5" />
-                  <span className="truncate max-w-16">{currentProfile.snapchat}</span>
-                </Badge>
-              )}
-              {currentProfile.phonePublic && currentProfile.phoneNumber && (
-                <Badge variant="outline" className="flex items-center gap-1 text-xs px-1.5 py-0.5 h-auto">
-                  <Phone className="h-2.5 w-2.5" />
-                  <span className="truncate max-w-20">{currentProfile.phoneNumber}</span>
-                </Badge>
-              )}
-            </div>
-          )}
-        </div>
-
-        {/* Action Buttons - Fixed at bottom */}
+        {/* Action Buttons */}
         <div className="flex-shrink-0 bg-white px-3 py-2 flex space-x-2">
           <Button 
             variant="outline" 
-            className="flex-1 hover:bg-red-50 hover:border-red-200 h-9 text-sm"
+            className="flex-1 hover:bg-red-50 hover:border-red-200 h-8 text-xs"
             onClick={() => handleSwipe('pass')}
           >
-            <X className="h-4 w-4 mr-1" />
+            <X className="h-3 w-3 mr-1" />
             Pass
           </Button>
           <Button 
-            className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 h-9 text-sm"
+            className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 h-8 text-xs"
             onClick={() => setShowIcebreakers(true)}
           >
-            <MessageSquare className="h-4 w-4 mr-1" />
+            <MessageSquare className="h-3 w-3 mr-1" />
             Message
           </Button>
           <Button 
-            className="flex-1 bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 h-9 text-sm"
+            className="flex-1 bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 h-8 text-xs"
             onClick={() => handleSwipe('like')}
           >
-            <Heart className="h-4 w-4 mr-1" />
+            <Heart className="h-3 w-3 mr-1" />
             Like
           </Button>
         </div>
       </div>
 
       {/* Desktop Layout */}
-      <div className="hidden md:flex h-full overflow-hidden">
+      <div className="hidden md:flex h-full" style={{ height: '100vh', overflow: 'hidden' }}>
         {/* Desktop Toggle - Top */}
         <div className="absolute top-4 left-1/2 -translate-x-1/2 z-20">
           {setMeetMode && (
@@ -280,13 +266,13 @@ const SwipeCards = ({
         </div>
 
         {/* Left side - Photo */}
-        <div className="flex-1 relative overflow-hidden">
+        <div className="flex-1 relative" style={{ minHeight: 0 }}>
           <img
             src={getUnsplashUrl(currentPhoto)}
             alt={currentProfile.name || "Profile"}
             className="w-full h-full object-cover cursor-pointer"
             onClick={handlePhotoTap}
-            style={{ objectFit: 'cover' }}
+            style={{ objectFit: 'cover', height: '100%' }}
           />
           
           {/* Photo indicators */}
@@ -315,108 +301,91 @@ const SwipeCards = ({
           </div>
         </div>
 
-        {/* Right side - Profile Info */}
-        <div className="w-80 bg-white flex flex-col h-full overflow-hidden">
-          <div className="flex-1 p-4 space-y-3 overflow-hidden">
-            <div>
-              <h3 className="text-xl font-bold">{currentProfile.name || "Unknown"}, {currentProfile.age || "18"}</h3>
-              <div className="flex items-center text-muted-foreground text-sm space-x-4 mt-1">
-                <div className="flex items-center space-x-1">
-                  <BookOpen className="h-4 w-4" />
-                  <span>{currentProfile.major || "Undeclared"}</span>
+        {/* Right side - Profile Info (only on last photo) */}
+        <div className="w-80 bg-white flex flex-col h-full" style={{ overflow: 'hidden' }}>
+          {isLastPhoto ? (
+            <>
+              <div className="flex-1 p-4 space-y-2" style={{ overflow: 'hidden' }}>
+                <div>
+                  <h3 className="text-lg font-bold">{currentProfile.name}, {currentProfile.age}</h3>
+                  <div className="flex items-center text-muted-foreground text-sm space-x-3">
+                    <div className="flex items-center space-x-1">
+                      <BookOpen className="h-4 w-4" />
+                      <span>{currentProfile.major}</span>
+                    </div>
+                    <div className="flex items-center space-x-1">
+                      <MapPin className="h-4 w-4" />
+                      <span>{currentProfile.location}</span>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex items-center space-x-1">
-                  <MapPin className="h-4 w-4" />
-                  <span>{currentProfile.location || "Unknown"}</span>
+
+                <div style={{ maxHeight: '4rem', overflow: 'hidden' }}>
+                  <p className="text-sm text-muted-foreground">
+                    {currentProfile.bio}
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <div>
+                    <p className="text-xs font-medium text-muted-foreground mb-1">INTERESTS</p>
+                    <div className="flex flex-wrap gap-1" style={{ maxHeight: '3rem', overflow: 'hidden' }}>
+                      {currentProfile.interests?.map((interest: string) => (
+                        <Badge key={interest} variant="outline" className="text-xs px-2 py-0.5">
+                          {interest}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <p className="text-xs font-medium text-muted-foreground mb-1">LOOKING FOR</p>
+                    <div className="flex flex-wrap gap-1">
+                      {currentProfile.lookingFor?.map((item: string) => (
+                        <Badge key={item} className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5">
+                          {item}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="max-h-20 overflow-hidden">
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                {currentProfile.bio || "No bio available"}
+              {/* Action Buttons */}
+              <div className="flex-shrink-0 p-4 space-y-2">
+                <Button 
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 h-10"
+                  onClick={() => setShowIcebreakers(true)}
+                >
+                  <MessageSquare className="h-4 w-4 mr-2" />
+                  Message
+                </Button>
+                <div className="flex space-x-2">
+                  <Button 
+                    variant="outline" 
+                    className="flex-1 hover:bg-red-50 hover:border-red-200 h-10"
+                    onClick={() => handleSwipe('pass')}
+                  >
+                    <X className="h-4 w-4 mr-1" />
+                    Pass
+                  </Button>
+                  <Button 
+                    className="flex-1 bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 h-10"
+                    onClick={() => handleSwipe('like')}
+                  >
+                    <Heart className="h-4 w-4 mr-1" />
+                    Like
+                  </Button>
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="flex-1 flex items-center justify-center">
+              <p className="text-muted-foreground text-center px-4">
+                Swipe through photos to see profile details
               </p>
             </div>
-
-            {/* Public Social Media */}
-            {(currentProfile.instagramPublic || currentProfile.snapchatPublic || currentProfile.phonePublic) && (
-              <div className="space-y-2">
-                <p className="text-xs font-medium text-muted-foreground">CONNECT</p>
-                <div className="flex flex-wrap gap-2">
-                  {currentProfile.instagramPublic && currentProfile.instagram && (
-                    <Badge variant="outline" className="flex items-center gap-1 text-xs px-2 py-1">
-                      <Instagram className="h-3 w-3" />
-                      {currentProfile.instagram}
-                    </Badge>
-                  )}
-                  {currentProfile.snapchatPublic && currentProfile.snapchat && (
-                    <Badge variant="outline" className="flex items-center gap-1 text-xs px-2 py-1">
-                      <MessageCircle className="h-3 w-3" />
-                      {currentProfile.snapchat}
-                    </Badge>
-                  )}
-                  {currentProfile.phonePublic && currentProfile.phoneNumber && (
-                    <Badge variant="outline" className="flex items-center gap-1 text-xs px-2 py-1">
-                      <Phone className="h-3 w-3" />
-                      {currentProfile.phoneNumber}
-                    </Badge>
-                  )}
-                </div>
-              </div>
-            )}
-
-            <div className="space-y-3">
-              <div>
-                <p className="text-xs font-medium text-muted-foreground mb-2">INTERESTS</p>
-                <div className="flex flex-wrap gap-1 max-h-16 overflow-hidden">
-                  {currentProfile.interests?.map((interest: string) => (
-                    <Badge key={interest} variant="outline" className="text-xs px-2 py-0.5">
-                      {interest}
-                    </Badge>
-                  )) || <span className="text-xs text-muted-foreground">No interests listed</span>}
-                </div>
-              </div>
-
-              <div>
-                <p className="text-xs font-medium text-muted-foreground mb-2">LOOKING FOR</p>
-                <div className="flex flex-wrap gap-1">
-                  {currentProfile.lookingFor?.map((item: string) => (
-                    <Badge key={item} className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5">
-                      {item}
-                    </Badge>
-                  )) || <span className="text-xs text-muted-foreground">Not specified</span>}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Action Buttons - Fixed at bottom */}
-          <div className="flex-shrink-0 p-4 space-y-3">
-            <Button 
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 h-10"
-              onClick={() => setShowIcebreakers(true)}
-            >
-              <MessageSquare className="h-4 w-4 mr-2" />
-              Message
-            </Button>
-            <div className="flex space-x-3">
-              <Button 
-                variant="outline" 
-                className="flex-1 hover:bg-red-50 hover:border-red-200 h-10"
-                onClick={() => handleSwipe('pass')}
-              >
-                <X className="h-4 w-4 mr-1" />
-                Pass
-              </Button>
-              <Button 
-                className="flex-1 bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 h-10"
-                onClick={() => handleSwipe('like')}
-              >
-                <Heart className="h-4 w-4 mr-1" />
-                Like
-              </Button>
-            </div>
-          </div>
+          )}
         </div>
       </div>
 
