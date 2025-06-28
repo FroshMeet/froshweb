@@ -34,7 +34,7 @@ const MeetTabContent = ({
   };
 
   return (
-    <div className="h-screen w-full" style={{ height: '100vh', overflow: 'hidden', boxSizing: 'border-box' }}>
+    <div className="h-screen w-full overflow-hidden" style={{ height: '100vh', maxHeight: '100vh' }}>
       <SwipeCards 
         profiles={filteredProfiles} 
         onShowIcebreakers={() => {}} 

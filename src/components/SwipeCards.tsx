@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { Heart, X, MessageSquare, MapPin, BookOpen, Instagram, MessageCircle, Phone, Users } from "lucide-react";
+import { Heart, X, MessageSquare, MapPin, BookOpen, Instagram, MessageCircle, Phone, Users, ChevronLeft, ChevronRight } from "lucide-react";
 import IcebreakerModal from "./IcebreakerModal";
 
 interface SwipeCardsProps {
@@ -112,11 +112,11 @@ const SwipeCards = ({
   const isLastPhoto = currentPhotoIndex === photos.length - 1;
 
   return (
-    <div className="h-full w-full" style={{ height: '100vh', overflow: 'hidden', boxSizing: 'border-box' }}>
+    <div className="h-screen w-full overflow-hidden" style={{ height: '100vh' }}>
       {/* Mobile Layout */}
-      <div className="md:hidden h-full flex flex-col" style={{ height: '100vh', overflow: 'hidden' }}>
-        {/* Toggle Group */}
-        <div className="flex-shrink-0 bg-white px-4 py-1">
+      <div className="md:hidden h-full flex flex-col overflow-hidden">
+        {/* Toggle Group - Fixed height */}
+        <div className="flex-shrink-0 bg-white px-4 py-2">
           <ToggleGroup 
             type="single" 
             value={meetMode} 
@@ -140,21 +140,39 @@ const SwipeCards = ({
           </ToggleGroup>
 
           {isGuest && (
-            <p className="text-xs text-amber-600 bg-amber-50 px-2 py-1 rounded-lg text-center">
+            <p className="text-xs text-amber-600 bg-amber-50 px-2 py-1 rounded-lg text-center mt-1">
               Browsing as guest - create an account to message people
             </p>
           )}
         </div>
 
-        {/* Photo Section */}
-        <div className="flex-1 relative" style={{ minHeight: 0 }}>
+        {/* Photo Section - Takes remaining space */}
+        <div className="flex-1 relative overflow-hidden">
           <img
             src={getUnsplashUrl(currentPhoto)}
             alt={currentProfile.name || "Profile"}
             className="w-full h-full object-cover cursor-pointer"
             onClick={handlePhotoTap}
-            style={{ objectFit: 'cover', height: '100%' }}
+            style={{ objectFit: 'cover' }}
           />
+          
+          {/* Photo navigation arrows */}
+          {photos.length > 1 && (
+            <>
+              <button
+                onClick={prevPhoto}
+                className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors z-10"
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </button>
+              <button
+                onClick={nextPhoto}
+                className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors z-10"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </button>
+            </>
+          )}
           
           {/* Photo indicators */}
           {photos.length > 1 && (
@@ -170,9 +188,9 @@ const SwipeCards = ({
             </div>
           )}
 
-          {/* Profile info overlay - only on last photo */}
+          {/* Profile info overlay - only on last photo for mobile */}
           {isLastPhoto && (
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3 text-white">
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-3 text-white overflow-hidden">
               <div className="space-y-1">
                 <h3 className="text-sm font-bold">{currentProfile.name}, {currentProfile.age}</h3>
                 <div className="flex items-center text-xs space-x-2">
@@ -209,7 +227,7 @@ const SwipeCards = ({
           </div>
         </div>
 
-        {/* Action Buttons */}
+        {/* Action Buttons - Fixed height */}
         <div className="flex-shrink-0 bg-white px-3 py-2 flex space-x-2">
           <Button 
             variant="outline" 
@@ -237,7 +255,7 @@ const SwipeCards = ({
       </div>
 
       {/* Desktop Layout */}
-      <div className="hidden md:flex h-full" style={{ height: '100vh', overflow: 'hidden' }}>
+      <div className="hidden md:flex h-full overflow-hidden">
         {/* Desktop Toggle - Top */}
         <div className="absolute top-4 left-1/2 -translate-x-1/2 z-20">
           {setMeetMode && (
@@ -266,14 +284,32 @@ const SwipeCards = ({
         </div>
 
         {/* Left side - Photo */}
-        <div className="flex-1 relative" style={{ minHeight: 0 }}>
+        <div className="flex-1 relative overflow-hidden">
           <img
             src={getUnsplashUrl(currentPhoto)}
             alt={currentProfile.name || "Profile"}
             className="w-full h-full object-cover cursor-pointer"
             onClick={handlePhotoTap}
-            style={{ objectFit: 'cover', height: '100%' }}
+            style={{ objectFit: 'cover' }}
           />
+          
+          {/* Photo navigation arrows */}
+          {photos.length > 1 && (
+            <>
+              <button
+                onClick={prevPhoto}
+                className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-black/70 transition-colors z-10"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </button>
+              <button
+                onClick={nextPhoto}
+                className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-black/70 transition-colors z-10"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </button>
+            </>
+          )}
           
           {/* Photo indicators */}
           {photos.length > 1 && (
@@ -301,91 +337,81 @@ const SwipeCards = ({
           </div>
         </div>
 
-        {/* Right side - Profile Info (only on last photo) */}
-        <div className="w-80 bg-white flex flex-col h-full" style={{ overflow: 'hidden' }}>
-          {isLastPhoto ? (
-            <>
-              <div className="flex-1 p-4 space-y-2" style={{ overflow: 'hidden' }}>
-                <div>
-                  <h3 className="text-lg font-bold">{currentProfile.name}, {currentProfile.age}</h3>
-                  <div className="flex items-center text-muted-foreground text-sm space-x-3">
-                    <div className="flex items-center space-x-1">
-                      <BookOpen className="h-4 w-4" />
-                      <span>{currentProfile.major}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <MapPin className="h-4 w-4" />
-                      <span>{currentProfile.location}</span>
-                    </div>
-                  </div>
+        {/* Right side - Profile Info (always visible on desktop) */}
+        <div className="w-80 bg-white flex flex-col h-full overflow-hidden">
+          <div className="flex-1 p-4 space-y-3 overflow-hidden">
+            <div>
+              <h3 className="text-lg font-bold">{currentProfile.name}, {currentProfile.age}</h3>
+              <div className="flex items-center text-muted-foreground text-sm space-x-3">
+                <div className="flex items-center space-x-1">
+                  <BookOpen className="h-4 w-4" />
+                  <span>{currentProfile.major}</span>
                 </div>
-
-                <div style={{ maxHeight: '4rem', overflow: 'hidden' }}>
-                  <p className="text-sm text-muted-foreground">
-                    {currentProfile.bio}
-                  </p>
-                </div>
-
-                <div className="space-y-2">
-                  <div>
-                    <p className="text-xs font-medium text-muted-foreground mb-1">INTERESTS</p>
-                    <div className="flex flex-wrap gap-1" style={{ maxHeight: '3rem', overflow: 'hidden' }}>
-                      {currentProfile.interests?.map((interest: string) => (
-                        <Badge key={interest} variant="outline" className="text-xs px-2 py-0.5">
-                          {interest}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <p className="text-xs font-medium text-muted-foreground mb-1">LOOKING FOR</p>
-                    <div className="flex flex-wrap gap-1">
-                      {currentProfile.lookingFor?.map((item: string) => (
-                        <Badge key={item} className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5">
-                          {item}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
+                <div className="flex items-center space-x-1">
+                  <MapPin className="h-4 w-4" />
+                  <span>{currentProfile.location}</span>
                 </div>
               </div>
+            </div>
 
-              {/* Action Buttons */}
-              <div className="flex-shrink-0 p-4 space-y-2">
-                <Button 
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 h-10"
-                  onClick={() => setShowIcebreakers(true)}
-                >
-                  <MessageSquare className="h-4 w-4 mr-2" />
-                  Message
-                </Button>
-                <div className="flex space-x-2">
-                  <Button 
-                    variant="outline" 
-                    className="flex-1 hover:bg-red-50 hover:border-red-200 h-10"
-                    onClick={() => handleSwipe('pass')}
-                  >
-                    <X className="h-4 w-4 mr-1" />
-                    Pass
-                  </Button>
-                  <Button 
-                    className="flex-1 bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 h-10"
-                    onClick={() => handleSwipe('like')}
-                  >
-                    <Heart className="h-4 w-4 mr-1" />
-                    Like
-                  </Button>
-                </div>
-              </div>
-            </>
-          ) : (
-            <div className="flex-1 flex items-center justify-center">
-              <p className="text-muted-foreground text-center px-4">
-                Swipe through photos to see profile details
+            <div className="overflow-hidden">
+              <p className="text-sm text-muted-foreground line-clamp-4">
+                {currentProfile.bio}
               </p>
             </div>
-          )}
+
+            <div className="space-y-3">
+              <div>
+                <p className="text-xs font-medium text-muted-foreground mb-2">INTERESTS</p>
+                <div className="flex flex-wrap gap-1 overflow-hidden" style={{ maxHeight: '4rem' }}>
+                  {currentProfile.interests?.map((interest: string) => (
+                    <Badge key={interest} variant="outline" className="text-xs px-2 py-0.5">
+                      {interest}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <p className="text-xs font-medium text-muted-foreground mb-2">LOOKING FOR</p>
+                <div className="flex flex-wrap gap-1">
+                  {currentProfile.lookingFor?.map((item: string) => (
+                    <Badge key={item} className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5">
+                      {item}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Action Buttons - Fixed at bottom */}
+          <div className="flex-shrink-0 p-4 space-y-2">
+            <Button 
+              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 h-10"
+              onClick={() => setShowIcebreakers(true)}
+            >
+              <MessageSquare className="h-4 w-4 mr-2" />
+              Message
+            </Button>
+            <div className="flex space-x-2">
+              <Button 
+                variant="outline" 
+                className="flex-1 hover:bg-red-50 hover:border-red-200 h-10"
+                onClick={() => handleSwipe('pass')}
+              >
+                <X className="h-4 w-4 mr-1" />
+                Pass
+              </Button>
+              <Button 
+                className="flex-1 bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 h-10"
+                onClick={() => handleSwipe('like')}
+              >
+                <Heart className="h-4 w-4 mr-1" />
+                Like
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
 
