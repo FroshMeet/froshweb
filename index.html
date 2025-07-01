@@ -2,18 +2,36 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Force title update immediately -->
     <script>
       document.title = "FroshMeet";
+      // Force favicon update
+      const links = document.querySelectorAll("link[rel*='icon']");
+      links.forEach(link => link.remove());
+      
+      const newFavicon = document.createElement('link');
+      newFavicon.rel = 'icon';
+      newFavicon.type = 'image/png';
+      newFavicon.href = 'https://cdn.loveable.dev/assets/frosh-meet/favicon.png?v=' + Date.now();
+      document.head.appendChild(newFavicon);
     </script>
-    <link rel="icon" href="https://cdn.loveable.dev/assets/frosh-meet/favicon.png?v=4" type="image/png">
-    <link rel="shortcut icon" href="https://cdn.loveable.dev/assets/frosh-meet/favicon.png?v=4" type="image/png">
-    <link rel="apple-touch-icon" href="https://cdn.loveable.dev/assets/frosh-meet/favicon.png?v=4">
+    
+    <!-- Multiple favicon declarations with timestamp -->
+    <link rel="icon" href="https://cdn.loveable.dev/assets/frosh-meet/favicon.png?v=20250701001" type="image/png">
+    <link rel="shortcut icon" href="https://cdn.loveable.dev/assets/frosh-meet/favicon.png?v=20250701001" type="image/png">
+    <link rel="apple-touch-icon" href="https://cdn.loveable.dev/assets/frosh-meet/favicon.png?v=20250701001">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://cdn.loveable.dev/assets/frosh-meet/favicon.png?v=20250701001">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://cdn.loveable.dev/assets/frosh-meet/favicon.png?v=20250701001">
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    
+    <!-- Aggressive cache control -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
+    <meta http-equiv="Last-Modified" content="0" />
+    
     <title>FroshMeet</title>
     <meta name="description" content="Connect with fellow freshmen and find your perfect roommate" />
     <meta name="author" content="FroshMeet" />
