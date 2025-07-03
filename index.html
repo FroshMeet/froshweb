@@ -8,6 +8,10 @@
       // Force favicon update with timestamp
       const links = document.querySelectorAll("link[rel*='icon']");
       links.forEach(link => link.remove());
+
+      <link rel="icon" href="/favicon.png" type="image/png" />
+
+      <title>FroshMeet</title>
       
       const timestamp = Date.now();
       const newFavicon = document.createElement('link');
