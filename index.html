@@ -12,35 +12,32 @@
       const newFavicon = document.createElement('link');
       newFavicon.rel = 'icon';
       newFavicon.type = 'image/png';
-      newFavicon.href = 'https://cdn.loveable.dev/assets/frosh-meet/favicon.png?cache=' + timestamp;
+      newFavicon.href = '/favicon.png?cache=' + timestamp; // ✅ LOCAL favicon
       document.head.appendChild(newFavicon);
-      
+
       // Force page refresh for cache bypass
       if (!sessionStorage.getItem('faviconUpdated')) {
         sessionStorage.setItem('faviconUpdated', 'true');
         setTimeout(() => window.location.reload(true), 100);
       }
     </script>
-    
-    <!-- Multiple favicon declarations with new timestamp -->
-    <link rel="icon" href="https://cdn.loveable.dev/assets/frosh-meet/favicon.png?cache=20250703001" type="image/png">
-    <link rel="shortcut icon" href="https://cdn.loveable.dev/assets/frosh-meet/favicon.png?cache=20250703001" type="image/png">
-    <link rel="apple-touch-icon" href="https://cdn.loveable.dev/assets/frosh-meet/favicon.png?cache=20250703001">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://cdn.loveable.dev/assets/frosh-meet/favicon.png?cache=20250703001">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://cdn.loveable.dev/assets/frosh-meet/favicon.png?cache=20250703001">
 
-    <!-- Local fallback favicon (if used) -->
-    <link rel="icon" href="/favicon.png" type="image/png">
+    <!-- ✅ These stay for compatibility but point to local favicon -->
+    <link rel="icon" href="/favicon.png?cache=20250703001" type="image/png">
+    <link rel="shortcut icon" href="/favicon.png?cache=20250703001" type="image/png">
+    <link rel="apple-touch-icon" href="/favicon.png?cache=20250703001">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png?cache=20250703001">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png?cache=20250703001">
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
+
     <!-- Aggressive cache control -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
     <meta http-equiv="Last-Modified" content="0" />
-    
+
     <title>FroshMeet</title>
     <meta name="description" content="Connect with fellow freshmen and find your perfect roommate" />
     <meta name="author" content="FroshMeet" />
