@@ -2,26 +2,33 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Force title update immediately -->
+    <!-- Force title and favicon update immediately -->
     <script>
       document.title = "FroshMeet";
-      // Force favicon update
+      // Force favicon update with timestamp
       const links = document.querySelectorAll("link[rel*='icon']");
       links.forEach(link => link.remove());
       
+      const timestamp = Date.now();
       const newFavicon = document.createElement('link');
       newFavicon.rel = 'icon';
       newFavicon.type = 'image/png';
-      newFavicon.href = 'https://cdn.loveable.dev/assets/frosh-meet/favicon.png?v=' + Date.now();
+      newFavicon.href = 'https://cdn.loveable.dev/assets/frosh-meet/favicon.png?cache=' + timestamp;
       document.head.appendChild(newFavicon);
+      
+      // Force page refresh for cache bypass
+      if (!sessionStorage.getItem('faviconUpdated')) {
+        sessionStorage.setItem('faviconUpdated', 'true');
+        setTimeout(() => window.location.reload(true), 100);
+      }
     </script>
     
-    <!-- Multiple favicon declarations with timestamp -->
-    <link rel="icon" href="https://cdn.loveable.dev/assets/frosh-meet/favicon.png?v=20250701001" type="image/png">
-    <link rel="shortcut icon" href="https://cdn.loveable.dev/assets/frosh-meet/favicon.png?v=20250701001" type="image/png">
-    <link rel="apple-touch-icon" href="https://cdn.loveable.dev/assets/frosh-meet/favicon.png?v=20250701001">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://cdn.loveable.dev/assets/frosh-meet/favicon.png?v=20250701001">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://cdn.loveable.dev/assets/frosh-meet/favicon.png?v=20250701001">
+    <!-- Multiple favicon declarations with new timestamp -->
+    <link rel="icon" href="https://cdn.loveable.dev/assets/frosh-meet/favicon.png?cache=20250703001" type="image/png">
+    <link rel="shortcut icon" href="https://cdn.loveable.dev/assets/frosh-meet/favicon.png?cache=20250703001" type="image/png">
+    <link rel="apple-touch-icon" href="https://cdn.loveable.dev/assets/frosh-meet/favicon.png?cache=20250703001">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://cdn.loveable.dev/assets/frosh-meet/favicon.png?cache=20250703001">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://cdn.loveable.dev/assets/frosh-meet/favicon.png?cache=20250703001">
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

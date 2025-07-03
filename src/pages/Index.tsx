@@ -170,9 +170,9 @@ const Index = () => {
         return null;
     }
   };
-  return <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
+  return <div className="h-screen w-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 flex flex-col overflow-hidden">
       {/* Header */}
-      <header className="bg-white/95 backdrop-blur-xl border-b border-slate-200/50 sticky top-0 z-40 shadow-lg">
+      <header className="bg-white/95 backdrop-blur-xl border-b border-slate-200/50 flex-shrink-0 z-40 shadow-lg">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <div className={`w-12 h-12 bg-gradient-to-r ${getSchoolLogo(displayUser.college)} rounded-xl shadow-lg flex items-center justify-center`}>
@@ -196,7 +196,7 @@ const Index = () => {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-6 py-8 pb-32">
+      <main className="flex-1 overflow-hidden">
         {renderContent()}
       </main>
 

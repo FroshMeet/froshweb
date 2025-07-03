@@ -96,7 +96,7 @@ const SwipeCards = ({
   const isLastPhoto = currentPhotoIndex === photos.length - 1;
 
   return (
-    <div className="h-screen w-full overflow-hidden">
+    <div className="h-full w-full overflow-hidden">
       {/* Mobile Layout */}
       <div className="md:hidden h-full flex flex-col overflow-hidden">
         {/* Toggle Group - Fixed at top */}

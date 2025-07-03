@@ -34,7 +34,7 @@ const MeetTabContent = ({
   };
 
   return (
-    <div className="h-screen w-full overflow-hidden">
+    <div className="h-full w-full overflow-hidden">
       <SwipeCards 
         profiles={filteredProfiles} 
         onShowIcebreakers={() => {}} 
