@@ -1,31 +1,17 @@
 import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Instagram, ExternalLink } from "lucide-react";
-
-// School Instagram accounts mapping
-const SCHOOL_INSTAGRAM_ACCOUNTS: Record<string, string> = {
-  'ucla': 'ucla',
-  'harvard': 'harvard',
-  'stanford': 'stanford',
-  'mit': 'mit',
-  'uc-berkeley': 'ucberkeley',
-  'nyu': 'nyuniversity',
-  'columbia': 'columbia',
-  'yale': 'yale',
-  'princeton': 'princeton',
-  'duke': 'dukeu',
-  'northwestern': 'northwesternu',
-  'usc': 'uscedu'
-};
+import { Instagram, ExternalLink, ArrowLeft, AlertCircle } from "lucide-react";
+import { getInstagramUsername, isSchoolSupported } from "@/config/schoolInstagramMapping";
 
 const SchoolInstagramPage = () => {
   const { school } = useParams<{ school: string }>();
   const navigate = useNavigate();
   
   const schoolName = school?.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) || '';
-  const instagramHandle = school ? SCHOOL_INSTAGRAM_ACCOUNTS[school] || school : '';
-
+  const instagramUsername = school ? getInstagramUsername(school) : null;
+  const isSupported = school ? isSchoolSupported(school) : false;
+  
   useEffect(() => {
     // Load Instagram embed script
     const script = document.createElement('script');
@@ -34,9 +20,61 @@ const SchoolInstagramPage = () => {
     document.body.appendChild(script);
 
     return () => {
-      document.body.removeChild(script);
+      const existingScript = document.querySelector('script[src="//www.instagram.com/embed.js"]');
+      if (existingScript && existingScript.parentNode) {
+        existingScript.parentNode.removeChild(existingScript);
+      }
     };
   }, []);
+
+  // If school is not supported, show error state
+  if (school && !isSupported) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-muted/50">
+        {/* Header */}
+        <header className="border-b bg-background/80 backdrop-blur-sm">
+          <div className="container mx-auto px-4 py-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <Button variant="ghost" onClick={() => navigate(`/${school}`)}>
+                  <ArrowLeft className="h-4 w-4 mr-2" />
+                  Back
+                </Button>
+                <div className="w-8 h-8 bg-gradient-to-r from-primary to-primary/80 rounded-lg flex items-center justify-center">
+                  <span className="text-primary-foreground font-bold text-sm">F</span>
+                </div>
+                <span className="font-semibold text-foreground">FroshMeet</span>
+              </div>
+              <Button onClick={() => navigate('/app')}>
+                Join Community
+              </Button>
+            </div>
+          </div>
+        </header>
+
+        {/* Error Content */}
+        <main className="container mx-auto px-4 py-16">
+          <div className="max-w-2xl mx-auto text-center">
+            <AlertCircle className="h-16 w-16 text-muted-foreground mx-auto mb-6" />
+            <h1 className="text-3xl font-bold text-foreground mb-4">Instagram Feed Not Available</h1>
+            <p className="text-lg text-muted-foreground mb-8">
+              We don't have Instagram content configured for {schoolName} yet.
+            </p>
+            <div className="space-y-4">
+              <Button onClick={() => navigate(`/${school}`)} size="lg">
+                Back to {schoolName}
+              </Button>
+              <div>
+                <Button variant="outline" onClick={() => navigate('/')}>
+                  Explore Other Schools
+                </Button>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-muted/50">
@@ -56,7 +94,7 @@ const SchoolInstagramPage = () => {
             <div className="flex items-center space-x-2">
               <Button variant="outline" asChild>
                 <a 
-                  href={`https://instagram.com/${instagramHandle}`} 
+                  href={`https://instagram.com/${instagramUsername}`} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="flex items-center space-x-2"
@@ -101,7 +139,7 @@ const SchoolInstagramPage = () => {
                       Instagram post #{index}
                     </p>
                     <p className="text-xs text-muted-foreground mt-1">
-                      @{instagramHandle}
+                      @{instagramUsername}
                     </p>
                   </div>
                 </div>
@@ -114,7 +152,7 @@ const SchoolInstagramPage = () => {
             <div className="bg-card border rounded-lg p-8">
               <Instagram className="h-16 w-16 text-primary mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-foreground mb-2">
-                Follow @{instagramHandle}
+                Follow @{instagramUsername}
               </h3>
               <p className="text-muted-foreground mb-6">
                 For the latest updates and campus life content from {schoolName}
@@ -122,7 +160,7 @@ const SchoolInstagramPage = () => {
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button asChild>
                   <a 
-                    href={`https://instagram.com/${instagramHandle}`} 
+                    href={`https://instagram.com/${instagramUsername}`} 
                     target="_blank" 
                     rel="noopener noreferrer"
                   >
@@ -140,8 +178,8 @@ const SchoolInstagramPage = () => {
           <div className="mt-8 p-4 bg-muted/50 rounded-lg">
             <p className="text-sm text-muted-foreground text-center">
               <strong>Note:</strong> Instagram posts will be embedded here automatically. 
-              To customize the Instagram feed for each school, update the SCHOOL_INSTAGRAM_ACCOUNTS 
-              mapping in the SchoolInstagramPage component.
+              To add new schools or update Instagram handles, edit the mapping in 
+              <code className="mx-1 px-2 py-1 bg-background rounded">src/config/schoolInstagramMapping.ts</code>
             </p>
           </div>
         </div>
