@@ -2,14 +2,15 @@
 // This file can be easily updated to add new schools or change Instagram handles
 export const SCHOOL_INSTAGRAM_MAPPING: Record<string, string> = {
   // UC System
-  'ucsc': 'ucsc2030class',
+  'uc-santa-cruz': 'ucsc2030class',
   'uc-berkeley': 'ucberkeley.2030',
   'ucla': 'ucla2030.official',
-  'ucsd': 'ucsandiego2030class',
-  'uci': 'ucirvineclassof2030',
-  'ucdavis': 'uc.davis2030',
-  'ucsb': 'ucsb2030_',
-  'ucmerced': 'ucmerced2030',
+  'uc-san-diego': 'ucsandiego2030class',
+  'uc-irvine': 'ucirvineclassof2030',
+  'uc-davis': 'uc.davis2030',
+  'uc-santa-barbara': 'ucsb2030_',
+  'uc-merced': 'ucmerced2030',
+  'uc-riverside': 'ucriverside2030meet',
   
   // Ivy League
   'harvard': 'harvard2030class',
@@ -37,9 +38,10 @@ export const SCHOOL_INSTAGRAM_MAPPING: Record<string, string> = {
   'carnegie-mellon': 'cmu2030meet',
   'boston-university': 'bu2030meet',
   'northeastern': 'northeastern2030meet',
+  'university-of-florida': 'uf2030meet',
   
   // State Universities
-  'fsu': 'fsu2030students',
+  'florida-state': 'fsu2030students',
   'asu': 'asu.2030official',
   'university-of-texas': 'utaustin.2030',
   'michigan': 'umich2030.class',
@@ -59,9 +61,11 @@ export const SCHOOL_INSTAGRAM_MAPPING: Record<string, string> = {
   'university-of-oregon': 'uoregon2030meet',
   'alabama': 'ualabama2030',
   'ucf': 'ucf2030meet',
+  'university-of-central-florida': 'ucf2030meet',
   'university-of-colorado-boulder': 'cuboulder2030meet',
   'wisconsin': 'uwm2030meet',
   'uiuc': 'uiuc2030class',
+  'iowa-state': 'iowastate2030meet',
   
   // Cal State System
   'sac-state': 'sacstate2030meet',
