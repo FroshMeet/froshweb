@@ -5,8 +5,19 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const FEATURED_SCHOOLS = [
-  "UCLA", "Harvard", "Stanford", "MIT", "UC Berkeley", "NYU", 
-  "Columbia", "Yale", "Princeton", "Duke", "Northwestern", "USC"
+  "Alabama", "ASU", "Berkeley", "Boston University", "Brown", "Cal Poly Pomona", 
+  "Cal Poly SLO", "Caltech", "Carnegie Mellon", "Chico State", "Columbia", "Cornell", 
+  "CSULB", "Dartmouth", "Duke", "Florida State", "Georgetown", "Georgia", "Harvard", 
+  "Indiana", "Iowa State", "MIT", "Michigan", "Michigan State", "Minnesota", 
+  "Northeastern", "Northwestern", "NYU", "Ohio State", "Penn State", "Princeton", 
+  "Purdue", "Rice", "Sac State", "San Diego State", "San Francisco State", "SJSU", 
+  "Stanford", "Texas A&M", "UC Davis", "UC Irvine", "UCLA", "UC Merced", 
+  "UC Riverside", "UC San Diego", "UC Santa Barbara", "UC Santa Cruz", "UCF", 
+  "UChicago", "UIUC", "UNC", "University of Arizona", "University of Central Florida", 
+  "University of Colorado Boulder", "University of Florida", "University of Miami", 
+  "University of Oregon", "University of Texas", "University of Virginia", 
+  "University of Washington", "UPenn", "USC", "Vanderbilt", "Virginia Tech", 
+  "Wisconsin", "Yale"
 ];
 
 const Homepage = () => {
@@ -15,13 +26,13 @@ const Homepage = () => {
   const [selectedSchool, setSelectedSchool] = useState("");
 
   const handleSchoolSelect = (school: string) => {
-    const schoolSlug = school.toLowerCase().replace(/\s+/g, '-');
+    const schoolSlug = school.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and');
     navigate(`/${schoolSlug}`);
   };
 
   const filteredSchools = FEATURED_SCHOOLS.filter(school =>
-    school.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+    school.toLowerCase().startsWith(searchTerm.toLowerCase())
+  ).slice(0, 10);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-muted/50">
@@ -67,6 +78,22 @@ const Homepage = () => {
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="h-12 text-lg"
                 />
+                {searchTerm && filteredSchools.length > 0 && (
+                  <div className="absolute top-full left-0 right-0 bg-background border border-border rounded-md mt-1 z-10 max-h-60 overflow-y-auto">
+                    {filteredSchools.map((school) => (
+                      <div
+                        key={school}
+                        className="p-3 hover:bg-muted cursor-pointer text-sm"
+                        onClick={() => {
+                          setSearchTerm("");
+                          handleSchoolSelect(school);
+                        }}
+                      >
+                        {school}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
               
               <Select value={selectedSchool} onValueChange={setSelectedSchool}>

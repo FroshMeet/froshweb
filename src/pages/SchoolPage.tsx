@@ -1,14 +1,81 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Instagram, Users, MessageSquare, Heart } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Instagram, Users, MessageSquare, Heart, Search } from "lucide-react";
+import DiscoverGrid from "@/components/DiscoverGrid";
 
 const SchoolPage = () => {
   const { school } = useParams<{ school: string }>();
   const navigate = useNavigate();
+  const [studentSearch, setStudentSearch] = useState("");
   
   const schoolName = school?.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) || '';
+
+  // Mock student profiles for the school
+  const mockProfiles = [{
+    id: 2,
+    name: "Alex Rivera",
+    age: 18,
+    college: schoolName,
+    classOf: "2029",
+    major: "Business",
+    dorm: "North Campus",
+    bio: "Entrepreneur at heart, love meeting new people and exploring!",
+    interests: ["Business", "Networking", "Basketball", "Travel"],
+    photos: ["photo-1581091226825-a6a2a5aee158"],
+    lookingFor: ["Friends", "Networking"],
+    location: "Campus",
+    instagram: "@alex_rivera",
+    snapchat: "@alex_r2029",
+    phoneNumber: "(555) 234-5678",
+    instagramPublic: true,
+    snapchatPublic: true,
+    phonePublic: false
+  }, {
+    id: 3,
+    name: "Maya Patel",
+    age: 18,
+    college: schoolName,
+    classOf: "2029",
+    major: "Pre-Med",
+    dorm: "South Campus",
+    bio: "Future doctor, current coffee addict ☕ Looking for study partners!",
+    interests: ["Medicine", "Yoga", "Reading", "Volunteering"],
+    photos: ["photo-1581092795360-fd1ca04f0952"],
+    lookingFor: ["Study Buddy", "Friends", "Roommate"],
+    location: "Campus",
+    instagram: "@maya_patel_md",
+    snapchat: "",
+    phoneNumber: "(555) 345-6789",
+    instagramPublic: false,
+    snapchatPublic: false,
+    phonePublic: false
+  }, {
+    id: 4,
+    name: "Jordan Smith",
+    age: 19,
+    college: schoolName,
+    classOf: "2028",
+    major: "Computer Science",
+    dorm: "Tech Hall",
+    bio: "Coding enthusiast, love hackathons and building cool projects!",
+    interests: ["Programming", "Gaming", "Music", "Tech"],
+    photos: ["photo-1507003211169-0a1dd7228f2d"],
+    lookingFor: ["Study Buddy", "Friends"],
+    location: "Campus",
+    instagram: "@jordan_codes",
+    snapchat: "@jordan_s28",
+    phoneNumber: "(555) 456-7890",
+    instagramPublic: true,
+    snapchatPublic: false,
+    phonePublic: false
+  }];
+
+  const filteredProfiles = mockProfiles.filter(profile =>
+    profile.name.toLowerCase().includes(studentSearch.toLowerCase())
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-muted/50">
@@ -126,6 +193,36 @@ const SchoolPage = () => {
                 <Button variant="outline" className="mt-4">
                   View Campus Feed →
                 </Button>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Student Search Section */}
+          <div className="mb-12">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Search className="h-5 w-5 text-primary" />
+                  <span>Find Students</span>
+                </CardTitle>
+                <CardDescription>
+                  Search for students by name at {schoolName}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-6">
+                  <div className="relative">
+                    <Input
+                      placeholder="Search for students by name..."
+                      value={studentSearch}
+                      onChange={(e) => setStudentSearch(e.target.value)}
+                      className="h-12 text-lg"
+                    />
+                  </div>
+                  
+                  {/* Student Profiles Grid */}
+                  <DiscoverGrid profiles={filteredProfiles} isGuest={true} />
+                </div>
               </CardContent>
             </Card>
           </div>
