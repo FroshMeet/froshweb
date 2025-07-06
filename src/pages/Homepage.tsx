@@ -79,11 +79,11 @@ const Homepage = () => {
                   className="h-12 text-lg"
                 />
                 {searchTerm && filteredSchools.length > 0 && (
-                  <div className="absolute top-full left-0 right-0 bg-background border border-border rounded-md mt-1 z-10 max-h-60 overflow-y-auto">
+                  <div className="absolute top-full left-0 right-0 bg-background border border-border rounded-md mt-1 z-50 max-h-60 overflow-y-auto shadow-lg">
                     {filteredSchools.map((school) => (
                       <div
                         key={school}
-                        className="p-3 hover:bg-muted cursor-pointer text-sm"
+                        className="p-3 hover:bg-muted cursor-pointer text-sm border-b border-border last:border-b-0"
                         onClick={() => {
                           setSearchTerm("");
                           handleSchoolSelect(school);
@@ -95,27 +95,14 @@ const Homepage = () => {
                   </div>
                 )}
               </div>
-              
-              <Select value={selectedSchool} onValueChange={setSelectedSchool}>
-                <SelectTrigger className="h-12 text-lg">
-                  <SelectValue placeholder="Or select from popular schools" />
-                </SelectTrigger>
-                <SelectContent>
-                  {filteredSchools.map((school) => (
-                    <SelectItem key={school} value={school}>
-                      {school}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
 
               <Button 
-                onClick={() => selectedSchool && handleSchoolSelect(selectedSchool)}
-                disabled={!selectedSchool}
+                onClick={() => searchTerm && filteredSchools.length > 0 && handleSchoolSelect(filteredSchools[0])}
+                disabled={!searchTerm || filteredSchools.length === 0}
                 className="w-full h-12 text-lg"
                 size="lg"
               >
-                Explore {selectedSchool || "School"} Community
+                Explore {searchTerm && filteredSchools.length > 0 ? filteredSchools[0] : "School"} Community
               </Button>
             </div>
           </div>

@@ -179,16 +179,15 @@ const SchoolPage = () => {
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
                   <Instagram className="h-5 w-5 text-primary" />
-                  <span>Campus Life</span>
+                  <span>Campus Feed</span>
                 </CardTitle>
                 <CardDescription>
-                  See what's happening around campus
+                  See Instagram posts and student activity
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Stay updated with campus events, student life, and the latest 
-                  happenings at {schoolName}.
+                  View Instagram posts from {schoolName} students and campus life content.
                 </p>
                 <Button variant="outline" className="mt-4">
                   View Campus Feed →
@@ -197,23 +196,23 @@ const SchoolPage = () => {
             </Card>
           </div>
 
-          {/* Student Search Section */}
+          {/* Student Profiles Section */}
           <div className="mb-12">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
                   <Search className="h-5 w-5 text-primary" />
-                  <span>Find Students</span>
+                  <span>Students at {schoolName}</span>
                 </CardTitle>
                 <CardDescription>
-                  Search for students by name at {schoolName}
+                  Connect with students from your school
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-6">
                   <div className="relative">
                     <Input
-                      placeholder="Search for students by name..."
+                      placeholder="Search students by name..."
                       value={studentSearch}
                       onChange={(e) => setStudentSearch(e.target.value)}
                       className="h-12 text-lg"
@@ -222,6 +221,12 @@ const SchoolPage = () => {
                   
                   {/* Student Profiles Grid */}
                   <DiscoverGrid profiles={filteredProfiles} isGuest={true} />
+                  
+                  {filteredProfiles.length === 0 && studentSearch && (
+                    <div className="text-center py-8 text-muted-foreground">
+                      No students found matching "{studentSearch}"
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>
