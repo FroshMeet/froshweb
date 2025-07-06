@@ -118,118 +118,62 @@ const SchoolPage = () => {
             </p>
           </div>
 
-          {/* Features Grid */}
-          <div className="grid md:grid-cols-2 gap-8 mb-12">
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <Heart className="h-5 w-5 text-primary" />
-                  <span>Meet Students</span>
-                </CardTitle>
-                <CardDescription>
-                  Discover and connect with students from your school
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Browse profiles, find common interests, and make meaningful connections 
-                  with fellow {schoolName} students.
-                </p>
+          {/* Quick Actions */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+            <Card className="hover:shadow-lg transition-shadow text-center py-6">
+              <CardContent className="p-3">
+                <Heart className="h-8 w-8 text-primary mx-auto mb-2" />
+                <h3 className="font-semibold text-sm">Meet Students</h3>
               </CardContent>
             </Card>
-
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <Users className="h-5 w-5 text-primary" />
-                  <span>Find Roommates</span>
-                </CardTitle>
-                <CardDescription>
-                  Connect with potential roommates and housing groups
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Find compatible roommates based on lifestyle preferences, 
-                  study habits, and shared interests.
-                </p>
+            <Card className="hover:shadow-lg transition-shadow text-center py-6">
+              <CardContent className="p-3">
+                <Users className="h-8 w-8 text-primary mx-auto mb-2" />
+                <h3 className="font-semibold text-sm">Find Roommates</h3>
               </CardContent>
             </Card>
-
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <MessageSquare className="h-5 w-5 text-primary" />
-                  <span>Study Groups</span>
-                </CardTitle>
-                <CardDescription>
-                  Form study groups and academic partnerships
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Connect with classmates, form study groups, and collaborate 
-                  on academic projects and assignments.
-                </p>
+            <Card className="hover:shadow-lg transition-shadow text-center py-6">
+              <CardContent className="p-3">
+                <MessageSquare className="h-8 w-8 text-primary mx-auto mb-2" />
+                <h3 className="font-semibold text-sm">Study Groups</h3>
               </CardContent>
             </Card>
-
-            <Card className="hover:shadow-lg transition-shadow cursor-pointer" 
+            <Card className="hover:shadow-lg transition-shadow cursor-pointer text-center py-6" 
                   onClick={() => navigate(`/${school}/insta`)}>
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <Instagram className="h-5 w-5 text-primary" />
-                  <span>Campus Feed</span>
-                </CardTitle>
-                <CardDescription>
-                  See Instagram posts and student activity
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  View Instagram posts from {schoolName} students and campus life content.
-                </p>
-                <Button variant="outline" className="mt-4">
-                  View Campus Feed →
-                </Button>
+              <CardContent className="p-3">
+                <Instagram className="h-8 w-8 text-primary mx-auto mb-2" />
+                <h3 className="font-semibold text-sm">Campus Feed</h3>
               </CardContent>
             </Card>
           </div>
 
-          {/* Student Profiles Section */}
+          {/* Student Posts Grid */}
           <div className="mb-12">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <Search className="h-5 w-5 text-primary" />
-                  <span>Students at {schoolName}</span>
-                </CardTitle>
-                <CardDescription>
-                  Connect with students from your school
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-6">
-                  <div className="relative">
-                    <Input
-                      placeholder="Search students by name..."
-                      value={studentSearch}
-                      onChange={(e) => setStudentSearch(e.target.value)}
-                      className="h-12 text-lg"
-                    />
-                  </div>
-                  
-                  {/* Student Profiles Grid */}
-                  <DiscoverGrid profiles={filteredProfiles} isGuest={true} />
-                  
-                  {filteredProfiles.length === 0 && studentSearch && (
-                    <div className="text-center py-8 text-muted-foreground">
-                      No students found matching "{studentSearch}"
-                    </div>
-                  )}
+            <div className="space-y-6">
+              <div className="text-center">
+                <h2 className="text-2xl font-bold text-foreground mb-2">Students at {schoolName}</h2>
+                <p className="text-muted-foreground">Connect with your fellow students</p>
+              </div>
+              
+              <div className="relative">
+                <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Search students by name..."
+                  value={studentSearch}
+                  onChange={(e) => setStudentSearch(e.target.value)}
+                  className="pl-10 h-12 text-lg"
+                />
+              </div>
+              
+              {/* Student Profiles Grid */}
+              <DiscoverGrid profiles={filteredProfiles} isGuest={true} />
+              
+              {filteredProfiles.length === 0 && studentSearch && (
+                <div className="text-center py-8 text-muted-foreground">
+                  No students found matching "{studentSearch}"
                 </div>
-              </CardContent>
-            </Card>
+              )}
+            </div>
           </div>
 
           {/* CTA Section */}

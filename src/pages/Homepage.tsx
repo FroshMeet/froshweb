@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const FEATURED_SCHOOLS = [
-  "Alabama", "ASU", "Berkeley", "Boston University", "Brown", "Cal Poly Pomona", 
+  "Alabama", "ASU", "UC Berkeley", "Boston University", "Brown", "Cal Poly Pomona", 
   "Cal Poly SLO", "Caltech", "Carnegie Mellon", "Chico State", "Columbia", "Cornell", 
   "CSULB", "Dartmouth", "Duke", "Florida State", "Georgetown", "Georgia", "Harvard", 
   "Indiana", "Iowa State", "MIT", "Michigan", "Michigan State", "Minnesota", 
