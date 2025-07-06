@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Heart, Users, MessageSquare, User, Grid, Newspaper, ArrowDown } from "lucide-react";
+import { Heart, Users, MessageSquare, User, Grid } from "lucide-react";
 import WelcomeScreen from "@/components/WelcomeScreen";
 import MeetTabContent from "@/components/tabs/MeetTabContent";
 import DiscoverTabContent from "@/components/tabs/DiscoverTabContent";
@@ -186,67 +186,108 @@ const Index = () => {
         return null;
     }
   };
-  return <div className="h-screen w-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 flex flex-col overflow-hidden">
+  return <div className="h-screen w-screen bg-background flex flex-col overflow-hidden">
       {/* Header */}
-      <header className="bg-white/95 backdrop-blur-xl border-b border-slate-200/50 flex-shrink-0 z-40 shadow-lg">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <div className={`w-12 h-12 bg-gradient-to-r ${getSchoolLogo(displayUser.college)} rounded-xl shadow-lg flex items-center justify-center`}>
-              <span className="text-white font-bold text-xl">
+      <header className="bg-card/95 backdrop-blur-xl border-b border-border/50 flex-shrink-0 z-40 card-shadow">
+        <div className="max-w-md mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <div className={`w-10 h-10 bg-gradient-to-r ${getSchoolLogo(displayUser.college)} rounded-2xl shadow-lg flex items-center justify-center`}>
+              <span className="text-white font-bold text-lg">
                 {displayUser.college.charAt(0)}
               </span>
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-slate-800">
+              <h1 className="text-xl font-display font-bold text-foreground">
                 FroshMeet
               </h1>
-              <p className="text-sm text-slate-600 font-semibold">
+              <p className="text-xs text-muted-foreground font-medium">
                 {displayUser.college}
               </p>
             </div>
           </div>
-          <Badge variant="secondary" className="bg-slate-100 text-slate-700 font-semibold px-4 py-2 text-sm">
+          <Badge variant="secondary" className="bg-primary/10 text-primary border-0 font-semibold px-3 py-1.5 text-xs rounded-full">
             {isGuest ? "Guest" : `Class of ${displayUser.classOf}`}
           </Badge>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-hidden">
+      <main className="flex-1 overflow-hidden bg-background">
         {renderContent()}
       </main>
 
       {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-xl border-t border-slate-200/50 shadow-2xl z-50">
-        <div className="max-w-md mx-auto px-6 py-4">
-          {/* Tooltip for Meet */}
-          {activeTab !== "meet" && <div className="absolute -top-16 left-1/2 transform -translate-x-1/2 bg-slate-900 text-white px-4 py-2 rounded-lg shadow-lg cursor-pointer" onClick={() => setActiveTab("meet")}>
-              <div className="flex items-center space-x-2">
-                <ArrowDown className="h-4 w-4" />
-                <span className="text-sm font-bold">Tap to meet students from your school!</span>
-              </div>
-              <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-slate-900"></div>
-            </div>}
-          
+      <nav className="bg-card/95 backdrop-blur-xl border-t border-border/50 card-shadow z-50">
+        <div className="max-w-md mx-auto px-4 py-3">
           <div className="flex justify-between items-center">
-            <Button variant={activeTab === "discover" ? "default" : "ghost"} size="sm" onClick={() => setActiveTab("discover")} className={`flex flex-col items-center justify-center h-16 w-16 transition-all duration-200 ${activeTab === "discover" ? "bg-slate-900 text-white shadow-lg scale-105" : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"}`}>
-              <Grid className="h-8 w-8" />
+            <Button 
+              variant={activeTab === "discover" ? "default" : "ghost"} 
+              size="sm" 
+              onClick={() => setActiveTab("discover")} 
+              className={`flex flex-col items-center justify-center h-12 w-16 rounded-2xl transition-all duration-200 ${
+                activeTab === "discover" 
+                  ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25 scale-105" 
+                  : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+              }`}
+            >
+              <Grid className="h-5 w-5 mb-1" />
+              <span className="text-xs font-medium">Discover</span>
             </Button>
             
-            <Button variant={activeTab === "community" ? "default" : "ghost"} size="sm" onClick={() => setActiveTab("community")} className={`flex flex-col items-center justify-center h-16 w-16 transition-all duration-200 ${activeTab === "community" ? "bg-slate-900 text-white shadow-lg scale-105" : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"}`}>
-              <Newspaper className="h-8 w-8" />
+            <Button 
+              variant={activeTab === "chats" ? "default" : "ghost"} 
+              size="sm" 
+              onClick={() => setActiveTab("chats")} 
+              className={`flex flex-col items-center justify-center h-12 w-16 rounded-2xl transition-all duration-200 ${
+                activeTab === "chats" 
+                  ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25 scale-105" 
+                  : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+              }`}
+            >
+              <MessageSquare className="h-5 w-5 mb-1" />
+              <span className="text-xs font-medium">Chats</span>
             </Button>
             
-            <Button variant={activeTab === "meet" ? "default" : "ghost"} size="lg" onClick={() => setActiveTab("meet")} className={`flex flex-col items-center justify-center h-16 w-16 transition-all duration-200 ${activeTab === "meet" ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg scale-105" : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"}`}>
-              <Heart className="h-8 w-8" />
+            <Button 
+              variant={activeTab === "meet" ? "default" : "ghost"} 
+              size="lg" 
+              onClick={() => setActiveTab("meet")} 
+              className={`flex flex-col items-center justify-center h-14 w-16 rounded-2xl transition-all duration-200 ${
+                activeTab === "meet" 
+                  ? "bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-lg shadow-primary/30 scale-110" 
+                  : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+              }`}
+            >
+              <Heart className="h-6 w-6 mb-1" />
+              <span className="text-xs font-bold">Meet</span>
             </Button>
             
-            <Button variant={activeTab === "chats" ? "default" : "ghost"} size="sm" onClick={() => setActiveTab("chats")} className={`flex flex-col items-center justify-center h-16 w-16 transition-all duration-200 ${activeTab === "chats" ? "bg-slate-900 text-white shadow-lg scale-105" : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"}`}>
-              <MessageSquare className="h-8 w-8" />
+            <Button 
+              variant={activeTab === "community" ? "default" : "ghost"} 
+              size="sm" 
+              onClick={() => setActiveTab("community")} 
+              className={`flex flex-col items-center justify-center h-12 w-16 rounded-2xl transition-all duration-200 ${
+                activeTab === "community" 
+                  ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25 scale-105" 
+                  : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+              }`}
+            >
+              <Users className="h-5 w-5 mb-1" />
+              <span className="text-xs font-medium">Feed</span>
             </Button>
             
-            <Button variant={activeTab === "profile" ? "default" : "ghost"} size="sm" onClick={() => setActiveTab("profile")} className={`flex flex-col items-center justify-center h-16 w-16 transition-all duration-200 ${activeTab === "profile" ? "bg-slate-900 text-white shadow-lg scale-105" : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"}`}>
-              <User className="h-8 w-8" />
+            <Button 
+              variant={activeTab === "profile" ? "default" : "ghost"} 
+              size="sm" 
+              onClick={() => setActiveTab("profile")} 
+              className={`flex flex-col items-center justify-center h-12 w-16 rounded-2xl transition-all duration-200 ${
+                activeTab === "profile" 
+                  ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25 scale-105" 
+                  : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+              }`}
+            >
+              <User className="h-5 w-5 mb-1" />
+              <span className="text-xs font-medium">Profile</span>
             </Button>
           </div>
         </div>
