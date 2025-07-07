@@ -618,23 +618,48 @@ const Homepage = () => {
             </p>
           </div>
           
-          <div className="relative">
+          <div className="relative space-y-6">
+            {/* Top Row */}
             <div className="overflow-hidden">
-              <div className="flex animate-scroll-carousel space-x-4">
+              <div className="flex animate-scroll-carousel space-x-6">
                 {/* Render schools twice for seamless loop */}
                 {[...SCHOOL_DATABASE, ...SCHOOL_DATABASE].map((school, index) => (
                   <Button
-                    key={`${school.name}-${index}`}
+                    key={`top-${school.name}-${index}`}
                     variant="outline"
                     onClick={() => handleSchoolSelect(school.name, school.slug)}
-                    className="flex-shrink-0 w-32 h-24 flex flex-col items-center justify-center text-sm hover:bg-primary/10 hover:border-primary/40 transition-all duration-300 hover:scale-105 bg-card/30 border-border/40"
+                    className="flex-shrink-0 w-40 md:w-48 h-28 md:h-32 flex flex-col items-center justify-center text-sm md:text-base hover:shadow-[0_0_30px_rgba(59,130,246,0.4)] hover:border-primary/60 transition-all duration-500 hover:scale-105 bg-card/40 border-border/40 group relative overflow-hidden"
                   >
-                    <div className="w-8 h-8 bg-gradient-to-r from-primary/30 to-primary/60 rounded-full flex items-center justify-center mb-2">
-                      <span className="text-primary font-bold text-xs">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="relative z-10 w-10 md:w-12 h-10 md:h-12 bg-gradient-to-r from-primary/40 to-primary/70 rounded-2xl flex items-center justify-center mb-2 md:mb-3 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-500">
+                      <span className="text-primary-foreground font-bold text-base md:text-lg">
                         {school.name.charAt(0)}
                       </span>
                     </div>
-                    <span className="text-center leading-tight text-xs">{school.name}</span>
+                    <span className="relative z-10 text-center leading-tight font-semibold px-2">{school.name}</span>
+                  </Button>
+                ))}
+              </div>
+            </div>
+            
+            {/* Bottom Row - Offset */}
+            <div className="overflow-hidden">
+              <div className="flex animate-scroll-carousel space-x-6" style={{ marginLeft: '5rem' }}>
+                {/* Render schools twice for seamless loop, starting from a different index for variety */}
+                {[...SCHOOL_DATABASE.slice(10), ...SCHOOL_DATABASE, ...SCHOOL_DATABASE.slice(0, 10)].map((school, index) => (
+                  <Button
+                    key={`bottom-${school.name}-${index}`}
+                    variant="outline"
+                    onClick={() => handleSchoolSelect(school.name, school.slug)}
+                    className="flex-shrink-0 w-40 md:w-48 h-28 md:h-32 flex flex-col items-center justify-center text-sm md:text-base hover:shadow-[0_0_30px_rgba(59,130,246,0.4)] hover:border-primary/60 transition-all duration-500 hover:scale-105 bg-card/40 border-border/40 group relative overflow-hidden"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="relative z-10 w-10 md:w-12 h-10 md:h-12 bg-gradient-to-r from-primary/40 to-primary/70 rounded-2xl flex items-center justify-center mb-2 md:mb-3 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-500">
+                      <span className="text-primary-foreground font-bold text-base md:text-lg">
+                        {school.name.charAt(0)}
+                      </span>
+                    </div>
+                    <span className="relative z-10 text-center leading-tight font-semibold px-2">{school.name}</span>
                   </Button>
                 ))}
               </div>
