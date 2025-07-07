@@ -54,9 +54,14 @@ const Contact = () => {
                 Contact
               </Button>
             </nav>
-            <Button onClick={() => navigate('/app')} className="bg-primary hover:bg-primary/90">
-              Join Now
-            </Button>
+            <div className="flex items-center space-x-4">
+              <Button variant="outline" onClick={() => navigate('/signin')}>
+                Sign In
+              </Button>
+              <Button onClick={() => navigate('/app')} className="bg-primary hover:bg-primary/90">
+                Join Now
+              </Button>
+            </div>
           </div>
         </div>
       </header>

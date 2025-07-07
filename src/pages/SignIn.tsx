@@ -77,7 +77,7 @@ const SignIn = () => {
           <CardHeader className="text-center pb-8">
             <div className="space-y-4">
               <h1 className="text-3xl font-bold text-foreground">
-                Welcome B<span className="text-primary/80">a</span>ck
+                Welcome Back
               </h1>
               <p className="text-muted-foreground">
                 Sign in to connect with your college community
@@ -90,7 +90,7 @@ const SignIn = () => {
               {/* Email Field */}
               <div className="space-y-2">
                 <Label htmlFor="email" className="text-foreground font-medium">
-                  Email <span className="text-primary/80">A</span>ddress
+                  Email Address
                 </Label>
                 <Input
                   id="email"
@@ -107,7 +107,7 @@ const SignIn = () => {
               {/* Password Field */}
               <div className="space-y-2">
                 <Label htmlFor="password" className="text-foreground font-medium">
-                  P<span className="text-primary/80">a</span>ssword
+                  Password
                 </Label>
                 <div className="relative">
                   <Input
@@ -180,7 +180,7 @@ const SignIn = () => {
                 onClick={() => navigate('/app')}
                 className="w-full h-12 border-border/60 hover:bg-muted/20 hover:border-primary/40 transition-all duration-300"
               >
-                Continue <span className="text-primary/80">a</span>s Guest
+                Continue as Guest
               </Button>
 
               {/* Sign Up Link */}
@@ -189,7 +189,7 @@ const SignIn = () => {
                 <Button
                   type="button"
                   variant="ghost"
-                  onClick={() => navigate('/app')} // This will go to sign-up flow in app
+                  onClick={() => navigate('/app')}
                   className="text-primary hover:text-primary/80 p-0 h-auto font-medium underline underline-offset-4"
                 >
                   Create an account
