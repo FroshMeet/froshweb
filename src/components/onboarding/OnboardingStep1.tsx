@@ -9,11 +9,78 @@ import { Search } from "lucide-react";
 interface OnboardingStep1Props {
   formData: any;
   setFormData: (data: any) => void;
-  colleges: string[];
+  colleges?: string[];
 }
 
 const OnboardingStep1 = ({ formData, setFormData, colleges }: OnboardingStep1Props) => {
   const [collegeSearch, setCollegeSearch] = useState("");
+
+  // Default college list if none provided
+  const defaultColleges = [
+    "Arizona State University",
+    "Boston University",
+    "Brown University",
+    "Cal Poly Pomona",
+    "California Polytechnic State University, San Luis Obispo",
+    "Carnegie Mellon University",
+    "Chico State (California State University, Chico)",
+    "Columbia University",
+    "Cornell University",
+    "Dartmouth College",
+    "Duke University",
+    "Florida State University",
+    "Georgetown University",
+    "Harvard University",
+    "Indiana University Bloomington",
+    "Massachusetts Institute of Technology (MIT)",
+    "Michigan State University",
+    "Northeastern University",
+    "Northwestern University",
+    "Ohio State University",
+    "Penn State University (The Pennsylvania State University)",
+    "Princeton University",
+    "Purdue University",
+    "Rice University",
+    "Sacramento State University (Sac State)",
+    "San Francisco State University (SF State)",
+    "San Diego State University (SDSU)",
+    "San Jose State University (SJSU)",
+    "Stanford University",
+    "Texas A&M University",
+    "University of Alabama",
+    "University of Arizona",
+    "University of California, Berkeley",
+    "University of California, Davis",
+    "University of California, Irvine",
+    "University of California, Los Angeles",
+    "University of California, Merced",
+    "University of California, Riverside",
+    "University of California, San Diego",
+    "University of California, Santa Barbara",
+    "University of California, Santa Cruz",
+    "University of Central Florida (UCF)",
+    "University of Chicago",
+    "University of Colorado Boulder",
+    "University of Florida",
+    "University of Georgia",
+    "University of Illinois Urbana-Champaign",
+    "University of Miami",
+    "University of Michigan",
+    "University of Minnesota",
+    "University of North Carolina at Chapel Hill (UNC Chapel Hill)",
+    "University of Oregon",
+    "University of Pennsylvania (UPenn)",
+    "University of Southern California (USC)",
+    "University of Texas at Austin",
+    "University of Virginia",
+    "University of Washington",
+    "University of Wisconsin–Madison",
+    "Vanderbilt University",
+    "Virginia Tech",
+    "Yale University"
+  ];
+
+  const collegeList = colleges || defaultColleges;
 
   const formatPhoneNumber = (value: string) => {
     const phoneNumber = value.replace(/\D/g, '');
@@ -32,7 +99,7 @@ const OnboardingStep1 = ({ formData, setFormData, colleges }: OnboardingStep1Pro
     setFormData(prev => ({ ...prev, phoneNumber: formatted }));
   };
 
-  const filteredColleges = colleges.filter(college =>
+  const filteredColleges = collegeList.filter(college =>
     college.toLowerCase().includes(collegeSearch.toLowerCase())
   );
 
