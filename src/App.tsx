@@ -9,6 +9,7 @@ import Homepage from "./pages/Homepage";
 import About from "./pages/About";
 import Features from "./pages/Features";
 import Contact from "./pages/Contact";
+import SignIn from "./pages/SignIn";
 import SchoolPage from "./pages/SchoolPage";
 import SchoolInstagramPage from "./pages/SchoolInstagramPage";
 import App from "./pages/App";
@@ -27,6 +28,7 @@ const AppRouter = () => (
           <Route path="/about" element={<About />} />
           <Route path="/features" element={<Features />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/signin" element={<SignIn />} />
           <Route path="/app" element={<App />} />
           <Route path="/:school" element={<SchoolPage />} />
           <Route path="/:school/insta" element={<SchoolInstagramPage />} />

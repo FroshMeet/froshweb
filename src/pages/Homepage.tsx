@@ -426,7 +426,7 @@ const Homepage = () => {
               </Button>
             </nav>
             <div className="flex items-center space-x-4">
-              <Button variant="outline" onClick={() => navigate('/app')}>
+              <Button variant="outline" onClick={() => navigate('/signin')}>
                 Sign In
               </Button>
               <Button onClick={() => navigate('/app')} className="bg-primary hover:bg-primary/90">
