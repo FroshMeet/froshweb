@@ -69,24 +69,24 @@ const DiscoverTabContent = ({ profiles, isGuest = false, onGuestAction, currentU
       {/* Search Bar */}
       <div className="relative">
         <div className="relative">
-          <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+          <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
           <Input
             placeholder="Search by name..."
             value={searchQuery}
             onChange={handleSearchChange}
             onFocus={handleSearchFocus}
             onBlur={handleSearchBlur}
-            className="pl-10 pr-4 py-2 border-2 border-slate-200 focus:border-slate-400 rounded-lg"
+            className="pl-10 pr-4 py-2 border border-border focus:border-ring rounded-lg bg-background text-foreground"
           />
         </div>
         
         {/* Auto-suggestions dropdown */}
         {showSuggestions && nameSuggestions.length > 0 && (
-          <div className="absolute top-full left-0 right-0 bg-white border border-slate-200 rounded-lg shadow-lg z-10 mt-1">
+          <div className="absolute top-full left-0 right-0 bg-popover border border-border rounded-lg shadow-lg z-50 mt-1">
             {nameSuggestions.map((name, index) => (
               <div
                 key={index}
-                className="px-4 py-2 hover:bg-slate-50 cursor-pointer border-b border-slate-100 last:border-b-0"
+                className="px-4 py-2 hover:bg-muted cursor-pointer border-b border-border last:border-b-0 text-popover-foreground"
                 onClick={() => handleSuggestionClick(name)}
               >
                 {name}
@@ -102,32 +102,32 @@ const DiscoverTabContent = ({ profiles, isGuest = false, onGuestAction, currentU
           type="single" 
           value={discoverMode} 
           onValueChange={(value) => value && setDiscoverMode(value)}
-          className="grid grid-cols-4 gap-2 bg-slate-100 p-1 rounded-lg"
+          className="grid grid-cols-4 gap-2 bg-muted p-1 rounded-lg"
         >
           <ToggleGroupItem 
             value="all" 
-            className="flex items-center space-x-2 px-4 py-2 data-[state=on]:bg-white data-[state=on]:shadow-sm"
+            className="flex items-center space-x-2 px-4 py-2 data-[state=on]:bg-background data-[state=on]:text-foreground data-[state=on]:shadow-sm text-muted-foreground"
           >
             <Grid className="h-4 w-4" />
             <span className="hidden sm:inline">All</span>
           </ToggleGroupItem>
           <ToggleGroupItem 
             value="friends" 
-            className="flex items-center space-x-2 px-4 py-2 data-[state=on]:bg-white data-[state=on]:shadow-sm"
+            className="flex items-center space-x-2 px-4 py-2 data-[state=on]:bg-background data-[state=on]:text-foreground data-[state=on]:shadow-sm text-muted-foreground"
           >
             <Heart className="h-4 w-4" />
             <span className="hidden sm:inline">Friends</span>
           </ToggleGroupItem>
           <ToggleGroupItem 
             value="roommates" 
-            className="flex items-center space-x-2 px-4 py-2 data-[state=on]:bg-white data-[state=on]:shadow-sm"
+            className="flex items-center space-x-2 px-4 py-2 data-[state=on]:bg-background data-[state=on]:text-foreground data-[state=on]:shadow-sm text-muted-foreground"
           >
             <Users className="h-4 w-4" />
             <span className="hidden sm:inline">Roommates</span>
           </ToggleGroupItem>
           <ToggleGroupItem 
             value="study" 
-            className="flex items-center space-x-2 px-4 py-2 data-[state=on]:bg-white data-[state=on]:shadow-sm"
+            className="flex items-center space-x-2 px-4 py-2 data-[state=on]:bg-background data-[state=on]:text-foreground data-[state=on]:shadow-sm text-muted-foreground"
           >
             <Zap className="h-4 w-4" />
             <span className="hidden sm:inline">Study</span>
@@ -138,7 +138,7 @@ const DiscoverTabContent = ({ profiles, isGuest = false, onGuestAction, currentU
       {/* Results */}
       <div>
         {searchQuery && (
-          <p className="text-sm text-slate-600 mb-4">
+          <p className="text-sm text-muted-foreground mb-4">
             {filteredProfiles.length} result{filteredProfiles.length !== 1 ? 's' : ''} for "{searchQuery}"
           </p>
         )}

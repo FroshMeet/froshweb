@@ -76,7 +76,7 @@ const SwipeCards = ({
   if (!profiles || profiles.length === 0) {
     return (
       <div className="h-full flex items-center justify-center">
-        <p className="text-slate-600">No profiles to show right now</p>
+        <p className="text-muted-foreground">No profiles to show right now</p>
       </div>
     );
   }
@@ -85,7 +85,7 @@ const SwipeCards = ({
   if (!currentProfile) {
     return (
       <div className="h-full flex items-center justify-center">
-        <p className="text-slate-600">Loading profile...</p>
+        <p className="text-muted-foreground">Loading profile...</p>
       </div>
     );
   }
@@ -100,23 +100,23 @@ const SwipeCards = ({
       {/* Mobile Layout */}
       <div className="md:hidden h-full flex flex-col overflow-hidden">
         {/* Toggle Group - Fixed at top */}
-        <div className="flex-shrink-0 bg-white px-4 py-2">
+        <div className="flex-shrink-0 bg-card px-4 py-2">
           <ToggleGroup 
             type="single" 
             value={meetMode} 
             onValueChange={value => value && setMeetMode && setMeetMode(value)} 
-            className="w-full justify-center"
+            className="w-full justify-center bg-muted p-1 rounded-lg"
           >
             <ToggleGroupItem 
               value="general" 
-              className="flex items-center space-x-1 px-3 py-1 text-xs data-[state=on]:bg-slate-900 data-[state=on]:text-white"
+              className="flex items-center space-x-1 px-3 py-1 text-xs data-[state=on]:bg-background data-[state=on]:text-foreground text-muted-foreground"
             >
               <Heart className="h-3 w-3" />
               <span>General</span>
             </ToggleGroupItem>
             <ToggleGroupItem 
               value="roommate" 
-              className="flex items-center space-x-1 px-3 py-1 text-xs data-[state=on]:bg-slate-900 data-[state=on]:text-white"
+              className="flex items-center space-x-1 px-3 py-1 text-xs data-[state=on]:bg-background data-[state=on]:text-foreground text-muted-foreground"
             >
               <Users className="h-3 w-3" />
               <span>Roommates</span>
@@ -226,7 +226,7 @@ const SwipeCards = ({
         </div>
 
         {/* Action Buttons - Fixed at bottom */}
-        <div className="flex-shrink-0 bg-white px-4 py-3 flex space-x-2">
+        <div className="flex-shrink-0 bg-card px-4 py-3 flex space-x-2">
           <Button 
             variant="outline" 
             className="flex-1 hover:bg-red-50 hover:border-red-200 h-10"
@@ -261,18 +261,18 @@ const SwipeCards = ({
               type="single" 
               value={meetMode} 
               onValueChange={value => value && setMeetMode(value)} 
-              className="bg-white/90 backdrop-blur-sm rounded-lg p-1"
+              className="bg-card/90 backdrop-blur-sm rounded-lg p-1"
             >
               <ToggleGroupItem 
                 value="general" 
-                className="flex items-center space-x-2 px-4 py-2 data-[state=on]:bg-slate-900 data-[state=on]:text-white"
+                className="flex items-center space-x-2 px-4 py-2 data-[state=on]:bg-background data-[state=on]:text-foreground text-muted-foreground"
               >
                 <Heart className="h-4 w-4" />
                 <span>General</span>
               </ToggleGroupItem>
               <ToggleGroupItem 
                 value="roommate" 
-                className="flex items-center space-x-2 px-4 py-2 data-[state=on]:bg-slate-900 data-[state=on]:text-white"
+                className="flex items-center space-x-2 px-4 py-2 data-[state=on]:bg-background data-[state=on]:text-foreground text-muted-foreground"
               >
                 <Users className="h-4 w-4" />
                 <span>Roommates</span>
@@ -340,7 +340,7 @@ const SwipeCards = ({
         </div>
 
         {/* Right side - Profile Info (ALWAYS visible on desktop) */}
-        <div className="w-80 bg-white flex flex-col h-full overflow-hidden">
+        <div className="w-80 bg-card flex flex-col h-full overflow-hidden">
           <div className="flex-1 p-6 space-y-4 overflow-y-auto">
             <div>
               <h3 className="text-xl font-bold">{currentProfile.name}, {currentProfile.age}</h3>
@@ -378,7 +378,7 @@ const SwipeCards = ({
                 <p className="text-xs font-medium text-muted-foreground mb-2">LOOKING FOR</p>
                 <div className="flex flex-wrap gap-1">
                   {currentProfile.lookingFor?.map((item: string) => (
-                    <Badge key={item} className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5">
+                    <Badge key={item} className="text-xs bg-primary/10 text-primary px-2 py-0.5">
                       {item}
                     </Badge>
                   ))}

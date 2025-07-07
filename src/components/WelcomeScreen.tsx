@@ -242,18 +242,18 @@ const WelcomeScreen = ({ onUserCreate, onGuestContinue }) => {
           <CardContent className="space-y-4">
             <Button 
               onClick={() => setShowOnboarding(true)}
-              className="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3 transition-colors duration-200"
+              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-3 transition-colors duration-200"
             >
               Create Account
             </Button>
             <Button 
               onClick={() => setShowGuestSchoolSelection(true)}
               variant="outline"
-              className="w-full border-slate-300 text-slate-700 hover:bg-slate-50 font-semibold py-3 transition-colors duration-200"
+              className="w-full border-border text-muted-foreground hover:bg-muted hover:text-foreground font-semibold py-3 transition-colors duration-200"
             >
               Continue as Guest
             </Button>
-            <p className="text-xs text-slate-500 text-center mt-4">
+            <p className="text-xs text-muted-foreground text-center mt-4">
               Create an account to message classmates and build your profile
             </p>
           </CardContent>
@@ -344,7 +344,7 @@ const WelcomeScreen = ({ onUserCreate, onGuestContinue }) => {
             </Button>
             <Button 
               onClick={handleNext}
-              className="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3 transition-colors duration-200"
+              className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-3 transition-colors duration-200"
               disabled={
                 (step === 1 && (!formData.name || !formData.age || !formData.college || !formData.phoneNumber)) ||
                 (step === 2 && !formData.verificationCode) ||

@@ -55,7 +55,7 @@ const DiscoverGrid = ({ profiles, isGuest = false, onGuestAction }: { profiles: 
         {profiles.map((profile) => (
           <Card 
             key={profile.id}
-            className={`cursor-pointer hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:scale-105 bg-white/90 backdrop-blur-sm border-4 ${getSchoolColors(profile.college)} overflow-hidden`}
+            className={`cursor-pointer hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:scale-105 bg-card/90 backdrop-blur-sm border-4 ${getSchoolColors(profile.college)} overflow-hidden`}
             onClick={() => setSelectedProfile(profile)}
           >
             <div className="relative aspect-square">
@@ -67,7 +67,7 @@ const DiscoverGrid = ({ profiles, isGuest = false, onGuestAction }: { profiles: 
               
               {/* Class Year Badge */}
               <div className="absolute bottom-2 right-2">
-                <Badge className="bg-white/90 text-slate-900 font-bold text-sm px-2 py-1">
+                <Badge className="bg-background/90 text-foreground font-bold text-sm px-2 py-1">
                   {profile.classOf || "2029"}
                 </Badge>
               </div>
@@ -95,10 +95,10 @@ const DiscoverGrid = ({ profiles, isGuest = false, onGuestAction }: { profiles: 
                 </div>
 
                 <div>
-                  <h3 className="text-2xl font-bold text-slate-800 mb-3">
+                  <h3 className="text-2xl font-bold text-foreground mb-3">
                     {selectedProfile.name}, {selectedProfile.age}
                   </h3>
-                  <div className="flex items-center text-slate-600 text-sm space-x-4 mb-4">
+                  <div className="flex items-center text-muted-foreground text-sm space-x-4 mb-4">
                     <div className="flex items-center space-x-1">
                       <BookOpen className="h-4 w-4" />
                       <span className="font-semibold">{selectedProfile.major}</span>
@@ -114,29 +114,29 @@ const DiscoverGrid = ({ profiles, isGuest = false, onGuestAction }: { profiles: 
                 </div>
 
                 <div>
-                  <p className="text-slate-700 mb-6 text-base leading-relaxed">{selectedProfile.bio}</p>
+                  <p className="text-muted-foreground mb-6 text-base leading-relaxed">{selectedProfile.bio}</p>
                 </div>
 
                 <div className="space-y-4">
                   <div>
-                    <p className="text-sm font-bold text-slate-500 mb-3 tracking-wide">INTERESTS</p>
+                    <p className="text-sm font-bold text-muted-foreground mb-3 tracking-wide">INTERESTS</p>
                     <div className="flex flex-wrap gap-2">
                       {selectedProfile.interests?.map((interest) => (
                         <Badge key={interest} variant="outline" className="text-sm py-1 px-3">
                           {interest}
                         </Badge>
-                      )) || <span className="text-sm text-slate-500">No interests listed</span>}
+                      )) || <span className="text-sm text-muted-foreground">No interests listed</span>}
                     </div>
                   </div>
 
                   <div>
-                    <p className="text-sm font-bold text-slate-500 mb-3 tracking-wide">LOOKING FOR</p>
+                    <p className="text-sm font-bold text-muted-foreground mb-3 tracking-wide">LOOKING FOR</p>
                     <div className="flex flex-wrap gap-2">
                       {selectedProfile.lookingFor?.map((item) => (
-                        <Badge key={item} className="text-sm bg-slate-900 text-white py-1 px-3">
+                        <Badge key={item} className="text-sm bg-primary text-primary-foreground py-1 px-3">
                           {item}
                         </Badge>
-                      )) || <span className="text-sm text-slate-500">Not specified</span>}
+                      )) || <span className="text-sm text-muted-foreground">Not specified</span>}
                     </div>
                   </div>
 
@@ -145,7 +145,7 @@ const DiscoverGrid = ({ profiles, isGuest = false, onGuestAction }: { profiles: 
                    (selectedProfile.snapchatPublic && selectedProfile.snapchat) ||
                    (selectedProfile.phonePublic && selectedProfile.phoneNumber) ? (
                     <div>
-                      <p className="text-sm font-bold text-slate-500 mb-3 tracking-wide">CONNECT</p>
+                      <p className="text-sm font-bold text-muted-foreground mb-3 tracking-wide">CONNECT</p>
                       <div className="space-y-3">
                         {selectedProfile.instagramPublic && selectedProfile.instagram && (
                           <div className="flex items-center space-x-3 text-sm">
@@ -176,7 +176,7 @@ const DiscoverGrid = ({ profiles, isGuest = false, onGuestAction }: { profiles: 
                   </Button>
                   <Button 
                     size="lg" 
-                    className="flex-1 bg-slate-900 hover:bg-slate-800 transition-all duration-200"
+                    className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-200"
                     onClick={() => handleMessage(selectedProfile)}
                   >
                     <MessageSquare className="h-5 w-5 mr-2" />
