@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Search, Users, MessageSquare, Calendar, Shield, Instagram } from "lucide-react";
+import heroImage from "@/assets/hero-college-students.jpg";
 
 const SCHOOL_DATABASE = [
   {
@@ -379,7 +382,7 @@ const searchSchools = (query: string) => {
 const Homepage = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedSchool, setSelectedSchool] = useState("");
+  const [email, setEmail] = useState("");
 
   const handleSchoolSelect = (schoolName: string, schoolSlug?: string) => {
     const slug = schoolSlug || schoolName.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and');
@@ -388,11 +391,18 @@ const Homepage = () => {
 
   const filteredSchools = searchSchools(searchTerm);
 
+  const handleNewsletterSignup = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Newsletter signup logic would go here
+    console.log("Newsletter signup:", email);
+    setEmail("");
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-muted/50">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b bg-background/80 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-6">
+      <header className="sticky top-0 border-b border-border/40 bg-background/80 backdrop-blur-xl z-50">
+        <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div 
               className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity"
@@ -404,93 +414,323 @@ const Homepage = () => {
                 className="h-10 w-auto"
               />
             </div>
-            <Button variant="outline" onClick={() => navigate('/app')}>
-              Open App
-            </Button>
+            <nav className="hidden md:flex items-center space-x-8">
+              <Button variant="ghost" onClick={() => navigate('/about')} className="text-muted-foreground hover:text-foreground">
+                About
+              </Button>
+              <Button variant="ghost" onClick={() => navigate('/features')} className="text-muted-foreground hover:text-foreground">
+                Features
+              </Button>
+              <Button variant="ghost" onClick={() => navigate('/contact')} className="text-muted-foreground hover:text-foreground">
+                Contact
+              </Button>
+            </nav>
+            <div className="flex items-center space-x-4">
+              <Button variant="outline" onClick={() => navigate('/app')}>
+                Sign In
+              </Button>
+              <Button onClick={() => navigate('/app')} className="bg-primary hover:bg-primary/90">
+                Join FroshMeet Now
+              </Button>
+            </div>
           </div>
         </div>
       </header>
 
       {/* Hero Section */}
-      <main className="container mx-auto px-4 py-16">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
-            Connect with your <br />
-            <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-              college community
-            </span>
-          </h2>
-          
-          <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">
-            Find roommates, study buddies, and lifelong friends at your school. 
-            Join thousands of students already connecting on FroshMeet.
-          </p>
-
-          {/* School Search */}
-          <div className="max-w-md mx-auto mb-12">
-            <div className="space-y-4">
-              <div className="relative">
-                <Input
-                  placeholder="Search for your school..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="h-12 text-lg"
-                />
-                 {searchTerm && filteredSchools.length > 0 && (
-                  <div className="absolute top-full left-0 right-0 bg-background border border-border rounded-md mt-1 z-50 max-h-60 overflow-y-auto shadow-lg">
-                    {filteredSchools.map((school) => (
-                      <div
-                        key={school.name}
-                        className="p-3 hover:bg-muted cursor-pointer text-sm border-b border-border last:border-b-0"
-                        onClick={() => {
-                          setSearchTerm("");
-                          handleSchoolSelect(school.name, school.slug);
-                        }}
-                      >
-                        {school.name}
-                      </div>
-                    ))}
-                  </div>
-                )}
+      <section className="relative overflow-hidden py-20 md:py-32">
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-card opacity-90"></div>
+        <div className="relative container mx-auto px-4">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="animate-fade-in-up">
+              <Badge variant="secondary" className="mb-6 bg-primary/10 text-primary border-primary/20">
+                🎓 Meet Your College Crew Before Day One
+              </Badge>
+              <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-6 leading-tight">
+                Connect with your{" "}
+                <span className="bg-gradient-to-r from-primary via-primary to-primary/80 bg-clip-text text-transparent">
+                  college community
+                </span>
+              </h1>
+              <p className="text-xl text-muted-foreground mb-8 max-w-lg">
+                Find roommates, study buddies, and lifelong friends at your school. 
+                Join thousands of students already connecting on FroshMeet - the trusted platform 
+                for college freshmen to build meaningful relationships.
+              </p>
+              
+              {/* School Search */}
+              <div className="max-w-md mb-8">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                  <Input
+                    placeholder="Search for your school..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="h-14 pl-10 text-lg bg-card/50 border-border/40"
+                  />
+                  {searchTerm && filteredSchools.length > 0 && (
+                    <div className="absolute top-full left-0 right-0 bg-card border border-border rounded-lg mt-2 z-50 max-h-60 overflow-y-auto shadow-2xl">
+                      {filteredSchools.slice(0, 5).map((school) => (
+                        <div
+                          key={school.name}
+                          className="p-4 hover:bg-muted/50 cursor-pointer text-sm border-b border-border/40 last:border-b-0 transition-colors"
+                          onClick={() => {
+                            setSearchTerm("");
+                            handleSchoolSelect(school.name, school.slug);
+                          }}
+                        >
+                          {school.name}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                
+                <div className="flex gap-3 mt-4">
+                  <Button 
+                    onClick={() => searchTerm && filteredSchools.length > 0 && handleSchoolSelect(filteredSchools[0].name, filteredSchools[0].slug)}
+                    disabled={!searchTerm || filteredSchools.length === 0}
+                    className="flex-1 h-12 text-base bg-primary hover:bg-primary/90"
+                    size="lg"
+                  >
+                    Explore {searchTerm && filteredSchools.length > 0 ? filteredSchools[0].name : "School"}
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    onClick={() => navigate('/features')}
+                    className="h-12 px-6"
+                  >
+                    Learn More
+                  </Button>
+                </div>
               </div>
 
-              <Button 
-                onClick={() => searchTerm && filteredSchools.length > 0 && handleSchoolSelect(filteredSchools[0].name, filteredSchools[0].slug)}
-                disabled={!searchTerm || filteredSchools.length === 0}
-                className="w-full h-12 text-lg"
-                size="lg"
-              >
-                Explore {searchTerm && filteredSchools.length > 0 ? filteredSchools[0].name : "School"} Community
-              </Button>
+              <p className="text-sm text-muted-foreground">
+                ⚠️ FroshMeet is an independent platform and is not officially partnered with any university.
+              </p>
+            </div>
+            
+            <div className="relative animate-slide-in-right">
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/5 rounded-3xl transform rotate-3"></div>
+              <img 
+                src={heroImage}
+                alt="College students connecting and making friends" 
+                className="relative rounded-3xl shadow-2xl w-full h-auto"
+              />
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Featured Schools Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
-            {SCHOOL_DATABASE.slice(0, 8).map((school) => (
+      {/* Features Preview */}
+      <section className="py-20 bg-card/20">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16 animate-fade-in">
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+              Everything you need to connect
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Discover the features that make FroshMeet the perfect platform for college freshmen
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <Card className="bg-card/50 border-border/40 hover:bg-card/80 transition-all duration-300 hover:scale-105 animate-scale-in">
+              <CardContent className="p-8 text-center">
+                <div className="w-16 h-16 bg-gradient-to-r from-primary/20 to-primary/40 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <Users className="h-8 w-8 text-primary" />
+                </div>
+                <h3 className="text-2xl font-bold text-foreground mb-4">Find Your People</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Connect with roommates, study buddies, and friends who share your interests and goals
+                </p>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-card/50 border-border/40 hover:bg-card/80 transition-all duration-300 hover:scale-105 animate-scale-in" style={{ animationDelay: '0.1s' }}>
+              <CardContent className="p-8 text-center">
+                <div className="w-16 h-16 bg-gradient-to-r from-primary/20 to-primary/40 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <MessageSquare className="h-8 w-8 text-primary" />
+                </div>
+                <h3 className="text-2xl font-bold text-foreground mb-4">Safe Messaging</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Chat securely with verified students from your school in a safe, moderated environment
+                </p>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-card/50 border-border/40 hover:bg-card/80 transition-all duration-300 hover:scale-105 animate-scale-in" style={{ animationDelay: '0.2s' }}>
+              <CardContent className="p-8 text-center">
+                <div className="w-16 h-16 bg-gradient-to-r from-primary/20 to-primary/40 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <Calendar className="h-8 w-8 text-primary" />
+                </div>
+                <h3 className="text-2xl font-bold text-foreground mb-4">Campus Events</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Discover events, study groups, and activities happening at your school
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Instagram Feed Preview */}
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16 animate-fade-in">
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+              See what's happening
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Follow @FroshMeet on Instagram for student stories, tips, and community highlights
+            </p>
+          </div>
+          
+          <div className="max-w-4xl mx-auto">
+            <Card className="bg-card/50 border-border/40 p-8 text-center">
+              <Instagram className="h-16 w-16 text-primary mx-auto mb-6" />
+              <h3 className="text-2xl font-bold text-foreground mb-4">@FroshMeet Instagram Feed</h3>
+              <p className="text-muted-foreground mb-6">
+                Connect with us on Instagram to see real student stories and stay updated with the latest from the FroshMeet community
+              </p>
+              <Button 
+                variant="outline" 
+                className="bg-gradient-to-r from-pink-500 to-purple-500 border-0 text-white hover:from-pink-600 hover:to-purple-600"
+                onClick={() => window.open('https://instagram.com/froshmeet', '_blank')}
+              >
+                <Instagram className="h-5 w-5 mr-2" />
+                Follow @FroshMeet
+              </Button>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Schools Grid */}
+      <section className="py-20 bg-card/20">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16 animate-fade-in">
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+              Popular Schools
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Join students from these top universities already connecting on FroshMeet
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 max-w-5xl mx-auto">
+            {SCHOOL_DATABASE.slice(0, 12).map((school, index) => (
               <Button
                 key={school.name}
                 variant="outline"
                 onClick={() => handleSchoolSelect(school.name, school.slug)}
-                className="h-20 flex flex-col items-center justify-center text-sm hover:bg-muted/50 transition-colors"
+                className="h-24 flex flex-col items-center justify-center text-sm hover:bg-primary/10 hover:border-primary/40 transition-all duration-300 hover:scale-105 bg-card/30 border-border/40 animate-scale-in"
+                style={{ animationDelay: `${index * 0.05}s` }}
               >
-                <div className="w-8 h-8 bg-gradient-to-r from-primary/20 to-primary/40 rounded-full flex items-center justify-center mb-2">
-                  <span className="text-primary font-semibold text-xs">
+                <div className="w-8 h-8 bg-gradient-to-r from-primary/30 to-primary/60 rounded-full flex items-center justify-center mb-2">
+                  <span className="text-primary font-bold text-xs">
                     {school.name.charAt(0)}
                   </span>
                 </div>
-                {school.name}
+                <span className="text-center leading-tight">{school.name}</span>
               </Button>
             ))}
           </div>
         </div>
-      </main>
+      </section>
+
+      {/* Newsletter Signup */}
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <Card className="max-w-2xl mx-auto bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 border-primary/20 animate-fade-in">
+            <CardContent className="p-12 text-center">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                Stay Updated
+              </h2>
+              <p className="text-xl text-muted-foreground mb-8">
+                Get the latest updates, tips, and stories from the FroshMeet community
+              </p>
+              <form onSubmit={handleNewsletterSignup} className="flex gap-4 max-w-md mx-auto">
+                <Input
+                  type="email"  
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="flex-1 h-12 bg-background/50"
+                  required
+                />
+                <Button type="submit" className="h-12 px-8 bg-primary hover:bg-primary/90">
+                  Subscribe
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
 
       {/* Footer */}
-      <footer className="border-t bg-muted/20 mt-20">
-        <div className="container mx-auto px-4 py-8">
-          <div className="text-center text-muted-foreground">
-            <p>&copy; 2024 FroshMeet. Connecting college communities.</p>
+      <footer className="border-t border-border/40 bg-card/20 py-16">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-4 gap-8 mb-12">
+            <div className="md:col-span-2">
+              <div className="flex items-center space-x-3 mb-6">
+                <img 
+                  src="/lovable-uploads/70c5411f-00f7-43f3-9004-7c6c2fc6cb12.png" 
+                  alt="FroshMeet Logo" 
+                  className="h-8 w-auto"
+                />
+                <span className="text-xl font-bold text-foreground">FroshMeet</span>
+              </div>
+              <p className="text-muted-foreground leading-relaxed mb-6 max-w-md">
+                The trusted platform for college freshmen to connect, network, and build lasting friendships 
+                before stepping foot on campus.
+              </p>
+              <div className="flex space-x-4">
+                <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary">
+                  <Instagram className="h-5 w-5" />
+                </Button>
+              </div>
+            </div>
+            
+            <div>
+              <h3 className="font-semibold text-foreground mb-4">Company</h3>
+              <div className="space-y-2">
+                <Button variant="ghost" size="sm" onClick={() => navigate('/about')} className="text-muted-foreground hover:text-foreground w-full justify-start p-0 h-auto">
+                  About
+                </Button>
+                <Button variant="ghost" size="sm" onClick={() => navigate('/features')} className="text-muted-foreground hover:text-foreground w-full justify-start p-0 h-auto">
+                  Features
+                </Button>
+                <Button variant="ghost" size="sm" onClick={() => navigate('/contact')} className="text-muted-foreground hover:text-foreground w-full justify-start p-0 h-auto">
+                  Contact
+                </Button>
+              </div>
+            </div>
+            
+            <div>
+              <h3 className="font-semibold text-foreground mb-4">Legal</h3>
+              <div className="space-y-2">
+                <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground w-full justify-start p-0 h-auto">
+                  Privacy Policy
+                </Button>
+                <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground w-full justify-start p-0 h-auto">
+                  Terms of Service
+                </Button>
+                <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground w-full justify-start p-0 h-auto">
+                  Cookie Policy
+                </Button>
+              </div>
+            </div>
+          </div>
+          
+          <div className="border-t border-border/40 pt-8 text-center">
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              © 2025 FroshMeet. All rights reserved. FroshMeet is a registered trademark of FroshMeet LLC. 
+              <br className="md:hidden" />
+              FroshMeet is not officially partnered with any university. 
+              <br className="md:hidden" />
+              Use of this website constitutes acceptance of our Privacy Policy and Terms of Service.
+            </p>
           </div>
         </div>
       </footer>

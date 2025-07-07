@@ -6,88 +6,64 @@
 
 @layer base {
   :root {
-    /* Gen Z Brand Colors */
-    --brand-blue: 214 100% 60%; /* Vibrant blue */
-    --brand-blue-dark: 214 100% 45%;
-    --brand-gradient: linear-gradient(135deg, hsl(214, 100%, 60%), hsl(214, 100%, 45%));
-    
-    /* Refined color system */
-    --background: 0 0% 100%;
-    --foreground: 0 0% 5%; /* Pure black for contrast */
+    /* Dark theme as default - primarily black with slightly lighter variants */
+    --background: 0 0% 4%; /* Very dark, almost black */
+    --foreground: 0 0% 98%; /* Pure white text */
 
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 5%;
+    --card: 0 0% 6%; /* Slightly lighter black for cards */
+    --card-foreground: 0 0% 98%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 5%;
+    --popover: 0 0% 6%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 214 100% 60%; /* Brand blue */
-    --primary-foreground: 0 0% 100%;
+    --primary: 214 100% 65%; /* Bright blue accent */
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 5%;
+    --secondary: 0 0% 10%; /* Dark gray */
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%; /* Medium gray */
+    --muted: 0 0% 8%; /* Muted dark */
+    --muted-foreground: 0 0% 60%; /* Medium gray text */
 
-    --accent: 214 100% 60%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 214 100% 65%;
+    --accent-foreground: 0 0% 98%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive-foreground: 0 0% 98%;
 
+    --border: 0 0% 12%; /* Subtle borders */
+    --input: 0 0% 8%; /* Dark inputs */
+    --ring: 214 100% 65%;
+
+    --radius: 1rem;
+
+    /* Gradients for modern look */
+    --gradient-primary: linear-gradient(135deg, hsl(214, 100%, 65%), hsl(214, 100%, 55%));
+    --gradient-background: linear-gradient(180deg, hsl(0, 0%, 4%), hsl(0, 0%, 2%));
+    --gradient-card: linear-gradient(135deg, hsl(0, 0%, 6%), hsl(0, 0%, 8%));
+  }
+
+  /* Keep light theme for reference but make dark the default */
+  .light {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 5%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 5%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 5%;
+    --primary: 214 100% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 5%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 214 100% 60%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
     --border: 0 0% 90%;
     --input: 0 0% 96%;
     --ring: 214 100% 60%;
-
-    --radius: 1rem; /* More rounded for Gen Z aesthetic */
-
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 0 0% 5%;
-    --sidebar-primary: 214 100% 60%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 96%;
-    --sidebar-accent-foreground: 0 0% 5%;
-    --sidebar-border: 0 0% 90%;
-    --sidebar-ring: 214 100% 60%;
-  }
-
-  .dark {
-    --background: 0 0% 5%; /* True black */
-    --foreground: 0 0% 100%;
-
-    --card: 0 0% 8%;
-    --card-foreground: 0 0% 100%;
-
-    --popover: 0 0% 8%;
-    --popover-foreground: 0 0% 100%;
-
-    --primary: 214 100% 60%;
-    --primary-foreground: 0 0% 5%;
-
-    --secondary: 0 0% 12%;
-    --secondary-foreground: 0 0% 100%;
-
-    --muted: 0 0% 12%;
-    --muted-foreground: 0 0% 65%;
-
-    --accent: 0 0% 12%;
-    --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 214 100% 60%;
-    --sidebar-background: 0 0% 8%;
-    --sidebar-foreground: 0 0% 95%;
-    --sidebar-primary: 214 100% 60%;
-    --sidebar-primary-foreground: 0 0% 5%;
-    --sidebar-accent: 0 0% 12%;
-    --sidebar-accent-foreground: 0 0% 95%;
-    --sidebar-border: 0 0% 15%;
-    --sidebar-ring: 214 100% 60%;
   }
 }
 
@@ -99,19 +75,14 @@
   html, body {
     margin: 0;
     padding: 0;
-    overflow: hidden; /* Disables all scrollbars on the page */
     height: 100%;
-    touch-action: manipulation; /* Optimized for mobile gestures */
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
     @apply bg-background text-foreground;
   }
 
   #root {
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
   }
 
   /* Gen Z Typography */
