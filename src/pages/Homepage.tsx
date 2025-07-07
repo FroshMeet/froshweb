@@ -39,8 +39,8 @@ const SCHOOL_DATABASE = [
     keywords: ["Stanford", "Stanford University"]
   },
   {
-    name: "Florida State University",
-    slug: "florida-state-university",
+    name: "FSU",
+    slug: "fsu",
     keywords: ["FSU", "Florida State", "Florida State University"]
   },
   {
@@ -74,8 +74,8 @@ const SCHOOL_DATABASE = [
     keywords: ["Caltech", "California Institute of Technology"]
   },
   {
-    name: "University of Chicago",
-    slug: "university-of-chicago",
+    name: "UChicago",
+    slug: "uchicago",
     keywords: ["University of Chicago", "UChicago", "Chicago"]
   },
   {
@@ -99,8 +99,8 @@ const SCHOOL_DATABASE = [
     keywords: ["UCI", "UC Irvine", "Irvine"]
   },
   {
-    name: "University of Florida",
-    slug: "university-of-florida",
+    name: "UF",
+    slug: "uf",
     keywords: ["University of Florida", "UF", "Florida"]
   },
   {
@@ -109,8 +109,8 @@ const SCHOOL_DATABASE = [
     keywords: ["UC Davis", "Davis"]
   },
   {
-    name: "University of Texas",
-    slug: "university-of-texas",
+    name: "UT",
+    slug: "ut",
     keywords: ["University of Texas", "UT", "Texas"]
   },
   {
@@ -134,18 +134,18 @@ const SCHOOL_DATABASE = [
     keywords: ["University of Michigan", "Michigan"]
   },
   {
-    name: "UNC Chapel Hill",
-    slug: "unc-chapel-hill",
+    name: "UNC",
+    slug: "unc",
     keywords: ["UNC", "UNC Chapel Hill", "Chapel Hill"]
   },
   {
-    name: "University of Virginia",
-    slug: "university-of-virginia",
+    name: "UVA",
+    slug: "uva",
     keywords: ["University of Virginia", "UVA", "Virginia"]
   },
   {
-    name: "University of Washington",
-    slug: "university-of-washington",
+    name: "UW",
+    slug: "uw",
     keywords: ["University of Washington", "UW", "Washington"]
   },
   {
@@ -184,13 +184,13 @@ const SCHOOL_DATABASE = [
     keywords: ["University of Miami", "Miami"]
   },
   {
-    name: "Carnegie Mellon University",
-    slug: "carnegie-mellon-university",
+    name: "CMU",
+    slug: "cmu",
     keywords: ["Carnegie Mellon", "CMU", "Carnegie Mellon University"]
   },
   {
-    name: "Boston University",
-    slug: "boston-university",
+    name: "BU",
+    slug: "bu",
     keywords: ["Boston University", "BU"]
   },
   {
@@ -199,28 +199,28 @@ const SCHOOL_DATABASE = [
     keywords: ["Purdue", "Purdue University"]
   },
   {
-    name: "University of Georgia",
-    slug: "university-of-georgia",
+    name: "UGA",
+    slug: "uga",
     keywords: ["University of Georgia", "UGA", "Georgia"]
   },
   {
-    name: "Indiana University",
-    slug: "indiana-university",
+    name: "IU",
+    slug: "iu",
     keywords: ["Indiana University", "IU", "Bloomington"]
   },
   {
-    name: "Penn State",
-    slug: "penn-state",
+    name: "PSU",
+    slug: "psu",
     keywords: ["Penn State", "PSU", "Pennsylvania State"]
   },
   {
-    name: "Michigan State University",
-    slug: "michigan-state-university",
+    name: "MSU",
+    slug: "msu",
     keywords: ["Michigan State", "MSU", "Michigan State University"]
   },
   {
-    name: "Ohio State University",
-    slug: "ohio-state-university",
+    name: "OSU",
+    slug: "osu",
     keywords: ["Ohio State", "OSU", "Ohio State University"]
   },
   {
@@ -229,8 +229,8 @@ const SCHOOL_DATABASE = [
     keywords: ["University of Arizona", "Arizona"]
   },
   {
-    name: "Texas A&M University",
-    slug: "texas-aandm-university",
+    name: "Texas A&M",
+    slug: "texas-aandm",
     keywords: ["Texas A&M", "TAMU", "Texas A&M University"]
   },
   {
@@ -309,13 +309,13 @@ const SCHOOL_DATABASE = [
     keywords: ["Cornell", "Cornell University"]
   },
   {
-    name: "University of Colorado Boulder",
-    slug: "university-of-colorado-boulder",
+    name: "CU Boulder",
+    slug: "cu-boulder",
     keywords: ["CU Boulder", "University of Colorado", "Colorado Boulder"]
   },
   {
-    name: "University of Wisconsin",
-    slug: "university-of-wisconsin",
+    name: "UW Madison",
+    slug: "uw-madison",
     keywords: ["UW Madison", "University of Wisconsin", "Wisconsin Madison"]
   },
   {
@@ -606,8 +606,8 @@ const Homepage = () => {
         </div>
       </section>
 
-      {/* Featured Schools Grid */}
-      <section className="py-20 bg-card/20">
+      {/* Featured Schools Carousel */}
+      <section className="py-20 bg-card/20 overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16 animate-fade-in">
             <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
@@ -618,23 +618,27 @@ const Homepage = () => {
             </p>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 max-w-5xl mx-auto">
-            {SCHOOL_DATABASE.slice(0, 12).map((school, index) => (
-              <Button
-                key={school.name}
-                variant="outline"
-                onClick={() => handleSchoolSelect(school.name, school.slug)}
-                className="h-24 flex flex-col items-center justify-center text-sm hover:bg-primary/10 hover:border-primary/40 transition-all duration-300 hover:scale-105 bg-card/30 border-border/40 animate-scale-in"
-                style={{ animationDelay: `${index * 0.05}s` }}
-              >
-                <div className="w-8 h-8 bg-gradient-to-r from-primary/30 to-primary/60 rounded-full flex items-center justify-center mb-2">
-                  <span className="text-primary font-bold text-xs">
-                    {school.name.charAt(0)}
-                  </span>
-                </div>
-                <span className="text-center leading-tight">{school.name}</span>
-              </Button>
-            ))}
+          <div className="relative">
+            <div className="overflow-hidden">
+              <div className="flex animate-scroll-carousel space-x-4">
+                {/* Render schools twice for seamless loop */}
+                {[...SCHOOL_DATABASE, ...SCHOOL_DATABASE].map((school, index) => (
+                  <Button
+                    key={`${school.name}-${index}`}
+                    variant="outline"
+                    onClick={() => handleSchoolSelect(school.name, school.slug)}
+                    className="flex-shrink-0 w-32 h-24 flex flex-col items-center justify-center text-sm hover:bg-primary/10 hover:border-primary/40 transition-all duration-300 hover:scale-105 bg-card/30 border-border/40"
+                  >
+                    <div className="w-8 h-8 bg-gradient-to-r from-primary/30 to-primary/60 rounded-full flex items-center justify-center mb-2">
+                      <span className="text-primary font-bold text-xs">
+                        {school.name.charAt(0)}
+                      </span>
+                    </div>
+                    <span className="text-center leading-tight text-xs">{school.name}</span>
+                  </Button>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>

@@ -16,7 +16,7 @@
     --popover: 0 0% 6%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 214 100% 65%; /* Bright blue accent */
+    --primary: 214 100% 55%; /* Darker blue for futuristic laser tag vibes */
     --primary-foreground: 0 0% 98%;
 
     --secondary: 0 0% 10%; /* Dark gray */
@@ -25,7 +25,7 @@
     --muted: 0 0% 8%; /* Muted dark */
     --muted-foreground: 0 0% 60%; /* Medium gray text */
 
-    --accent: 214 100% 65%;
+    --accent: 214 100% 55%;
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 84.2% 60.2%;
@@ -33,7 +33,7 @@
 
     --border: 0 0% 12%; /* Subtle borders */
     --input: 0 0% 8%; /* Dark inputs */
-    --ring: 214 100% 65%;
+    --ring: 214 100% 55%;
 
     --radius: 1rem;
 
