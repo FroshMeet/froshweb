@@ -44,10 +44,11 @@ const SchoolInstagramPage = () => {
                   className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity"
                   onClick={() => navigate('/')}
                 >
-                  <div className="w-8 h-8 bg-gradient-to-r from-primary to-primary/80 rounded-lg flex items-center justify-center">
-                    <span className="text-primary-foreground font-bold text-sm">F</span>
-                  </div>
-                  <span className="font-semibold text-foreground">FroshMeet</span>
+                  <img 
+                    src="/lovable-uploads/70c5411f-00f7-43f3-9004-7c6c2fc6cb12.png" 
+                    alt="FroshMeet Logo" 
+                    className="h-8 w-auto"
+                  />
                 </div>
               </div>
               <Button onClick={() => navigate('/app')}>
@@ -95,10 +96,11 @@ const SchoolInstagramPage = () => {
                 className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity"
                 onClick={() => navigate('/')}
               >
-                <div className="w-8 h-8 bg-gradient-to-r from-primary to-primary/80 rounded-lg flex items-center justify-center">
-                  <span className="text-primary-foreground font-bold text-sm">F</span>
-                </div>
-                <span className="font-semibold text-foreground">FroshMeet</span>
+                <img 
+                  src="/lovable-uploads/70c5411f-00f7-43f3-9004-7c6c2fc6cb12.png" 
+                  alt="FroshMeet Logo" 
+                  className="h-8 w-auto"
+                />
               </div>
             </div>
             <div className="flex items-center space-x-2">

@@ -44,10 +44,11 @@ const Homepage = () => {
               className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity"
               onClick={() => navigate('/')}
             >
-              <div className="w-10 h-10 bg-gradient-to-r from-primary to-primary/80 rounded-lg flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-lg">F</span>
-              </div>
-              <h1 className="text-2xl font-bold text-foreground">FroshMeet</h1>
+              <img 
+                src="/lovable-uploads/70c5411f-00f7-43f3-9004-7c6c2fc6cb12.png" 
+                alt="FroshMeet Logo" 
+                className="h-10 w-auto"
+              />
             </div>
             <Button variant="outline" onClick={() => navigate('/app')}>
               Open App
