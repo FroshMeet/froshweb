@@ -59,26 +59,26 @@ const CommunityBoard = () => {
   const getPostIcon = (type) => {
     switch (type) {
       case "event":
-        return <Calendar className="h-5 w-5 text-blue-600" />;
+        return <Calendar className="h-5 w-5 text-neon-cyan" />;
       case "question":
-        return <HelpCircle className="h-5 w-5 text-green-600" />;
+        return <HelpCircle className="h-5 w-5 text-green-400" />;
       case "club":
-        return <Megaphone className="h-5 w-5 text-purple-600" />;
+        return <Megaphone className="h-5 w-5 text-neon-violet" />;
       default:
-        return <Users className="h-5 w-5 text-slate-600" />;
+        return <Users className="h-5 w-5 text-muted-foreground" />;
     }
   };
 
   const getPostColor = (type) => {
     switch (type) {
       case "event":
-        return "bg-blue-50 border-blue-200";
+        return "bg-card border-border";
       case "question":
-        return "bg-green-50 border-green-200";
+        return "bg-card border-border";
       case "club":
-        return "bg-purple-50 border-purple-200";
+        return "bg-card border-border";
       default:
-        return "bg-slate-50 border-slate-200";
+        return "bg-card border-border";
     }
   };
 
@@ -89,8 +89,8 @@ const CommunityBoard = () => {
   return (
     <div className="max-w-4xl mx-auto">
       <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold text-slate-800 mb-2">Community Board</h2>
-        <p className="text-slate-600">Stay connected with campus events, questions, and clubs</p>
+        <h2 className="text-2xl font-bold text-foreground mb-2">Community Board</h2>
+        <p className="text-muted-foreground">Stay connected with campus events, questions, and clubs</p>
       </div>
 
       <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="mb-6">
@@ -112,8 +112,8 @@ const CommunityBoard = () => {
                   <div>
                     <CardTitle className="text-lg">{post.title}</CardTitle>
                     <div className="flex items-center space-x-2 mt-1">
-                      <span className="text-sm text-slate-600">by {post.author}</span>
-                      <span className="text-xs text-slate-500 flex items-center">
+                      <span className="text-sm text-muted-foreground">by {post.author}</span>
+                      <span className="text-xs text-muted-foreground flex items-center">
                         <Clock className="h-3 w-3 mr-1" />
                         {post.time}
                       </span>
@@ -124,7 +124,7 @@ const CommunityBoard = () => {
             </CardHeader>
             
             <CardContent className="pt-0">
-              <p className="text-slate-700 mb-4">{post.content}</p>
+              <p className="text-foreground mb-4">{post.content}</p>
               
               <div className="flex flex-wrap gap-2 mb-4">
                 {post.tags.map((tag) => (
@@ -136,11 +136,11 @@ const CommunityBoard = () => {
               
               <div className="flex items-center justify-between">
                 <div className="flex space-x-4">
-                  <Button variant="ghost" size="sm" className="text-slate-600 hover:text-red-600">
+                  <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-red-400">
                     <Heart className="h-4 w-4 mr-1" />
                     {post.likes}
                   </Button>
-                  <Button variant="ghost" size="sm" className="text-slate-600 hover:text-blue-600">
+                  <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary">
                     <MessageSquare className="h-4 w-4 mr-1" />
                     {post.comments}
                   </Button>
@@ -155,7 +155,7 @@ const CommunityBoard = () => {
       </div>
 
       <div className="mt-8 text-center">
-        <Button className="bg-slate-900 hover:bg-slate-800">
+        <Button className="bg-primary hover:bg-primary/90 neon-glow">
           Create New Post
         </Button>
       </div>

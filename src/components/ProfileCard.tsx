@@ -32,7 +32,7 @@ const ProfileCard = ({ profile, isOwnProfile = false, isMobile = false, onUpdate
 
   return (
     <>
-      <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-white/80 backdrop-blur-sm">
+      <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-card/80 backdrop-blur-sm neon-glow">
         <div className="relative">
           {hasProfilePhoto ? (
             <img
@@ -41,12 +41,12 @@ const ProfileCard = ({ profile, isOwnProfile = false, isMobile = false, onUpdate
               className="w-full h-64 object-cover"
             />
           ) : (
-            <div className="w-full h-64 bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
-              <User className="h-16 w-16 text-slate-400" />
+            <div className="w-full h-64 bg-gradient-to-br from-muted to-muted/70 flex items-center justify-center">
+              <User className="h-16 w-16 text-muted-foreground" />
             </div>
           )}
           <div className="absolute top-4 right-4 flex items-center space-x-2">
-            <Badge className="bg-white/90 text-black">
+            <Badge className="bg-primary/90 text-primary-foreground">
               Class of {profile?.classOf || "2029"}
             </Badge>
             {/* Mobile Settings Icon */}
@@ -54,9 +54,9 @@ const ProfileCard = ({ profile, isOwnProfile = false, isMobile = false, onUpdate
               <Button
                 variant="outline"
                 size="sm"
-                className="bg-white/90 hover:bg-white p-2 h-8 w-8"
+                className="bg-card/90 hover:bg-card p-2 h-8 w-8"
               >
-                <Settings className="h-4 w-4 text-black" />
+                <Settings className="h-4 w-4 text-foreground" />
               </Button>
             )}
           </div>
@@ -128,16 +128,16 @@ const ProfileCard = ({ profile, isOwnProfile = false, isMobile = false, onUpdate
                 </div>
               </div>
 
-              <div>
-                <p className="text-xs font-medium text-muted-foreground mb-1">LOOKING FOR</p>
-                <div className="flex flex-wrap gap-1">
-                  {profile?.lookingFor?.map((item) => (
-                    <Badge key={item} className="text-xs bg-purple-100 text-purple-700">
-                      {item}
-                    </Badge>
-                  )) || <span className="text-xs text-muted-foreground">Not specified</span>}
+                <div>
+                  <p className="text-xs font-medium text-muted-foreground mb-1">LOOKING FOR</p>
+                  <div className="flex flex-wrap gap-1">
+                    {profile?.lookingFor?.map((item) => (
+                      <Badge key={item} className="text-xs bg-primary/20 text-primary">
+                        {item}
+                      </Badge>
+                    )) || <span className="text-xs text-muted-foreground">Not specified</span>}
+                  </div>
                 </div>
-              </div>
             </div>
 
             {/* Mobile Edit Button */}
@@ -156,14 +156,14 @@ const ProfileCard = ({ profile, isOwnProfile = false, isMobile = false, onUpdate
                 <Button 
                   size="sm" 
                   variant="outline" 
-                  className="flex-1 hover:bg-red-50 hover:border-red-200"
+                  className="flex-1 hover:bg-destructive/10 hover:border-destructive/20"
                 >
                   <Heart className="h-4 w-4 mr-1" />
                   Like
                 </Button>
                 <Button 
                   size="sm" 
-                  className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                  className="flex-1 bg-primary hover:bg-primary/90 neon-glow"
                 >
                   <MessageSquare className="h-4 w-4 mr-1" />
                   Chat

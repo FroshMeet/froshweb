@@ -178,7 +178,7 @@ const Index = () => {
         return <CommunityTabContent />;
       case "chats":
         return isGuest ? <div className="max-w-lg mx-auto pb-32 text-center">
-            <p className="text-slate-600 mt-8 text-lg">Create an account to view your chats</p>
+            <p className="text-muted-foreground mt-8 text-lg">Create an account to view your chats</p>
           </div> : <ChatsTabContent />;
       case "profile":
         return isGuest ? <GuestProfile onCreateAccount={handleCreateAccount} /> : <ProfileTabContent currentUser={displayUser} onUpdateUser={setCurrentUser} />;

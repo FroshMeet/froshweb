@@ -54,7 +54,7 @@ const ProfileTabContent = ({ currentUser, onUpdateUser }: ProfileTabContentProps
             <Button 
               onClick={() => setShowPostModal(true)}
               size="lg"
-              className="w-full h-32 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white text-lg font-semibold"
+              className="w-full h-32 bg-primary hover:bg-primary/90 text-primary-foreground text-lg font-semibold neon-glow-strong"
             >
               Post Your Profile
             </Button>
@@ -70,7 +70,7 @@ const ProfileTabContent = ({ currentUser, onUpdateUser }: ProfileTabContentProps
           <Button 
             onClick={() => setShowPostModal(true)}
             size="lg"
-            className="w-full h-16 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white text-lg font-semibold"
+            className="w-full h-16 bg-primary hover:bg-primary/90 text-primary-foreground text-lg font-semibold neon-glow-strong"
           >
             Post Your Profile
           </Button>

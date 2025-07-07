@@ -56,6 +56,12 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				neon: {
+					cyan: 'hsl(var(--neon-cyan))',
+					magenta: 'hsl(var(--neon-magenta))',
+					violet: 'hsl(var(--neon-violet))',
+					glow: 'hsl(var(--neon-glow))'
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',

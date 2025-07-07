@@ -99,12 +99,12 @@ const ChatInterface = () => {
           <SheetTitle>Share Your Socials</SheetTitle>
         </SheetHeader>
         <div className="space-y-6 mt-6">
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+          <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4">
             <div className="flex items-start space-x-3">
-              <AlertTriangle className="h-5 w-5 text-red-500 mt-0.5" />
+              <AlertTriangle className="h-5 w-5 text-destructive mt-0.5" />
               <div>
-                <h4 className="font-medium text-red-800">Safety First!</h4>
-                <p className="text-sm text-red-700 mt-1">
+                <h4 className="font-medium text-destructive">Safety First!</h4>
+                <p className="text-sm text-destructive/80 mt-1">
                   Only share your personal information with people you trust. 
                   Be cautious about meeting strangers and always meet in public places.
                 </p>
@@ -190,8 +190,8 @@ const ChatInterface = () => {
     return (
       <div className="max-w-4xl mx-auto pb-32">
         <div className="text-center mb-6">
-          <h2 className="text-2xl font-bold text-slate-800 mb-2">Messages</h2>
-          <p className="text-slate-600">Connect with your matches and study groups</p>
+          <h2 className="text-2xl font-bold text-foreground mb-2">Messages</h2>
+          <p className="text-muted-foreground">Connect with your matches and study groups</p>
         </div>
 
         <Tabs defaultValue="requests" className="w-full">
@@ -233,10 +233,10 @@ const ChatInterface = () => {
                       
                       <div className="flex-1 min-w-0">
                         <div className="flex justify-between items-start">
-                          <h4 className="font-medium text-slate-800 truncate">{chat.name}</h4>
-                          <span className="text-xs text-slate-500">{chat.time}</span>
+                          <h4 className="font-medium text-foreground truncate">{chat.name}</h4>
+                          <span className="text-xs text-muted-foreground">{chat.time}</span>
                         </div>
-                        <p className="text-sm text-slate-600 truncate">{chat.lastMessage}</p>
+                        <p className="text-sm text-muted-foreground truncate">{chat.lastMessage}</p>
                         <div className="flex space-x-2 mt-1">
                           <Badge variant="outline" className="text-xs">{chat.major}</Badge>
                           <Badge variant="outline" className="text-xs">{chat.dorm}</Badge>
@@ -300,8 +300,8 @@ const ChatInterface = () => {
                 <div
                   className={`max-w-xs px-4 py-2 rounded-lg ${
                     msg.sender === 'me'
-                      ? 'bg-slate-900 text-white'
-                      : 'bg-slate-100 text-slate-800'
+                      ? 'bg-primary text-primary-foreground neon-glow'
+                      : 'bg-muted text-foreground'
                   }`}
                 >
                   <p className="text-sm">{msg.text}</p>
