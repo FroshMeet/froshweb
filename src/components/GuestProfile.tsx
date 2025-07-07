@@ -10,12 +10,12 @@ interface GuestProfileProps {
 const GuestProfile = ({ onCreateAccount }: GuestProfileProps) => {
   return (
     <div className="max-w-lg mx-auto pb-32">
-      <Card className="overflow-hidden bg-white/80 backdrop-blur-sm">
+      <Card className="overflow-hidden bg-card/90 backdrop-blur-sm neon-glow border-border">
         <CardHeader className="text-center">
-          <div className="w-16 h-16 bg-gradient-to-r from-slate-300 to-slate-400 rounded-full mx-auto mb-4 flex items-center justify-center">
-            <User className="h-8 w-8 text-white" />
+          <div className="w-16 h-16 bg-gradient-to-r from-primary/30 to-primary/50 rounded-full mx-auto mb-4 flex items-center justify-center neon-glow">
+            <User className="h-8 w-8 text-primary" />
           </div>
-          <CardTitle className="text-xl">Guest User</CardTitle>
+          <CardTitle className="text-xl text-foreground">Guest User</CardTitle>
           <p className="text-sm text-muted-foreground">
             Create an account to build your profile and connect with classmates
           </p>
@@ -23,32 +23,32 @@ const GuestProfile = ({ onCreateAccount }: GuestProfileProps) => {
         
         <CardContent className="space-y-4">
           <div className="space-y-3">
-            <div className="flex items-center space-x-3 p-3 bg-slate-50 rounded-lg">
-              <Users className="h-5 w-5 text-slate-600" />
+            <div className="flex items-center space-x-3 p-3 bg-muted/50 rounded-lg border border-border">
+              <Users className="h-5 w-5 text-primary" />
               <div>
-                <p className="font-medium">Connect with peers</p>
-                <p className="text-sm text-slate-600">Message and meet classmates</p>
+                <p className="font-medium text-foreground">Connect with peers</p>
+                <p className="text-sm text-muted-foreground">Message and meet classmates</p>
               </div>
             </div>
-            <div className="flex items-center space-x-3 p-3 bg-slate-50 rounded-lg">
-              <MessageSquare className="h-5 w-5 text-slate-600" />
+            <div className="flex items-center space-x-3 p-3 bg-muted/50 rounded-lg border border-border">
+              <MessageSquare className="h-5 w-5 text-primary" />
               <div>
-                <p className="font-medium">Build your profile</p>
-                <p className="text-sm text-slate-600">Share your interests and bio</p>
+                <p className="font-medium text-foreground">Build your profile</p>
+                <p className="text-sm text-muted-foreground">Share your interests and bio</p>
               </div>
             </div>
-            <div className="flex items-center space-x-3 p-3 bg-slate-50 rounded-lg">
-              <Heart className="h-5 w-5 text-slate-600" />
+            <div className="flex items-center space-x-3 p-3 bg-muted/50 rounded-lg border border-border">
+              <Heart className="h-5 w-5 text-primary" />
               <div>
-                <p className="font-medium">Smart matching</p>
-                <p className="text-sm text-slate-600">Find study buddies and friends</p>
+                <p className="font-medium text-foreground">Smart matching</p>
+                <p className="text-sm text-muted-foreground">Find study buddies and friends</p>
               </div>
             </div>
           </div>
           
           <Button 
             onClick={onCreateAccount}
-            className="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3"
+            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-3 neon-glow-strong"
           >
             Create Account
           </Button>
