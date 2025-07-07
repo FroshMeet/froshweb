@@ -15,9 +15,9 @@ const BottomNavigation = ({ activeTab, setActiveTab }: BottomNavigationProps) =>
             variant={activeTab === "discover" ? "default" : "ghost"} 
             size="sm" 
             onClick={() => setActiveTab("discover")} 
-            className={`flex flex-col items-center justify-center h-12 w-16 rounded-2xl transition-all duration-200 ${
+            className={`flex flex-col items-center justify-center h-12 w-16 rounded-2xl smooth-transition micro-interaction ${
               activeTab === "discover" 
-                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25 scale-105" 
+                ? "bg-primary text-primary-foreground neon-glow scale-105" 
                 : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
             }`}
           >
@@ -29,9 +29,9 @@ const BottomNavigation = ({ activeTab, setActiveTab }: BottomNavigationProps) =>
             variant={activeTab === "chats" ? "default" : "ghost"} 
             size="sm" 
             onClick={() => setActiveTab("chats")} 
-            className={`flex flex-col items-center justify-center h-12 w-16 rounded-2xl transition-all duration-200 ${
+            className={`flex flex-col items-center justify-center h-12 w-16 rounded-2xl smooth-transition micro-interaction ${
               activeTab === "chats" 
-                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25 scale-105" 
+                ? "bg-primary text-primary-foreground neon-glow scale-105" 
                 : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
             }`}
           >
@@ -43,9 +43,9 @@ const BottomNavigation = ({ activeTab, setActiveTab }: BottomNavigationProps) =>
             variant={activeTab === "meet" ? "default" : "ghost"} 
             size="lg" 
             onClick={() => setActiveTab("meet")} 
-            className={`flex flex-col items-center justify-center h-14 w-16 rounded-2xl transition-all duration-200 ${
+            className={`flex flex-col items-center justify-center h-14 w-16 rounded-2xl smooth-transition micro-interaction ${
               activeTab === "meet" 
-                ? "bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-lg shadow-primary/30 scale-110" 
+                ? "bg-gradient-to-r from-primary to-primary/80 text-primary-foreground neon-glow-strong scale-110" 
                 : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
             }`}
           >
@@ -57,9 +57,9 @@ const BottomNavigation = ({ activeTab, setActiveTab }: BottomNavigationProps) =>
             variant={activeTab === "community" ? "default" : "ghost"} 
             size="sm" 
             onClick={() => setActiveTab("community")} 
-            className={`flex flex-col items-center justify-center h-12 w-16 rounded-2xl transition-all duration-200 ${
+            className={`flex flex-col items-center justify-center h-12 w-16 rounded-2xl smooth-transition micro-interaction ${
               activeTab === "community" 
-                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25 scale-105" 
+                ? "bg-primary text-primary-foreground neon-glow scale-105" 
                 : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
             }`}
           >
@@ -71,9 +71,9 @@ const BottomNavigation = ({ activeTab, setActiveTab }: BottomNavigationProps) =>
             variant={activeTab === "profile" ? "default" : "ghost"} 
             size="sm" 
             onClick={() => setActiveTab("profile")} 
-            className={`flex flex-col items-center justify-center h-12 w-16 rounded-2xl transition-all duration-200 ${
+            className={`flex flex-col items-center justify-center h-12 w-16 rounded-2xl smooth-transition micro-interaction ${
               activeTab === "profile" 
-                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25 scale-105" 
+                ? "bg-primary text-primary-foreground neon-glow scale-105" 
                 : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
             }`}
           >

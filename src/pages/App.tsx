@@ -63,10 +63,10 @@ const Index = () => {
   };
 
   return (
-    <div className="h-screen w-screen bg-background flex flex-col overflow-hidden">
+    <div className="h-screen w-screen bg-gradient-to-b from-background to-background/95 flex flex-col overflow-hidden">
       <AppHeader displayUser={displayUser} isGuest={isGuest} />
       
-      <main className="flex-1 overflow-hidden bg-background">
+      <main className="flex-1 overflow-hidden bg-transparent smooth-transition">
         {renderContent()}
       </main>
 
