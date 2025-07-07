@@ -1,7 +1,3 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Heart, Users, MessageSquare, User, Grid } from "lucide-react";
 import WelcomeScreen from "@/components/WelcomeScreen";
 import MeetTabContent from "@/components/tabs/MeetTabContent";
 import DiscoverTabContent from "@/components/tabs/DiscoverTabContent";
@@ -10,164 +6,35 @@ import ChatsTabContent from "@/components/tabs/ChatsTabContent";
 import ProfileTabContent from "@/components/tabs/ProfileTabContent";
 import GuestProfile from "@/components/GuestProfile";
 import GuestMessageDialog from "@/components/GuestMessageDialog";
+import AppHeader from "@/components/layout/AppHeader";
+import BottomNavigation from "@/components/layout/BottomNavigation";
+import { mockUser, mockProfiles } from "@/data/mockData";
+import { useAppState } from "@/hooks/useAppState";
+
 const Index = () => {
-  const [currentUser, setCurrentUser] = useState(null);
-  const [isGuest, setIsGuest] = useState(false);
-  const [guestSchool, setGuestSchool] = useState("");
-  const [activeTab, setActiveTab] = useState("meet");
-  const [showGuestDialog, setShowGuestDialog] = useState(false);
-  const mockUser = {
-    id: 1,
-    name: "Sarah Chen",
-    age: 18,
-    college: "UCLA",
-    classOf: "2029",
-    major: "Computer Science",
-    dorm: "Warren Hall",
-    bio: "Love hiking, coding, and bubble tea! Looking for study buddies and new friends 🌟",
-    interests: ["Programming", "Hiking", "Photography", "Music"],
-    photos: [],
-    lookingFor: ["Friends", "Study Buddy", "Roommate"],
-    location: null,
-    instagram: "@sarah_chen",
-    snapchat: "@sarah_c22",
-    phoneNumber: "(555) 123-4567",
-    instagramPublic: true,
-    snapchatPublic: false,
-    phonePublic: false,
-    isInMeet: false,
-    isInDiscover: false
-  };
-  const mockProfiles = [{
-    id: 2,
-    name: "Alex Rivera",
-    age: 18,
-    college: "UCLA",
-    classOf: "2029",
-    major: "Business",
-    dorm: "North Campus",
-    bio: "Entrepreneur at heart, love meeting new people and exploring LA!",
-    interests: ["Business", "Networking", "Basketball", "Travel"],
-    photos: ["photo-1581091226825-a6a2a5aee158"],
-    lookingFor: ["Friends", "Networking"],
-    location: "Los Angeles, CA",
-    instagram: "@alex_rivera",
-    snapchat: "@alex_r2029",
-    phoneNumber: "(555) 234-5678",
-    instagramPublic: true,
-    snapchatPublic: true,
-    phonePublic: false
-  }, {
-    id: 3,
-    name: "Maya Patel",
-    age: 18,
-    college: "UCLA",
-    classOf: "2029",
-    major: "Pre-Med",
-    dorm: "South Campus",
-    bio: "Future doctor, current coffee addict ☕ Looking for study partners!",
-    interests: ["Medicine", "Yoga", "Reading", "Volunteering"],
-    photos: ["photo-1581092795360-fd1ca04f0952"],
-    lookingFor: ["Study Buddy", "Friends", "Roommate"],
-    location: "Los Angeles, CA",
-    instagram: "@maya_patel_md",
-    snapchat: "",
-    phoneNumber: "(555) 345-6789",
-    instagramPublic: false,
-    snapchatPublic: false,
-    phonePublic: false
-  }];
-  const getSchoolLogo = college => {
-    const colors = {
-      "Alabama": "from-red-700 to-red-900",
-      "ASU": "from-yellow-400 to-red-600",
-      "Berkeley": "from-blue-700 to-yellow-500",
-      "Boston University": "from-red-700 to-red-900",
-      "Brown": "from-red-700 to-yellow-600",
-      "Cal Poly Pomona": "from-green-600 to-yellow-400",
-      "Cal Poly SLO": "from-green-600 to-yellow-400",
-      "Caltech": "from-orange-500 to-red-600",
-      "Carnegie Mellon": "from-red-600 to-gray-700",
-      "Chico State": "from-red-600 to-yellow-400",
-      "Columbia": "from-blue-600 to-blue-800",
-      "Cornell": "from-red-600 to-red-800",
-      "CSULB": "from-yellow-400 to-black",
-      "Dartmouth": "from-green-600 to-green-800",
-      "Duke": "from-blue-600 to-blue-800",
-      "Florida State": "from-yellow-400 to-red-600",
-      "Georgetown": "from-blue-600 to-gray-600",
-      "Georgia": "from-red-600 to-black",
-      "Harvard": "from-red-700 to-red-900",
-      "Indiana": "from-red-600 to-white",
-      "Iowa State": "from-red-600 to-yellow-400",
-      "MIT": "from-gray-700 to-gray-900",
-      "Michigan": "from-blue-600 to-yellow-400",
-      "Michigan State": "from-green-600 to-white",
-      "Minnesota": "from-yellow-400 to-red-600",
-      "Northeastern": "from-red-600 to-black",
-      "Northwestern": "from-purple-600 to-purple-800",
-      "NYU": "from-purple-600 to-purple-800",
-      "Ohio State": "from-red-600 to-gray-600",
-      "Penn State": "from-blue-600 to-blue-800",
-      "Princeton": "from-orange-500 to-black",
-      "Purdue": "from-yellow-400 to-black",
-      "Rice": "from-blue-600 to-gray-600",
-      "Sac State": "from-green-600 to-yellow-400",
-      "San Diego State": "from-red-600 to-black",
-      "San Francisco State": "from-blue-600 to-yellow-400",
-      "SJSU": "from-blue-600 to-yellow-400",
-      "Stanford": "from-red-600 to-red-800",
-      "Texas A&M": "from-red-700 to-red-900",
-      "UC Davis": "from-blue-600 to-yellow-400",
-      "UC Irvine": "from-blue-600 to-yellow-400",
-      "UCLA": "from-blue-600 to-yellow-400",
-      "UC Merced": "from-blue-600 to-yellow-400",
-      "UC Riverside": "from-blue-600 to-yellow-400",
-      "UC San Diego": "from-blue-600 to-yellow-400",
-      "UC Santa Barbara": "from-blue-600 to-yellow-400",
-      "UC Santa Cruz": "from-blue-600 to-yellow-400",
-      "UCF": "from-yellow-400 to-black",
-      "UChicago": "from-red-700 to-red-900",
-      "UIUC": "from-blue-600 to-orange-500",
-      "UNC": "from-blue-600 to-blue-800",
-      "University of Arizona": "from-red-600 to-blue-600",
-      "University of Central Florida": "from-yellow-400 to-black",
-      "University of Colorado Boulder": "from-yellow-400 to-black",
-      "University of Florida": "from-blue-600 to-orange-500",
-      "University of Miami": "from-orange-500 to-green-600",
-      "University of Oregon": "from-green-600 to-yellow-400",
-      "University of Texas": "from-orange-500 to-orange-700",
-      "University of Virginia": "from-blue-600 to-orange-500",
-      "University of Washington": "from-purple-600 to-yellow-400",
-      "UPenn": "from-blue-600 to-red-600",
-      "USC": "from-red-700 to-yellow-400",
-      "Vanderbilt": "from-yellow-400 to-black",
-      "Virginia Tech": "from-red-700 to-orange-500",
-      "Wisconsin": "from-red-600 to-white",
-      "Yale": "from-blue-600 to-blue-800"
-    };
-    return colors[college] || "from-blue-600 to-purple-600";
-  };
-  const handleGuestContinue = selectedSchool => {
-    setIsGuest(true);
-    setGuestSchool(selectedSchool);
-    setCurrentUser(null);
-  };
-  const handleCreateAccount = () => {
-    setIsGuest(false);
-    setCurrentUser(null);
-    setShowGuestDialog(false);
-  };
-  const handleGuestAction = () => {
-    setShowGuestDialog(true);
-  };
+  const {
+    currentUser,
+    setCurrentUser,
+    isGuest,
+    guestSchool,
+    activeTab,
+    setActiveTab,
+    showGuestDialog,
+    setShowGuestDialog,
+    handleGuestContinue,
+    handleCreateAccount,
+    handleGuestAction
+  } = useAppState();
+
   if (!currentUser && !isGuest) {
     return <WelcomeScreen onUserCreate={setCurrentUser} onGuestContinue={handleGuestContinue} />;
   }
+
   const displayUser = currentUser || {
     ...mockUser,
     college: guestSchool || "Arizona State University"
   };
+
   const renderContent = () => {
     switch (activeTab) {
       case "meet":
@@ -177,123 +44,41 @@ const Index = () => {
       case "community":
         return <CommunityTabContent />;
       case "chats":
-        return isGuest ? <div className="max-w-lg mx-auto pb-32 text-center">
+        return isGuest ? (
+          <div className="max-w-lg mx-auto pb-32 text-center">
             <p className="text-muted-foreground mt-8 text-lg">Create an account to view your chats</p>
-          </div> : <ChatsTabContent />;
+          </div>
+        ) : (
+          <ChatsTabContent />
+        );
       case "profile":
-        return isGuest ? <GuestProfile onCreateAccount={handleCreateAccount} /> : <ProfileTabContent currentUser={displayUser} onUpdateUser={setCurrentUser} />;
+        return isGuest ? (
+          <GuestProfile onCreateAccount={handleCreateAccount} />
+        ) : (
+          <ProfileTabContent currentUser={displayUser} onUpdateUser={setCurrentUser} />
+        );
       default:
         return null;
     }
   };
-  return <div className="h-screen w-screen bg-background flex flex-col overflow-hidden">
-      {/* Header */}
-      <header className="bg-card/95 backdrop-blur-xl border-b border-border/50 flex-shrink-0 z-40 card-shadow">
-        <div className="max-w-md mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className={`w-10 h-10 bg-gradient-to-r ${getSchoolLogo(displayUser.college)} rounded-2xl shadow-lg flex items-center justify-center`}>
-              <span className="text-white font-bold text-lg">
-                {displayUser.college.charAt(0)}
-              </span>
-            </div>
-            <div>
-              <h1 className="text-xl font-display font-bold text-foreground">
-                FroshMeet
-              </h1>
-              <p className="text-xs text-muted-foreground font-medium">
-                {displayUser.college}
-              </p>
-            </div>
-          </div>
-          <Badge variant="secondary" className="bg-primary/10 text-primary border-0 font-semibold px-3 py-1.5 text-xs rounded-full">
-            {isGuest ? "Guest" : `Class of ${displayUser.classOf}`}
-          </Badge>
-        </div>
-      </header>
 
-      {/* Main Content */}
+  return (
+    <div className="h-screen w-screen bg-background flex flex-col overflow-hidden">
+      <AppHeader displayUser={displayUser} isGuest={isGuest} />
+      
       <main className="flex-1 overflow-hidden bg-background">
         {renderContent()}
       </main>
 
-      {/* Bottom Navigation */}
-      <nav className="bg-card/95 backdrop-blur-xl border-t border-border/50 card-shadow z-50">
-        <div className="max-w-md mx-auto px-4 py-3">
-          <div className="flex justify-between items-center">
-            <Button 
-              variant={activeTab === "discover" ? "default" : "ghost"} 
-              size="sm" 
-              onClick={() => setActiveTab("discover")} 
-              className={`flex flex-col items-center justify-center h-12 w-16 rounded-2xl transition-all duration-200 ${
-                activeTab === "discover" 
-                  ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25 scale-105" 
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-              }`}
-            >
-              <Grid className="h-5 w-5 mb-1" />
-              <span className="text-xs font-medium">Discover</span>
-            </Button>
-            
-            <Button 
-              variant={activeTab === "chats" ? "default" : "ghost"} 
-              size="sm" 
-              onClick={() => setActiveTab("chats")} 
-              className={`flex flex-col items-center justify-center h-12 w-16 rounded-2xl transition-all duration-200 ${
-                activeTab === "chats" 
-                  ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25 scale-105" 
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-              }`}
-            >
-              <MessageSquare className="h-5 w-5 mb-1" />
-              <span className="text-xs font-medium">Chats</span>
-            </Button>
-            
-            <Button 
-              variant={activeTab === "meet" ? "default" : "ghost"} 
-              size="lg" 
-              onClick={() => setActiveTab("meet")} 
-              className={`flex flex-col items-center justify-center h-14 w-16 rounded-2xl transition-all duration-200 ${
-                activeTab === "meet" 
-                  ? "bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-lg shadow-primary/30 scale-110" 
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-              }`}
-            >
-              <Heart className="h-6 w-6 mb-1" />
-              <span className="text-xs font-bold">Meet</span>
-            </Button>
-            
-            <Button 
-              variant={activeTab === "community" ? "default" : "ghost"} 
-              size="sm" 
-              onClick={() => setActiveTab("community")} 
-              className={`flex flex-col items-center justify-center h-12 w-16 rounded-2xl transition-all duration-200 ${
-                activeTab === "community" 
-                  ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25 scale-105" 
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-              }`}
-            >
-              <Users className="h-5 w-5 mb-1" />
-              <span className="text-xs font-medium">Feed</span>
-            </Button>
-            
-            <Button 
-              variant={activeTab === "profile" ? "default" : "ghost"} 
-              size="sm" 
-              onClick={() => setActiveTab("profile")} 
-              className={`flex flex-col items-center justify-center h-12 w-16 rounded-2xl transition-all duration-200 ${
-                activeTab === "profile" 
-                  ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25 scale-105" 
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-              }`}
-            >
-              <User className="h-5 w-5 mb-1" />
-              <span className="text-xs font-medium">Profile</span>
-            </Button>
-          </div>
-        </div>
-      </nav>
+      <BottomNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
 
-      <GuestMessageDialog isOpen={showGuestDialog} onClose={() => setShowGuestDialog(false)} onCreateAccount={handleCreateAccount} />
-    </div>;
+      <GuestMessageDialog 
+        isOpen={showGuestDialog} 
+        onClose={() => setShowGuestDialog(false)} 
+        onCreateAccount={handleCreateAccount} 
+      />
+    </div>
+  );
 };
+
 export default Index;
