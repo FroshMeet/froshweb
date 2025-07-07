@@ -202,7 +202,7 @@ const WelcomeScreen = ({ onUserCreate, onGuestContinue }) => {
 
           <CardContent className="space-y-6">
             <div className="space-y-2">
-              <Select onValueChange={setSelectedSchool}>
+              <Select onValueChange={setSelectedSchool} value={selectedSchool}>
                 <SelectTrigger className="h-14 text-lg border-border bg-input neon-glow">
                   <SelectValue placeholder="Select your school" />
                 </SelectTrigger>
@@ -215,6 +215,7 @@ const WelcomeScreen = ({ onUserCreate, onGuestContinue }) => {
                         value={guestSchoolSearch}
                         onChange={(e) => setGuestSchoolSearch(e.target.value)}
                         className="pl-10 h-12 text-base"
+                        onKeyDown={(e) => e.stopPropagation()}
                       />
                     </div>
                   </div>
@@ -362,13 +363,25 @@ const WelcomeScreen = ({ onUserCreate, onGuestContinue }) => {
               <Select onValueChange={(value) => {
                 const college = colleges.find(c => c.name === value);
                 setFormData(prev => ({ ...prev, college }));
-              }}>
+              }} value={formData.college?.name || ""}>
                 <SelectTrigger className="h-14 text-lg border-border bg-input neon-glow">
                   <SelectValue placeholder="Search and select your school" />
                 </SelectTrigger>
                 <SelectContent className="max-h-[400px] bg-popover border-border text-popover-foreground z-50">
+                  <div className="sticky top-0 bg-popover p-3 border-b border-border">
+                    <div className="relative">
+                      <Search className="absolute left-3 top-4 h-5 w-5 text-muted-foreground" />
+                      <Input
+                        placeholder="Search schools, cities, or acronyms..."
+                        value={guestSchoolSearch}
+                        onChange={(e) => setGuestSchoolSearch(e.target.value)}
+                        className="pl-10 h-12 text-base"
+                        onKeyDown={(e) => e.stopPropagation()}
+                      />
+                    </div>
+                  </div>
                   <ScrollArea className="h-[300px]">
-                    {colleges.map((college) => (
+                    {filteredColleges.map((college) => (
                       <SelectItem key={college.name} value={college.name} className="py-3">
                         <div className="flex items-center gap-3">
                           <div className="text-sm font-bold text-primary">{college.acronym}</div>

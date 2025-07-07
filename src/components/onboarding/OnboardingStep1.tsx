@@ -131,7 +131,7 @@ const OnboardingStep1 = ({ formData, setFormData, colleges }: OnboardingStep1Pro
       </div>
       <div className="space-y-2">
         <Label htmlFor="college">College/University</Label>
-        <Select onValueChange={(value) => setFormData(prev => ({ ...prev, college: value }))}>
+        <Select onValueChange={(value) => setFormData(prev => ({ ...prev, college: value }))} value={formData.college || ""}>
           <SelectTrigger>
             <SelectValue placeholder="Select your college" />
           </SelectTrigger>
@@ -144,6 +144,7 @@ const OnboardingStep1 = ({ formData, setFormData, colleges }: OnboardingStep1Pro
                   value={collegeSearch}
                   onChange={(e) => setCollegeSearch(e.target.value)}
                   className="pl-10"
+                  onKeyDown={(e) => e.stopPropagation()}
                 />
               </div>
             </div>
