@@ -16,7 +16,7 @@
     --popover: 0 0% 5%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 195 100% 50%; /* FroshMeet brand blue #00BFFF */
+    --primary: 214 100% 45%; /* Darker blue for futuristic laser tag vibes */
     --primary-foreground: 0 0% 98%;
 
     --secondary: 0 0% 8%; /* Dark gray */
@@ -25,7 +25,7 @@
     --muted: 0 0% 7%; /* Muted dark */
     --muted-foreground: 0 0% 65%; /* Medium gray text */
 
-    --accent: 195 100% 50%;
+    --accent: 214 100% 45%;
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 84.2% 60.2%;
@@ -33,20 +33,20 @@
 
     --border: 0 0% 15%; /* Subtle borders */
     --input: 0 0% 7%; /* Dark inputs */
-    --ring: 195 100% 50%;
+    --ring: 214 100% 45%;
 
-    /* FroshMeet brand colors */
-    --neon-cyan: 195 100% 50%; /* #00BFFF */
-    --neon-magenta: 320 100% 75%;
-    --neon-violet: 270 100% 65%;
-    --neon-glow: 195 100% 50%;
-    --primary-rgb: 0, 191, 255;
+    /* Neon accent colors for futuristic vibes */
+    --neon-cyan: 180 100% 50%;
+    --neon-magenta: 300 100% 50%;
+    --neon-violet: 270 100% 50%;
+    --neon-glow: 214 100% 45%;
+    --primary-rgb: 59, 130, 246;
 
     --radius: 1rem;
 
     /* Gradients for modern look */
-    --gradient-primary: linear-gradient(135deg, hsl(195, 100%, 55%), hsl(195, 100%, 45%));
-    --gradient-neon: linear-gradient(135deg, hsl(195, 100%, 50%), hsl(320, 100%, 75%));
+    --gradient-primary: linear-gradient(135deg, hsl(214, 100%, 55%), hsl(214, 100%, 45%));
+    --gradient-neon: linear-gradient(135deg, hsl(180, 100%, 50%), hsl(270, 100%, 50%));
     --gradient-background: linear-gradient(180deg, hsl(0, 0%, 3%), hsl(0, 0%, 1%));
     --gradient-card: linear-gradient(135deg, hsl(0, 0%, 5%), hsl(0, 0%, 7%));
   }
@@ -102,25 +102,12 @@
 
   /* Mobile-optimized interactions */
   .tap-highlight {
-    -webkit-tap-highlight-color: rgba(0, 191, 255, 0.1);
+    -webkit-tap-highlight-color: rgba(59, 130, 246, 0.1);
   }
 
-  /* Smooth animations with FroshMeet polish */
+  /* Smooth animations */
   * {
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  /* Enhanced smooth transitions for mobile */
-  .smooth-transition {
-    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-  }
-
-  .micro-interaction {
-    transition: transform 0.15s ease-out;
-  }
-
-  .micro-interaction:active {
-    transform: scale(0.97);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   /* Card shadows for depth with neon glow */
