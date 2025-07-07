@@ -87,10 +87,15 @@ const SchoolPage = () => {
               <Button variant="ghost" onClick={() => navigate('/')}>
                 ← Back
               </Button>
-              <div className="w-8 h-8 bg-gradient-to-r from-primary to-primary/80 rounded-lg flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">F</span>
+              <div 
+                className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity"
+                onClick={() => navigate('/')}
+              >
+                <div className="w-8 h-8 bg-gradient-to-r from-primary to-primary/80 rounded-lg flex items-center justify-center">
+                  <span className="text-primary-foreground font-bold text-sm">F</span>
+                </div>
+                <span className="font-semibold text-foreground">FroshMeet</span>
               </div>
-              <span className="font-semibold text-foreground">FroshMeet</span>
             </div>
             <Button onClick={() => navigate('/app')}>
               Join Community
