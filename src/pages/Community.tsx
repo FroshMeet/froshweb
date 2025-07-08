@@ -95,25 +95,38 @@ const Community = () => {
       <header className="border-b bg-background/80 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <Button variant="ghost" onClick={() => navigate('/')}>
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Back
-              </Button>
-              <div 
-                className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity"
-                onClick={() => navigate('/')}
-              >
-                <img 
-                  src="/lovable-uploads/70c5411f-00f7-43f3-9004-7c6c2fc6cb12.png" 
-                  alt="FroshMeet Logo" 
-                  className="h-8 w-auto"
-                />
-              </div>
+            <div 
+              className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity"
+              onClick={() => navigate('/')}
+            >
+              <img 
+                src="/lovable-uploads/70c5411f-00f7-43f3-9004-7c6c2fc6cb12.png" 
+                alt="FroshMeet Logo" 
+                className="h-10 w-auto"
+              />
             </div>
-            <Button onClick={() => navigate('/signin')}>
-              Sign In
-            </Button>
+            <nav className="hidden md:flex items-center space-x-8">
+              <Button variant="ghost" onClick={() => navigate('/community')} className="text-foreground">
+                Community
+              </Button>
+              <Button variant="ghost" onClick={() => navigate('/about')} className="text-muted-foreground hover:text-foreground">
+                About
+              </Button>
+              <Button variant="ghost" onClick={() => navigate('/features')} className="text-muted-foreground hover:text-foreground">
+                Features
+              </Button>
+              <Button variant="ghost" onClick={() => navigate('/contact')} className="text-muted-foreground hover:text-foreground">
+                Contact
+              </Button>
+            </nav>
+            <div className="flex items-center space-x-4">
+              <Button variant="outline" onClick={() => navigate('/signin')}>
+                Sign In
+              </Button>
+              <Button onClick={() => navigate('/community')} className="bg-primary hover:bg-primary/90">
+                Join FroshMeet Now
+              </Button>
+            </div>
           </div>
         </div>
       </header>

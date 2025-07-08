@@ -25,6 +25,9 @@ const About = () => {
               />
             </div>
             <nav className="hidden md:flex items-center space-x-8">
+              <Button variant="ghost" onClick={() => navigate('/community')} className="text-muted-foreground hover:text-foreground">
+                Community
+              </Button>
               <Button variant="ghost" onClick={() => navigate('/about')} className="text-foreground">
                 About
               </Button>

@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Instagram, Users, MessageSquare, Heart, Search, ArrowLeft } from "lucide-react";
 import DiscoverGrid from "@/components/DiscoverGrid";
-import SwipeInterface from "@/components/SwipeInterface";
+import EnhancedSwipeInterface from "@/components/EnhancedSwipeInterface";
 import SchoolChatInterface from "@/components/SchoolChatInterface";
 
 const EnhancedSchoolPage = () => {
@@ -138,7 +138,7 @@ const EnhancedSchoolPage = () => {
 
   if (activeInterface === "swipe-meet" || activeInterface === "swipe-roommate") {
     return (
-      <SwipeInterface
+      <EnhancedSwipeInterface
         schoolName={schoolName}
         profiles={mockProfiles}
         isGuest={!isLoggedIn}
