@@ -61,8 +61,8 @@ const Contact = () => {
               <Button variant="outline" onClick={() => navigate('/signin')}>
                 Sign In
               </Button>
-              <Button onClick={() => navigate('/app')} className="bg-primary hover:bg-primary/90">
-                Join Now
+              <Button onClick={() => navigate('/community')} className="bg-primary hover:bg-primary/90">
+                Join FroshMeet Now
               </Button>
             </div>
           </div>
@@ -209,10 +209,10 @@ const Contact = () => {
                           <p className="text-muted-foreground mb-2">Quick support through the app</p>
                           <Button 
                             size="sm" 
-                            onClick={() => navigate('/app')}
+                            onClick={() => navigate('/community')}
                             className="bg-green-500 hover:bg-green-600 text-white"
                           >
-                            Open App
+                            Visit Community
                           </Button>
                         </div>
                       </div>

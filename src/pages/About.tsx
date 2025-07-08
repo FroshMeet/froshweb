@@ -42,8 +42,8 @@ const About = () => {
               <Button variant="outline" onClick={() => navigate('/signin')}>
                 Sign In
               </Button>
-              <Button onClick={() => navigate('/app')} className="bg-primary hover:bg-primary/90">
-                Join Now
+              <Button onClick={() => navigate('/community')} className="bg-primary hover:bg-primary/90">
+                Join FroshMeet Now
               </Button>
             </div>
           </div>
@@ -177,7 +177,7 @@ const About = () => {
               </p>
               <Button 
                 size="lg" 
-                onClick={() => navigate('/app')}
+                onClick={() => navigate('/community')}
                 className="bg-primary hover:bg-primary/90 text-lg px-8 py-4 h-auto"
               >
                 Start Connecting Today
