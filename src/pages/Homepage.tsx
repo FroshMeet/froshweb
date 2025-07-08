@@ -153,6 +153,7 @@ const Homepage = () => {
       <header className="sticky top-0 border-b border-border/40 bg-background/80 backdrop-blur-xl z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
+            {/* Logo */}
             <div 
               className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity"
               onClick={() => navigate('/')}
@@ -163,8 +164,10 @@ const Homepage = () => {
                 className="h-10 w-auto"
               />
             </div>
-            <div className="flex items-center space-x-8">
-              <nav className="hidden md:flex items-center space-x-8">
+            
+            {/* Centered Navigation */}
+            <nav className="hidden md:flex items-center justify-center flex-1">
+              <div className="flex items-center space-x-8">
                 <Button variant="ghost" onClick={() => navigate('/community')} className="text-muted-foreground hover:text-foreground">
                   Community
                 </Button>
@@ -177,15 +180,17 @@ const Homepage = () => {
                 <Button variant="ghost" onClick={() => navigate('/contact')} className="text-muted-foreground hover:text-foreground">
                   Contact
                 </Button>
-              </nav>
-              <div className="flex items-center space-x-4">
-                <Button variant="outline" onClick={() => navigate('/signin')}>
-                  Sign In
-                </Button>
-                <Button onClick={() => navigate('/community')} className="bg-primary hover:bg-primary/90">
-                  Join FroshMeet Now
-                </Button>
               </div>
+            </nav>
+            
+            {/* Action Buttons */}
+            <div className="flex items-center space-x-4">
+              <Button variant="outline" onClick={() => navigate('/signin')}>
+                Sign In
+              </Button>
+              <Button onClick={() => navigate('/community')} className="bg-primary hover:bg-primary/90">
+                Join FroshMeet Now
+              </Button>
             </div>
           </div>
         </div>
