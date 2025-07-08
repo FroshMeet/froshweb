@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 import { Search, ArrowLeft } from "lucide-react";
 
 const SCHOOLS = [
@@ -192,12 +193,17 @@ const Community = () => {
       <main className="container mx-auto px-4 py-12">
         <div className="max-w-6xl mx-auto">
           {/* Page Header */}
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-              Explore Your Community
-              <div className="w-24 h-1 bg-gradient-to-r from-primary to-primary/50 mx-auto mt-4 rounded-full neon-glow"></div>
+          <div className="text-center mb-12 animate-fade-in-up">
+            <Badge variant="secondary" className="mb-6 bg-primary/10 text-primary border-primary/20">
+              Start Exploring
+            </Badge>
+            <h1 className="text-5xl md:text-7xl font-bold leading-tight mb-6">
+              <div className="text-foreground">Explore the Community</div>
+              <div className="bg-gradient-to-r from-primary via-primary to-primary/80 bg-clip-text text-transparent">
+                at your school
+              </div>
             </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
               Find your school and connect with thousands of students in your community.
             </p>
             
