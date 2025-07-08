@@ -3,12 +3,13 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Instagram, ExternalLink, ArrowLeft, AlertCircle } from "lucide-react";
 import { getInstagramUsername, isSchoolSupported } from "@/config/schoolInstagramMapping";
+import { getSchoolName } from "@/config/schoolNameMapping";
 
 const SchoolInstagramPage = () => {
   const { school } = useParams<{ school: string }>();
   const navigate = useNavigate();
   
-  const schoolName = school?.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) || '';
+  const schoolName = school ? getSchoolName(school) : '';
   const instagramUsername = school ? getInstagramUsername(school) : null;
   const isSupported = school ? isSchoolSupported(school) : false;
   

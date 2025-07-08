@@ -8,6 +8,7 @@ import { Instagram, Users, MessageSquare, Heart, Search, ArrowLeft } from "lucid
 import DiscoverGrid from "@/components/DiscoverGrid";
 import EnhancedSwipeInterface from "@/components/EnhancedSwipeInterface";
 import SchoolChatInterface from "@/components/SchoolChatInterface";
+import { getSchoolName } from "@/config/schoolNameMapping";
 
 const EnhancedSchoolPage = () => {
   const { school } = useParams<{ school: string }>();
@@ -16,7 +17,7 @@ const EnhancedSchoolPage = () => {
   const [activeInterface, setActiveInterface] = useState<null | "swipe-meet" | "swipe-roommate" | "chat">(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false); // This would come from auth context
   
-  const schoolName = school?.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) || '';
+  const schoolName = school ? getSchoolName(school) : '';
 
   // Mock student profiles for the school
   const mockProfiles = [{
