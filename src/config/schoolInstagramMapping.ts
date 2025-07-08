@@ -38,7 +38,7 @@ export const SCHOOL_INSTAGRAM_MAPPING: Record<string, string> = {
   'carnegie-mellon': 'cmu2030meet',
   'boston-university': 'bu2030meet',
   'northeastern': 'northeastern2030meet',
-  'university-of-florida': 'uf2030meet',
+  'university-of-florida': 'usf2030meet',
   
   // State Universities
   'florida-state': 'fsu2030students',
