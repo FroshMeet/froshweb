@@ -155,27 +155,29 @@ const Community = () => {
                 className="h-10 w-auto"
               />
             </div>
-            <nav className="hidden md:flex items-center space-x-8">
-              <Button variant="ghost" onClick={() => navigate('/community')} className="text-foreground">
-                Community
-              </Button>
-              <Button variant="ghost" onClick={() => navigate('/about')} className="text-muted-foreground hover:text-foreground">
-                About
-              </Button>
-              <Button variant="ghost" onClick={() => navigate('/features')} className="text-muted-foreground hover:text-foreground">
-                Features
-              </Button>
-              <Button variant="ghost" onClick={() => navigate('/contact')} className="text-muted-foreground hover:text-foreground">
-                Contact
-              </Button>
-            </nav>
-            <div className="flex items-center space-x-4">
-              <Button variant="outline" onClick={() => navigate('/signin')}>
-                Sign In
-              </Button>
-              <Button onClick={() => navigate('/community')} className="bg-primary hover:bg-primary/90">
-                Join FroshMeet Now
-              </Button>
+            <div className="flex items-center space-x-8">
+              <nav className="hidden md:flex items-center space-x-8">
+                <Button variant="ghost" onClick={() => navigate('/community')} className="text-foreground">
+                  Community
+                </Button>
+                <Button variant="ghost" onClick={() => navigate('/about')} className="text-muted-foreground hover:text-foreground">
+                  About
+                </Button>
+                <Button variant="ghost" onClick={() => navigate('/features')} className="text-muted-foreground hover:text-foreground">
+                  Features
+                </Button>
+                <Button variant="ghost" onClick={() => navigate('/contact')} className="text-muted-foreground hover:text-foreground">
+                  Contact
+                </Button>
+              </nav>
+              <div className="flex items-center space-x-4">
+                <Button variant="outline" onClick={() => navigate('/signin')}>
+                  Sign In
+                </Button>
+                <Button onClick={() => navigate('/community')} className="bg-primary hover:bg-primary/90">
+                  Join FroshMeet Now
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -223,9 +225,14 @@ const Community = () => {
                   </div>
                   
                   {/* School Info */}
-                  <h3 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors text-primary">
-                    {school.acronym} - {school.name}
-                  </h3>
+                  <div className="space-y-2">
+                    <h3 className="font-bold text-xl uppercase tracking-wide text-primary group-hover:neon-glow transition-all duration-300">
+                      {school.acronym}
+                    </h3>
+                    <p className="text-sm text-foreground leading-relaxed line-clamp-2">
+                      {school.name}
+                    </p>
+                  </div>
                 </div>
               </div>
             ))}
