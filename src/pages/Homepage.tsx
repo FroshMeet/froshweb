@@ -178,7 +178,7 @@ const Homepage = () => {
               <Button variant="outline" onClick={() => navigate('/signin')}>
                 Sign In
               </Button>
-              <Button onClick={() => navigate('/app')} className="bg-primary hover:bg-primary/90">
+              <Button onClick={() => navigate('/community')} className="bg-primary hover:bg-primary/90">
                 Join FroshMeet Now
               </Button>
             </div>
@@ -249,10 +249,10 @@ const Homepage = () => {
                   </Button>
                   <Button 
                     variant="outline" 
-                    onClick={() => navigate('/features')}
+                    onClick={() => navigate('/community')}
                     className="h-12 px-6"
                   >
-                    Learn More
+                    Browse Schools
                   </Button>
                 </div>
               </div>

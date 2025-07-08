@@ -12,7 +12,7 @@ import Contact from "./pages/Contact";
 import SignIn from "./pages/SignIn";
 import SchoolPage from "./pages/SchoolPage";
 import SchoolInstagramPage from "./pages/SchoolInstagramPage";
-import App from "./pages/App";
+import Community from "./pages/Community";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,7 +29,7 @@ const AppRouter = () => (
           <Route path="/features" element={<Features />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/signin" element={<SignIn />} />
-          <Route path="/app" element={<App />} />
+          <Route path="/community" element={<Community />} />
           <Route path="/:school" element={<SchoolPage />} />
           <Route path="/:school/insta" element={<SchoolInstagramPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
