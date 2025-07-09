@@ -122,7 +122,9 @@ const EnhancedSchoolPage = () => {
   );
 
   const handleGuestAction = () => {
-    navigate('/signin');
+    // Set the user as a guest for this school instead of redirecting to signin
+    setIsLoggedIn(false); // Keep as guest but allow them to use the interface
+    // You could also set a guest state here if needed
   };
 
   const handleActionClick = (action: "meet" | "roommate" | "chat" | "feed") => {

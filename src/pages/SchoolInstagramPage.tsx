@@ -52,7 +52,7 @@ const SchoolInstagramPage = () => {
                   />
                 </div>
               </div>
-              <Button onClick={() => navigate('/app')}>
+              <Button onClick={() => navigate('/community')}>
                 Join Community
               </Button>
             </div>
@@ -116,7 +116,7 @@ const SchoolInstagramPage = () => {
                   <span>View on Instagram</span>
                 </a>
               </Button>
-              <Button onClick={() => navigate('/app')}>
+              <Button onClick={() => navigate('/community')}>
                 Join Community
               </Button>
             </div>

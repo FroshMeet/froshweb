@@ -20,7 +20,7 @@ const SignIn = () => {
     // Simulate sign-in process
     setTimeout(() => {
       setIsLoading(false);
-      navigate('/app');
+      navigate('/community');
     }, 1500);
   };
 
@@ -177,7 +177,7 @@ const SignIn = () => {
               <Button
                 type="button"
                 variant="outline"
-                onClick={() => navigate('/app')}
+                onClick={() => navigate('/community')}
                 className="w-full h-12 border-border/60 hover:bg-muted/20 hover:border-primary/40 transition-all duration-300"
               >
                 Continue as Guest
@@ -189,7 +189,7 @@ const SignIn = () => {
                 <Button
                   type="button"
                   variant="ghost"
-                  onClick={() => navigate('/app')}
+                  onClick={() => navigate('/community')}
                   className="text-primary hover:text-primary/80 p-0 h-auto font-medium underline underline-offset-4"
                 >
                   Create an account
