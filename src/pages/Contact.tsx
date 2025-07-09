@@ -48,17 +48,17 @@ const Contact = () => {
             {/* Centered Navigation */}
             <nav className="hidden md:flex items-center justify-center flex-1">
               <div className="flex items-center space-x-8">
-                <Button variant="ghost" onClick={() => navigate('/community')} className="text-muted-foreground hover:text-foreground">
-                  Community
-                </Button>
-                <Button variant="ghost" onClick={() => navigate('/about')} className="text-muted-foreground hover:text-foreground">
-                  About
-                </Button>
                 <Button variant="ghost" onClick={() => navigate('/features')} className="text-muted-foreground hover:text-foreground">
                   Features
                 </Button>
+                <Button variant="ghost" onClick={() => navigate('/community')} className="text-muted-foreground hover:text-foreground">
+                  Community
+                </Button>
                 <Button variant="ghost" onClick={() => navigate('/contact')} className="text-foreground">
                   Contact
+                </Button>
+                <Button variant="ghost" onClick={() => navigate('/about')} className="text-muted-foreground hover:text-foreground">
+                  About
                 </Button>
               </div>
             </nav>
