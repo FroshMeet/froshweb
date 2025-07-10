@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Users, Plus, Instagram, ExternalLink, ArrowLeft, Heart, MessageSquare, UserPlus, Home, DollarSign } from "lucide-react";
+import { Users, Plus, Instagram, ExternalLink, ArrowLeft, Heart, MessageSquare, UserPlus, Home } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { getSchoolName } from "@/config/schoolNameMapping";
 import GuestProfile from "@/components/GuestProfile";
@@ -30,7 +30,7 @@ export default function SchoolDashboard() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<any>(null);
   const [showGuestDialog, setShowGuestDialog] = useState(false);
-  const [activeTab, setActiveTab] = useState("posts");
+  const [activeTab, setActiveTab] = useState("meet");
   
   const schoolName = school ? getSchoolName(school) : school?.toUpperCase();
   const schoolDisplayName = schoolName || school?.toUpperCase() || '';
@@ -124,30 +124,29 @@ export default function SchoolDashboard() {
                 {schoolDisplayName.charAt(0)}
               </span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
               {schoolDisplayName}
             </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
+            <p className="text-muted-foreground mb-3">
               Connect with fellow students and build lasting friendships
             </p>
             
-            <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-6">
+            <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-4">
               <Users className="h-4 w-4" />
               <span>{profiles.length} students connected</span>
             </div>
 
             {!user && (
-              <div className="bg-gradient-to-r from-primary/20 to-accent/20 rounded-lg p-4 mb-6 border border-primary/30">
-                <p className="text-sm text-foreground mb-3">
-                  ✨ <strong>Create a free profile for the full FroshMeet experience!</strong>
+              <div className="space-y-3">
+                <p className="text-sm text-foreground">
+                  ✨ Create a free profile for the full FroshMeet experience!
                 </p>
-                <div className="flex flex-col sm:flex-row gap-2 justify-center">
+                <div className="flex gap-3 justify-center">
                   <Button 
                     onClick={handleCreateAccount}
                     size="sm"
                     className="bg-primary hover:bg-primary/90"
                   >
-                    <UserPlus className="h-4 w-4 mr-2" />
                     Sign Up Free
                   </Button>
                   <Button 
@@ -156,8 +155,8 @@ export default function SchoolDashboard() {
                     size="sm"
                     className="border-primary/50 text-primary hover:bg-primary/10"
                   >
-                    <DollarSign className="h-4 w-4 mr-2" />
-                    Quick $5 Instagram Post
+                    <Instagram className="h-4 w-4 mr-2" />
+                    Quick Instagram Post
                   </Button>
                 </div>
               </div>
@@ -169,156 +168,48 @@ export default function SchoolDashboard() {
       {/* Main Content with Tabs */}
       <div className="max-w-6xl mx-auto px-4 py-6">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid grid-cols-6 w-full mb-8">
-            <TabsTrigger value="posts">Website Posts</TabsTrigger>
-            <TabsTrigger value="instagram">Instagram</TabsTrigger>
-            <TabsTrigger value="meet">Meet</TabsTrigger>
-            <TabsTrigger value="roommates">Roommates</TabsTrigger>
-            <TabsTrigger value="chat">Chat</TabsTrigger>
-            <TabsTrigger value="insta-overview">Insta Feed</TabsTrigger>
+          <TabsList className="grid grid-cols-4 w-full mb-8 h-12">
+            <TabsTrigger value="meet" className="text-sm font-medium hover:bg-primary/10 transition-colors">Meet</TabsTrigger>
+            <TabsTrigger value="roommates" className="text-sm font-medium hover:bg-primary/10 transition-colors">Roommates</TabsTrigger>
+            <TabsTrigger value="chat" className="text-sm font-medium hover:bg-primary/10 transition-colors">Chat</TabsTrigger>
+            <TabsTrigger value="instagram-feed" className="text-sm font-medium hover:bg-primary/10 transition-colors">Instagram Feed</TabsTrigger>
           </TabsList>
 
-          {/* Website Posts Tab */}
-          <TabsContent value="posts" className="mt-0">
-            <div className="flex justify-between items-center mb-6">
-              <div>
-                <h2 className="text-2xl font-bold">Student Profiles</h2>
-                <p className="text-muted-foreground">Free profiles from {schoolDisplayName} students</p>
-              </div>
-              <Button 
-                onClick={user ? () => navigate('/create-profile') : () => handleGuestAction('profile creation')}
-                className="bg-primary hover:bg-primary/90"
-              >
-                <Plus className="h-4 w-4 mr-2" />
-                {user ? 'Create Profile' : 'Join to Create Profile'}
-              </Button>
-            </div>
-
-            {loading ? (
-              <div className="text-center py-12">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-                <p className="text-muted-foreground">Loading profiles...</p>
-              </div>
-            ) : profiles.length === 0 ? (
-              <div className="text-center py-12">
-                <Users className="h-16 w-16 text-muted-foreground mx-auto mb-4 opacity-50" />
-                <h3 className="text-xl font-semibold mb-2">No profiles yet!</h3>
-                <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                  Be the first student from {schoolDisplayName} to create a profile.
+          {/* Instagram Feed Tab */}
+          <TabsContent value="instagram-feed" className="mt-0">
+            <div className="space-y-8">
+              {/* Instagram Account Header */}
+              <div className="text-center">
+                <div className="flex items-center justify-center gap-2 mb-4">
+                  <Instagram className="h-8 w-8 text-[#E4405F]" />
+                  <h3 className="text-2xl font-bold">@{school}2030class</h3>
+                </div>
+                <p className="text-muted-foreground mb-6">
+                  Official Instagram account for {schoolDisplayName} Class of 2030
                 </p>
-                <Button 
-                  onClick={user ? () => navigate('/create-profile') : () => handleGuestAction('profile creation')}
-                  size="lg"
-                >
-                  <Plus className="h-5 w-5 mr-2" />
-                  {user ? 'Create First Profile' : 'Join to Create Profile'}
-                </Button>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {profiles.map((profile) => (
-                  <Card 
-                    key={profile.id} 
-                    className="overflow-hidden hover:shadow-lg transition-all duration-200 cursor-pointer group"
-                    onClick={() => navigate(`/${school}/post-to-insta?profileId=${profile.id}`)}
-                  >
-                    <div className="relative">
-                      {profile.photos && profile.photos.length > 0 && (
-                        <div className="aspect-square relative overflow-hidden">
-                          <img
-                            src={profile.photos[0]}
-                            alt={`${profile.name}'s photo`}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
-                          />
-                          {profile.photos.length > 1 && (
-                            <Badge 
-                              variant="secondary" 
-                              className="absolute top-2 right-2 bg-black/50 text-white"
-                            >
-                              +{profile.photos.length - 1}
-                            </Badge>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                    
-                    <CardHeader className="pb-3">
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <CardTitle className="text-lg group-hover:text-primary transition-colors">
-                            {profile.name}
-                          </CardTitle>
-                          <CardDescription>Class of {profile.class_year}</CardDescription>
-                        </div>
-                        <Badge variant="outline" className="text-xs">
-                          {school?.toUpperCase()}
-                        </Badge>
-                      </div>
-                    </CardHeader>
-                    
-                    <CardContent className="pt-0">
-                      {profile.bio && (
-                        <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-                          {profile.bio}
-                        </p>
-                      )}
-                      
-                      {profile.social_links && Object.keys(profile.social_links).length > 0 && (
-                        <div className="flex flex-wrap gap-2 mb-4">
-                          {Object.entries(profile.social_links).map(([platform, handle]) => (
-                            handle && (
-                              <Button
-                                key={platform}
-                                variant="outline"
-                                size="sm"
-                                className="h-7 text-xs"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleSocialClick(platform, handle as string);
-                                }}
-                              >
-                                {platform === 'instagram' && <Instagram className="h-3 w-3 mr-1" />}
-                                {platform}: {(handle as string).replace('@', '@')}
-                                <ExternalLink className="h-2 w-2 ml-1" />
-                              </Button>
-                            )
-                          ))}
-                        </div>
-                      )}
-                      
-                      <div className="flex items-center justify-between text-xs text-muted-foreground">
-                        <span>Want this on Instagram? Click to see options</span>
-                        <Heart className="h-3 w-3" />
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            )}
-          </TabsContent>
-
-          {/* Instagram Tab */}
-          <TabsContent value="instagram" className="mt-0">
-            <div className="text-center py-12">
-              <Instagram className="h-16 w-16 text-primary mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Get Featured on Instagram</h3>
-              <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                Pay $5 to get your profile posted on @{school}2030class Instagram account
-              </p>
-              <div className="flex gap-4 justify-center">
+                
                 <Button 
                   onClick={user ? () => navigate(`/${school}/post-to-insta`) : handleGuestInstagramPost}
-                  className="bg-primary hover:bg-primary/90"
+                  className="bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] hover:opacity-90 text-white border-0"
                 >
-                  <DollarSign className="h-4 w-4 mr-2" />
-                  {user ? 'Post to Instagram ($5)' : 'Quick Instagram Post ($5)'}
+                  <Instagram className="h-4 w-4 mr-2" />
+                  Submit Profile to Instagram ($5)
                 </Button>
-                <Button 
-                  variant="outline"
-                  onClick={() => navigate(`/${school}/insta/posts`)}
-                >
-                  View Paid Features
-                </Button>
+              </div>
+
+              {/* Mock Instagram Posts Grid */}
+              <div>
+                <h4 className="text-lg font-semibold mb-4">Recent Posts</h4>
+                <div className="grid grid-cols-3 gap-2">
+                  {[1, 2, 3, 4, 5, 6].map((i) => (
+                    <div key={i} className="aspect-square bg-muted rounded-lg flex items-center justify-center">
+                      <Instagram className="h-8 w-8 text-muted-foreground" />
+                    </div>
+                  ))}
+                </div>
+                <p className="text-sm text-muted-foreground mt-4 text-center">
+                  Follow @{school}2030class on Instagram to see student features
+                </p>
               </div>
             </div>
           </TabsContent>
@@ -420,25 +311,35 @@ export default function SchoolDashboard() {
             </div>
           </TabsContent>
 
-          {/* Instagram Feed Tab */}
-          <TabsContent value="insta-overview" className="mt-0">
-            <div className="text-center py-12">
-              <Instagram className="h-16 w-16 text-primary mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">@{school}2030class</h3>
-              <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                Check out the official {schoolDisplayName} Instagram account featuring student profiles
-              </p>
-              <Button 
-                variant="outline"
-                onClick={() => window.open(`https://instagram.com/${school}2030class`, '_blank')}
-                size="lg"
-              >
-                <ExternalLink className="h-4 w-4 mr-2" />
-                View on Instagram
-              </Button>
-            </div>
-          </TabsContent>
         </Tabs>
+
+        {/* Website Posts Section (unlabeled) */}
+        <div className="mt-12 space-y-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {/* Mock website profiles */}
+            {[1, 2, 3, 4].map((i) => (
+              <Card key={i} className="overflow-hidden hover:shadow-lg transition-all duration-200">
+                <div className="aspect-square bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                  <Users className="h-8 w-8 text-muted-foreground" />
+                </div>
+                <CardContent className="p-3">
+                  <h4 className="font-medium text-sm">Sample Profile {i}</h4>
+                  <p className="text-xs text-muted-foreground">Class of 2030</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          
+          <div className="text-center">
+            <Button 
+              onClick={user ? () => navigate('/create-profile') : () => handleGuestAction('profile creation')}
+              variant="outline"
+              size="sm"
+            >
+              Sign up to be posted
+            </Button>
+          </div>
+        </div>
       </div>
 
       <GuestMessageDialog 
