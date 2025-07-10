@@ -279,7 +279,7 @@ const Homepage = () => {
             <div className="relative animate-slide-in-right">
               <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/5 rounded-3xl transform rotate-3"></div>
               <img 
-                src={heroImage}
+                src="/lovable-uploads/f95a4d92-a40d-46a3-9199-c970d7098828.png"
                 alt="College students connecting and making friends" 
                 className="relative rounded-3xl shadow-2xl w-full h-auto"
               />
