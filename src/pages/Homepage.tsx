@@ -180,6 +180,10 @@ const Homepage = () => {
                 <Button variant="ghost" onClick={() => navigate('/about')} className="text-muted-foreground hover:text-foreground">
                   About
                 </Button>
+                <Button variant="ghost" onClick={() => navigate('/create-profile')} className="text-muted-foreground hover:text-foreground flex items-center gap-2">
+                  <Instagram className="h-4 w-4" />
+                  Get Featured
+                </Button>
               </div>
             </nav>
             

@@ -14,7 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      instagram_profiles: {
+        Row: {
+          bio: string | null
+          class_year: string
+          created_at: string
+          id: string
+          instagram_handle: string
+          is_paid: boolean
+          name: string
+          photos: string[] | null
+          school: string
+          stripe_session_id: string | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          bio?: string | null
+          class_year: string
+          created_at?: string
+          id?: string
+          instagram_handle: string
+          is_paid?: boolean
+          name: string
+          photos?: string[] | null
+          school: string
+          stripe_session_id?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          bio?: string | null
+          class_year?: string
+          created_at?: string
+          id?: string
+          instagram_handle?: string
+          is_paid?: boolean
+          name?: string
+          photos?: string[] | null
+          school?: string
+          stripe_session_id?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

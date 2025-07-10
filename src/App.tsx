@@ -14,6 +14,9 @@ import SignIn from "./pages/SignIn";
 import SchoolPage from "./pages/SchoolPage";
 import SchoolInstagramPage from "./pages/SchoolInstagramPage";
 import Community from "./pages/Community";
+import CreateProfile from "./pages/CreateProfile";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import SchoolInstagramPosts from "./pages/SchoolInstagramPosts";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,8 +35,11 @@ const AppRouter = () => (
           <Route path="/contact" element={<Contact />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/community" element={<Community />} />
+          <Route path="/create-profile" element={<CreateProfile />} />
+          <Route path="/payment-success" element={<PaymentSuccess />} />
           <Route path="/:school" element={<SchoolPage />} />
           <Route path="/:school/insta" element={<SchoolInstagramPage />} />
+          <Route path="/:school/insta/posts" element={<SchoolInstagramPosts />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
