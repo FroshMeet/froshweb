@@ -20,6 +20,8 @@ import ProfileSuccess from "./pages/ProfileSuccess";
 import PostToInstagram from "./pages/PostToInstagram";
 import SchoolInstagramPosts from "./pages/SchoolInstagramPosts";
 import SchoolPageNew from "./pages/SchoolPageNew";
+import SchoolDashboard from "./pages/SchoolDashboard";
+import GuestInstagramPost from "./pages/GuestInstagramPost";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -37,14 +39,16 @@ const AppRouter = () => (
           <Route path="/features" element={<Features />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/signin" element={<SignIn />} />
+          <Route path="/auth" element={<SignIn />} />
           <Route path="/community" element={<Community />} />
           <Route path="/create-profile" element={<CreateProfile />} />
           <Route path="/payment-success" element={<PaymentSuccess />} />
           <Route path="/profile-success" element={<ProfileSuccess />} />
-          <Route path="/:school" element={<SchoolPageNew />} />
+          <Route path="/:school" element={<SchoolDashboard />} />
           <Route path="/:school/insta" element={<SchoolInstagramPage />} />
           <Route path="/:school/insta/posts" element={<SchoolInstagramPosts />} />
           <Route path="/:school/post-to-insta" element={<PostToInstagram />} />
+          <Route path="/:school/guest-post-to-insta" element={<GuestInstagramPost />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
