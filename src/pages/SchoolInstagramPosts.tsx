@@ -32,7 +32,7 @@ export default function SchoolInstagramPosts() {
           .from('instagram_profiles')
           .select('*')
           .eq('school', schoolName)
-          .eq('is_paid', true)
+          .eq('paid_for_instagram', true)
           .order('created_at', { ascending: false });
 
         if (error) throw error;

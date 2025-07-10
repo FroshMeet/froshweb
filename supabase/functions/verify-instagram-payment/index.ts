@@ -52,10 +52,13 @@ serve(async (req) => {
     logStep("Session retrieved", { paymentStatus: session.payment_status });
 
     if (session.payment_status === "paid") {
-      // Update profile to mark as paid
+      // Update profile to mark as paid for Instagram
       const { error: updateError } = await supabaseService
         .from("instagram_profiles")
-        .update({ is_paid: true })
+        .update({ 
+          paid_for_instagram: true,
+          posted_to_instagram: false // Admin will set this to true after posting
+        })
         .eq("id", profileId);
 
       if (updateError) {

@@ -5,17 +5,23 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Upload, X, Instagram } from 'lucide-react';
+import { Upload, X, Users, Instagram } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { useNavigate } from 'react-router-dom';
 
 interface FormData {
   school: string;
   name: string;
-  instagram_handle: string;
-  class_year: string;
   bio: string;
+  class_year: string;
   photos: File[];
+  social_links: {
+    instagram?: string;
+    tiktok?: string;
+    twitter?: string;
+    linkedin?: string;
+  };
 }
 
 const SCHOOLS = [
@@ -26,21 +32,29 @@ const SCHOOLS = [
 
 const CLASS_YEARS = ['2025', '2026', '2027', '2028', '2029', '2030'];
 
-export default function InstagramProfileForm() {
+export default function ProfileCreationForm() {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<FormData>({
     school: '',
     name: '',
-    instagram_handle: '',
-    class_year: '',
     bio: '',
-    photos: []
+    class_year: '',
+    photos: [],
+    social_links: {}
   });
   const [loading, setLoading] = useState(false);
   const [photoPreviewUrls, setPhotoPreviewUrls] = useState<string[]>([]);
 
   const handleInputChange = (field: keyof FormData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleSocialLinkChange = (platform: string, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      social_links: { ...prev.social_links, [platform]: value }
+    }));
   };
 
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -98,7 +112,7 @@ export default function InstagramProfileForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.school || !formData.name || !formData.instagram_handle || !formData.class_year) {
+    if (!formData.school || !formData.name || !formData.class_year) {
       toast({
         title: "Missing fields",
         description: "Please fill in all required fields",
@@ -129,11 +143,12 @@ export default function InstagramProfileForm() {
           user_id: user.id,
           school: formData.school,
           name: formData.name,
-          instagram_handle: formData.instagram_handle.replace('@', ''),
           class_year: formData.class_year,
           bio: formData.bio,
+          social_links: formData.social_links,
           photos: [], // Will update after photo upload
-          is_paid: false
+          paid_for_instagram: false,
+          instagram_handle: formData.social_links.instagram || ''
         })
         .select()
         .single();
@@ -151,20 +166,12 @@ export default function InstagramProfileForm() {
 
       if (updateError) throw updateError;
 
-      // Create payment session
-      const { data: paymentData, error: paymentError } = await supabase.functions
-        .invoke('create-instagram-payment', {
-          body: { profileId: profile.id }
-        });
-
-      if (paymentError) throw paymentError;
-
-      // Redirect to Stripe checkout
-      window.open(paymentData.url, '_blank');
+      // Navigate to success page with profile data
+      navigate(`/profile-success?school=${formData.school}&profileId=${profile.id}`);
 
       toast({
         title: "Profile created!",
-        description: "Complete your payment to get featured on Instagram",
+        description: "Your profile is now live on your school page",
       });
 
     } catch (error) {
@@ -185,11 +192,11 @@ export default function InstagramProfileForm() {
         <Card>
           <CardHeader className="text-center">
             <div className="flex items-center justify-center gap-2 mb-4">
-              <Instagram className="h-8 w-8 text-primary" />
-              <CardTitle className="text-2xl">Create Instagram Profile</CardTitle>
+              <Users className="h-8 w-8 text-primary" />
+              <CardTitle className="text-2xl">Create Your Profile</CardTitle>
             </div>
             <CardDescription>
-              Create your profile to get featured on your school's Instagram account for $5
+              Join your school's community and connect with fellow students
             </CardDescription>
           </CardHeader>
           
@@ -210,22 +217,65 @@ export default function InstagramProfileForm() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="name">Full Name *</Label>
+                <Label htmlFor="name">Name or Nickname *</Label>
                 <Input
                   id="name"
                   value={formData.name}
                   onChange={(e) => handleInputChange('name', e.target.value)}
-                  placeholder="Your full name"
+                  placeholder="How you'd like to be known"
                 />
               </div>
 
+              <div className="space-y-4">
+                <Label>Social Links (Optional)</Label>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <Label htmlFor="instagram" className="text-sm">Instagram</Label>
+                    <Input
+                      id="instagram"
+                      value={formData.social_links.instagram || ''}
+                      onChange={(e) => handleSocialLinkChange('instagram', e.target.value)}
+                      placeholder="@username"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="tiktok" className="text-sm">TikTok</Label>
+                    <Input
+                      id="tiktok"
+                      value={formData.social_links.tiktok || ''}
+                      onChange={(e) => handleSocialLinkChange('tiktok', e.target.value)}
+                      placeholder="@username"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="twitter" className="text-sm">Twitter/X</Label>
+                    <Input
+                      id="twitter"
+                      value={formData.social_links.twitter || ''}
+                      onChange={(e) => handleSocialLinkChange('twitter', e.target.value)}
+                      placeholder="@username"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="linkedin" className="text-sm">LinkedIn</Label>
+                    <Input
+                      id="linkedin"
+                      value={formData.social_links.linkedin || ''}
+                      onChange={(e) => handleSocialLinkChange('linkedin', e.target.value)}
+                      placeholder="linkedin.com/in/username"
+                    />
+                  </div>
+                </div>
+              </div>
+
               <div className="space-y-2">
-                <Label htmlFor="instagram">Instagram Handle *</Label>
-                <Input
-                  id="instagram"
-                  value={formData.instagram_handle}
-                  onChange={(e) => handleInputChange('instagram_handle', e.target.value)}
-                  placeholder="@yourusername"
+                <Label htmlFor="bio-detail">Bio</Label>
+                <Textarea
+                  id="bio-detail"
+                  value={formData.bio}
+                  onChange={(e) => handleInputChange('bio', e.target.value)}
+                  placeholder="Tell us about yourself..."
+                  rows={3}
                 />
               </div>
 
@@ -243,19 +293,9 @@ export default function InstagramProfileForm() {
                 </Select>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="bio">Bio</Label>
-                <Textarea
-                  id="bio"
-                  value={formData.bio}
-                  onChange={(e) => handleInputChange('bio', e.target.value)}
-                  placeholder="Tell us about yourself..."
-                  rows={3}
-                />
-              </div>
 
               <div className="space-y-2">
-                <Label>Photos (1-3 required) *</Label>
+                <Label>Photos (1-3 photos) *</Label>
                 <div className="space-y-4">
                   {formData.photos.length < 3 && (
                     <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-6 text-center">
@@ -305,7 +345,7 @@ export default function InstagramProfileForm() {
               </div>
 
               <Button type="submit" className="w-full" disabled={loading}>
-                {loading ? "Creating Profile..." : "Create Profile & Pay $5"}
+                {loading ? "Creating Profile..." : "Create Profile (Free)"}
               </Button>
             </form>
           </CardContent>

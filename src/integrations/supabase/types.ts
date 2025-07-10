@@ -21,10 +21,13 @@ export type Database = {
           created_at: string
           id: string
           instagram_handle: string
-          is_paid: boolean
+          instagram_payment_date: string | null
           name: string
+          paid_for_instagram: boolean
           photos: string[] | null
+          posted_to_instagram: boolean
           school: string
+          social_links: Json | null
           stripe_session_id: string | null
           updated_at: string
           user_id: string | null
@@ -35,10 +38,13 @@ export type Database = {
           created_at?: string
           id?: string
           instagram_handle: string
-          is_paid?: boolean
+          instagram_payment_date?: string | null
           name: string
+          paid_for_instagram?: boolean
           photos?: string[] | null
+          posted_to_instagram?: boolean
           school: string
+          social_links?: Json | null
           stripe_session_id?: string | null
           updated_at?: string
           user_id?: string | null
@@ -49,10 +55,13 @@ export type Database = {
           created_at?: string
           id?: string
           instagram_handle?: string
-          is_paid?: boolean
+          instagram_payment_date?: string | null
           name?: string
+          paid_for_instagram?: boolean
           photos?: string[] | null
+          posted_to_instagram?: boolean
           school?: string
+          social_links?: Json | null
           stripe_session_id?: string | null
           updated_at?: string
           user_id?: string | null

@@ -89,7 +89,10 @@ serve(async (req) => {
 
     await supabaseService
       .from("instagram_profiles")
-      .update({ stripe_session_id: session.id })
+      .update({ 
+        stripe_session_id: session.id,
+        instagram_payment_date: new Date().toISOString()
+      })
       .eq("id", profileId)
       .eq("user_id", user.id);
 
