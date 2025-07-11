@@ -32,7 +32,7 @@ export default function SchoolDashboard() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<any>(null);
   const [showGuestDialog, setShowGuestDialog] = useState(false);
-  const [activeTab, setActiveTab] = useState("meet");
+  const [activeTab, setActiveTab] = useState("");
   const isMobile = useIsMobile();
   
   const schoolName = school ? getSchoolName(school) : school?.toUpperCase();
@@ -168,33 +168,32 @@ export default function SchoolDashboard() {
         </div>
       </div>
 
-      {/* Main Content with Tabs */}
       <div className="max-w-6xl mx-auto px-4 py-6">
-        {/* Default Grid View - Always Visible */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          {[1, 2, 3, 4].map((i) => (
-            <Card key={i} className="overflow-hidden hover:shadow-lg transition-all duration-200">
-              <div className="aspect-square bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                <Users className="h-8 w-8 text-muted-foreground" />
-              </div>
-              <CardContent className="p-3">
-                <h4 className="font-medium text-sm">Sample Profile {i}</h4>
-                <p className="text-xs text-muted-foreground">Class of 2030</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full" defaultValue="meet">
           <TabsList className="grid grid-cols-4 w-full mb-8 h-12">
-            <TabsTrigger value="meet" className="text-sm font-medium hover:bg-primary/10 transition-colors">Meet</TabsTrigger>
-            <TabsTrigger value="roommates" className="text-sm font-medium hover:bg-primary/10 transition-colors">Roommates</TabsTrigger>
-            <TabsTrigger value="chat" className="text-sm font-medium hover:bg-primary/10 transition-colors">Chat</TabsTrigger>
-            <TabsTrigger value="instagram-feed" className="text-sm font-medium hover:bg-primary/10 transition-colors flex items-center gap-2">
+            <TabsTrigger value="meet" className="text-sm font-medium">Meet</TabsTrigger>
+            <TabsTrigger value="roommates" className="text-sm font-medium">Roommates</TabsTrigger>
+            <TabsTrigger value="chat" className="text-sm font-medium">Chat</TabsTrigger>
+            <TabsTrigger value="instagram-feed" className="text-sm font-medium flex items-center gap-2">
               <Instagram className="h-4 w-4" />
               {schoolDisplayName.split(' ')[0]}'s Instagram
             </TabsTrigger>
           </TabsList>
+
+          {/* Default View - Grid of Sample Profiles */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            {[1, 2, 3, 4].map((i) => (
+              <Card key={i} className="overflow-hidden hover:shadow-lg transition-all duration-200">
+                <div className="aspect-square bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                  <Users className="h-8 w-8 text-muted-foreground" />
+                </div>
+                <CardContent className="p-3">
+                  <h4 className="font-medium text-sm">Sample Profile {i}</h4>
+                  <p className="text-xs text-muted-foreground">Class of 2030</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
 
           {/* Instagram Feed Tab */}
           <TabsContent value="instagram-feed" className="mt-0">
