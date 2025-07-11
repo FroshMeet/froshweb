@@ -9,7 +9,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { getSchoolName } from "@/config/schoolNameMapping";
 import GuestProfile from "@/components/GuestProfile";
 import GuestMessageDialog from "@/components/GuestMessageDialog";
+import PublicProfileBrowser from "@/components/PublicProfileBrowser";
 import { useToast } from "@/hooks/use-toast";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface Profile {
   id: string;
@@ -31,6 +33,7 @@ export default function SchoolDashboard() {
   const [user, setUser] = useState<any>(null);
   const [showGuestDialog, setShowGuestDialog] = useState(false);
   const [activeTab, setActiveTab] = useState("meet");
+  const isMobile = useIsMobile();
   
   const schoolName = school ? getSchoolName(school) : school?.toUpperCase();
   const schoolDisplayName = schoolName || school?.toUpperCase() || '';
@@ -97,7 +100,7 @@ export default function SchoolDashboard() {
   };
 
   const handleCreateAccount = () => {
-    navigate('/auth');
+    navigate('/signup');
   };
 
   const handleGuestInstagramPost = () => {
@@ -106,32 +109,32 @@ export default function SchoolDashboard() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-primary/10 to-accent/10 py-8">
+          {/* Header */}
+      <div className="bg-gradient-to-r from-primary/10 to-accent/10 py-6">
         <div className="max-w-6xl mx-auto px-4">
           <Button 
             variant="ghost" 
             onClick={() => navigate('/')}
-            className="mb-6"
+            className="mb-4"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Home
           </Button>
           
           <div className="text-center">
-            <div className="w-20 h-20 bg-gradient-to-r from-primary to-primary/80 rounded-2xl flex items-center justify-center mx-auto mb-6">
-              <span className="text-primary-foreground font-bold text-2xl">
+            <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary/80 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <span className="text-primary-foreground font-bold text-xl">
                 {schoolDisplayName.charAt(0)}
               </span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
+            <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2 animate-fade-in">
               {schoolDisplayName}
             </h1>
-            <p className="text-muted-foreground mb-3">
+            <p className="text-muted-foreground mb-2 text-sm">
               Connect with fellow students and build lasting friendships
             </p>
             
-            <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-4">
+            <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-3">
               <Users className="h-4 w-4" />
               <span>{profiles.length} students connected</span>
             </div>
@@ -153,10 +156,10 @@ export default function SchoolDashboard() {
                     variant="outline"
                     onClick={handleGuestInstagramPost}
                     size="sm"
-                    className="border-primary/50 text-primary hover:bg-primary/10"
+                    className="bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] text-white border-0 hover:opacity-90"
                   >
                     <Instagram className="h-4 w-4 mr-2" />
-                    Quick Instagram Post
+                    Post on {schoolDisplayName.split(' ')[0]}'s Insta
                   </Button>
                 </div>
               </div>
@@ -172,7 +175,10 @@ export default function SchoolDashboard() {
             <TabsTrigger value="meet" className="text-sm font-medium hover:bg-primary/10 transition-colors">Meet</TabsTrigger>
             <TabsTrigger value="roommates" className="text-sm font-medium hover:bg-primary/10 transition-colors">Roommates</TabsTrigger>
             <TabsTrigger value="chat" className="text-sm font-medium hover:bg-primary/10 transition-colors">Chat</TabsTrigger>
-            <TabsTrigger value="instagram-feed" className="text-sm font-medium hover:bg-primary/10 transition-colors">Instagram Feed</TabsTrigger>
+            <TabsTrigger value="instagram-feed" className="text-sm font-medium hover:bg-primary/10 transition-colors flex items-center gap-2">
+              <Instagram className="h-4 w-4" />
+              {schoolDisplayName.split(' ')[0]}'s Instagram
+            </TabsTrigger>
           </TabsList>
 
           {/* Instagram Feed Tab */}
@@ -180,9 +186,11 @@ export default function SchoolDashboard() {
             <div className="space-y-8">
               {/* Instagram Account Header */}
               <div className="text-center">
-                <div className="flex items-center justify-center gap-2 mb-4">
-                  <Instagram className="h-8 w-8 text-[#E4405F]" />
-                  <h3 className="text-2xl font-bold">@{school}2030class</h3>
+                <div className="flex flex-col items-center gap-4 mb-4">
+                  <Instagram className="h-12 w-12 text-[#E4405F]" />
+                  <div>
+                    <h3 className="text-2xl font-bold text-[#E4405F]">@{school}2030class</h3>
+                  </div>
                 </div>
                 <p className="text-muted-foreground mb-6">
                   Official Instagram account for {schoolDisplayName} Class of 2030
@@ -193,7 +201,7 @@ export default function SchoolDashboard() {
                   className="bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] hover:opacity-90 text-white border-0"
                 >
                   <Instagram className="h-4 w-4 mr-2" />
-                  Submit Profile to Instagram ($5)
+                  Post on {schoolDisplayName.split(' ')[0]}'s Insta ($5)
                 </Button>
               </div>
 
@@ -216,72 +224,46 @@ export default function SchoolDashboard() {
 
           {/* Meet Tab */}
           <TabsContent value="meet" className="mt-0">
-            <div className="text-center py-12">
-              <Users className="h-16 w-16 text-primary mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Meet Fellow Students</h3>
-              <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                {user ? 'Connect with students who share your interests' : 'Sign up to discover and connect with like-minded classmates'}
-              </p>
-              {user ? (
+            {user ? (
+              <div className="text-center py-12">
+                <Users className="h-16 w-16 text-primary mx-auto mb-4" />
+                <h3 className="text-xl font-semibold mb-2">Meet Fellow Students</h3>
+                <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+                  Connect with students who share your interests
+                </p>
                 <Button size="lg" className="bg-primary hover:bg-primary/90">
                   <Heart className="h-4 w-4 mr-2" />
                   Start Meeting People
                 </Button>
-              ) : (
-                <div className="space-y-4">
-                  <p className="text-sm text-muted-foreground">Preview available - limited features for guests</p>
-                  <div className="flex gap-4 justify-center">
-                    <Button 
-                      variant="outline"
-                      onClick={() => handleGuestAction('meet feature')}
-                    >
-                      Browse (Limited)
-                    </Button>
-                    <Button 
-                      onClick={handleCreateAccount}
-                      className="bg-primary hover:bg-primary/90"
-                    >
-                      Join for Full Access
-                    </Button>
-                  </div>
-                </div>
-              )}
-            </div>
+              </div>
+            ) : (
+              <PublicProfileBrowser 
+                onGuestAction={() => handleGuestAction('meet feature')}
+                isMobile={isMobile}
+              />
+            )}
           </TabsContent>
 
           {/* Roommates Tab */}
           <TabsContent value="roommates" className="mt-0">
-            <div className="text-center py-12">
-              <Home className="h-16 w-16 text-primary mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Find Roommates</h3>
-              <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                {user ? 'Find the perfect roommate match for your dorm or apartment' : 'Create an account to access our roommate matching system'}
-              </p>
-              {user ? (
+            {user ? (
+              <div className="text-center py-12">
+                <Home className="h-16 w-16 text-primary mx-auto mb-4" />
+                <h3 className="text-xl font-semibold mb-2">Find Roommates</h3>
+                <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+                  Find the perfect roommate match for your dorm or apartment
+                </p>
                 <Button size="lg" className="bg-primary hover:bg-primary/90">
                   <Users className="h-4 w-4 mr-2" />
                   Find Roommates
                 </Button>
-              ) : (
-                <div className="space-y-4">
-                  <p className="text-sm text-muted-foreground">Preview available - limited features for guests</p>
-                  <div className="flex gap-4 justify-center">
-                    <Button 
-                      variant="outline"
-                      onClick={() => handleGuestAction('roommate finder')}
-                    >
-                      Browse (Limited)
-                    </Button>
-                    <Button 
-                      onClick={handleCreateAccount}
-                      className="bg-primary hover:bg-primary/90"
-                    >
-                      Join for Full Access
-                    </Button>
-                  </div>
-                </div>
-              )}
-            </div>
+              </div>
+            ) : (
+              <PublicProfileBrowser 
+                onGuestAction={() => handleGuestAction('roommate finder')}
+                isMobile={isMobile}
+              />
+            )}
           </TabsContent>
 
           {/* Chat Tab */}

@@ -180,7 +180,7 @@ const Homepage = () => {
                 <Button variant="ghost" onClick={() => navigate('/about')} className="text-muted-foreground hover:text-foreground">
                   About
                 </Button>
-                <Button variant="ghost" onClick={() => navigate('/create-profile')} className="text-muted-foreground hover:text-foreground flex items-center gap-2">
+                <Button variant="ghost" onClick={() => navigate('/guest-post-to-insta')} className="text-muted-foreground hover:text-foreground flex items-center gap-2">
                   <Instagram className="h-4 w-4" />
                   Get Featured
                 </Button>
@@ -192,7 +192,7 @@ const Homepage = () => {
               <Button variant="outline" onClick={() => navigate('/signin')}>
                 Sign In
               </Button>
-              <Button onClick={() => navigate('/community')} className="bg-primary hover:bg-primary/90">
+              <Button onClick={() => navigate('/signup')} className="bg-primary hover:bg-primary/90">
                 Join FroshMeet Now
               </Button>
             </div>
@@ -231,8 +231,8 @@ const Homepage = () => {
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="h-14 pl-10 text-lg bg-card/50 border-border/40"
                   />
-                  {searchTerm && filteredSchools.length > 0 && (
-                    <div className="absolute top-full left-0 right-0 bg-card border border-border rounded-lg mt-2 z-50 max-h-60 overflow-y-auto shadow-2xl">
+                   {searchTerm && filteredSchools.length > 0 && (
+                    <div className="absolute top-full left-0 right-0 bg-card border border-border rounded-lg mt-2 z-50 max-h-60 overflow-y-auto shadow-2xl animate-fade-scale-in">
                       {filteredSchools.slice(0, 5).map((school) => (
                         <div
                           key={school.name}

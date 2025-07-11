@@ -135,6 +135,16 @@ export default {
 						transform: 'scale(1)'
 					}
 				},
+				'fade-scale-in': {
+					'0%': {
+						opacity: '0',
+						transform: 'scale(0.9) translateY(-10px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'scale(1) translateY(0)'
+					}
+				},
 				'float': {
 					'0%, 100%': { transform: 'translateY(0px)' },
 					'50%': { transform: 'translateY(-10px)' }
@@ -151,6 +161,7 @@ export default {
 				'fade-in-up': 'fade-in-up 0.8s ease-out',
 				'slide-in-right': 'slide-in-right 0.6s ease-out',
 				'scale-in': 'scale-in 0.4s ease-out',
+				'fade-scale-in': 'fade-scale-in 0.2s ease-out',
 				'float': 'float 3s ease-in-out infinite',
 				'scroll-carousel': 'scroll-carousel 60s linear infinite'
 			}
