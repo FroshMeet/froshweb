@@ -170,6 +170,21 @@ export default function SchoolDashboard() {
 
       {/* Main Content with Tabs */}
       <div className="max-w-6xl mx-auto px-4 py-6">
+        {/* Default Grid View - Always Visible */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          {[1, 2, 3, 4].map((i) => (
+            <Card key={i} className="overflow-hidden hover:shadow-lg transition-all duration-200">
+              <div className="aspect-square bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                <Users className="h-8 w-8 text-muted-foreground" />
+              </div>
+              <CardContent className="p-3">
+                <h4 className="font-medium text-sm">Sample Profile {i}</h4>
+                <p className="text-xs text-muted-foreground">Class of 2030</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid grid-cols-4 w-full mb-8 h-12">
             <TabsTrigger value="meet" className="text-sm font-medium hover:bg-primary/10 transition-colors">Meet</TabsTrigger>
@@ -224,46 +239,20 @@ export default function SchoolDashboard() {
 
           {/* Meet Tab */}
           <TabsContent value="meet" className="mt-0">
-            {user ? (
-              <div className="text-center py-12">
-                <Users className="h-16 w-16 text-primary mx-auto mb-4" />
-                <h3 className="text-xl font-semibold mb-2">Meet Fellow Students</h3>
-                <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                  Connect with students who share your interests
-                </p>
-                <Button size="lg" className="bg-primary hover:bg-primary/90">
-                  <Heart className="h-4 w-4 mr-2" />
-                  Start Meeting People
-                </Button>
-              </div>
-            ) : (
-              <PublicProfileBrowser 
-                onGuestAction={() => handleGuestAction('meet feature')}
-                isMobile={isMobile}
-              />
-            )}
+            <PublicProfileBrowser 
+              onGuestAction={() => handleGuestAction('meet feature')}
+              isMobile={isMobile}
+              viewMode="swipe"
+            />
           </TabsContent>
 
           {/* Roommates Tab */}
           <TabsContent value="roommates" className="mt-0">
-            {user ? (
-              <div className="text-center py-12">
-                <Home className="h-16 w-16 text-primary mx-auto mb-4" />
-                <h3 className="text-xl font-semibold mb-2">Find Roommates</h3>
-                <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                  Find the perfect roommate match for your dorm or apartment
-                </p>
-                <Button size="lg" className="bg-primary hover:bg-primary/90">
-                  <Users className="h-4 w-4 mr-2" />
-                  Find Roommates
-                </Button>
-              </div>
-            ) : (
-              <PublicProfileBrowser 
-                onGuestAction={() => handleGuestAction('roommate finder')}
-                isMobile={isMobile}
-              />
-            )}
+            <PublicProfileBrowser 
+              onGuestAction={() => handleGuestAction('roommate finder')}
+              isMobile={isMobile}
+              viewMode="swipe"
+            />
           </TabsContent>
 
           {/* Chat Tab */}
@@ -294,34 +283,6 @@ export default function SchoolDashboard() {
           </TabsContent>
 
         </Tabs>
-
-        {/* Website Posts Section (unlabeled) */}
-        <div className="mt-12 space-y-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {/* Mock website profiles */}
-            {[1, 2, 3, 4].map((i) => (
-              <Card key={i} className="overflow-hidden hover:shadow-lg transition-all duration-200">
-                <div className="aspect-square bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                  <Users className="h-8 w-8 text-muted-foreground" />
-                </div>
-                <CardContent className="p-3">
-                  <h4 className="font-medium text-sm">Sample Profile {i}</h4>
-                  <p className="text-xs text-muted-foreground">Class of 2030</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-          
-          <div className="text-center">
-            <Button 
-              onClick={user ? () => navigate('/create-profile') : () => handleGuestAction('profile creation')}
-              variant="outline"
-              size="sm"
-            >
-              Sign up to be posted
-            </Button>
-          </div>
-        </div>
       </div>
 
       <GuestMessageDialog 

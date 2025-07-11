@@ -72,9 +72,10 @@ const MOCK_PROFILES: Profile[] = [
 interface PublicProfileBrowserProps {
   onGuestAction: () => void;
   isMobile?: boolean;
+  viewMode?: 'grid' | 'swipe';
 }
 
-export default function PublicProfileBrowser({ onGuestAction, isMobile = false }: PublicProfileBrowserProps) {
+export default function PublicProfileBrowser({ onGuestAction, isMobile = false, viewMode = 'grid' }: PublicProfileBrowserProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
 
@@ -108,8 +109,8 @@ export default function PublicProfileBrowser({ onGuestAction, isMobile = false }
   const currentProfile = MOCK_PROFILES[currentIndex];
   const currentPhoto = currentProfile.photos[currentPhotoIndex];
 
-  if (isMobile) {
-    // Mobile swipe-like interface
+  if (viewMode === 'swipe' || (isMobile && viewMode !== 'grid')) {
+    // Swipe-like interface for Meet/Roommate tabs
     return (
       <div className="h-full w-full overflow-hidden">
         <div className="h-full flex flex-col">
