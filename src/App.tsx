@@ -11,6 +11,7 @@ import About from "./pages/About";
 import Features from "./pages/Features";
 import Contact from "./pages/Contact";
 import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 import SchoolPage from "./pages/SchoolPage";
 import SchoolInstagramPage from "./pages/SchoolInstagramPage";
 import Community from "./pages/Community";
@@ -39,6 +40,7 @@ const AppRouter = () => (
           <Route path="/features" element={<Features />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/auth" element={<SignIn />} />
           <Route path="/community" element={<Community />} />
           <Route path="/create-profile" element={<CreateProfile />} />

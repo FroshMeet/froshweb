@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -9,6 +10,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { getSchoolName } from "@/config/schoolNameMapping";
 import GuestProfile from "@/components/GuestProfile";
 import GuestMessageDialog from "@/components/GuestMessageDialog";
+import SwipeInterface from "@/components/SwipeInterface";
 import { useToast } from "@/hooks/use-toast";
 
 interface Profile {
@@ -31,9 +33,11 @@ export default function SchoolDashboard() {
   const [user, setUser] = useState<any>(null);
   const [showGuestDialog, setShowGuestDialog] = useState(false);
   const [activeTab, setActiveTab] = useState("meet");
+  const [showSwipeInterface, setShowSwipeInterface] = useState(false);
   
   const schoolName = school ? getSchoolName(school) : school?.toUpperCase();
   const schoolDisplayName = schoolName || school?.toUpperCase() || '';
+  const schoolAcronym = school?.toUpperCase() || '';
 
   useEffect(() => {
     // Check auth status
@@ -97,47 +101,64 @@ export default function SchoolDashboard() {
   };
 
   const handleCreateAccount = () => {
-    navigate('/auth');
+    navigate('/signup');
   };
 
   const handleGuestInstagramPost = () => {
     navigate(`/${school}/guest-post-to-insta`);
   };
 
+  const handleMeetClick = () => {
+    setShowSwipeInterface(true);
+  };
+
+  if (showSwipeInterface) {
+    return (
+      <SwipeInterface
+        schoolName={schoolDisplayName}
+        profiles={profiles}
+        isGuest={!user}
+        onGuestAction={() => handleGuestAction('meet feature')}
+        onClose={() => setShowSwipeInterface(false)}
+        mode="meet"
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <div className="bg-gradient-to-r from-primary/10 to-accent/10 py-8">
+      <div className="bg-gradient-to-r from-primary/10 to-accent/10 py-6">
         <div className="max-w-6xl mx-auto px-4">
           <Button 
             variant="ghost" 
             onClick={() => navigate('/')}
-            className="mb-6"
+            className="mb-4"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Home
           </Button>
           
           <div className="text-center">
-            <div className="w-20 h-20 bg-gradient-to-r from-primary to-primary/80 rounded-2xl flex items-center justify-center mx-auto mb-6">
-              <span className="text-primary-foreground font-bold text-2xl">
+            <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary/80 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <span className="text-primary-foreground font-bold text-xl">
                 {schoolDisplayName.charAt(0)}
               </span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2 animate-fade-in">
               {schoolDisplayName}
             </h1>
-            <p className="text-muted-foreground mb-3">
+            <p className="text-muted-foreground mb-2">
               Connect with fellow students and build lasting friendships
             </p>
             
-            <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-4">
+            <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-3">
               <Users className="h-4 w-4" />
               <span>{profiles.length} students connected</span>
             </div>
 
             {!user && (
-              <div className="space-y-3">
+              <div className="space-y-2">
                 <p className="text-sm text-foreground">
                   ✨ Create a free profile for the full FroshMeet experience!
                 </p>
@@ -153,10 +174,10 @@ export default function SchoolDashboard() {
                     variant="outline"
                     onClick={handleGuestInstagramPost}
                     size="sm"
-                    className="border-primary/50 text-primary hover:bg-primary/10"
+                    className="bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] hover:opacity-90 text-white border-0"
                   >
                     <Instagram className="h-4 w-4 mr-2" />
-                    Quick Instagram Post
+                    Post on {schoolAcronym}'s Insta
                   </Button>
                 </div>
               </div>
@@ -169,10 +190,22 @@ export default function SchoolDashboard() {
       <div className="max-w-6xl mx-auto px-4 py-6">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid grid-cols-4 w-full mb-8 h-12">
-            <TabsTrigger value="meet" className="text-sm font-medium hover:bg-primary/10 transition-colors">Meet</TabsTrigger>
-            <TabsTrigger value="roommates" className="text-sm font-medium hover:bg-primary/10 transition-colors">Roommates</TabsTrigger>
-            <TabsTrigger value="chat" className="text-sm font-medium hover:bg-primary/10 transition-colors">Chat</TabsTrigger>
-            <TabsTrigger value="instagram-feed" className="text-sm font-medium hover:bg-primary/10 transition-colors">Instagram Feed</TabsTrigger>
+            <TabsTrigger value="meet" className="text-sm font-medium hover:bg-primary/10 transition-all duration-200">
+              <Heart className="h-4 w-4 mr-2" />
+              Meet
+            </TabsTrigger>
+            <TabsTrigger value="roommates" className="text-sm font-medium hover:bg-primary/10 transition-all duration-200">
+              <Home className="h-4 w-4 mr-2" />
+              Roommates
+            </TabsTrigger>
+            <TabsTrigger value="chat" className="text-sm font-medium hover:bg-primary/10 transition-all duration-200">
+              <MessageSquare className="h-4 w-4 mr-2" />
+              Chat
+            </TabsTrigger>
+            <TabsTrigger value="instagram-feed" className="text-sm font-medium hover:bg-primary/10 transition-all duration-200">
+              <Instagram className="h-4 w-4 mr-2" />
+              {schoolAcronym}'s Instagram
+            </TabsTrigger>
           </TabsList>
 
           {/* Instagram Feed Tab */}
@@ -180,9 +213,12 @@ export default function SchoolDashboard() {
             <div className="space-y-8">
               {/* Instagram Account Header */}
               <div className="text-center">
-                <div className="flex items-center justify-center gap-2 mb-4">
+                <div className="flex items-center justify-center gap-3 mb-4">
                   <Instagram className="h-8 w-8 text-[#E4405F]" />
-                  <h3 className="text-2xl font-bold">@{school}2030class</h3>
+                  <div>
+                    <h3 className="text-2xl font-bold">@{school}2030class</h3>
+                    <p className="text-lg font-bold text-muted-foreground">@{school}2030class</p>
+                  </div>
                 </div>
                 <p className="text-muted-foreground mb-6">
                   Official Instagram account for {schoolDisplayName} Class of 2030
@@ -202,7 +238,7 @@ export default function SchoolDashboard() {
                 <h4 className="text-lg font-semibold mb-4">Recent Posts</h4>
                 <div className="grid grid-cols-3 gap-2">
                   {[1, 2, 3, 4, 5, 6].map((i) => (
-                    <div key={i} className="aspect-square bg-muted rounded-lg flex items-center justify-center">
+                    <div key={i} className="aspect-square bg-muted rounded-lg flex items-center justify-center hover:opacity-80 transition-opacity">
                       <Instagram className="h-8 w-8 text-muted-foreground" />
                     </div>
                   ))}
@@ -217,34 +253,23 @@ export default function SchoolDashboard() {
           {/* Meet Tab */}
           <TabsContent value="meet" className="mt-0">
             <div className="text-center py-12">
-              <Users className="h-16 w-16 text-primary mx-auto mb-4" />
+              <Heart className="h-16 w-16 text-primary mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-2">Meet Fellow Students</h3>
               <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                {user ? 'Connect with students who share your interests' : 'Sign up to discover and connect with like-minded classmates'}
+                Browse and connect with students who share your interests
               </p>
-              {user ? (
-                <Button size="lg" className="bg-primary hover:bg-primary/90">
-                  <Heart className="h-4 w-4 mr-2" />
-                  Start Meeting People
-                </Button>
-              ) : (
-                <div className="space-y-4">
-                  <p className="text-sm text-muted-foreground">Preview available - limited features for guests</p>
-                  <div className="flex gap-4 justify-center">
-                    <Button 
-                      variant="outline"
-                      onClick={() => handleGuestAction('meet feature')}
-                    >
-                      Browse (Limited)
-                    </Button>
-                    <Button 
-                      onClick={handleCreateAccount}
-                      className="bg-primary hover:bg-primary/90"
-                    >
-                      Join for Full Access
-                    </Button>
-                  </div>
-                </div>
+              <Button 
+                size="lg" 
+                className="bg-primary hover:bg-primary/90"
+                onClick={handleMeetClick}
+              >
+                <Heart className="h-4 w-4 mr-2" />
+                Browse Students
+              </Button>
+              {!user && (
+                <p className="text-sm text-muted-foreground mt-4">
+                  Sign up to match and message students
+                </p>
               )}
             </div>
           </TabsContent>
@@ -255,31 +280,20 @@ export default function SchoolDashboard() {
               <Home className="h-16 w-16 text-primary mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-2">Find Roommates</h3>
               <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                {user ? 'Find the perfect roommate match for your dorm or apartment' : 'Create an account to access our roommate matching system'}
+                Browse roommate profiles and find your perfect housing match
               </p>
-              {user ? (
-                <Button size="lg" className="bg-primary hover:bg-primary/90">
-                  <Users className="h-4 w-4 mr-2" />
-                  Find Roommates
-                </Button>
-              ) : (
-                <div className="space-y-4">
-                  <p className="text-sm text-muted-foreground">Preview available - limited features for guests</p>
-                  <div className="flex gap-4 justify-center">
-                    <Button 
-                      variant="outline"
-                      onClick={() => handleGuestAction('roommate finder')}
-                    >
-                      Browse (Limited)
-                    </Button>
-                    <Button 
-                      onClick={handleCreateAccount}
-                      className="bg-primary hover:bg-primary/90"
-                    >
-                      Join for Full Access
-                    </Button>
-                  </div>
-                </div>
+              <Button 
+                size="lg" 
+                className="bg-primary hover:bg-primary/90"
+                onClick={() => setShowSwipeInterface(true)}
+              >
+                <Users className="h-4 w-4 mr-2" />
+                Browse Roommates
+              </Button>
+              {!user && (
+                <p className="text-sm text-muted-foreground mt-4">
+                  Sign up to connect with potential roommates
+                </p>
               )}
             </div>
           </TabsContent>
@@ -298,15 +312,12 @@ export default function SchoolDashboard() {
                   Join Chat Rooms
                 </Button>
               ) : (
-                <div className="space-y-4">
-                  <p className="text-sm text-muted-foreground">Account required for chat access</p>
-                  <Button 
-                    onClick={handleCreateAccount}
-                    className="bg-primary hover:bg-primary/90"
-                  >
-                    Create Account to Chat
-                  </Button>
-                </div>
+                <Button 
+                  onClick={handleCreateAccount}
+                  className="bg-primary hover:bg-primary/90"
+                >
+                  Create Account to Chat
+                </Button>
               )}
             </div>
           </TabsContent>
@@ -318,7 +329,7 @@ export default function SchoolDashboard() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {/* Mock website profiles */}
             {[1, 2, 3, 4].map((i) => (
-              <Card key={i} className="overflow-hidden hover:shadow-lg transition-all duration-200">
+              <Card key={i} className="overflow-hidden hover:shadow-lg transition-all duration-200 hover:scale-105">
                 <div className="aspect-square bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
                   <Users className="h-8 w-8 text-muted-foreground" />
                 </div>
