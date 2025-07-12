@@ -25,6 +25,8 @@ import {
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { getSchoolName } from "@/config/schoolNameMapping";
+import { getInstagramUsername } from "@/config/schoolInstagramMapping";
+import { getSchoolDisplayName } from "@/config/schoolDisplayMapping";
 import GuestMessageDialog from "@/components/GuestMessageDialog";
 import PublicProfileBrowser from "@/components/PublicProfileBrowser";
 import { useToast } from "@/hooks/use-toast";
@@ -60,8 +62,8 @@ export default function SchoolDashboard() {
   const isMobile = useIsMobile();
   
   const schoolName = school ? getSchoolName(school) : school?.toUpperCase();
-  const schoolDisplayName = schoolName || school?.toUpperCase() || '';
-  const schoolAcronym = schoolDisplayName.split(' ').map(word => word.charAt(0)).join('').toUpperCase() || school?.toUpperCase() || '';
+  const schoolDisplayName = school ? getSchoolDisplayName(school) : schoolName || school?.toUpperCase() || '';
+  const instagramUsername = school ? getInstagramUsername(school) : null;
 
   useEffect(() => {
     // Check auth status
@@ -169,7 +171,7 @@ export default function SchoolDashboard() {
             {/* School acronym badge with glow */}
             <div className="w-20 h-20 bg-gradient-to-r from-primary to-primary/80 rounded-3xl flex items-center justify-center mx-auto mb-6 neon-glow">
               <span className="text-primary-foreground font-bold text-2xl">
-                {schoolAcronym.charAt(0)}
+                {schoolDisplayName.charAt(0)}
               </span>
             </div>
             
@@ -207,7 +209,7 @@ export default function SchoolDashboard() {
                 className="bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] text-white border-0 hover:opacity-90 font-bold px-8 py-4 rounded-2xl transition-all duration-300 hover:scale-105"
               >
                 <Instagram className="h-5 w-5 mr-2" />
-                Post on {schoolAcronym}'s Insta
+                Post on {schoolDisplayName}'s Insta
               </Button>
             </div>
           </div>
@@ -275,7 +277,7 @@ export default function SchoolDashboard() {
               }`}
             >
               <Instagram className={`${isMobile ? "h-6 w-6" : "h-8 w-8"} mb-1`} />
-              <span className={`${isMobile ? "text-xs" : "text-sm"} font-bold`}>{schoolAcronym}'s Insta</span>
+              <span className={`${isMobile ? "text-xs" : "text-sm"} font-bold`}>{schoolDisplayName}'s Insta</span>
             </Button>
           </div>
         </div>
@@ -628,7 +630,7 @@ export default function SchoolDashboard() {
               <div className="flex flex-col items-center gap-6 mb-8">
                 <Instagram className="h-20 w-20 text-[#E4405F]" />
                 <div>
-                  <h3 className="text-4xl font-black text-[#E4405F] mb-2">@{school}2030class</h3>
+                  <h3 className="text-4xl font-black text-[#E4405F] mb-2">@{instagramUsername || `${school}2030class`}</h3>
                   <p className="text-muted-foreground text-lg">
                     Official Instagram account for {schoolDisplayName} Class of 2030
                   </p>
@@ -637,7 +639,7 @@ export default function SchoolDashboard() {
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button 
-                  onClick={() => window.open(`https://instagram.com/${school}2030class`, '_blank')}
+                  onClick={() => window.open(`https://instagram.com/${instagramUsername || `${school}2030class`}`, '_blank')}
                   size="lg"
                   variant="outline"
                   className="border-[#E4405F] text-[#E4405F] hover:bg-[#E4405F]/10 px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 hover:scale-105"
@@ -652,7 +654,7 @@ export default function SchoolDashboard() {
                   className="bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] hover:opacity-90 text-white border-0 px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 hover:scale-105"
                 >
                   <Instagram className="h-6 w-6 mr-3" />
-                  📸 Post on {schoolAcronym}'s Insta ($5)
+                  📸 Post on {schoolDisplayName}'s Insta ($5)
                 </Button>
               </div>
             </div>
@@ -668,7 +670,7 @@ export default function SchoolDashboard() {
                 ))}
               </div>
               <p className="text-muted-foreground mt-6 text-center">
-                Follow @{school}2030class on Instagram to see student features and campus highlights
+                Follow @{instagramUsername || `${school}2030class`} on Instagram to see student features and campus highlights
               </p>
             </div>
           </div>
