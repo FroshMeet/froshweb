@@ -551,8 +551,8 @@ export default function SchoolDashboard() {
                     </div>
                     
                     {/* Right: Info and Actions */}
-                    <div className="w-1/2 p-8 flex flex-col justify-between">
-                      <div className="space-y-6">
+                    <div className="w-1/2 p-6 flex flex-col justify-between">
+                      <div className="space-y-4">
                         {filterMode === "roommates" && (
                           <Badge className="bg-primary/90 text-primary-foreground w-fit">
                             Looking for Roommate
@@ -560,13 +560,13 @@ export default function SchoolDashboard() {
                         )}
                         
                         <div>
-                          <h3 className="text-3xl font-bold text-foreground mb-2">
+                          <h3 className="text-2xl font-bold text-foreground mb-2">
                             {sampleProfiles[currentSwipeProfile]?.name}
                           </h3>
-                          <p className="text-lg text-muted-foreground mb-1">
+                          <p className="text-base text-muted-foreground mb-1">
                             Class of {sampleProfiles[currentSwipeProfile]?.year}
                           </p>
-                          <p className="text-lg text-muted-foreground mb-4">
+                          <p className="text-base text-muted-foreground mb-3">
                             {sampleProfiles[currentSwipeProfile]?.major}
                           </p>
                           <p className="text-primary font-medium">
@@ -574,29 +574,29 @@ export default function SchoolDashboard() {
                           </p>
                         </div>
                         
-                        <p className="text-muted-foreground leading-relaxed">
+                        <p className="text-sm text-muted-foreground leading-relaxed">
                           "Hey! I'm looking forward to meeting new people and exploring campus together! 🎓"
                         </p>
                       </div>
                       
                       {/* Desktop Action Buttons */}
-                      <div className="flex gap-4">
+                      <div className="flex gap-3 mt-4">
                         <Button
                           size="lg"
                           variant="outline"
                           onClick={() => handleSwipeAction("pass")}
-                          className="flex-1 h-14 rounded-2xl border-muted-foreground/30 hover:border-destructive hover:bg-destructive/10"
+                          className="flex-1 h-12 rounded-xl border-muted-foreground/30 hover:border-destructive hover:bg-destructive/10"
                         >
-                          <X className="h-6 w-6 mr-2" />
+                          <X className="h-5 w-5 mr-1" />
                           Skip
                         </Button>
                         
                         <Button
                           size="lg"
                           onClick={() => handleSwipeAction("message")}
-                          className="flex-1 h-14 rounded-2xl bg-primary hover:bg-primary/90 neon-glow"
+                          className="flex-1 h-12 rounded-xl bg-primary hover:bg-primary/90 neon-glow"
                         >
-                          <MessageCircle className="h-6 w-6 mr-2" />
+                          <MessageCircle className="h-5 w-5 mr-1" />
                           Message
                         </Button>
                         
@@ -604,9 +604,9 @@ export default function SchoolDashboard() {
                           size="lg"
                           variant="outline"
                           onClick={() => handleSwipeAction("like")}
-                          className="flex-1 h-14 rounded-2xl border-primary hover:border-primary hover:bg-primary/10"
+                          className="flex-1 h-12 rounded-xl border-primary hover:border-primary hover:bg-primary/10"
                         >
-                          <Heart className="h-6 w-6 mr-2 text-primary" />
+                          <Heart className="h-5 w-5 mr-1 text-primary" />
                           Like
                         </Button>
                       </div>
