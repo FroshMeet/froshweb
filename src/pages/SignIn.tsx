@@ -62,9 +62,9 @@ const SignIn = () => {
           </Button>
           <div className="flex items-center space-x-3">
             <img 
-              src="/lovable-uploads/70c5411f-00f7-43f3-9004-7c6c2fc6cb12.png" 
+              src="/lovable-uploads/e9020b20-5a8d-4a80-a4e0-9d917c7c5e5c.png" 
               alt="FroshMeet Logo" 
-              className="h-8 w-auto"
+              className="h-10 w-auto"
             />
             <span className="text-xl font-bold text-foreground">FroshMeet</span>
           </div>

@@ -243,7 +243,7 @@ export default function SchoolDashboard() {
         </div>
       </div>
 
-      {/* Bottom Tab Navigation - Desktop vs Mobile Sizing */}
+      {/* Bottom Tab Navigation - Enhanced Desktop vs Mobile Sizing */}
       <div className="sticky bottom-0 bg-card/95 backdrop-blur-xl border-t border-border/50 z-50">
         <div className="max-w-6xl mx-auto px-4 py-4">
           <div className="flex justify-around items-center">
@@ -251,60 +251,62 @@ export default function SchoolDashboard() {
               variant={activeTab === "discover" ? "default" : "ghost"} 
               onClick={() => setActiveTab("discover")} 
               className={`flex flex-col items-center justify-center ${
-                isMobile ? "h-16 w-20" : "h-20 w-24"
+                isMobile ? "h-14 w-16 px-1" : "h-24 w-28 px-3"
               } rounded-2xl transition-all duration-300 ${
                 activeTab === "discover" 
                   ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25 scale-105 neon-glow" 
                   : "text-muted-foreground hover:text-foreground hover:bg-muted/50 hover:scale-105"
               }`}
             >
-              <Grid3X3 className={`${isMobile ? "h-6 w-6" : "h-8 w-8"} mb-1`} />
-              <span className={`${isMobile ? "text-xs" : "text-sm"} font-bold`}>Discover</span>
+              <Grid3X3 className={`${isMobile ? "h-5 w-5" : "h-9 w-9"} mb-1`} />
+              <span className={`${isMobile ? "text-xs" : "text-sm"} font-bold leading-tight`}>Discover</span>
             </Button>
             
             <Button 
               variant={activeTab === "meet" ? "default" : "ghost"} 
               onClick={() => setActiveTab("meet")} 
               className={`flex flex-col items-center justify-center ${
-                isMobile ? "h-16 w-20" : "h-20 w-24"
+                isMobile ? "h-14 w-16 px-1" : "h-24 w-28 px-3"
               } rounded-2xl transition-all duration-300 ${
                 activeTab === "meet" 
                   ? "bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-lg shadow-primary/30 scale-110 neon-glow-strong" 
                   : "text-muted-foreground hover:text-foreground hover:bg-muted/50 hover:scale-105"
               }`}
             >
-              <Heart className={`${isMobile ? "h-6 w-6" : "h-8 w-8"} mb-1`} />
-              <span className={`${isMobile ? "text-xs" : "text-sm"} font-bold`}>Meet</span>
+              <Heart className={`${isMobile ? "h-5 w-5" : "h-9 w-9"} mb-1`} />
+              <span className={`${isMobile ? "text-xs" : "text-sm"} font-bold leading-tight`}>Meet</span>
             </Button>
             
             <Button 
               variant={activeTab === "chat" ? "default" : "ghost"} 
               onClick={() => setActiveTab("chat")} 
               className={`flex flex-col items-center justify-center ${
-                isMobile ? "h-16 w-20" : "h-20 w-24"
+                isMobile ? "h-14 w-16 px-1" : "h-24 w-28 px-3"
               } rounded-2xl transition-all duration-300 ${
                 activeTab === "chat" 
                   ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25 scale-105 neon-glow" 
                   : "text-muted-foreground hover:text-foreground hover:bg-muted/50 hover:scale-105"
               }`}
             >
-              <MessageSquare className={`${isMobile ? "h-6 w-6" : "h-8 w-8"} mb-1 ${activeTab === "chat" ? "" : "bg-transparent"}`} />
-              <span className={`${isMobile ? "text-xs" : "text-sm"} font-bold`}>Chat</span>
+              <MessageSquare className={`${isMobile ? "h-5 w-5" : "h-9 w-9"} mb-1`} />
+              <span className={`${isMobile ? "text-xs" : "text-sm"} font-bold leading-tight`}>Chat</span>
             </Button>
             
             <Button 
               variant={activeTab === "instagram" ? "default" : "ghost"} 
               onClick={() => setActiveTab("instagram")} 
               className={`flex flex-col items-center justify-center ${
-                isMobile ? "h-16 w-20" : "h-20 w-24"
+                isMobile ? "h-14 w-16 px-1" : "h-24 w-28 px-3"
               } rounded-2xl transition-all duration-300 ${
                 activeTab === "instagram" 
                   ? "bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] text-white shadow-lg scale-105" 
                   : "text-muted-foreground hover:text-foreground hover:bg-muted/50 hover:scale-105"
               }`}
             >
-              <Instagram className={`${isMobile ? "h-6 w-6" : "h-8 w-8"} mb-1`} />
-              <span className={`${isMobile ? "text-xs" : "text-sm"} font-bold`}>{schoolDisplayName}'s Insta</span>
+              <Instagram className={`${isMobile ? "h-5 w-5" : "h-9 w-9"} mb-1`} />
+              <span className={`${isMobile ? "text-xs" : "text-sm"} font-bold leading-tight text-center`}>
+                {isMobile ? schoolDisplayName : `${schoolDisplayName}'s Insta`}
+              </span>
             </Button>
           </div>
         </div>
@@ -378,21 +380,23 @@ export default function SchoolDashboard() {
           <div className="space-y-6 animate-fade-in">
             {/* Enhanced Filters */}
             <div className="bg-card/95 backdrop-blur-xl border border-border/50 rounded-2xl p-4 card-shadow">
-              <div className="flex flex-col sm:flex-row gap-4 justify-between items-center">
-                <div className="flex items-center gap-3">
-                  <h3 className="text-lg font-bold text-foreground">{schoolDisplayName} Students</h3>
-                  <ToggleGroup type="single" value={filterMode} onValueChange={setFilterMode}>
-                    <ToggleGroupItem value="all" className="px-6 rounded-xl">Everyone</ToggleGroupItem>
-                    <ToggleGroupItem value="roommates" className="px-6 rounded-xl">Roommates Only</ToggleGroupItem>
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                  <h3 className="text-lg font-bold text-foreground truncate">
+                    {schoolDisplayName} Students
+                  </h3>
+                  <ToggleGroup type="single" value={filterMode} onValueChange={setFilterMode} className="flex-shrink-0">
+                    <ToggleGroupItem value="all" className="px-4 py-2 rounded-xl text-sm">Everyone</ToggleGroupItem>
+                    <ToggleGroupItem value="roommates" className="px-4 py-2 rounded-xl text-sm">Roommates</ToggleGroupItem>
                   </ToggleGroup>
                 </div>
                 {filterMode === "all" && (
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 justify-center sm:justify-start">
                     <Button
                       variant={meetScope === "school" ? "default" : "outline"}
                       size="sm"
                       onClick={() => setMeetScope("school")}
-                      className="rounded-xl"
+                      className="rounded-xl px-4 py-2 text-sm flex-shrink-0"
                     >
                       Your School
                     </Button>
@@ -400,7 +404,7 @@ export default function SchoolDashboard() {
                       variant={meetScope === "worldwide" ? "default" : "outline"}
                       size="sm"
                       onClick={() => setMeetScope("worldwide")}
-                      className="rounded-xl"
+                      className="rounded-xl px-4 py-2 text-sm flex-shrink-0"
                     >
                       <Globe className="h-4 w-4 mr-1" />
                       Worldwide
