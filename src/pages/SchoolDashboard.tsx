@@ -27,6 +27,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { getSchoolName } from "@/config/schoolNameMapping";
 import { getInstagramUsername } from "@/config/schoolInstagramMapping";
 import { getSchoolDisplayName } from "@/config/schoolDisplayMapping";
+import { isApprovedSchool, getApprovedSchool } from "@/config/approvedSchools";
 import GuestMessageDialog from "@/components/GuestMessageDialog";
 import PublicProfileBrowser from "@/components/PublicProfileBrowser";
 import { useToast } from "@/hooks/use-toast";
@@ -61,9 +62,42 @@ export default function SchoolDashboard() {
   const [meetScope, setMeetScope] = useState("school"); // "school" or "worldwide"
   const isMobile = useIsMobile();
   
-  const schoolName = school ? getSchoolName(school) : school?.toUpperCase();
-  const schoolDisplayName = school ? getSchoolDisplayName(school) : schoolName || school?.toUpperCase() || '';
-  const instagramUsername = school ? getInstagramUsername(school) : null;
+  // Validate school slug against approved schools
+  const approvedSchool = school ? getApprovedSchool(school) : null;
+  
+  // If school is not approved, show 404-style page
+  if (school && !approvedSchool) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center px-4">
+          <div className="mb-8">
+            <h1 className="text-6xl font-black text-muted-foreground mb-4">404</h1>
+            <h2 className="text-3xl font-bold text-foreground mb-4">School Not Found</h2>
+            <p className="text-xl text-muted-foreground mb-6 max-w-md mx-auto">
+              Sorry, "{school}" is not a supported school on FroshMeet yet.
+            </p>
+          </div>
+          <div className="space-y-4">
+            <Button 
+              onClick={() => navigate('/')} 
+              size="lg"
+              className="bg-primary hover:bg-primary/90 px-8 py-4 rounded-2xl font-bold"
+            >
+              <ArrowLeft className="h-5 w-5 mr-2" />
+              Back to Home
+            </Button>
+            <p className="text-sm text-muted-foreground">
+              Want to add your school? Contact us to get started!
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  
+  const schoolName = approvedSchool?.name || school?.toUpperCase();
+  const schoolDisplayName = approvedSchool?.displayName || school?.toUpperCase() || '';
+  const instagramUsername = approvedSchool?.instagramUsername || null;
 
   useEffect(() => {
     // Check auth status
