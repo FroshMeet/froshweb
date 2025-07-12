@@ -212,7 +212,7 @@ export default function SchoolDashboard() {
             {/* School name with enhanced animation and FroshMeet blue */}
             <h1 className="text-5xl md:text-7xl font-black text-foreground mb-4 animate-fade-in-up tracking-tight">
               <span className="bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent">
-                {schoolDisplayName}
+                {schoolName}
               </span>
             </h1>
             
