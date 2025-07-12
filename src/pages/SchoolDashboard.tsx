@@ -379,7 +379,7 @@ export default function SchoolDashboard() {
         {activeTab === "meet" && (
           <div className="space-y-6 animate-fade-in">
             {/* Enhanced Filters */}
-          <div className="bg-card/95 backdrop-blur-xl border border-border/50 rounded-2xl p-6 card-shadow">
+          <div className="bg-card/95 backdrop-blur-xl border border-border/50 rounded-2xl p-4 md:p-6 card-shadow">
              {/* Context Label */}
              <div className="text-center mb-4">
                <p className="text-sm text-muted-foreground">
@@ -389,51 +389,107 @@ export default function SchoolDashboard() {
                </p>
              </div>
              
-             {/* Filter Toggles */}
-             <div className="flex justify-center mb-4">
-               <ToggleGroup 
-                 type="single" 
-                 value={filterMode} 
-                 onValueChange={setFilterMode} 
-                 className="bg-muted/50 p-1 rounded-xl"
-               >
-                 <ToggleGroupItem 
-                   value="all" 
-                   className="px-6 py-2.5 rounded-lg text-sm font-medium data-[state=on]:bg-primary data-[state=on]:text-primary-foreground transition-all duration-200"
-                 >
-                   Everyone
-                 </ToggleGroupItem>
-                 <ToggleGroupItem 
-                   value="roommates" 
-                   className="px-6 py-2.5 rounded-lg text-sm font-medium data-[state=on]:bg-primary data-[state=on]:text-primary-foreground transition-all duration-200"
-                 >
-                   Roommates
-                 </ToggleGroupItem>
-               </ToggleGroup>
-             </div>
-             
-             {/* Scope Selector */}
-             {filterMode === "all" && (
-               <div className="flex justify-end">
-                 <div className="flex items-center gap-2 bg-muted/30 rounded-xl p-1">
-                   <Button
-                     variant={meetScope === "school" ? "default" : "ghost"}
-                     size="sm"
-                     onClick={() => setMeetScope("school")}
-                     className="rounded-lg px-3 py-1.5 text-xs"
+             {/* Mobile Layout - Stack Everything Vertically */}
+             {isMobile ? (
+               <div className="space-y-4">
+                 {/* Filter Toggles */}
+                 <div className="flex justify-center">
+                   <ToggleGroup 
+                     type="single" 
+                     value={filterMode} 
+                     onValueChange={setFilterMode} 
+                     className="bg-muted/50 p-1 rounded-xl w-full max-w-xs"
                    >
-                     Your School
-                   </Button>
-                   <Button
-                     variant={meetScope === "worldwide" ? "default" : "ghost"}
-                     size="sm"
-                     onClick={() => setMeetScope("worldwide")}
-                     className="rounded-lg px-3 py-1.5 text-xs"
-                   >
-                     <Globe className="h-3 w-3 mr-1" />
-                     Worldwide
-                   </Button>
+                     <ToggleGroupItem 
+                       value="all" 
+                       className="flex-1 py-2.5 rounded-lg text-sm font-medium data-[state=on]:bg-primary data-[state=on]:text-primary-foreground transition-all duration-200"
+                     >
+                       Everyone
+                     </ToggleGroupItem>
+                     <ToggleGroupItem 
+                       value="roommates" 
+                       className="flex-1 py-2.5 rounded-lg text-sm font-medium data-[state=on]:bg-primary data-[state=on]:text-primary-foreground transition-all duration-200"
+                     >
+                       Roommates
+                     </ToggleGroupItem>
+                   </ToggleGroup>
                  </div>
+                 
+                 {/* Scope Selector - Centered on Mobile */}
+                 {filterMode === "all" && (
+                   <div className="flex justify-center">
+                     <div className="flex items-center gap-1 bg-muted/30 rounded-xl p-1 w-full max-w-xs">
+                       <Button
+                         variant={meetScope === "school" ? "default" : "ghost"}
+                         size="sm"
+                         onClick={() => setMeetScope("school")}
+                         className="flex-1 rounded-lg py-2 text-xs font-medium"
+                       >
+                         Your School
+                       </Button>
+                       <Button
+                         variant={meetScope === "worldwide" ? "default" : "ghost"}
+                         size="sm"
+                         onClick={() => setMeetScope("worldwide")}
+                         className="flex-1 rounded-lg py-2 text-xs font-medium"
+                       >
+                         <Globe className="h-3 w-3 mr-1" />
+                         Worldwide
+                       </Button>
+                     </div>
+                   </div>
+                 )}
+               </div>
+             ) : (
+               /* Desktop Layout - Side by Side */
+               <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                 {/* Filter Toggles */}
+                 <div className="flex justify-center lg:justify-start">
+                   <ToggleGroup 
+                     type="single" 
+                     value={filterMode} 
+                     onValueChange={setFilterMode} 
+                     className="bg-muted/50 p-1 rounded-xl"
+                   >
+                     <ToggleGroupItem 
+                       value="all" 
+                       className="px-6 py-2.5 rounded-lg text-sm font-medium data-[state=on]:bg-primary data-[state=on]:text-primary-foreground transition-all duration-200"
+                     >
+                       Everyone
+                     </ToggleGroupItem>
+                     <ToggleGroupItem 
+                       value="roommates" 
+                       className="px-6 py-2.5 rounded-lg text-sm font-medium data-[state=on]:bg-primary data-[state=on]:text-primary-foreground transition-all duration-200"
+                     >
+                       Roommates
+                     </ToggleGroupItem>
+                   </ToggleGroup>
+                 </div>
+                 
+                 {/* Scope Selector */}
+                 {filterMode === "all" && (
+                   <div className="flex justify-center lg:justify-end">
+                     <div className="flex items-center gap-2 bg-muted/30 rounded-xl p-1">
+                       <Button
+                         variant={meetScope === "school" ? "default" : "ghost"}
+                         size="sm"
+                         onClick={() => setMeetScope("school")}
+                         className="rounded-lg px-3 py-1.5 text-xs"
+                       >
+                         Your School
+                       </Button>
+                       <Button
+                         variant={meetScope === "worldwide" ? "default" : "ghost"}
+                         size="sm"
+                         onClick={() => setMeetScope("worldwide")}
+                         className="rounded-lg px-3 py-1.5 text-xs"
+                       >
+                         <Globe className="h-3 w-3 mr-1" />
+                         Worldwide
+                       </Button>
+                     </div>
+                   </div>
+                 )}
                </div>
              )}
            </div>
@@ -551,8 +607,8 @@ export default function SchoolDashboard() {
                     </div>
                     
                     {/* Right: Info and Actions */}
-                    <div className="w-1/2 p-6 flex flex-col justify-between">
-                      <div className="space-y-4">
+                    <div className="w-1/2 p-3 md:p-4 lg:p-6 flex flex-col justify-between">
+                      <div className="space-y-3 md:space-y-4 flex-1">
                         {filterMode === "roommates" && (
                           <Badge className="bg-primary/90 text-primary-foreground w-fit">
                             Looking for Roommate
@@ -560,54 +616,57 @@ export default function SchoolDashboard() {
                         )}
                         
                         <div>
-                          <h3 className="text-2xl font-bold text-foreground mb-2">
+                          <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-foreground mb-1 md:mb-2">
                             {sampleProfiles[currentSwipeProfile]?.name}
                           </h3>
-                          <p className="text-base text-muted-foreground mb-1">
+                          <p className="text-sm md:text-base text-muted-foreground mb-1">
                             Class of {sampleProfiles[currentSwipeProfile]?.year}
                           </p>
-                          <p className="text-base text-muted-foreground mb-3">
+                          <p className="text-sm md:text-base text-muted-foreground mb-2 md:mb-3">
                             {sampleProfiles[currentSwipeProfile]?.major}
                           </p>
-                          <p className="text-primary font-medium">
+                          <p className="text-primary font-medium text-sm md:text-base">
                             {meetScope === "school" ? schoolDisplayName : "Worldwide 🌐"}
                           </p>
                         </div>
                         
-                        <p className="text-sm text-muted-foreground leading-relaxed">
+                        <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
                           "Hey! I'm looking forward to meeting new people and exploring campus together! 🎓"
                         </p>
                       </div>
                       
-                      {/* Desktop Action Buttons */}
-                      <div className="flex gap-3 mt-4">
+                      {/* Desktop Action Buttons - Responsive Sizing */}
+                      <div className="flex gap-2 md:gap-3 mt-3 md:mt-4 flex-shrink-0">
                         <Button
                           size="lg"
                           variant="outline"
                           onClick={() => handleSwipeAction("pass")}
-                          className="flex-1 h-12 rounded-xl border-muted-foreground/30 hover:border-destructive hover:bg-destructive/10"
+                          className="flex-1 h-10 md:h-11 lg:h-12 rounded-lg md:rounded-xl border-muted-foreground/30 hover:border-destructive hover:bg-destructive/10 text-xs md:text-sm"
                         >
-                          <X className="h-5 w-5 mr-1" />
-                          Skip
+                          <X className="h-4 w-4 md:h-5 md:w-5 mr-1" />
+                          <span className="hidden sm:inline">Skip</span>
+                          <span className="sm:hidden">✕</span>
                         </Button>
                         
                         <Button
                           size="lg"
                           onClick={() => handleSwipeAction("message")}
-                          className="flex-1 h-12 rounded-xl bg-primary hover:bg-primary/90 neon-glow"
+                          className="flex-1 h-10 md:h-11 lg:h-12 rounded-lg md:rounded-xl bg-primary hover:bg-primary/90 neon-glow text-xs md:text-sm"
                         >
-                          <MessageCircle className="h-5 w-5 mr-1" />
-                          Message
+                          <MessageCircle className="h-4 w-4 md:h-5 md:w-5 mr-1" />
+                          <span className="hidden sm:inline">Message</span>
+                          <span className="sm:hidden">💬</span>
                         </Button>
                         
                         <Button
                           size="lg"
                           variant="outline"
                           onClick={() => handleSwipeAction("like")}
-                          className="flex-1 h-12 rounded-xl border-primary hover:border-primary hover:bg-primary/10"
+                          className="flex-1 h-10 md:h-11 lg:h-12 rounded-lg md:rounded-xl border-primary hover:border-primary hover:bg-primary/10 text-xs md:text-sm"
                         >
-                          <Heart className="h-5 w-5 mr-1 text-primary" />
-                          Like
+                          <Heart className="h-4 w-4 md:h-5 md:w-5 mr-1 text-primary" />
+                          <span className="hidden sm:inline">Like</span>
+                          <span className="sm:hidden">❤️</span>
                         </Button>
                       </div>
                     </div>
