@@ -379,40 +379,64 @@ export default function SchoolDashboard() {
         {activeTab === "meet" && (
           <div className="space-y-6 animate-fade-in">
             {/* Enhanced Filters */}
-            <div className="bg-card/95 backdrop-blur-xl border border-border/50 rounded-2xl p-4 card-shadow">
-              <div className="flex flex-col gap-4">
-                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-                  <h3 className="text-lg font-bold text-foreground truncate">
-                    {schoolDisplayName} Students
-                  </h3>
-                  <ToggleGroup type="single" value={filterMode} onValueChange={setFilterMode} className="flex-shrink-0">
-                    <ToggleGroupItem value="all" className="px-4 py-2 rounded-xl text-sm">Everyone</ToggleGroupItem>
-                    <ToggleGroupItem value="roommates" className="px-4 py-2 rounded-xl text-sm">Roommates</ToggleGroupItem>
-                  </ToggleGroup>
-                </div>
-                {filterMode === "all" && (
-                  <div className="flex items-center gap-2 justify-center sm:justify-start">
-                    <Button
-                      variant={meetScope === "school" ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => setMeetScope("school")}
-                      className="rounded-xl px-4 py-2 text-sm flex-shrink-0"
-                    >
-                      Your School
-                    </Button>
-                    <Button
-                      variant={meetScope === "worldwide" ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => setMeetScope("worldwide")}
-                      className="rounded-xl px-4 py-2 text-sm flex-shrink-0"
-                    >
-                      <Globe className="h-4 w-4 mr-1" />
-                      Worldwide
-                    </Button>
-                  </div>
-                )}
-              </div>
-            </div>
+          <div className="bg-card/95 backdrop-blur-xl border border-border/50 rounded-2xl p-6 card-shadow">
+             {/* Context Label */}
+             <div className="text-center mb-4">
+               <p className="text-sm text-muted-foreground">
+                 Showing students from: <span className="font-semibold text-foreground">
+                   {meetScope === "school" ? schoolDisplayName : "All Schools"}
+                 </span>
+               </p>
+             </div>
+             
+             {/* Filter Toggles */}
+             <div className="flex justify-center mb-4">
+               <ToggleGroup 
+                 type="single" 
+                 value={filterMode} 
+                 onValueChange={setFilterMode} 
+                 className="bg-muted/50 p-1 rounded-xl"
+               >
+                 <ToggleGroupItem 
+                   value="all" 
+                   className="px-6 py-2.5 rounded-lg text-sm font-medium data-[state=on]:bg-primary data-[state=on]:text-primary-foreground transition-all duration-200"
+                 >
+                   Everyone
+                 </ToggleGroupItem>
+                 <ToggleGroupItem 
+                   value="roommates" 
+                   className="px-6 py-2.5 rounded-lg text-sm font-medium data-[state=on]:bg-primary data-[state=on]:text-primary-foreground transition-all duration-200"
+                 >
+                   Roommates
+                 </ToggleGroupItem>
+               </ToggleGroup>
+             </div>
+             
+             {/* Scope Selector */}
+             {filterMode === "all" && (
+               <div className="flex justify-end">
+                 <div className="flex items-center gap-2 bg-muted/30 rounded-xl p-1">
+                   <Button
+                     variant={meetScope === "school" ? "default" : "ghost"}
+                     size="sm"
+                     onClick={() => setMeetScope("school")}
+                     className="rounded-lg px-3 py-1.5 text-xs"
+                   >
+                     Your School
+                   </Button>
+                   <Button
+                     variant={meetScope === "worldwide" ? "default" : "ghost"}
+                     size="sm"
+                     onClick={() => setMeetScope("worldwide")}
+                     className="rounded-lg px-3 py-1.5 text-xs"
+                   >
+                     <Globe className="h-3 w-3 mr-1" />
+                     Worldwide
+                   </Button>
+                 </div>
+               </div>
+             )}
+           </div>
 
             {/* Swipe Card - Desktop Horizontal vs Mobile Vertical */}
             {isMobile ? (
@@ -679,14 +703,14 @@ export default function SchoolDashboard() {
                   View on Instagram
                 </Button>
                 
-                <Button 
-                  onClick={handleGuestInstagramPost}
-                  size="lg"
-                  className="bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] hover:opacity-90 text-white border-0 px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 hover:scale-105"
-                >
-                  <Instagram className="h-6 w-6 mr-3" />
-                  📸 Post on {schoolDisplayName}'s Insta ($5)
-                </Button>
+                 <Button 
+                   onClick={handleGuestInstagramPost}
+                   size="lg"
+                   className="bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] hover:opacity-90 text-white border-0 px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 hover:scale-105"
+                 >
+                   <Instagram className="h-6 w-6 mr-2" />
+                   📸 Post on {schoolDisplayName}'s Insta
+                 </Button>
               </div>
             </div>
 

@@ -4,9 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Users, MessageSquare, Calendar, Shield, Search, Heart, Zap, Star } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Features = () => {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
 
   return (
     <div className="min-h-screen bg-background">
@@ -20,9 +22,9 @@ const Features = () => {
               onClick={() => navigate('/')}
             >
               <img 
-                src="/lovable-uploads/e9020b20-5a8d-4a80-a4e0-9d917c7c5e5c.png" 
+                src={isMobile ? "/lovable-uploads/a880e910-33fe-4ce7-b556-01f73d623057.png" : "/lovable-uploads/e9020b20-5a8d-4a80-a4e0-9d917c7c5e5c.png"}
                 alt="FroshMeet Logo" 
-                className="h-12 w-auto"
+                className={isMobile ? "h-10 w-auto" : "h-16 w-auto"}
               />
             </div>
             

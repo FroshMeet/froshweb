@@ -5,9 +5,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Eye, EyeOff, ArrowLeft } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const SignIn = () => {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -62,9 +64,9 @@ const SignIn = () => {
           </Button>
           <div className="flex items-center space-x-3">
             <img 
-              src="/lovable-uploads/e9020b20-5a8d-4a80-a4e0-9d917c7c5e5c.png" 
+              src={isMobile ? "/lovable-uploads/a880e910-33fe-4ce7-b556-01f73d623057.png" : "/lovable-uploads/e9020b20-5a8d-4a80-a4e0-9d917c7c5e5c.png"}
               alt="FroshMeet Logo" 
-              className="h-10 w-auto"
+              className={isMobile ? "h-8 w-auto" : "h-12 w-auto"}
             />
             <span className="text-xl font-bold text-foreground">FroshMeet</span>
           </div>

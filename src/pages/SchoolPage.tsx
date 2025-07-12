@@ -9,10 +9,12 @@ import DiscoverGrid from "@/components/DiscoverGrid";
 import EnhancedSwipeInterface from "@/components/EnhancedSwipeInterface";
 import SchoolChatInterface from "@/components/SchoolChatInterface";
 import { getSchoolName } from "@/config/schoolNameMapping";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const EnhancedSchoolPage = () => {
   const { school } = useParams<{ school: string }>();
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   const [studentSearch, setStudentSearch] = useState("");
   const [activeInterface, setActiveInterface] = useState<null | "swipe-meet" | "swipe-roommate" | "chat">(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false); // This would come from auth context
@@ -179,9 +181,9 @@ const EnhancedSchoolPage = () => {
                 onClick={() => navigate('/')}
               >
                 <img 
-                  src="/lovable-uploads/e9020b20-5a8d-4a80-a4e0-9d917c7c5e5c.png" 
+                  src={isMobile ? "/lovable-uploads/a880e910-33fe-4ce7-b556-01f73d623057.png" : "/lovable-uploads/e9020b20-5a8d-4a80-a4e0-9d917c7c5e5c.png"}
                   alt="FroshMeet Logo" 
-                  className="h-10 w-auto"
+                  className={isMobile ? "h-8 w-auto" : "h-12 w-auto"}
                 />
               </div>
             </div>

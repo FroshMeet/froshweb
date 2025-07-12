@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Search, Users, MessageSquare, Calendar, Shield, Instagram } from "lucide-react";
 import heroImage from "@/assets/hero-college-students.jpg";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const SCHOOL_DATABASE = [
   { name: "University of California, Los Angeles", acronym: "UCLA", searchTerms: ["ucla", "los angeles", "westwood"], slug: "ucla" },
@@ -130,6 +131,7 @@ const searchSchools = (query: string) => {
 
 const Homepage = () => {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   const [searchTerm, setSearchTerm] = useState("");
   const [email, setEmail] = useState("");
 
@@ -159,9 +161,9 @@ const Homepage = () => {
               onClick={() => navigate('/')}
             >
               <img 
-                src="/lovable-uploads/e9020b20-5a8d-4a80-a4e0-9d917c7c5e5c.png" 
+                src={isMobile ? "/lovable-uploads/a880e910-33fe-4ce7-b556-01f73d623057.png" : "/lovable-uploads/e9020b20-5a8d-4a80-a4e0-9d917c7c5e5c.png"}
                 alt="FroshMeet Logo" 
-                className="h-12 w-auto"
+                className={isMobile ? "h-10 w-auto" : "h-16 w-auto"}
               />
             </div>
             
@@ -466,7 +468,7 @@ const Homepage = () => {
             <div className="md:col-span-2">
               <div className="flex items-center space-x-3 mb-6">
                 <img 
-                  src="/lovable-uploads/e9020b20-5a8d-4a80-a4e0-9d917c7c5e5c.png" 
+                  src="/lovable-uploads/a880e910-33fe-4ce7-b556-01f73d623057.png"
                   alt="FroshMeet Logo" 
                   className="h-10 w-auto"
                 />

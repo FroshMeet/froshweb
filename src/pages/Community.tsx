@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Search, ArrowLeft } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const SCHOOLS = [
   { name: "Arizona State University", acronym: "ASU", slug: "asu", searchTerms: ["ASU", "Arizona State University", "Arizona State", "Arizona"] },
@@ -127,6 +128,7 @@ const searchSchools = (query: string) => {
 
 const Community = () => {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredSchools = searchSchools(searchQuery);
@@ -152,9 +154,9 @@ const Community = () => {
               onClick={() => navigate('/')}
             >
               <img 
-                src="/lovable-uploads/e9020b20-5a8d-4a80-a4e0-9d917c7c5e5c.png" 
+                src={isMobile ? "/lovable-uploads/a880e910-33fe-4ce7-b556-01f73d623057.png" : "/lovable-uploads/e9020b20-5a8d-4a80-a4e0-9d917c7c5e5c.png"}
                 alt="FroshMeet Logo" 
-                className="h-12 w-auto"
+                className={isMobile ? "h-10 w-auto" : "h-16 w-auto"}
               />
             </div>
             
