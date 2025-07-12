@@ -202,13 +202,6 @@ export default function SchoolDashboard() {
           </Button>
           
           <div className="text-center">
-            {/* School acronym badge with glow */}
-            <div className="w-20 h-20 bg-gradient-to-r from-primary to-primary/80 rounded-3xl flex items-center justify-center mx-auto mb-6 neon-glow">
-              <span className="text-primary-foreground font-bold text-2xl">
-                {schoolDisplayName.charAt(0)}
-              </span>
-            </div>
-            
             {/* School name with enhanced animation and FroshMeet blue */}
             <h1 className="text-5xl md:text-7xl font-black text-foreground mb-4 animate-fade-in-up tracking-tight">
               <span className="bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent">
