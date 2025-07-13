@@ -1,811 +1,411 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   Users, 
   Instagram, 
-  ArrowLeft, 
-  Heart, 
-  MessageSquare, 
-  UserPlus, 
-  Grid3X3,
-  Search,
-  Filter,
-  X,
-  ThumbsDown,
-  MessageCircle,
-  Star,
-  ChevronLeft,
-  ChevronRight,
-  Globe
+  Star, 
+  MapPin, 
+  GraduationCap,
+  Heart,
+  MessageSquare,
+  Share2,
+  Camera,
+  Sparkles,
+  ArrowRight,
+  ExternalLink,
+  TrendingUp,
+  Award,
+  Calendar,
+  BookOpen
 } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { getSchoolName } from "@/config/schoolNameMapping";
-import { getInstagramUsername } from "@/config/schoolInstagramMapping";
-import { getSchoolDisplayName } from "@/config/schoolDisplayMapping";
-import { isApprovedSchool, getApprovedSchool } from "@/config/approvedSchools";
-import GuestMessageDialog from "@/components/GuestMessageDialog";
-import PublicProfileBrowser from "@/components/PublicProfileBrowser";
+import { APPROVED_SCHOOLS } from "@/config/approvedSchools";
 import { GetFeaturedFlow } from "@/components/GetFeaturedFlow";
-import { useToast } from "@/hooks/use-toast";
-import { useIsMobile } from "@/hooks/use-mobile";
+import AppHeader from "@/components/layout/AppHeader";
+import BottomNavigation from "@/components/layout/BottomNavigation";
 
-interface Profile {
-  id: string;
-  name: string;
-  bio: string;
-  class_year: string;
-  photos: string[];
-  social_links: any;
-  school: string;
-  created_at: string;
-  major?: string;
-  lookingFor?: string[];
-}
-
-export default function SchoolDashboard() {
-  const { school } = useParams<{ school: string }>();
-  const navigate = useNavigate();
-  const { toast } = useToast();
-  const [profiles, setProfiles] = useState<Profile[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<any>(null);
-  const [showGuestDialog, setShowGuestDialog] = useState(false);
+const SchoolDashboard = () => {
+  const { school: schoolSlug } = useParams();
+  const [showGetFeatured, setShowGetFeatured] = useState(false);
   const [activeTab, setActiveTab] = useState("discover");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filterMode, setFilterMode] = useState("all");
-  const [currentSwipeProfile, setCurrentSwipeProfile] = useState(0);
-  const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
-  const [meetScope, setMeetScope] = useState("school"); // "school" or "worldwide"
-  const isMobile = useIsMobile();
+  const [isFollowing, setIsFollowing] = useState(false);
+
+  const school = schoolSlug ? APPROVED_SCHOOLS[schoolSlug] : null;
   
-  // Validate school slug against approved schools
-  const approvedSchool = school ? getApprovedSchool(school) : null;
-  
-  // If school is not approved, show 404-style page
-  if (school && !approvedSchool) {
+  // Mock data - in real app, this would come from API
+  const schoolStats = {
+    followers: 2847,
+    posts: 156,
+    featured: 43,
+    engagement: 8.2
+  };
+
+  const featuredProfiles = [
+    {
+      id: 1,
+      name: "Alex Chen",
+      major: "Computer Science",
+      bio: "Love coding, hiking, and making new friends! Looking for study buddies and roommates 🤓",
+      photos: ["https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=600&fit=crop&crop=face"],
+      interests: ["Coding", "Hiking", "Gaming"],
+      year: "2030"
+    },
+    {
+      id: 2,
+      name: "Sarah Kim",
+      major: "Pre-Med",
+      bio: "Future doctor with a passion for helping others. Love volleyball and coffee ☕",
+      photos: ["https://images.unsplash.com/photo-1494790108755-2616b332c1e0?w=400&h=600&fit=crop&crop=face"],
+      interests: ["Medicine", "Volleyball", "Coffee"],
+      year: "2030"
+    },
+    {
+      id: 3,
+      name: "Mike Johnson",
+      major: "Business",
+      bio: "Entrepreneur mindset, always looking for the next big opportunity! 🚀",
+      photos: ["https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=600&fit=crop&crop=face"],
+      interests: ["Business", "Startups", "Basketball"],
+      year: "2030"
+    }
+  ];
+
+  const instagramPosts = [
+    {
+      id: 1,
+      image: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400&h=400&fit=crop",
+      caption: "Welcome Class of 2030! 🎉",
+      likes: 234,
+      comments: 18
+    },
+    {
+      id: 2,
+      image: "https://images.unsplash.com/photo-1523050854058-8df90110c9d1?w=400&h=400&fit=crop",
+      caption: "Campus tour highlights ✨",
+      likes: 189,
+      comments: 12
+    },
+    {
+      id: 3,
+      image: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=400&h=400&fit=crop",
+      caption: "Study spots you need to know 📚",
+      likes: 156,
+      comments: 8
+    },
+    {
+      id: 4,
+      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=400&fit=crop",
+      caption: "Meet your future classmates! 🤝",
+      likes: 298,
+      comments: 24
+    },
+    {
+      id: 5,
+      image: "https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?w=400&h=400&fit=crop",
+      caption: "Dorm life preview 🏠",
+      likes: 167,
+      comments: 15
+    },
+    {
+      id: 6,
+      image: "https://images.unsplash.com/photo-1564981797816-1043664bf78d?w=400&h=400&fit=crop",
+      caption: "Campus events coming up! 🎊",
+      likes: 203,
+      comments: 19
+    }
+  ];
+
+  const displayUser = {
+    college: school?.name || "University",
+    classOf: "2030"
+  };
+
+  if (!school) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center px-4">
-          <div className="mb-8">
-            <h1 className="text-6xl font-black text-muted-foreground mb-4">404</h1>
-            <h2 className="text-3xl font-bold text-foreground mb-4">School Not Found</h2>
-            <p className="text-xl text-muted-foreground mb-6 max-w-md mx-auto">
-              Sorry, "{school}" is not a supported school on FroshMeet yet.
-            </p>
-          </div>
-          <div className="space-y-4">
-            <Button 
-              onClick={() => navigate('/')} 
-              size="lg"
-              className="bg-primary hover:bg-primary/90 px-8 py-4 rounded-2xl font-bold"
-            >
-              <ArrowLeft className="h-5 w-5 mr-2" />
-              Back to Home
-            </Button>
-            <p className="text-sm text-muted-foreground">
-              Want to add your school? Contact us to get started!
-            </p>
-          </div>
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-foreground mb-4">School Not Found</h1>
+          <p className="text-muted-foreground">The school you're looking for doesn't exist.</p>
         </div>
       </div>
     );
   }
-  
-  const schoolName = approvedSchool?.name || school?.toUpperCase();
-  const schoolDisplayName = approvedSchool?.displayName || school?.toUpperCase() || '';
-  const instagramUsername = approvedSchool?.instagramUsername || null;
-
-  useEffect(() => {
-    // Check auth status
-    const checkAuth = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      setUser(user);
-    };
-    checkAuth();
-
-    const fetchProfiles = async () => {
-      if (!school) return;
-      
-      try {
-        const { data, error } = await supabase
-          .from('instagram_profiles')
-          .select('*')
-          .eq('school', school.toUpperCase())
-          .order('created_at', { ascending: false });
-
-        if (error) throw error;
-        setProfiles(data || []);
-      } catch (error) {
-        console.error('Error fetching profiles:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProfiles();
-  }, [school]);
-
-  const handleGuestAction = (feature: string) => {
-    if (!user) {
-      toast({
-        title: `Join FroshMeet for ${feature}`,
-        description: "Create a free account to access all features",
-      });
-      setShowGuestDialog(true);
-    }
-  };
-
-  const handleCreateAccount = () => {
-    navigate('/signup');
-  };
-
-  const [showGetFeaturedFlow, setShowGetFeaturedFlow] = useState(false);
-
-  const handleGuestInstagramPost = () => {
-    setShowGetFeaturedFlow(true);
-  };
-
-  // Mock sample profiles for grid view
-  const sampleProfiles = [
-    { id: 1, name: "Emma S.", year: "2029", major: "Computer Science", photo: null },
-    { id: 2, name: "Alex M.", year: "2028", major: "Business", photo: null },
-    { id: 3, name: "Sarah L.", year: "2029", major: "Psychology", photo: null },
-    { id: 4, name: "Marcus T.", year: "2028", major: "Engineering", photo: null },
-    { id: 5, name: "Jessica R.", year: "2029", major: "Biology", photo: null },
-    { id: 6, name: "David K.", year: "2028", major: "Economics", photo: null }
-  ];
-
-  // Filter profiles based on search only (show everyone by default)
-  const filteredProfiles = sampleProfiles.filter(profile => {
-    const matchesSearch = profile.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         profile.major.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesSearch;
-  });
-
-  const handleSwipeAction = (action: "like" | "pass" | "message") => {
-    if (!user) {
-      handleGuestAction(action === "like" ? "liking profiles" : action === "message" ? "messaging" : "swiping");
-      return;
-    }
-    
-    // Move to next profile
-    setCurrentSwipeProfile(prev => (prev + 1) % sampleProfiles.length);
-    
-    if (action === "like") {
-      toast({ title: "Profile liked! ❤️", description: "We'll let you know if it's a match!" });
-    } else if (action === "message") {
-      toast({ title: "Message sent! 💬", description: "Your icebreaker has been delivered." });
-    }
-  };
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Enhanced Header with Bold Animation */}
-      <div className="bg-gradient-to-br from-primary/20 via-primary/10 to-background py-12 relative overflow-hidden">
-        {/* Animated background elements */}
-        <div className="absolute inset-0">
-          <div className="absolute top-10 left-10 w-2 h-2 bg-primary rounded-full animate-pulse opacity-60"></div>
-          <div className="absolute top-20 right-16 w-1 h-1 bg-neon-cyan rounded-full animate-pulse opacity-40"></div>
-          <div className="absolute bottom-16 left-1/4 w-1.5 h-1.5 bg-primary rounded-full animate-pulse opacity-50"></div>
-        </div>
-        
-        <div className="max-w-6xl mx-auto px-4 relative">
-          <Button 
-            variant="ghost" 
-            onClick={() => navigate('/')}
-            className="mb-8 text-muted-foreground hover:text-foreground"
-          >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Home
-          </Button>
-          
-          <div className="text-center">
-            {/* School name with enhanced animation and FroshMeet blue */}
-            <h1 className="text-5xl md:text-7xl font-black text-foreground mb-4 animate-fade-in-up tracking-tight">
-              <span className="bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent">
-                {schoolName}
-              </span>
+      <AppHeader displayUser={displayUser} isGuest={true} />
+      
+      {/* Hero Section */}
+      <section className="relative h-64 md:h-80 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-hero" />
+        <div className="absolute inset-0 bg-black/30" />
+        <div className="relative h-full flex items-center justify-center px-4">
+          <div className="text-center text-white max-w-4xl mx-auto">
+            <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center">
+              <GraduationCap className="w-10 h-10 text-white" />
+            </div>
+            <h1 className="text-3xl md:text-5xl font-bold mb-4">
+              {school.name}
             </h1>
-            
-            {/* Animated subheader */}
-            <p className="text-xl md:text-2xl text-primary mb-6 animate-fade-in font-medium">
-              Connect with fellow students and build lasting friendships
+            <p className="text-lg md:text-xl text-white/90 mb-6">
+              Class of 2030 • {schoolStats.followers.toLocaleString()} Members
             </p>
-            
-            {/* Student count with enhanced styling */}
-            <div className="flex items-center justify-center gap-3 text-lg text-muted-foreground mb-8">
-              <Users className="h-6 w-6 text-primary" />
-              <span className="font-semibold">{profiles.length} students connected</span>
-            </div>
-
-            {/* Enhanced CTAs */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button 
-                onClick={handleCreateAccount}
-                size="lg"
-                className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold px-8 py-4 rounded-2xl neon-glow transition-all duration-300 hover:scale-105"
+                onClick={() => setIsFollowing(!isFollowing)}
+                className={`h-12 px-8 rounded-2xl transition-all ${
+                  isFollowing 
+                    ? 'bg-white/20 backdrop-blur-md border border-white/30 text-white hover:bg-white/30' 
+                    : 'bg-white text-primary hover:bg-white/90'
+                }`}
               >
-                <UserPlus className="h-5 w-5 mr-2" />
-                Sign Up Free
+                <Heart className={`w-5 h-5 mr-2 ${isFollowing ? 'fill-current' : ''}`} />
+                {isFollowing ? 'Following' : 'Follow'}
               </Button>
               <Button 
-                onClick={handleGuestInstagramPost}
-                size="lg"
-                className="bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] text-white border-0 hover:opacity-90 font-bold px-8 py-4 rounded-2xl transition-all duration-300 hover:scale-105"
+                onClick={() => setShowGetFeatured(true)}
+                className="h-12 px-8 bg-gradient-primary hover:scale-105 transition-transform rounded-2xl shadow-glow"
               >
-                <Instagram className="h-5 w-5 mr-2" />
-                Post on {schoolDisplayName}'s Insta
+                <Sparkles className="w-5 h-5 mr-2" />
+                Get Featured
               </Button>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Bottom Tab Navigation - Enhanced Desktop vs Mobile Sizing */}
-      <div className="sticky bottom-0 bg-card/95 backdrop-blur-xl border-t border-border/50 z-50">
-        <div className="max-w-6xl mx-auto px-4 py-4">
-          <div className="flex justify-around items-center">
-            <Button 
-              variant={activeTab === "discover" ? "default" : "ghost"} 
-              onClick={() => setActiveTab("discover")} 
-              className={`flex flex-col items-center justify-center ${
-                isMobile ? "h-14 w-16 px-1" : "h-24 w-28 px-3"
-              } rounded-2xl transition-all duration-300 ${
-                activeTab === "discover" 
-                  ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25 scale-105 neon-glow" 
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted/50 hover:scale-105"
-              }`}
-            >
-              <Grid3X3 className={`${isMobile ? "h-5 w-5" : "h-9 w-9"} mb-1`} />
-              <span className={`${isMobile ? "text-xs" : "text-sm"} font-bold leading-tight`}>Discover</span>
-            </Button>
-            
-            <Button 
-              variant={activeTab === "meet" ? "default" : "ghost"} 
-              onClick={() => setActiveTab("meet")} 
-              className={`flex flex-col items-center justify-center ${
-                isMobile ? "h-14 w-16 px-1" : "h-24 w-28 px-3"
-              } rounded-2xl transition-all duration-300 ${
-                activeTab === "meet" 
-                  ? "bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-lg shadow-primary/30 scale-110 neon-glow-strong" 
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted/50 hover:scale-105"
-              }`}
-            >
-              <Heart className={`${isMobile ? "h-5 w-5" : "h-9 w-9"} mb-1`} />
-              <span className={`${isMobile ? "text-xs" : "text-sm"} font-bold leading-tight`}>Meet</span>
-            </Button>
-            
-            <Button 
-              variant={activeTab === "chat" ? "default" : "ghost"} 
-              onClick={() => setActiveTab("chat")} 
-              className={`flex flex-col items-center justify-center ${
-                isMobile ? "h-14 w-16 px-1" : "h-24 w-28 px-3"
-              } rounded-2xl transition-all duration-300 ${
-                activeTab === "chat" 
-                  ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25 scale-105 neon-glow" 
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted/50 hover:scale-105"
-              }`}
-            >
-              <MessageSquare className={`${isMobile ? "h-5 w-5" : "h-9 w-9"} mb-1`} />
-              <span className={`${isMobile ? "text-xs" : "text-sm"} font-bold leading-tight`}>Chat</span>
-            </Button>
-            
-            <Button 
-              variant={activeTab === "instagram" ? "default" : "ghost"} 
-              onClick={() => setActiveTab("instagram")} 
-              className={`flex flex-col items-center justify-center ${
-                isMobile ? "h-14 w-16 px-1" : "h-24 w-28 px-3"
-              } rounded-2xl transition-all duration-300 ${
-                activeTab === "instagram" 
-                  ? "bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] text-white shadow-lg scale-105" 
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted/50 hover:scale-105"
-              }`}
-            >
-              <Instagram className={`${isMobile ? "h-5 w-5" : "h-9 w-9"} mb-1`} />
-              <span className={`${isMobile ? "text-xs" : "text-sm"} font-bold leading-tight text-center`}>
-                {isMobile ? schoolDisplayName : `${schoolDisplayName}'s Insta`}
-              </span>
-            </Button>
+      {/* Stats Row */}
+      <section className="py-8 px-4 bg-card/50 border-b border-border">
+        <div className="max-w-4xl mx-auto">
+          <div className="grid grid-cols-4 gap-4 text-center">
+            <div>
+              <div className="text-2xl font-bold text-primary">{schoolStats.followers.toLocaleString()}</div>
+              <div className="text-sm text-muted-foreground">Followers</div>
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-primary">{schoolStats.posts}</div>
+              <div className="text-sm text-muted-foreground">Posts</div>
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-primary">{schoolStats.featured}</div>
+              <div className="text-sm text-muted-foreground">Featured</div>
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-primary">{schoolStats.engagement}%</div>
+              <div className="text-sm text-muted-foreground">Engagement</div>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Main Content Area */}
-      <div className="max-w-6xl mx-auto px-4 py-8 pb-32">
-        
-        {/* Discover Tab */}
-        {activeTab === "discover" && (
-          <div className="space-y-6 animate-fade-in">
-            {/* Sticky Search Bar Only - Removed Toggle */}
-            <div className="sticky top-4 z-40 bg-card/95 backdrop-blur-xl border border-border/50 rounded-2xl p-4 card-shadow">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                <Input
-                  placeholder="Search by name, major, class year..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 h-12 bg-background/50 border-border/40 rounded-xl"
-                />
-              </div>
-            </div>
+      {/* Main Content */}
+      <div className="max-w-4xl mx-auto px-4 py-8 pb-24">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="grid w-full grid-cols-3 mb-8 bg-card/50 p-1 rounded-2xl">
+            <TabsTrigger 
+              value="discover" 
+              className="rounded-xl data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+            >
+              <Users className="w-4 h-4 mr-2" />
+              Discover
+            </TabsTrigger>
+            <TabsTrigger 
+              value="instagram"
+              className="rounded-xl data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+            >
+              <Instagram className="w-4 h-4 mr-2" />
+              Instagram
+            </TabsTrigger>
+            <TabsTrigger 
+              value="featured"
+              className="rounded-xl data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+            >
+              <Star className="w-4 h-4 mr-2" />
+              Featured
+            </TabsTrigger>
+          </TabsList>
 
-            {/* Results count */}
-            <div className="text-sm text-muted-foreground">
-              {filteredProfiles.length} students found
-            </div>
-
-            {/* Profile Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {filteredProfiles.map((profile) => (
-                <Card key={profile.id} className="group overflow-hidden hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 cursor-pointer hover:scale-105 bg-card/50 backdrop-blur-sm border-border/40">
-                  <div className="aspect-square bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center relative overflow-hidden">
-                    <Users className="h-16 w-16 text-primary/60" />
-                    {Math.random() > 0.5 && (
-                      <Badge className="absolute top-2 right-2 bg-primary/90 text-primary-foreground text-xs">
-                        Roommate
-                      </Badge>
-                    )}
+          <TabsContent value="discover" className="space-y-6">
+            <Card className="glass-card border-0 p-6">
+              <CardContent className="pt-0">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-primary flex items-center justify-center">
+                    <Users className="w-6 h-6 text-white" />
                   </div>
-                  <CardContent className="p-4">
-                    <h4 className="font-bold text-foreground text-sm">{profile.name}</h4>
-                    <p className="text-xs text-muted-foreground">Class of {profile.year}</p>
-                    <p className="text-xs text-primary font-medium mt-1">{profile.major}</p>
-                    <Button 
-                      size="sm" 
-                      variant="outline" 
-                      className="w-full mt-3 border-primary/50 text-primary hover:bg-primary/10 rounded-xl"
-                      onClick={() => handleGuestAction("viewing profiles")}
-                    >
-                      View Profile
-                    </Button>
+                  <div>
+                    <h3 className="text-xl font-bold text-foreground">Discover Classmates</h3>
+                    <p className="text-muted-foreground">Connect with your future peers</p>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4 mb-6">
+                  <div className="bg-muted/30 rounded-xl p-4 text-center">
+                    <div className="text-2xl font-bold text-primary mb-1">2.8K+</div>
+                    <div className="text-sm text-muted-foreground">Active Students</div>
+                  </div>
+                  <div className="bg-muted/30 rounded-xl p-4 text-center">
+                    <div className="text-2xl font-bold text-primary mb-1">156</div>
+                    <div className="text-sm text-muted-foreground">New This Week</div>
+                  </div>
+                </div>
+                <Button className="w-full h-12 bg-gradient-primary hover:scale-105 transition-transform rounded-xl">
+                  <Users className="w-5 h-5 mr-2" />
+                  Start Discovering
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Quick Actions */}
+            <div className="grid grid-cols-2 gap-4">
+              <Card className="glass-card border-0 p-4 card-hover cursor-pointer">
+                <CardContent className="pt-0 text-center">
+                  <div className="w-12 h-12 mx-auto mb-3 rounded-xl bg-gradient-to-r from-purple-500 to-pink-600 flex items-center justify-center">
+                    <MessageSquare className="w-6 h-6 text-white" />
+                  </div>
+                  <h4 className="font-semibold text-foreground mb-1">Chat</h4>
+                  <p className="text-xs text-muted-foreground">Message classmates</p>
+                </CardContent>
+              </Card>
+              <Card className="glass-card border-0 p-4 card-hover cursor-pointer">
+                <CardContent className="pt-0 text-center">
+                  <div className="w-12 h-12 mx-auto mb-3 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 flex items-center justify-center">
+                    <Calendar className="w-6 h-6 text-white" />
+                  </div>
+                  <h4 className="font-semibold text-foreground mb-1">Events</h4>
+                  <p className="text-xs text-muted-foreground">Campus activities</p>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="instagram" className="space-y-6">
+            <div className="text-center mb-6">
+              <h3 className="text-2xl font-bold text-foreground mb-2">Instagram Feed</h3>
+              <p className="text-muted-foreground">Latest posts from @{schoolSlug}class2030</p>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              {instagramPosts.map((post) => (
+                <Card key={post.id} className="glass-card border-0 overflow-hidden card-hover group cursor-pointer">
+                  <div className="relative aspect-square">
+                    <img
+                      src={post.image}
+                      alt={post.caption}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
+                    <div className="absolute bottom-2 left-2 right-2 bg-black/50 backdrop-blur-sm rounded-lg p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="flex items-center justify-between text-white text-xs">
+                        <div className="flex items-center gap-3">
+                          <span className="flex items-center gap-1">
+                            <Heart className="w-3 h-3" />
+                            {post.likes}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <MessageSquare className="w-3 h-3" />
+                            {post.comments}
+                          </span>
+                        </div>
+                        <ExternalLink className="w-3 h-3" />
+                      </div>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+
+            <Card className="glass-card border-0 p-6">
+              <CardContent className="pt-0 text-center">
+                <Instagram className="w-12 h-12 mx-auto mb-4 text-primary" />
+                <h4 className="text-lg font-semibold text-foreground mb-2">Want to be featured?</h4>
+                <p className="text-muted-foreground mb-4">Get your profile featured on the official Instagram</p>
+                <Button 
+                  onClick={() => setShowGetFeatured(true)}
+                  className="bg-gradient-to-r from-pink-500 via-purple-500 to-orange-500 hover:scale-105 transition-transform rounded-xl"
+                >
+                  <Camera className="w-4 h-4 mr-2" />
+                  Get Featured Now
+                </Button>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="featured" className="space-y-6">
+            <div className="text-center mb-6">
+              <h3 className="text-2xl font-bold text-foreground mb-2">Featured Students</h3>
+              <p className="text-muted-foreground">Students who got featured this month</p>
+            </div>
+
+            <div className="space-y-6">
+              {featuredProfiles.map((profile) => (
+                <Card key={profile.id} className="glass-card border-0 p-6 card-hover">
+                  <CardContent className="pt-0">
+                    <div className="flex items-start gap-4">
+                      <div className="relative">
+                        <img
+                          src={profile.photos[0]}
+                          alt={profile.name}
+                          className="w-16 h-16 rounded-2xl object-cover"
+                        />
+                        <div className="absolute -top-1 -right-1 w-6 h-6 bg-primary rounded-full flex items-center justify-center">
+                          <Star className="w-3 h-3 text-white fill-current" />
+                        </div>
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <h4 className="text-lg font-semibold text-foreground">{profile.name}</h4>
+                          <Badge variant="secondary" className="text-xs">
+                            {profile.major}
+                          </Badge>
+                        </div>
+                        <p className="text-muted-foreground text-sm mb-3 leading-relaxed">
+                          {profile.bio}
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                          {profile.interests.map((interest) => (
+                            <Badge key={interest} variant="outline" className="text-xs">
+                              {interest}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
                   </CardContent>
                 </Card>
               ))}
             </div>
 
-            {filteredProfiles.length === 0 && (
-              <div className="text-center py-16">
-                <Search className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-xl font-semibold mb-2">No students found</h3>
-                <p className="text-muted-foreground">Try adjusting your search or filters</p>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Meet Tab - Enhanced for Desktop/Mobile */}
-        {activeTab === "meet" && (
-          <div className="space-y-6 animate-fade-in">
-            {/* Enhanced Filters */}
-          <div className="bg-card/95 backdrop-blur-xl border border-border/50 rounded-2xl p-4 md:p-6 card-shadow">
-             {/* Context Label */}
-             <div className="text-center mb-4">
-               <p className="text-sm text-muted-foreground">
-                 Showing students from: <span className="font-semibold text-foreground">
-                   {meetScope === "school" ? schoolDisplayName : "All Schools"}
-                 </span>
-               </p>
-             </div>
-             
-             {/* Mobile Layout - Stack Everything Vertically */}
-             {isMobile ? (
-               <div className="space-y-4">
-                 {/* Filter Toggles */}
-                 <div className="flex justify-center">
-                   <ToggleGroup 
-                     type="single" 
-                     value={filterMode} 
-                     onValueChange={setFilterMode} 
-                     className="bg-muted/50 p-1 rounded-xl w-full max-w-xs"
-                   >
-                     <ToggleGroupItem 
-                       value="all" 
-                       className="flex-1 py-2.5 rounded-lg text-sm font-medium data-[state=on]:bg-primary data-[state=on]:text-primary-foreground transition-all duration-200"
-                     >
-                       Everyone
-                     </ToggleGroupItem>
-                     <ToggleGroupItem 
-                       value="roommates" 
-                       className="flex-1 py-2.5 rounded-lg text-sm font-medium data-[state=on]:bg-primary data-[state=on]:text-primary-foreground transition-all duration-200"
-                     >
-                       Roommates
-                     </ToggleGroupItem>
-                   </ToggleGroup>
-                 </div>
-                 
-                 {/* Scope Selector - Centered on Mobile */}
-                 {filterMode === "all" && (
-                   <div className="flex justify-center">
-                     <div className="flex items-center gap-1 bg-muted/30 rounded-xl p-1 w-full max-w-xs">
-                       <Button
-                         variant={meetScope === "school" ? "default" : "ghost"}
-                         size="sm"
-                         onClick={() => setMeetScope("school")}
-                         className="flex-1 rounded-lg py-2 text-xs font-medium"
-                       >
-                         Your School
-                       </Button>
-                       <Button
-                         variant={meetScope === "worldwide" ? "default" : "ghost"}
-                         size="sm"
-                         onClick={() => setMeetScope("worldwide")}
-                         className="flex-1 rounded-lg py-2 text-xs font-medium"
-                       >
-                         <Globe className="h-3 w-3 mr-1" />
-                         Worldwide
-                       </Button>
-                     </div>
-                   </div>
-                 )}
-               </div>
-             ) : (
-               /* Desktop Layout - Side by Side */
-               <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-                 {/* Filter Toggles */}
-                 <div className="flex justify-center lg:justify-start">
-                   <ToggleGroup 
-                     type="single" 
-                     value={filterMode} 
-                     onValueChange={setFilterMode} 
-                     className="bg-muted/50 p-1 rounded-xl"
-                   >
-                     <ToggleGroupItem 
-                       value="all" 
-                       className="px-6 py-2.5 rounded-lg text-sm font-medium data-[state=on]:bg-primary data-[state=on]:text-primary-foreground transition-all duration-200"
-                     >
-                       Everyone
-                     </ToggleGroupItem>
-                     <ToggleGroupItem 
-                       value="roommates" 
-                       className="px-6 py-2.5 rounded-lg text-sm font-medium data-[state=on]:bg-primary data-[state=on]:text-primary-foreground transition-all duration-200"
-                     >
-                       Roommates
-                     </ToggleGroupItem>
-                   </ToggleGroup>
-                 </div>
-                 
-                 {/* Scope Selector */}
-                 {filterMode === "all" && (
-                   <div className="flex justify-center lg:justify-end">
-                     <div className="flex items-center gap-2 bg-muted/30 rounded-xl p-1">
-                       <Button
-                         variant={meetScope === "school" ? "default" : "ghost"}
-                         size="sm"
-                         onClick={() => setMeetScope("school")}
-                         className="rounded-lg px-3 py-1.5 text-xs"
-                       >
-                         Your School
-                       </Button>
-                       <Button
-                         variant={meetScope === "worldwide" ? "default" : "ghost"}
-                         size="sm"
-                         onClick={() => setMeetScope("worldwide")}
-                         className="rounded-lg px-3 py-1.5 text-xs"
-                       >
-                         <Globe className="h-3 w-3 mr-1" />
-                         Worldwide
-                       </Button>
-                     </div>
-                   </div>
-                 )}
-               </div>
-             )}
-           </div>
-
-            {/* Swipe Card - Desktop Horizontal vs Mobile Vertical */}
-            {isMobile ? (
-              /* Mobile: Vertical Card Layout with Swipe Gestures */
-              <div 
-                className="relative h-[600px] flex items-center justify-center touch-pan-x"
-                onTouchStart={(e) => {
-                  // Store touch start position for swipe detection
-                  const touch = e.touches[0];
-                  e.currentTarget.dataset.startX = touch.clientX.toString();
-                  e.currentTarget.dataset.startY = touch.clientY.toString();
-                }}
-                onTouchEnd={(e) => {
-                  const startX = parseFloat(e.currentTarget.dataset.startX || "0");
-                  const startY = parseFloat(e.currentTarget.dataset.startY || "0");
-                  const endX = e.changedTouches[0].clientX;
-                  const endY = e.changedTouches[0].clientY;
-                  const deltaX = endX - startX;
-                  const deltaY = endY - startY;
-                  const threshold = 100;
-
-                  if (Math.abs(deltaX) > Math.abs(deltaY)) {
-                    if (deltaX > threshold) {
-                      handleSwipeAction("like"); // Swipe right = like
-                    } else if (deltaX < -threshold) {
-                      handleSwipeAction("pass"); // Swipe left = pass
-                    }
-                  } else if (Math.abs(deltaY) > threshold && deltaY < 0) {
-                    handleSwipeAction("message"); // Swipe up = message
-                  }
-                }}
-              >
-                <Card className="w-full max-w-md h-full bg-card/80 backdrop-blur-xl border-border/40 overflow-hidden card-shadow-lg">
-                  <div 
-                    className="relative h-3/5 bg-gradient-to-br from-primary/30 to-accent/30 flex items-center justify-center cursor-pointer"
-                    onClick={(e) => {
-                      const rect = e.currentTarget.getBoundingClientRect();
-                      const clickX = e.clientX - rect.left;
-                      const width = rect.width;
-                      
-                      if (clickX > width / 2) {
-                        setCurrentPhotoIndex(prev => (prev + 1) % 5); // Mock 5 photos
-                      } else {
-                        setCurrentPhotoIndex(prev => prev === 0 ? 4 : prev - 1);
-                      }
-                    }}
-                  >
-                    <Users className="h-24 w-24 text-primary/60" />
-                    {filterMode === "roommates" && (
-                      <Badge className="absolute top-4 left-4 bg-primary/90 text-primary-foreground">
-                        Looking for Roommate
-                      </Badge>
-                    )}
-                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-1">
-                      {[0,1,2,3,4].map(i => (
-                        <div key={i} className={`w-2 h-2 rounded-full ${i === currentPhotoIndex ? 'bg-white' : 'bg-white/40'}`} />
-                      ))}
-                    </div>
-                  </div>
-                  <CardContent className="p-6 space-y-4">
-                    <div>
-                      <h3 className="text-2xl font-bold text-foreground">
-                        {sampleProfiles[currentSwipeProfile]?.name}
-                      </h3>
-                      <p className="text-muted-foreground">
-                        Class of {sampleProfiles[currentSwipeProfile]?.year} • {sampleProfiles[currentSwipeProfile]?.major}
-                      </p>
-                      <p className="text-sm text-foreground mt-2">
-                        {meetScope === "school" ? schoolDisplayName : "Worldwide 🌐"}
-                      </p>
-                    </div>
-                    
-                    <p className="text-sm text-muted-foreground">
-                      "Hey! I'm looking forward to meeting new people and exploring campus together! 🎓"
-                    </p>
-                  </CardContent>
-                </Card>
-              </div>
-            ) : (
-              /* Desktop: Horizontal Split Layout */
-              <div className="relative h-[600px] flex items-center justify-center">
-                <Card className="w-full max-w-4xl h-full bg-card/80 backdrop-blur-xl border-border/40 overflow-hidden card-shadow-lg">
-                  <div className="flex h-full">
-                    {/* Left: Large Photo with Navigation */}
-                    <div className="relative w-1/2 h-full bg-gradient-to-br from-primary/30 to-accent/30 flex items-center justify-center">
-                      <Users className="h-32 w-32 text-primary/60" />
-                      
-                      {/* Photo Navigation Arrows */}
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/20 hover:bg-black/40 text-white w-10 h-10 rounded-full"
-                        onClick={() => setCurrentPhotoIndex(prev => prev === 0 ? 4 : prev - 1)}
-                      >
-                        <ChevronLeft className="h-5 w-5" />
-                      </Button>
-                      
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/20 hover:bg-black/40 text-white w-10 h-10 rounded-full"
-                        onClick={() => setCurrentPhotoIndex(prev => (prev + 1) % 5)}
-                      >
-                        <ChevronRight className="h-5 w-5" />
-                      </Button>
-
-                      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-1">
-                        {[0,1,2,3,4].map(i => (
-                          <div key={i} className={`w-2 h-2 rounded-full ${i === currentPhotoIndex ? 'bg-white' : 'bg-white/40'}`} />
-                        ))}
-                      </div>
-                    </div>
-                    
-                    {/* Right: Info and Actions */}
-                    <div className="w-1/2 p-3 md:p-4 lg:p-6 flex flex-col justify-between">
-                      <div className="space-y-3 md:space-y-4 flex-1">
-                        {filterMode === "roommates" && (
-                          <Badge className="bg-primary/90 text-primary-foreground w-fit">
-                            Looking for Roommate
-                          </Badge>
-                        )}
-                        
-                        <div>
-                          <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-foreground mb-1 md:mb-2">
-                            {sampleProfiles[currentSwipeProfile]?.name}
-                          </h3>
-                          <p className="text-sm md:text-base text-muted-foreground mb-1">
-                            Class of {sampleProfiles[currentSwipeProfile]?.year}
-                          </p>
-                          <p className="text-sm md:text-base text-muted-foreground mb-2 md:mb-3">
-                            {sampleProfiles[currentSwipeProfile]?.major}
-                          </p>
-                          <p className="text-primary font-medium text-sm md:text-base">
-                            {meetScope === "school" ? schoolDisplayName : "Worldwide 🌐"}
-                          </p>
-                        </div>
-                        
-                        <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
-                          "Hey! I'm looking forward to meeting new people and exploring campus together! 🎓"
-                        </p>
-                      </div>
-                      
-                      {/* Desktop Action Buttons - Responsive Sizing */}
-                      <div className="flex gap-2 md:gap-3 mt-3 md:mt-4 flex-shrink-0">
-                        <Button
-                          size="lg"
-                          variant="outline"
-                          onClick={() => handleSwipeAction("pass")}
-                          className="flex-1 h-10 md:h-11 lg:h-12 rounded-lg md:rounded-xl border-muted-foreground/30 hover:border-destructive hover:bg-destructive/10 text-xs md:text-sm"
-                        >
-                          <X className="h-4 w-4 md:h-5 md:w-5 mr-1" />
-                          <span className="hidden sm:inline">Skip</span>
-                          <span className="sm:hidden">✕</span>
-                        </Button>
-                        
-                        <Button
-                          size="lg"
-                          onClick={() => handleSwipeAction("message")}
-                          className="flex-1 h-10 md:h-11 lg:h-12 rounded-lg md:rounded-xl bg-primary hover:bg-primary/90 neon-glow text-xs md:text-sm"
-                        >
-                          <MessageCircle className="h-4 w-4 md:h-5 md:w-5 mr-1" />
-                          <span className="hidden sm:inline">Message</span>
-                          <span className="sm:hidden">💬</span>
-                        </Button>
-                        
-                        <Button
-                          size="lg"
-                          variant="outline"
-                          onClick={() => handleSwipeAction("like")}
-                          className="flex-1 h-10 md:h-11 lg:h-12 rounded-lg md:rounded-xl border-primary hover:border-primary hover:bg-primary/10 text-xs md:text-sm"
-                        >
-                          <Heart className="h-4 w-4 md:h-5 md:w-5 mr-1 text-primary" />
-                          <span className="hidden sm:inline">Like</span>
-                          <span className="sm:hidden">❤️</span>
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </Card>
-              </div>
-            )}
-
-            {/* Mobile Action Buttons - Only show on mobile */}
-            {isMobile && (
-              <div className="flex justify-center gap-6">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  onClick={() => handleSwipeAction("pass")}
-                  className="w-16 h-16 rounded-full border-muted-foreground/30 hover:border-destructive hover:bg-destructive/10"
-                >
-                  <X className="h-6 w-6" />
-                </Button>
-                
-                <Button
-                  size="lg"
-                  onClick={() => handleSwipeAction("message")}
-                  className="w-16 h-16 rounded-full bg-primary hover:bg-primary/90 neon-glow"
-                >
-                  <MessageCircle className="h-6 w-6" />
-                </Button>
-                
-                <Button
-                  size="lg"
-                  variant="outline"
-                  onClick={() => handleSwipeAction("like")}
-                  className="w-16 h-16 rounded-full border-primary hover:border-primary hover:bg-primary/10"
-                >
-                  <Heart className="h-6 w-6 text-primary" />
-                </Button>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Chat Tab */}
-        {activeTab === "chat" && (
-          <div className="text-center py-16 animate-fade-in">
-            <MessageSquare className="h-20 w-20 text-primary mx-auto mb-6 neon-glow" />
-            <h3 className="text-3xl font-bold mb-4 text-foreground">School Chat Rooms</h3>
-            <p className="text-muted-foreground mb-8 max-w-md mx-auto text-lg">
-              {user ? 'Join conversations with your classmates in dedicated chat rooms' : 'Create an account to join school-specific chat rooms and start conversations'}
-            </p>
-            {user ? (
-              <Button size="lg" className="bg-primary hover:bg-primary/90 px-8 py-4 rounded-2xl font-bold neon-glow">
-                <MessageSquare className="h-5 w-5 mr-2" />
-                Join Chat Rooms
-              </Button>
-            ) : (
-              <div className="space-y-6">
-                <p className="text-primary font-medium">Account required for chat access</p>
+            <Card className="glass-card border-0 p-6">
+              <CardContent className="pt-0 text-center">
+                <Award className="w-12 h-12 mx-auto mb-4 text-primary" />
+                <h4 className="text-lg font-semibold text-foreground mb-2">Join the Featured List</h4>
+                <p className="text-muted-foreground mb-4">Showcase your personality and get noticed</p>
                 <Button 
-                  onClick={handleCreateAccount}
-                  size="lg"
-                  className="bg-primary hover:bg-primary/90 px-8 py-4 rounded-2xl font-bold neon-glow"
+                  onClick={() => setShowGetFeatured(true)}
+                  className="bg-gradient-primary hover:scale-105 transition-transform rounded-xl"
                 >
-                  Create Account to Chat
+                  <Sparkles className="w-4 h-4 mr-2" />
+                  Get Featured
                 </Button>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Instagram Tab */}
-        {activeTab === "instagram" && (
-          <div className="space-y-8 animate-fade-in">
-            {/* Instagram Account Header */}
-            <div className="text-center bg-gradient-to-r from-[#833AB4]/10 via-[#FD1D1D]/10 to-[#F77737]/10 rounded-3xl p-8">
-              <div className="flex flex-col items-center gap-6 mb-8">
-                <Instagram className="h-20 w-20 text-[#E4405F]" />
-                <div>
-                  <h3 className="text-4xl font-black text-[#E4405F] mb-2">@{instagramUsername || `${school}2030class`}</h3>
-                  <p className="text-muted-foreground text-lg">
-                    Official Instagram account for {schoolDisplayName} Class of 2030
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button 
-                  onClick={() => window.open(`https://instagram.com/${instagramUsername || `${school}2030class`}`, '_blank')}
-                  size="lg"
-                  variant="outline"
-                  className="border-[#E4405F] text-[#E4405F] hover:bg-[#E4405F]/10 px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 hover:scale-105"
-                >
-                  <Instagram className="h-6 w-6 mr-3" />
-                  View on Instagram
-                </Button>
-                
-                 <Button 
-                   onClick={handleGuestInstagramPost}
-                   size="lg"
-                   className="bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] hover:opacity-90 text-white border-0 px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 hover:scale-105"
-                 >
-                   <Instagram className="h-6 w-6 mr-2" />
-                   📸 Post on {schoolDisplayName}'s Insta
-                 </Button>
-              </div>
-            </div>
-
-            {/* Instagram Posts Grid */}
-            <div>
-              <h4 className="text-2xl font-bold mb-6 text-foreground">Recent Posts</h4>
-              <div className="grid grid-cols-3 gap-3">
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => (
-                  <div key={i} className="aspect-square bg-gradient-to-br from-muted to-muted/50 rounded-2xl flex items-center justify-center hover:bg-muted/80 transition-all duration-300 cursor-pointer hover:scale-105 card-shadow">
-                    <Instagram className="h-12 w-12 text-muted-foreground" />
-                  </div>
-                ))}
-              </div>
-              <p className="text-muted-foreground mt-6 text-center">
-                Follow @{instagramUsername || `${school}2030class`} on Instagram to see student features and campus highlights
-              </p>
-            </div>
-          </div>
-        )}
-
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </div>
 
-      <GuestMessageDialog 
-        isOpen={showGuestDialog}
-        onClose={() => setShowGuestDialog(false)}
-        onCreateAccount={handleCreateAccount}
-      />
-      
-      <GetFeaturedFlow 
-        open={showGetFeaturedFlow}
-        onOpenChange={setShowGetFeaturedFlow}
-        preSelectedSchool={school}
+      <BottomNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
+
+      <GetFeaturedFlow
+        open={showGetFeatured}
+        onOpenChange={setShowGetFeatured}
+        preSelectedSchool={schoolSlug}
       />
     </div>
   );
-}
+};
+
+export default SchoolDashboard;

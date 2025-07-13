@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -38,7 +39,7 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
   const [isCompleted, setIsCompleted] = useState(false);
   const { toast } = useToast();
 
-  // Copy exact search function from homepage
+  // Smart search function
   const searchSchools = (query: string) => {
     if (!query.trim()) return [];
     
@@ -146,13 +147,6 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
     setPhotos(prev => prev.filter((_, i) => i !== index));
   };
 
-  const reorderPhoto = (fromIndex: number, toIndex: number) => {
-    const newPhotos = [...photos];
-    const [removed] = newPhotos.splice(fromIndex, 1);
-    newPhotos.splice(toIndex, 0, removed);
-    setPhotos(newPhotos);
-  };
-
   const nextStep = () => {
     if (currentStep < STEPS.length - 1) {
       setCurrentStep(prev => prev + 1);
@@ -209,21 +203,21 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
     if (isCompleted) {
       return (
         <div className="text-center py-12">
-          <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-r from-green-500 to-green-600 flex items-center justify-center">
+          <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-r from-green-500 to-green-600 flex items-center justify-center animate-scale-in">
             <Check className="h-12 w-12 text-white" />
           </div>
           <h2 className="text-3xl font-bold text-foreground mb-4">🔥 You're in!</h2>
           <p className="text-xl text-muted-foreground mb-8">
             We'll feature your profile soon on your school's Instagram!
           </p>
-          <div className="bg-card/50 rounded-2xl p-6 border border-primary/20">
+          <div className="glass-card rounded-2xl p-6 border border-primary/20 mb-8">
             <p className="text-sm text-muted-foreground">
-              Keep an eye on <span className="font-semibold text-foreground">@{selectedSchool}class</span> for your feature!
+              Keep an eye on <span className="font-semibold text-primary">@{selectedSchool}class</span> for your feature!
             </p>
           </div>
           <Button 
             onClick={handleClose}
-            className="mt-8 bg-gradient-to-r from-pink-500 via-purple-500 to-orange-500 hover:from-pink-600 hover:via-purple-600 hover:to-orange-600"
+            className="bg-gradient-primary hover:scale-105 transition-transform rounded-2xl shadow-glow"
           >
             Close
           </Button>
@@ -241,15 +235,15 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
               <p className="text-sm text-primary font-medium mt-2">Posting costs $5</p>
             </div>
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground z-10" />
               <Input
                 placeholder="Search schools, cities, or acronyms..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="h-14 pl-10 text-lg bg-card/50 border-border/40"
+                className="h-14 pl-12 text-lg glass-card border-border/40 rounded-2xl"
               />
               {searchTerm && filteredSchools.length > 0 && (
-                <div className="absolute top-full left-0 right-0 bg-card border border-border rounded-lg mt-2 z-[9999] shadow-2xl animate-fade-scale-in">
+                <div className="absolute top-full left-0 right-0 glass-card border border-border rounded-2xl mt-2 z-[9999] shadow-2xl animate-fade-scale-in">
                   {filteredSchools.slice(0, 5).map((school) => {
                     // Get proper acronym from search terms
                     const acronyms = school.searchTerms.filter((term: string) => 
@@ -260,11 +254,13 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
                     return (
                       <div
                         key={school.value}
-                        className="p-4 hover:bg-muted/50 cursor-pointer border-b border-border/40 last:border-b-0 transition-colors"
+                        className="p-4 hover:bg-muted/30 cursor-pointer border-b border-border/40 last:border-b-0 transition-colors rounded-2xl"
                         onClick={() => handleSchoolSelect(school.value)}
                       >
                         <div className="flex items-center gap-3">
-                          <div className="text-sm font-bold text-primary">{acronym}</div>
+                          <div className="w-10 h-10 rounded-xl bg-gradient-primary flex items-center justify-center">
+                            <span className="text-white font-bold text-sm">{acronym}</span>
+                          </div>
                           <div className="text-sm text-foreground">{school.label}</div>
                         </div>
                       </div>
@@ -289,13 +285,13 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
                 placeholder="your_username"
                 value={instagramHandle}
                 onChange={(e) => setInstagramHandle(e.target.value.replace('@', ''))}
-                className="h-14 pl-8 text-lg"
+                className="h-14 pl-8 text-lg glass-card border-border/40 rounded-2xl"
               />
             </div>
             {instagramHandle && (
-              <div className="bg-card/50 rounded-xl p-4 border border-primary/20">
+              <div className="glass-card rounded-2xl p-4 border border-primary/20">
                 <p className="text-sm text-muted-foreground">
-                  We'll tag you as <span className="font-semibold text-foreground">@{instagramHandle}</span>
+                  We'll tag you as <span className="font-semibold text-primary">@{instagramHandle}</span>
                 </p>
               </div>
             )}
@@ -314,7 +310,7 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
               value={bio}
               onChange={(e) => setBio(e.target.value)}
               rows={4}
-              className="resize-none text-lg"
+              className="resize-none text-lg glass-card border-border/40 rounded-2xl"
               maxLength={150}
             />
             <div className="text-right">
@@ -338,7 +334,7 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
                     <img
                       src={URL.createObjectURL(photo)}
                       alt={`Upload ${index + 1}`}
-                      className="w-full h-24 object-cover rounded-lg border border-border"
+                      className="w-full h-24 object-cover rounded-2xl border border-border"
                     />
                     <Button
                       type="button"
@@ -355,7 +351,7 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
             )}
 
             {photos.length < 10 && (
-              <Card className="border-dashed border-2 border-primary/30 hover:border-primary/50 transition-colors">
+              <Card className="border-dashed border-2 border-primary/30 hover:border-primary/50 transition-colors glass-card rounded-2xl">
                 <CardContent className="p-8">
                   <div className="text-center">
                     <Upload className="h-12 w-12 text-primary mx-auto mb-4" />
@@ -387,7 +383,7 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
               <p className="text-muted-foreground">Want your profile shown on your school's FroshMeet page?</p>
             </div>
             
-            <Card className="p-6 border border-primary/20">
+            <Card className="glass-card p-6 border border-primary/20 rounded-2xl">
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
                   <Label htmlFor="school-page" className="text-base font-medium">
@@ -405,7 +401,7 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
               </div>
             </Card>
 
-            <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-xl p-6 border border-primary/20">
+            <div className="glass-card rounded-2xl p-6 border border-primary/20">
               <h3 className="font-semibold text-foreground mb-2">What you'll get:</h3>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>✨ Featured on your school's Instagram story</li>
@@ -425,12 +421,12 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
               <p className="text-muted-foreground">Secure your spot for just $5</p>
             </div>
 
-            <Card className="p-6 border border-primary/20 bg-gradient-to-r from-primary/5 to-primary/10">
+            <Card className="glass-card p-6 border border-primary/20 rounded-2xl">
               <div className="text-center space-y-4">
-                <div className="text-4xl font-bold text-foreground">$5</div>
+                <div className="text-4xl font-bold text-gradient">$5</div>
                 <p className="text-muted-foreground">One-time fee to get featured</p>
                 
-                <div className="bg-background/50 rounded-lg p-4 space-y-2 text-left">
+                <div className="glass-card rounded-2xl p-4 space-y-2 text-left">
                   <div className="flex justify-between">
                     <span className="text-sm text-muted-foreground">School:</span>
                     <span className="text-sm font-medium text-foreground">
@@ -458,7 +454,7 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
             <Button
               onClick={handlePayment}
               disabled={isSubmitting}
-              className="w-full h-14 text-lg bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white"
+              className="w-full h-14 text-lg bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 hover:scale-105 transition-all text-white rounded-2xl shadow-glow"
             >
               {isSubmitting ? (
                 "Processing Payment..."
@@ -479,11 +475,11 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto p-0" hideCloseButton>
-        <div className="bg-gradient-to-r from-pink-500 via-purple-500 to-orange-500 p-6 text-white">
+      <DialogContent className="max-w-2xl max-h-[90vh] p-0 glass-card border-0 rounded-3xl shadow-2xl" hideCloseButton>
+        <div className="bg-gradient-hero p-6 text-white rounded-t-3xl">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-md">
                 <Instagram className="h-5 w-5" />
               </div>
               <div>
@@ -495,7 +491,7 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
               variant="ghost"
               size="sm"
               onClick={handleClose}
-              className="text-white hover:bg-white/20 h-8 w-8 p-0"
+              className="text-white hover:bg-white/20 h-8 w-8 p-0 rounded-full"
             >
               <X className="h-4 w-4" />
             </Button>
@@ -523,12 +519,12 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
 
           {/* Navigation */}
           {!isCompleted && (
-            <div className="flex justify-between mt-8 pt-6 border-t">
+            <div className="flex justify-between mt-8 pt-6 border-t border-border">
               <Button
                 variant="outline"
                 onClick={prevStep}
                 disabled={currentStep === 0}
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 rounded-2xl"
               >
                 <ArrowLeft className="h-4 w-4" />
                 Back
@@ -538,7 +534,7 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
                 <Button
                   onClick={nextStep}
                   disabled={!canProceed()}
-                  className="flex items-center gap-2 bg-gradient-to-r from-pink-500 via-purple-500 to-orange-500 hover:from-pink-600 hover:via-purple-600 hover:to-orange-600"
+                  className="flex items-center gap-2 bg-gradient-primary hover:scale-105 transition-transform rounded-2xl shadow-glow"
                 >
                   Next
                   <ArrowRight className="h-4 w-4" />
