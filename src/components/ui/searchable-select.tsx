@@ -139,21 +139,24 @@ export const SearchableSelect: React.FC<SearchableSelectProps> = ({
       />
       
       {isOpen && filteredOptions.length > 0 && (
-        <Card className="absolute top-full left-0 right-0 z-50 mt-1 max-h-60 overflow-y-auto bg-black border border-gray-800 shadow-lg">
-          <div className="p-1">
-            {filteredOptions.map((option) => (
-              <div
-                key={option.value}
-                onClick={() => handleOptionSelect(option)}
-                className={cn(
-                  "flex items-center justify-between px-3 py-2 text-sm cursor-pointer rounded-md text-white hover:bg-blue-600 hover:text-white transition-colors",
-                  value === option.value && "bg-blue-600 text-white"
-                )}
-              >
-                <span>{option.label}</span>
-                {value === option.value && <Check className="h-4 w-4" />}
-              </div>
-            ))}
+        <Card className="absolute top-full left-0 right-0 z-[9999] mt-1 bg-background border border-border shadow-xl">
+          <div className="max-h-80 overflow-y-auto scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent">
+            <div className="p-1">
+              {filteredOptions.map((option) => (
+                <div
+                  key={option.value}
+                  onClick={() => handleOptionSelect(option)}
+                  className={cn(
+                    "flex items-center justify-between px-3 py-2.5 text-sm cursor-pointer rounded-md transition-colors",
+                    "hover:bg-accent hover:text-accent-foreground",
+                    value === option.value && "bg-accent text-accent-foreground"
+                  )}
+                >
+                  <span>{option.label}</span>
+                  {value === option.value && <Check className="h-4 w-4" />}
+                </div>
+              ))}
+            </div>
           </div>
         </Card>
       )}

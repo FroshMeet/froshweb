@@ -52,7 +52,7 @@ export const GetFeaturedModal: React.FC<GetFeaturedModalProps> = ({ open, onOpen
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-lg">
+      <DialogContent className="max-w-lg overflow-visible" hideCloseButton>
         <GetFeaturedModalHeader />
 
         <form onSubmit={handleSubmit} className="space-y-6">
