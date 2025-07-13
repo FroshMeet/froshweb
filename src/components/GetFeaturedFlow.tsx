@@ -35,7 +35,7 @@ const STEPS = [
 ];
 
 export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenChange, preSelectedSchool }) => {
-  const [currentStep, setCurrentStep] = useState(preSelectedSchool ? 1 : 0);
+  const [currentStep, setCurrentStep] = useState(0);
   const [selectedSchool, setSelectedSchool] = useState(preSelectedSchool || "");
   const [instagramHandle, setInstagramHandle] = useState("");
   const [bio, setBio] = useState("");
@@ -46,7 +46,7 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
   const { toast } = useToast();
 
   const resetForm = () => {
-    setCurrentStep(preSelectedSchool ? 1 : 0);
+    setCurrentStep(0);
     setSelectedSchool(preSelectedSchool || "");
     setInstagramHandle("");
     setBio("");
@@ -403,7 +403,7 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto p-0">
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto p-0" hideCloseButton>
         <div className="bg-gradient-to-r from-pink-500 via-purple-500 to-orange-500 p-6 text-white">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
@@ -430,7 +430,6 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
                 <span>Step {currentStep + 1} of {STEPS.length}</span>
-                <span>{Math.round(((currentStep + 1) / STEPS.length) * 100)}%</span>
               </div>
               <div className="w-full bg-white/20 rounded-full h-2">
                 <div
