@@ -139,34 +139,26 @@ export const SearchableSelect: React.FC<SearchableSelectProps> = ({
       />
       
       {isOpen && filteredOptions.length > 0 && (
-        <div className="fixed inset-0 z-[9999] pointer-events-none">
-          <div 
-            className="absolute pointer-events-auto bg-card border border-border shadow-2xl rounded-lg overflow-hidden"
-            style={{
-              top: containerRef.current ? containerRef.current.getBoundingClientRect().bottom : 0,
-              left: containerRef.current ? containerRef.current.getBoundingClientRect().left : 0,
-              width: containerRef.current ? containerRef.current.getBoundingClientRect().width : 'auto',
-              maxHeight: '320px'
-            }}
-          >
-            <div className="overflow-y-scroll scrollbar-none max-h-80">
+        <Card className="absolute top-full left-0 right-0 z-[9999] mt-1 bg-background border border-border shadow-xl">
+          <div className="max-h-80 overflow-y-auto scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent">
+            <div className="p-1">
               {filteredOptions.map((option) => (
                 <div
                   key={option.value}
                   onClick={() => handleOptionSelect(option)}
                   className={cn(
-                    "flex items-center justify-between px-3 py-2.5 text-sm cursor-pointer transition-colors",
-                    "hover:bg-accent/50 hover:text-accent-foreground",
+                    "flex items-center justify-between px-3 py-2.5 text-sm cursor-pointer rounded-md transition-colors",
+                    "hover:bg-accent hover:text-accent-foreground",
                     value === option.value && "bg-accent text-accent-foreground"
                   )}
                 >
-                  <span className="text-foreground">{option.label}</span>
-                  {value === option.value && <Check className="h-4 w-4 text-primary" />}
+                  <span>{option.label}</span>
+                  {value === option.value && <Check className="h-4 w-4" />}
                 </div>
               ))}
             </div>
           </div>
-        </div>
+        </Card>
       )}
     </div>
   );
