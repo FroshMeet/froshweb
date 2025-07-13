@@ -140,32 +140,32 @@ export const SearchableSelect: React.FC<SearchableSelectProps> = ({
       
       {isOpen && filteredOptions.length > 0 && (
         <div className="fixed inset-0 z-[9999] pointer-events-none">
-          <Card className="absolute bg-background border border-border shadow-2xl rounded-lg pointer-events-auto"
-                style={{
-                  top: containerRef.current ? containerRef.current.getBoundingClientRect().bottom + 4 : 0,
-                  left: containerRef.current ? containerRef.current.getBoundingClientRect().left : 0,
-                  width: containerRef.current ? containerRef.current.getBoundingClientRect().width : 'auto',
-                  maxHeight: '320px' // Show ~10 options at 32px each
-                }}>
-            <div className="overflow-y-auto max-h-80 custom-scrollbar">
-              <div className="p-1">
-                {filteredOptions.map((option) => (
-                  <div
-                    key={option.value}
-                    onClick={() => handleOptionSelect(option)}
-                    className={cn(
-                      "flex items-center justify-between px-3 py-2.5 text-sm cursor-pointer rounded-md transition-colors",
-                      "hover:bg-accent hover:text-accent-foreground",
-                      value === option.value && "bg-accent text-accent-foreground"
-                    )}
-                  >
-                    <span>{option.label}</span>
-                    {value === option.value && <Check className="h-4 w-4" />}
-                  </div>
-                ))}
-              </div>
+          <div 
+            className="absolute pointer-events-auto bg-card border border-border shadow-2xl rounded-lg overflow-hidden"
+            style={{
+              top: containerRef.current ? containerRef.current.getBoundingClientRect().bottom : 0,
+              left: containerRef.current ? containerRef.current.getBoundingClientRect().left : 0,
+              width: containerRef.current ? containerRef.current.getBoundingClientRect().width : 'auto',
+              maxHeight: '320px'
+            }}
+          >
+            <div className="overflow-y-scroll scrollbar-none max-h-80">
+              {filteredOptions.map((option) => (
+                <div
+                  key={option.value}
+                  onClick={() => handleOptionSelect(option)}
+                  className={cn(
+                    "flex items-center justify-between px-3 py-2.5 text-sm cursor-pointer transition-colors",
+                    "hover:bg-accent/50 hover:text-accent-foreground",
+                    value === option.value && "bg-accent text-accent-foreground"
+                  )}
+                >
+                  <span className="text-foreground">{option.label}</span>
+                  {value === option.value && <Check className="h-4 w-4 text-primary" />}
+                </div>
+              ))}
             </div>
-          </Card>
+          </div>
         </div>
       )}
     </div>
