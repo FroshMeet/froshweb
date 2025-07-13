@@ -76,6 +76,15 @@ export const SchoolSelector: React.FC<SchoolSelectorProps> = ({
     setSearchTerm("");
   };
 
+  // Get proper acronym from search terms
+  const getAcronym = (school: any) => {
+    // Find the shortest uppercase acronym from search terms
+    const acronyms = school.searchTerms.filter((term: string) => 
+      term === term.toUpperCase() && term.length <= 6 && /^[A-Z]+$/.test(term)
+    );
+    return acronyms.length > 0 ? acronyms[0] : school.label.split(' ').map((word: string) => word.charAt(0)).join('').toUpperCase();
+  };
+
   return (
     <div className="space-y-2">
       <Label htmlFor="school">Search for your school</Label>
@@ -96,7 +105,7 @@ export const SchoolSelector: React.FC<SchoolSelectorProps> = ({
                 onClick={() => handleSchoolSelect(school.value)}
               >
                 <div className="flex items-center gap-3">
-                  <div className="text-sm font-bold text-primary">{school.label.split(' ').map(word => word.charAt(0)).join('').toUpperCase()}</div>
+                  <div className="text-sm font-bold text-primary">{getAcronym(school)}</div>
                   <div className="text-sm text-foreground">{school.label}</div>
                 </div>
               </div>
