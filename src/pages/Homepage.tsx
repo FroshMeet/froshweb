@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Search, Users, MessageSquare, Calendar, Shield, Instagram } from "lucide-react";
 import heroImage from "@/assets/hero-college-students.jpg";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { GetFeaturedModal } from "@/components/GetFeaturedModal";
 
 const SCHOOL_DATABASE = [
   { name: "University of California, Los Angeles", acronym: "UCLA", searchTerms: ["ucla", "los angeles", "westwood"], slug: "ucla" },
@@ -134,6 +135,7 @@ const Homepage = () => {
   const isMobile = useIsMobile();
   const [searchTerm, setSearchTerm] = useState("");
   const [email, setEmail] = useState("");
+  const [showGetFeaturedModal, setShowGetFeaturedModal] = useState(false);
 
   const handleSchoolSelect = (schoolName: string, schoolSlug?: string) => {
     const slug = schoolSlug || schoolName.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and');
@@ -265,6 +267,17 @@ const Homepage = () => {
                     className="h-12 px-6"
                   >
                     Browse Schools
+                  </Button>
+                </div>
+                
+                {/* Get Featured Button */}
+                <div className="mt-6">
+                  <Button
+                    onClick={() => setShowGetFeaturedModal(true)}
+                    className="bg-gradient-to-r from-pink-500 via-purple-500 to-orange-500 hover:from-pink-600 hover:via-purple-600 hover:to-orange-600 text-white border-0 h-12 px-6 shadow-lg hover:shadow-xl transition-all duration-300"
+                  >
+                    <Instagram className="h-4 w-4 mr-2" />
+                    Get Featured on Instagram
                   </Button>
                 </div>
               </div>
@@ -527,6 +540,12 @@ const Homepage = () => {
           </div>
         </div>
       </footer>
+
+      {/* Get Featured Modal */}
+      <GetFeaturedModal 
+        open={showGetFeaturedModal} 
+        onOpenChange={setShowGetFeaturedModal} 
+      />
     </div>
   );
 };
