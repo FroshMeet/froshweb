@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Search, Users, MessageSquare, Calendar, Shield, Instagram } from "lucide-react";
 import heroImage from "@/assets/hero-college-students.jpg";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { GetFeaturedModal } from "@/components/GetFeaturedModal";
+import { GetFeaturedFlow } from "@/components/GetFeaturedFlow";
 
 const SCHOOL_DATABASE = [
   { name: "University of California, Los Angeles", acronym: "UCLA", searchTerms: ["ucla", "los angeles", "westwood"], slug: "ucla" },
@@ -270,14 +270,24 @@ const Homepage = () => {
                   </Button>
                 </div>
                 
-                {/* Get Featured Button */}
-                <div className="mt-6">
+                {/* Get Featured Promotion */}
+                <div className="mt-8 p-6 bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-orange-500/10 rounded-2xl border border-gradient-to-r border-pink-500/20">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="w-12 h-12 bg-gradient-to-r from-pink-500 via-purple-500 to-orange-500 rounded-xl flex items-center justify-center">
+                      <Instagram className="h-6 w-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-foreground">Get Featured on Instagram</h3>
+                      <p className="text-sm text-muted-foreground">Share your story with thousands of students</p>
+                    </div>
+                  </div>
+                  
                   <Button
                     onClick={() => setShowGetFeaturedModal(true)}
-                    className="bg-gradient-to-r from-pink-500 via-purple-500 to-orange-500 hover:from-pink-600 hover:via-purple-600 hover:to-orange-600 text-white border-0 h-12 px-6 shadow-lg hover:shadow-xl transition-all duration-300"
+                    className="w-full bg-gradient-to-r from-pink-500 via-purple-500 to-orange-500 hover:from-pink-600 hover:via-purple-600 hover:to-orange-600 text-white border-0 h-12 shadow-lg hover:shadow-xl transition-all duration-300"
                   >
                     <Instagram className="h-4 w-4 mr-2" />
-                    Get Featured on Instagram
+                    Start Your Feature Application
                   </Button>
                 </div>
               </div>
@@ -541,8 +551,8 @@ const Homepage = () => {
         </div>
       </footer>
 
-      {/* Get Featured Modal */}
-      <GetFeaturedModal 
+      {/* Get Featured Flow */}
+      <GetFeaturedFlow 
         open={showGetFeaturedModal} 
         onOpenChange={setShowGetFeaturedModal} 
       />

@@ -6,6 +6,22 @@ import { Badge } from "@/components/ui/badge";
 import { Search, ArrowLeft } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
+// Import logos
+import harvardLogo from "@/assets/logos/harvard.png";
+import stanfordLogo from "@/assets/logos/stanford.png";
+import mitLogo from "@/assets/logos/mit.png";
+import uclaLogo from "@/assets/logos/ucla.png";
+import yaleLogo from "@/assets/logos/yale.png";
+import uscLogo from "@/assets/logos/usc.png";
+import ucBerkeleyLogo from "@/assets/logos/uc-berkeley.png";
+import nyuLogo from "@/assets/logos/nyu.png";
+import umichLogo from "@/assets/logos/umich.png";
+import dukeLogo from "@/assets/logos/duke.png";
+import princetonLogo from "@/assets/logos/princeton.png";
+import northwesternLogo from "@/assets/logos/northwestern.png";
+import upennLogo from "@/assets/logos/upenn.png";
+import columbiaLogo from "@/assets/logos/columbia.png";
+
 const SCHOOLS = [
   { name: "Arizona State University", acronym: "ASU", slug: "asu", searchTerms: ["ASU", "Arizona State University", "Arizona State", "Arizona"] },
   { name: "Boston University", acronym: "BU", slug: "bu", searchTerms: ["BU", "Boston University", "Boston"] },
@@ -142,6 +158,26 @@ const Community = () => {
     return acronym.split(' ').map(word => word[0]).join('').slice(0, 3);
   };
 
+  const getSchoolLogo = (slug: string) => {
+    const logoMap: Record<string, string> = {
+      'harvard': harvardLogo,
+      'stanford': stanfordLogo,
+      'mit': mitLogo,
+      'ucla': uclaLogo,
+      'yale': yaleLogo,
+      'usc': uscLogo,
+      'uc-berkeley': ucBerkeleyLogo,
+      'nyu': nyuLogo,
+      'umich': umichLogo,
+      'duke': dukeLogo,
+      'princeton': princetonLogo,
+      'northwestern': northwesternLogo,
+      'upenn': upennLogo,
+      'columbia': columbiaLogo,
+    };
+    return logoMap[slug];
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-primary/5">
       {/* Header */}
@@ -231,10 +267,18 @@ const Community = () => {
               >
                 <div className="bg-card/50 backdrop-blur-sm rounded-3xl p-8 text-center transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-primary/30 border-2 border-primary/20 hover:border-primary/50 card-shadow group-hover:bg-card/80">
                   {/* School Circle */}
-                  <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-r from-primary to-primary/70 flex items-center justify-center group-hover:neon-glow-strong transition-all duration-300 border-2 border-primary/30 group-hover:border-primary/60">
-                    <span className="text-primary-foreground font-bold text-xl">
-                      {getSchoolInitials(school.acronym)}
-                    </span>
+                  <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-r from-primary to-primary/70 flex items-center justify-center group-hover:neon-glow-strong transition-all duration-300 border-2 border-primary/30 group-hover:border-primary/60 overflow-hidden">
+                    {getSchoolLogo(school.slug) ? (
+                      <img 
+                        src={getSchoolLogo(school.slug)} 
+                        alt={`${school.name} logo`}
+                        className="w-16 h-16 object-contain"
+                      />
+                    ) : (
+                      <span className="text-primary-foreground font-bold text-xl">
+                        {getSchoolInitials(school.acronym)}
+                      </span>
+                    )}
                   </div>
                   
                   {/* School Info */}
