@@ -1,85 +1,20 @@
+
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { SearchableSelect } from "@/components/ui/searchable-select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { Instagram, Upload, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { Input } from "@/components/ui/input";
+import { SCHOOL_DATABASE } from "@/config/schoolDatabase";
 
 interface GetFeaturedModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
-
-const SCHOOL_OPTIONS = [
-  { name: "University of California, Los Angeles", slug: "ucla" },
-  { name: "Stanford University", slug: "stanford" },
-  { name: "University of California, Berkeley", slug: "uc-berkeley" },
-  { name: "University of Southern California", slug: "usc" },
-  { name: "Harvard University", slug: "harvard" },
-  { name: "Arizona State University", slug: "asu" },
-  { name: "University of California, Santa Barbara", slug: "ucsb" },
-  { name: "New York University", slug: "nyu" },
-  { name: "University of Florida", slug: "uf" },
-  { name: "Texas A&M University", slug: "texas-aandm" },
-  { name: "Cornell University", slug: "cornell" },
-  { name: "Pennsylvania State University", slug: "penn-state" },
-  { name: "Duke University", slug: "duke" },
-  { name: "Florida State University", slug: "fsu" },
-  { name: "University of Pennsylvania", slug: "upenn" },
-  { name: "Dartmouth College", slug: "dartmouth" },
-  { name: "Columbia University", slug: "columbia" },
-  { name: "University of California, Irvine", slug: "uc-irvine" },
-  { name: "University of Michigan", slug: "umich" },
-  { name: "Massachusetts Institute of Technology", slug: "mit" },
-  { name: "Northeastern University", slug: "northeastern" },
-  { name: "University of California, San Diego", slug: "ucsd" },
-  { name: "University of Central Florida", slug: "ucf" },
-  { name: "Princeton University", slug: "princeton" },
-  { name: "Brown University", slug: "brown" },
-  { name: "Yale University", slug: "yale" },
-  { name: "Georgetown University", slug: "georgetown" },
-  { name: "University of California, Santa Cruz", slug: "uc-santa-cruz" },
-  { name: "Carnegie Mellon University", slug: "cmu" },
-  { name: "University of Miami", slug: "umiami" },
-  { name: "Northwestern University", slug: "northwestern" },
-  { name: "Rice University", slug: "rice" },
-  { name: "Purdue University", slug: "purdue" },
-  { name: "University of Chicago", slug: "uchicago" },
-  { name: "Vanderbilt University", slug: "vanderbilt" },
-  { name: "Indiana University Bloomington", slug: "iu-bloomington" },
-  { name: "University of Georgia", slug: "uga" },
-  { name: "University of Illinois Urbana-Champaign", slug: "uiuc" },
-  { name: "Ohio State University", slug: "ohio-state" },
-  { name: "Michigan State University", slug: "michigan-state" },
-  { name: "University of Minnesota", slug: "umn" },
-  { name: "University of North Carolina at Chapel Hill", slug: "unc" },
-  { name: "University of Oregon", slug: "uoregon" },
-  { name: "University of Texas at Austin", slug: "ut-austin" },
-  { name: "University of Virginia", slug: "uva" },
-  { name: "University of Washington", slug: "uw" },
-  { name: "University of Wisconsin–Madison", slug: "uw-madison" },
-  { name: "California Polytechnic State University, San Luis Obispo", slug: "cal-poly-slo" },
-  { name: "California State Polytechnic University, Pomona", slug: "cal-poly-pomona" },
-  { name: "University of California, Davis", slug: "uc-davis" },
-  { name: "University of California, Riverside", slug: "uc-riverside" },
-  { name: "University of California, Merced", slug: "uc-merced" },
-  { name: "California Institute of Technology", slug: "caltech" },
-  { name: "California State University, Sacramento", slug: "sac-state" },
-  { name: "San Diego State University", slug: "sdsu" },
-  { name: "San Jose State University", slug: "sjsu" },
-  { name: "San Francisco State University", slug: "sf-state" },
-  { name: "California State University, Chico", slug: "chico-state" },
-  { name: "Boston University", slug: "bu" },
-  { name: "University of Arizona", slug: "uarizona" },
-  { name: "University of Alabama", slug: "ua" },
-  { name: "University of Colorado Boulder", slug: "cu-boulder" },
-  { name: "California State University, Long Beach", slug: "csulb" },
-  { name: "Virginia Polytechnic Institute and State University", slug: "virginia-tech" }
-];
 
 export const GetFeaturedModal: React.FC<GetFeaturedModalProps> = ({ open, onOpenChange }) => {
   const [selectedSchool, setSelectedSchool] = useState("");
@@ -155,18 +90,12 @@ export const GetFeaturedModal: React.FC<GetFeaturedModalProps> = ({ open, onOpen
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
             <Label htmlFor="school">Select your school</Label>
-            <Select value={selectedSchool} onValueChange={setSelectedSchool}>
-              <SelectTrigger>
-                <SelectValue placeholder="Choose your school..." />
-              </SelectTrigger>
-              <SelectContent className="max-h-48">
-                {SCHOOL_OPTIONS.map((school) => (
-                  <SelectItem key={school.slug} value={school.slug}>
-                    {school.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <SearchableSelect
+              options={SCHOOL_DATABASE}
+              value={selectedSchool}
+              onValueChange={setSelectedSchool}
+              placeholder="Search and select your school..."
+            />
           </div>
 
           <div className="space-y-2">

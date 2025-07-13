@@ -2,28 +2,20 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { SearchableSelect } from "@/components/ui/searchable-select";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Card, CardContent } from "@/components/ui/card";
 import { Instagram, Upload, X, ArrowLeft, ArrowRight, Check, DollarSign } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { APPROVED_SCHOOLS } from "@/config/approvedSchools";
+import { SCHOOL_DATABASE } from "@/config/schoolDatabase";
 
 interface GetFeaturedFlowProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   preSelectedSchool?: string;
 }
-
-const SCHOOL_OPTIONS = Object.entries(APPROVED_SCHOOLS)
-  .map(([slug, school]) => ({ 
-    name: school.name, 
-    slug,
-    displayName: school.displayName 
-  }))
-  .sort((a, b) => a.name.localeCompare(b.name));
 
 const STEPS = [
   { id: 'school', title: 'Choose Your School', description: 'Select your university to get featured' },
@@ -185,18 +177,13 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
               <p className="text-muted-foreground">Select your university to get featured on their Instagram</p>
               <p className="text-sm text-primary font-medium mt-2">Posting costs $5</p>
             </div>
-            <Select value={selectedSchool} onValueChange={setSelectedSchool}>
-              <SelectTrigger className="h-14 text-lg">
-                <SelectValue placeholder="Search and select your school..." />
-              </SelectTrigger>
-              <SelectContent className="max-h-48 bg-popover border shadow-lg">
-                {SCHOOL_OPTIONS.map((school) => (
-                  <SelectItem key={school.slug} value={school.slug} className="hover:bg-primary hover:text-primary-foreground">
-                    {school.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <SearchableSelect
+              options={SCHOOL_DATABASE}
+              value={selectedSchool}
+              onValueChange={setSelectedSchool}
+              placeholder="Search and select your school..."
+              className="h-14 text-lg"
+            />
           </div>
         );
 
@@ -318,7 +305,7 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
                     Show on School Page
                   </Label>
                   <p className="text-sm text-muted-foreground">
-                    Your profile will appear on the {SCHOOL_OPTIONS.find(s => s.slug === selectedSchool)?.name} FroshMeet page
+                    Your profile will appear on the {SCHOOL_DATABASE.find(s => s.value === selectedSchool)?.label} FroshMeet page
                   </p>
                 </div>
                 <Switch
@@ -358,7 +345,7 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
                   <div className="flex justify-between">
                     <span className="text-sm text-muted-foreground">School:</span>
                     <span className="text-sm font-medium text-foreground">
-                      {SCHOOL_OPTIONS.find(s => s.slug === selectedSchool)?.name}
+                      {SCHOOL_DATABASE.find(s => s.value === selectedSchool)?.label}
                     </span>
                   </div>
                   <div className="flex justify-between">
