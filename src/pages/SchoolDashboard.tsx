@@ -30,6 +30,7 @@ import { getSchoolDisplayName } from "@/config/schoolDisplayMapping";
 import { isApprovedSchool, getApprovedSchool } from "@/config/approvedSchools";
 import GuestMessageDialog from "@/components/GuestMessageDialog";
 import PublicProfileBrowser from "@/components/PublicProfileBrowser";
+import { GetFeaturedFlow } from "@/components/GetFeaturedFlow";
 import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -143,8 +144,10 @@ export default function SchoolDashboard() {
     navigate('/signup');
   };
 
+  const [showGetFeaturedFlow, setShowGetFeaturedFlow] = useState(false);
+
   const handleGuestInstagramPost = () => {
-    navigate(`/${school}/guest-post-to-insta`);
+    setShowGetFeaturedFlow(true);
   };
 
   // Mock sample profiles for grid view
@@ -796,6 +799,12 @@ export default function SchoolDashboard() {
         isOpen={showGuestDialog}
         onClose={() => setShowGuestDialog(false)}
         onCreateAccount={handleCreateAccount}
+      />
+      
+      <GetFeaturedFlow 
+        open={showGetFeaturedFlow}
+        onOpenChange={setShowGetFeaturedFlow}
+        preSelectedSchool={school}
       />
     </div>
   );

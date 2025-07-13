@@ -133,3 +133,25 @@
     filter: drop-shadow(0 0 3px hsl(214, 100%, 35%));
   }
 }
+
+/* Confetti Animation */
+@keyframes confetti {
+  0% {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    top: 30%;
+    left: 60%;
+    transform: translate(-50%, -50%) scale(1.5) rotate(180deg);
+    opacity: 0.8;
+  }
+  100% {
+    top: 20%;
+    left: 70%;
+    transform: translate(-50%, -50%) scale(0.5) rotate(360deg);
+    opacity: 0;
+  }
+}

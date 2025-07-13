@@ -9,78 +9,21 @@ import { Instagram, Upload, X, ArrowLeft, ArrowRight, Check, DollarSign } from "
 import { useToast } from "@/hooks/use-toast";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { APPROVED_SCHOOLS } from "@/config/approvedSchools";
 
 interface GetFeaturedFlowProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  preSelectedSchool?: string;
 }
 
-const SCHOOL_OPTIONS = [
-  { name: "University of California, Los Angeles", slug: "ucla" },
-  { name: "Stanford University", slug: "stanford" },
-  { name: "University of California, Berkeley", slug: "uc-berkeley" },
-  { name: "University of Southern California", slug: "usc" },
-  { name: "Harvard University", slug: "harvard" },
-  { name: "Arizona State University", slug: "asu" },
-  { name: "University of California, Santa Barbara", slug: "ucsb" },
-  { name: "New York University", slug: "nyu" },
-  { name: "University of Florida", slug: "uf" },
-  { name: "Texas A&M University", slug: "texas-aandm" },
-  { name: "Cornell University", slug: "cornell" },
-  { name: "Pennsylvania State University", slug: "penn-state" },
-  { name: "Duke University", slug: "duke" },
-  { name: "Florida State University", slug: "fsu" },
-  { name: "University of Pennsylvania", slug: "upenn" },
-  { name: "Dartmouth College", slug: "dartmouth" },
-  { name: "Columbia University", slug: "columbia" },
-  { name: "University of California, Irvine", slug: "uc-irvine" },
-  { name: "University of Michigan", slug: "umich" },
-  { name: "Massachusetts Institute of Technology", slug: "mit" },
-  { name: "Northeastern University", slug: "northeastern" },
-  { name: "University of California, San Diego", slug: "ucsd" },
-  { name: "University of Central Florida", slug: "ucf" },
-  { name: "Princeton University", slug: "princeton" },
-  { name: "Brown University", slug: "brown" },
-  { name: "Yale University", slug: "yale" },
-  { name: "Georgetown University", slug: "georgetown" },
-  { name: "University of California, Santa Cruz", slug: "uc-santa-cruz" },
-  { name: "Carnegie Mellon University", slug: "cmu" },
-  { name: "University of Miami", slug: "umiami" },
-  { name: "Northwestern University", slug: "northwestern" },
-  { name: "Rice University", slug: "rice" },
-  { name: "Purdue University", slug: "purdue" },
-  { name: "University of Chicago", slug: "uchicago" },
-  { name: "Vanderbilt University", slug: "vanderbilt" },
-  { name: "Indiana University Bloomington", slug: "iu-bloomington" },
-  { name: "University of Georgia", slug: "uga" },
-  { name: "University of Illinois Urbana-Champaign", slug: "uiuc" },
-  { name: "Ohio State University", slug: "ohio-state" },
-  { name: "Michigan State University", slug: "michigan-state" },
-  { name: "University of Minnesota", slug: "umn" },
-  { name: "University of North Carolina at Chapel Hill", slug: "unc" },
-  { name: "University of Oregon", slug: "uoregon" },
-  { name: "University of Texas at Austin", slug: "ut-austin" },
-  { name: "University of Virginia", slug: "uva" },
-  { name: "University of Washington", slug: "uw" },
-  { name: "University of Wisconsin–Madison", slug: "uw-madison" },
-  { name: "California Polytechnic State University, San Luis Obispo", slug: "cal-poly-slo" },
-  { name: "California State Polytechnic University, Pomona", slug: "cal-poly-pomona" },
-  { name: "University of California, Davis", slug: "uc-davis" },
-  { name: "University of California, Riverside", slug: "uc-riverside" },
-  { name: "University of California, Merced", slug: "uc-merced" },
-  { name: "California Institute of Technology", slug: "caltech" },
-  { name: "California State University, Sacramento", slug: "sac-state" },
-  { name: "San Diego State University", slug: "sdsu" },
-  { name: "San Jose State University", slug: "sjsu" },
-  { name: "San Francisco State University", slug: "sf-state" },
-  { name: "California State University, Chico", slug: "chico-state" },
-  { name: "Boston University", slug: "bu" },
-  { name: "University of Arizona", slug: "uarizona" },
-  { name: "University of Alabama", slug: "ua" },
-  { name: "University of Colorado Boulder", slug: "cu-boulder" },
-  { name: "California State University, Long Beach", slug: "csulb" },
-  { name: "Virginia Polytechnic Institute and State University", slug: "virginia-tech" }
-];
+const SCHOOL_OPTIONS = Object.entries(APPROVED_SCHOOLS)
+  .map(([slug, school]) => ({ 
+    name: school.name, 
+    slug,
+    displayName: school.displayName 
+  }))
+  .sort((a, b) => a.name.localeCompare(b.name));
 
 const STEPS = [
   { id: 'school', title: 'Choose Your School', description: 'Select your university to get featured' },
@@ -91,9 +34,9 @@ const STEPS = [
   { id: 'payment', title: 'Get Featured', description: 'Secure your spot for $5' }
 ];
 
-export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenChange }) => {
-  const [currentStep, setCurrentStep] = useState(0);
-  const [selectedSchool, setSelectedSchool] = useState("");
+export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenChange, preSelectedSchool }) => {
+  const [currentStep, setCurrentStep] = useState(preSelectedSchool ? 1 : 0);
+  const [selectedSchool, setSelectedSchool] = useState(preSelectedSchool || "");
   const [instagramHandle, setInstagramHandle] = useState("");
   const [bio, setBio] = useState("");
   const [photos, setPhotos] = useState<File[]>([]);
@@ -103,8 +46,8 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
   const { toast } = useToast();
 
   const resetForm = () => {
-    setCurrentStep(0);
-    setSelectedSchool("");
+    setCurrentStep(preSelectedSchool ? 1 : 0);
+    setSelectedSchool(preSelectedSchool || "");
     setInstagramHandle("");
     setBio("");
     setPhotos([]);
@@ -240,14 +183,15 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
             <div className="text-center mb-8">
               <h2 className="text-2xl font-bold text-foreground mb-2">Choose Your School</h2>
               <p className="text-muted-foreground">Select your university to get featured on their Instagram</p>
+              <p className="text-sm text-primary font-medium mt-2">Posting costs $5</p>
             </div>
             <Select value={selectedSchool} onValueChange={setSelectedSchool}>
               <SelectTrigger className="h-14 text-lg">
                 <SelectValue placeholder="Search and select your school..." />
               </SelectTrigger>
-              <SelectContent className="max-h-48">
+              <SelectContent className="max-h-48 bg-popover border shadow-lg">
                 {SCHOOL_OPTIONS.map((school) => (
-                  <SelectItem key={school.slug} value={school.slug}>
+                  <SelectItem key={school.slug} value={school.slug} className="hover:bg-primary hover:text-primary-foreground">
                     {school.name}
                   </SelectItem>
                 ))}

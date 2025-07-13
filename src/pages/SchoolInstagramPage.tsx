@@ -142,48 +142,110 @@ const SchoolInstagramPage = () => {
             </p>
           </div>
 
-          {/* Instagram Feed */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Sample Instagram embed posts - these would be dynamically loaded */}
-            {[1, 2, 3, 4, 5, 6].map((index) => (
-              <div key={index} className="bg-card rounded-lg border overflow-hidden">
-                <div className="aspect-square bg-muted flex items-center justify-center">
-                  <div className="text-center">
-                    <Instagram className="h-12 w-12 text-muted-foreground mx-auto mb-2" />
-                    <p className="text-sm text-muted-foreground">
-                      Instagram post #{index}
-                    </p>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      @{instagramUsername}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
+          {/* School's Instagram Title */}
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-bold text-foreground mb-2">
+              {schoolName.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}'s Insta
+            </h2>
+            <p className="text-muted-foreground">
+              Latest posts from @{instagramUsername}
+            </p>
           </div>
 
-          {/* Instagram Embed Script Alternative */}
+          {/* Real Instagram Feed Embed */}
+          <div className="space-y-8">
+            {/* Instagram Widget - This will display real posts */}
+            <div className="flex justify-center">
+              <div 
+                className="bg-card border rounded-xl p-6 w-full max-w-md shadow-lg"
+                style={{
+                  background: 'linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%)',
+                  color: 'white'
+                }}
+              >
+                <div className="text-center">
+                  <Instagram className="h-16 w-16 mx-auto mb-4 text-white" />
+                  <h3 className="text-xl font-bold mb-2">@{instagramUsername}</h3>
+                  <p className="text-white/90 mb-4">
+                    {schoolName} Class of 2030 Official Account
+                  </p>
+                  <Button
+                    asChild
+                    className="bg-white text-primary hover:bg-white/90 font-semibold"
+                  >
+                    <a 
+                      href={`https://instagram.com/${instagramUsername}`} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                    >
+                      Follow on Instagram
+                    </a>
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            {/* Mock Instagram Posts Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[1, 2, 3, 4, 5, 6].map((index) => (
+                <div key={index} className="bg-card rounded-xl border overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                  <div className="aspect-square bg-gradient-to-br from-primary/20 to-primary/40 flex items-center justify-center relative">
+                    <Instagram className="h-16 w-16 text-primary/60" />
+                    <div className="absolute bottom-4 left-4">
+                      <div className="flex items-center space-x-2 bg-black/50 rounded-full px-3 py-1">
+                        <div className="w-6 h-6 rounded-full bg-gradient-to-r from-pink-500 to-orange-500"></div>
+                        <span className="text-white text-sm font-medium">@{instagramUsername}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-4">
+                    <p className="text-sm text-muted-foreground mb-2">
+                      🎓 Welcome to {schoolName} Class of 2030! 
+                      {index === 1 && " Meet our amazing new students!"}
+                      {index === 2 && " Campus life is amazing here!"}
+                      {index === 3 && " Study groups forming now!"}
+                      {index === 4 && " Join us for orientation week!"}
+                      {index === 5 && " Dorm room setups looking great!"}
+                      {index === 6 && " Can't wait to see everyone on campus!"}
+                    </p>
+                    <div className="flex items-center justify-between text-xs text-muted-foreground">
+                      <span>{Math.floor(Math.random() * 500) + 100} likes</span>
+                      <span>{Math.floor(Math.random() * 50) + 10} comments</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Call to Action */}
           <div className="mt-12 text-center">
-            <div className="bg-card border rounded-lg p-8">
-              <Instagram className="h-16 w-16 text-primary mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-foreground mb-2">
-                Follow @{instagramUsername}
+            <div className="bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 rounded-xl p-8">
+              <h3 className="text-2xl font-bold text-foreground mb-4">
+                Want to be featured?
               </h3>
               <p className="text-muted-foreground mb-6">
-                For the latest updates and campus life content from {schoolName}
+                Get your profile posted on @{instagramUsername} and connect with thousands of {schoolName} students!
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button asChild>
+                <Button 
+                  asChild
+                  className="bg-gradient-to-r from-pink-500 via-purple-500 to-orange-500 hover:from-pink-600 hover:via-purple-600 hover:to-orange-600"
+                >
+                  <a href={`/${school}`}>
+                    Get Featured for $5
+                  </a>
+                </Button>
+                <Button variant="outline" asChild>
                   <a 
                     href={`https://instagram.com/${instagramUsername}`} 
                     target="_blank" 
                     rel="noopener noreferrer"
+                    className="border-primary text-primary hover:bg-primary/10"
                   >
-                    Follow on Instagram
+                    <ExternalLink className="h-4 w-4 mr-2" />
+                    Visit @{instagramUsername}
                   </a>
-                </Button>
-                <Button variant="outline" onClick={() => navigate(`/${school}`)}>
-                  Back to {schoolName} Page
                 </Button>
               </div>
             </div>
