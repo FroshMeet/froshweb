@@ -134,7 +134,6 @@ const Homepage = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const [searchTerm, setSearchTerm] = useState("");
-  const [email, setEmail] = useState("");
   const [showGetFeaturedModal, setShowGetFeaturedModal] = useState(false);
 
   const handleSchoolSelect = (schoolName: string, schoolSlug?: string) => {
@@ -143,13 +142,6 @@ const Homepage = () => {
   };
 
   const filteredSchools = searchSchools(searchTerm);
-
-  const handleNewsletterSignup = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Newsletter signup logic would go here
-    console.log("Newsletter signup:", email);
-    setEmail("");
-  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -215,10 +207,14 @@ const Homepage = () => {
                   college community
                 </span>
               </h1>
-              <p className="text-xl text-muted-foreground mb-8 max-w-lg">
-                Find roommates, study buddies, and lifelong friends at your school. 
-                Join thousands of students already connecting on FroshMeet - the trusted platform 
-                for college freshmen to build meaningful relationships.
+              <p className="text-xl text-muted-foreground mb-4 max-w-lg">
+                FroshMeet helps you find roommates, group chats, and new friends at your school, before the year even starts.
+              </p>
+              <p className="text-lg text-muted-foreground mb-6 max-w-lg">
+                Now live for Class of 2030 at 60+ colleges across the U.S.
+              </p>
+              <p className="text-lg text-primary font-semibold mb-8 max-w-lg">
+                🚀 Join early, stand out, and get featured on your school's Instagram.
               </p>
               
               {/* School Search */}
@@ -293,7 +289,7 @@ const Homepage = () => {
               </div>
 
               <p className="text-sm text-muted-foreground">
-                ⚠️ FroshMeet is an independent platform and is not officially partnered with any university.
+                ⚠️ FroshMeet is student-run and not affiliated with any college or university.
               </p>
             </div>
             
@@ -304,6 +300,68 @@ const Homepage = () => {
                 alt="College students connecting and making friends" 
                 className="relative rounded-3xl shadow-2xl w-full h-auto"
               />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Schools Carousel */}
+      <section className="py-20 bg-card/20 overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16 animate-fade-in">
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+              Popular Schools
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Join students from these top universities already connecting on FroshMeet
+            </p>
+          </div>
+          
+          <div className="relative space-y-6">
+            {/* Top Row */}
+            <div className="overflow-hidden">
+              <div className="flex animate-scroll-carousel space-x-6">
+                {/* Render schools twice for seamless loop */}
+                {[...SCHOOL_DATABASE, ...SCHOOL_DATABASE].map((school, index) => (
+                  <Button
+                    key={`top-${school.name}-${index}`}
+                    variant="outline"
+                    onClick={() => handleSchoolSelect(school.name, school.slug)}
+                    className="flex-shrink-0 w-40 md:w-48 h-28 md:h-32 flex flex-col items-center justify-center text-sm md:text-base hover:shadow-[0_0_30px_rgba(59,130,246,0.4)] hover:border-primary/60 transition-all duration-500 hover:scale-105 bg-card/40 border-border/40 group relative overflow-hidden"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="relative z-10 w-10 md:w-12 h-10 md:h-12 bg-gradient-to-r from-primary/40 to-primary/70 rounded-2xl flex items-center justify-center mb-2 md:mb-3 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-500">
+                      <span className="text-primary-foreground font-bold text-base md:text-lg">
+                        {school.name.charAt(0)}
+                      </span>
+                    </div>
+                    <span className="relative z-10 text-center leading-tight font-semibold px-2">{school.acronym}</span>
+                  </Button>
+                ))}
+              </div>
+            </div>
+            
+            {/* Bottom Row - Offset */}
+            <div className="overflow-hidden">
+              <div className="flex animate-scroll-carousel space-x-6" style={{ marginLeft: '5rem' }}>
+                {/* Render schools twice for seamless loop, starting from a different index for variety */}
+                {[...SCHOOL_DATABASE.slice(10), ...SCHOOL_DATABASE, ...SCHOOL_DATABASE.slice(0, 10)].map((school, index) => (
+                  <Button
+                    key={`bottom-${school.name}-${index}`}
+                    variant="outline"
+                    onClick={() => handleSchoolSelect(school.name, school.slug)}
+                    className="flex-shrink-0 w-40 md:w-48 h-28 md:h-32 flex flex-col items-center justify-center text-sm md:text-base hover:shadow-[0_0_30px_rgba(59,130,246,0.4)] hover:border-primary/60 transition-all duration-500 hover:scale-105 bg-card/40 border-border/40 group relative overflow-hidden"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="relative z-10 w-10 md:w-12 h-10 md:h-12 bg-gradient-to-r from-primary/40 to-primary/70 rounded-2xl flex items-center justify-center mb-2 md:mb-3 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-500">
+                      <span className="text-primary-foreground font-bold text-base md:text-lg">
+                        {school.name.charAt(0)}
+                      </span>
+                    </div>
+                    <span className="relative z-10 text-center leading-tight font-semibold px-2">{school.acronym}</span>
+                  </Button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -393,97 +451,6 @@ const Homepage = () => {
         </div>
       </section>
 
-      {/* Featured Schools Carousel */}
-      <section className="py-20 bg-card/20 overflow-hidden">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16 animate-fade-in">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              Popular Schools
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Join students from these top universities already connecting on FroshMeet
-            </p>
-          </div>
-          
-          <div className="relative space-y-6">
-            {/* Top Row */}
-            <div className="overflow-hidden">
-              <div className="flex animate-scroll-carousel space-x-6">
-                {/* Render schools twice for seamless loop */}
-                {[...SCHOOL_DATABASE, ...SCHOOL_DATABASE].map((school, index) => (
-                  <Button
-                    key={`top-${school.name}-${index}`}
-                    variant="outline"
-                    onClick={() => handleSchoolSelect(school.name, school.slug)}
-                    className="flex-shrink-0 w-40 md:w-48 h-28 md:h-32 flex flex-col items-center justify-center text-sm md:text-base hover:shadow-[0_0_30px_rgba(59,130,246,0.4)] hover:border-primary/60 transition-all duration-500 hover:scale-105 bg-card/40 border-border/40 group relative overflow-hidden"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <div className="relative z-10 w-10 md:w-12 h-10 md:h-12 bg-gradient-to-r from-primary/40 to-primary/70 rounded-2xl flex items-center justify-center mb-2 md:mb-3 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-500">
-                      <span className="text-primary-foreground font-bold text-base md:text-lg">
-                        {school.name.charAt(0)}
-                      </span>
-                    </div>
-                    <span className="relative z-10 text-center leading-tight font-semibold px-2">{school.acronym}</span>
-                  </Button>
-                ))}
-              </div>
-            </div>
-            
-            {/* Bottom Row - Offset */}
-            <div className="overflow-hidden">
-              <div className="flex animate-scroll-carousel space-x-6" style={{ marginLeft: '5rem' }}>
-                {/* Render schools twice for seamless loop, starting from a different index for variety */}
-                {[...SCHOOL_DATABASE.slice(10), ...SCHOOL_DATABASE, ...SCHOOL_DATABASE.slice(0, 10)].map((school, index) => (
-                  <Button
-                    key={`bottom-${school.name}-${index}`}
-                    variant="outline"
-                    onClick={() => handleSchoolSelect(school.name, school.slug)}
-                    className="flex-shrink-0 w-40 md:w-48 h-28 md:h-32 flex flex-col items-center justify-center text-sm md:text-base hover:shadow-[0_0_30px_rgba(59,130,246,0.4)] hover:border-primary/60 transition-all duration-500 hover:scale-105 bg-card/40 border-border/40 group relative overflow-hidden"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <div className="relative z-10 w-10 md:w-12 h-10 md:h-12 bg-gradient-to-r from-primary/40 to-primary/70 rounded-2xl flex items-center justify-center mb-2 md:mb-3 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-500">
-                      <span className="text-primary-foreground font-bold text-base md:text-lg">
-                        {school.name.charAt(0)}
-                      </span>
-                    </div>
-                    <span className="relative z-10 text-center leading-tight font-semibold px-2">{school.acronym}</span>
-                  </Button>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Newsletter Signup */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <Card className="max-w-2xl mx-auto bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 border-primary/20 animate-fade-in">
-            <CardContent className="p-12 text-center">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Stay Updated
-              </h2>
-              <p className="text-xl text-muted-foreground mb-8">
-                Get the latest updates, tips, and stories from the FroshMeet community
-              </p>
-              <form onSubmit={handleNewsletterSignup} className="flex gap-4 max-w-md mx-auto">
-                <Input
-                  type="email"  
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="flex-1 h-12 bg-background/50"
-                  required
-                />
-                <Button type="submit" className="h-12 px-8 bg-primary hover:bg-primary/90">
-                  Subscribe
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
       {/* Footer */}
       <footer className="border-t border-border/40 bg-card/20 py-16">
         <div className="container mx-auto px-4">
@@ -543,7 +510,7 @@ const Homepage = () => {
             <p className="text-sm text-muted-foreground leading-relaxed">
               © 2025 FroshMeet. All rights reserved. FroshMeet is a registered trademark of FroshMeet LLC. 
               <br className="md:hidden" />
-              FroshMeet is not officially partnered with any university. 
+              FroshMeet is student-run and not affiliated with any college or university. 
               <br className="md:hidden" />
               Use of this website constitutes acceptance of our Privacy Policy and Terms of Service.
             </p>
