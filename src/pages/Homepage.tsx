@@ -417,7 +417,7 @@ const Homepage = () => {
       </section>
 
       {/* Instagram-Style Get Featured Section */}
-      <section className="py-20 bg-gradient-to-br from-blue-500 via-purple-600 to-blue-700 relative overflow-hidden">
+      <section className="py-20 bg-gradient-to-br from-purple-500 via-pink-500 via-orange-500 to-yellow-500 relative overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="flex flex-col lg:flex-row items-center gap-12 max-w-6xl mx-auto">
             {/* Left Content */}
@@ -442,13 +442,13 @@ const Homepage = () => {
               {/* CTA Button */}
               <Button
                 onClick={() => setShowGetFeaturedModal(true)}
-                className="bg-white text-blue-600 hover:bg-white/90 h-16 px-8 text-lg font-semibold rounded-2xl shadow-2xl hover:shadow-white/20 transition-all duration-300 hover:scale-105 group"
+                className="bg-white text-purple-600 hover:bg-white/90 h-16 px-8 text-lg font-semibold rounded-2xl shadow-2xl hover:shadow-white/20 transition-all duration-300 hover:scale-105 group"
               >
-                <div className="w-6 h-6 bg-blue-600 rounded-lg flex items-center justify-center mr-3">
+                <div className="w-6 h-6 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 rounded-lg flex items-center justify-center mr-3">
                   <span className="text-white text-sm">✨</span>
                 </div>
                 Get Featured Now
-                <div className="ml-3 w-6 h-6 bg-blue-600 rounded-lg flex items-center justify-center group-hover:translate-x-1 transition-transform">
+                <div className="ml-3 w-6 h-6 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 rounded-lg flex items-center justify-center group-hover:translate-x-1 transition-transform">
                   <span className="text-white text-sm">→</span>
                 </div>
               </Button>
@@ -457,8 +457,8 @@ const Homepage = () => {
             {/* Right Image Placeholder */}
             <div className="flex-1 lg:max-w-md animate-slide-in-right">
               <div className="relative">
-                {/* Glowing border effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 rounded-3xl blur-xl opacity-30"></div>
+                {/* Glowing border effect with Instagram gradient */}
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-400 via-pink-400 via-orange-400 to-yellow-400 rounded-3xl blur-xl opacity-30"></div>
                 <div className="relative bg-white/10 backdrop-blur-sm rounded-3xl p-1">
                   <div className="bg-gradient-to-br from-white/20 to-white/5 rounded-2xl h-96 flex items-center justify-center text-white/60">
                     <div className="text-center">
@@ -475,7 +475,7 @@ const Homepage = () => {
           </div>
         </div>
         
-        {/* Background decoration */}
+        {/* Background decoration with Instagram gradient colors */}
         <div className="absolute top-0 left-0 w-full h-full opacity-10">
           <div className="absolute top-10 left-10 w-32 h-32 border border-white/30 rounded-full"></div>
           <div className="absolute bottom-20 right-20 w-24 h-24 border border-white/30 rounded-full"></div>
@@ -489,7 +489,7 @@ const Homepage = () => {
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             {/* Brand */}
             <div className="text-center md:text-left">
-              <h3 className="text-2xl font-bold text-blue-500 mb-2">FroshMeet</h3>
+              <h3 className="text-2xl font-bold bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 bg-clip-text text-transparent mb-2">FroshMeet</h3>
               <p className="text-gray-400">Connecting the Class of 2030, one friendship at a time</p>
             </div>
             
@@ -498,27 +498,27 @@ const Homepage = () => {
               <Button 
                 variant="ghost" 
                 onClick={() => navigate('/about')} 
-                className="text-gray-400 hover:text-blue-500 transition-colors"
+                className="text-gray-400 hover:bg-gradient-to-r hover:from-purple-500 hover:via-pink-500 hover:to-orange-500 hover:bg-clip-text hover:text-transparent transition-all duration-300"
               >
                 About
               </Button>
               <Button 
                 variant="ghost" 
                 onClick={() => navigate('/features')} 
-                className="text-gray-400 hover:text-blue-500 transition-colors"
+                className="text-gray-400 hover:bg-gradient-to-r hover:from-purple-500 hover:via-pink-500 hover:to-orange-500 hover:bg-clip-text hover:text-transparent transition-all duration-300"
               >
                 How It Works
               </Button>
               <Button 
                 variant="ghost" 
-                className="text-gray-400 hover:text-blue-500 transition-colors"
+                className="text-gray-400 hover:bg-gradient-to-r hover:from-purple-500 hover:via-pink-500 hover:to-orange-500 hover:bg-clip-text hover:text-transparent transition-all duration-300"
               >
                 FAQs
               </Button>
               <Button 
                 variant="ghost" 
                 onClick={() => navigate('/contact')} 
-                className="text-gray-400 hover:text-blue-500 transition-colors"
+                className="text-gray-400 hover:bg-gradient-to-r hover:from-purple-500 hover:via-pink-500 hover:to-orange-500 hover:bg-clip-text hover:text-transparent transition-all duration-300"
               >
                 Contact
               </Button>
