@@ -23,43 +23,77 @@ export default function SignUp() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        <Button 
-          variant="ghost" 
-          onClick={() => navigate('/')}
-          className="mb-6"
-        >
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to Home
-        </Button>
+    <div className="min-h-screen bg-background relative overflow-hidden">
+      {/* Animated background particles */}
+      <div className="absolute inset-0 bg-gradient-to-br from-background via-card to-background">
+        <div className="absolute inset-0 opacity-30">
+          {[...Array(50)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-1 h-1 bg-primary rounded-full animate-pulse"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 3}s`,
+                animationDuration: `${2 + Math.random() * 2}s`
+              }}
+            />
+          ))}
+        </div>
+      </div>
 
-        <Card>
-          <CardHeader className="text-center">
-            <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-              <UserPlus className="h-6 w-6 text-primary-foreground" />
+      {/* Header */}
+      <header className="relative z-10 p-6">
+        <div className="flex items-center justify-between max-w-6xl mx-auto">
+          <Button 
+            variant="ghost" 
+            onClick={() => navigate('/')}
+            className="text-muted-foreground hover:text-foreground"
+          >
+            <ArrowLeft className="h-5 w-5 mr-2" />
+            Back to Home
+          </Button>
+          <div className="flex items-center space-x-3">
+            <img 
+              src="/lovable-uploads/e9020b20-5a8d-4a80-a4e0-9d917c7c5e5c.png"
+              alt="FroshMeet Logo" 
+              className="h-12 w-auto"
+            />
+            <span className="text-xl font-bold text-foreground">FroshMeet</span>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <div className="relative z-10 flex items-center justify-center px-4 py-12">
+        <Card className="w-full max-w-md bg-card/80 backdrop-blur-xl border-border/40 shadow-2xl">
+          <CardHeader className="text-center pb-8">
+            <div className="space-y-4">
+              <h1 className="text-3xl font-bold text-primary animate-pulse">
+                Join FroshMeet
+              </h1>
+              <p className="text-muted-foreground">
+                Create your account and start connecting with your college community
+              </p>
             </div>
-            <CardTitle className="text-2xl">Join FroshMeet</CardTitle>
-            <CardDescription>
-              Create your account and start connecting with your college community
-            </CardDescription>
           </CardHeader>
           
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <Label htmlFor="name">Full Name</Label>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="space-y-2">
+                <Label htmlFor="name" className="text-foreground font-medium">Full Name</Label>
                 <Input
                   id="name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="Enter your full name"
                   required
+                  className="h-12 bg-background/50 border-border/60 focus:border-primary focus:ring-2 focus:ring-primary/40 focus:shadow-[0_0_10px_rgba(59,130,246,0.3)] transition-all duration-300"
                 />
               </div>
               
-              <div>
-                <Label htmlFor="email">Email</Label>
+              <div className="space-y-2">
+                <Label htmlFor="email" className="text-foreground font-medium">Email</Label>
                 <Input
                   id="email"
                   type="email"
@@ -67,11 +101,12 @@ export default function SignUp() {
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder="Enter your college email"
                   required
+                  className="h-12 bg-background/50 border-border/60 focus:border-primary focus:ring-2 focus:ring-primary/40 focus:shadow-[0_0_10px_rgba(59,130,246,0.3)] transition-all duration-300"
                 />
               </div>
               
-              <div>
-                <Label htmlFor="password">Password</Label>
+              <div className="space-y-2">
+                <Label htmlFor="password" className="text-foreground font-medium">Password</Label>
                 <Input
                   id="password"
                   type="password"
@@ -79,11 +114,12 @@ export default function SignUp() {
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   placeholder="Create a password"
                   required
+                  className="h-12 bg-background/50 border-border/60 focus:border-primary focus:ring-2 focus:ring-primary/40 focus:shadow-[0_0_10px_rgba(59,130,246,0.3)] transition-all duration-300"
                 />
               </div>
               
-              <div>
-                <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <div className="space-y-2">
+                <Label htmlFor="confirmPassword" className="text-foreground font-medium">Confirm Password</Label>
                 <Input
                   id="confirmPassword"
                   type="password"
@@ -91,25 +127,59 @@ export default function SignUp() {
                   onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
                   placeholder="Confirm your password"
                   required
+                  className="h-12 bg-background/50 border-border/60 focus:border-primary focus:ring-2 focus:ring-primary/40 focus:shadow-[0_0_10px_rgba(59,130,246,0.3)] transition-all duration-300"
                 />
               </div>
               
-              <Button type="submit" className="w-full" size="lg">
+              <Button 
+                type="submit" 
+                className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg hover:shadow-[0_0_20px_rgba(59,130,246,0.5)] hover:scale-[1.02] transition-all duration-300"
+                size="lg"
+              >
                 Create Account
+              </Button>
+
+              {/* Divider */}
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-border/40"></div>
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="bg-card px-2 text-muted-foreground">or</span>
+                </div>
+              </div>
+
+              {/* Continue as Guest */}
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={() => navigate('/community')}
+                className="w-full h-12 text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all duration-300"
+              >
+                Continue as Guest
               </Button>
             </form>
             
-            <div className="mt-6 text-center">
-              <p className="text-sm text-muted-foreground">
-                Already have an account?{" "}
-                <Button variant="link" onClick={() => navigate('/signin')} className="p-0 h-auto">
-                  Sign In
-                </Button>
-              </p>
+            <div className="text-center text-sm text-muted-foreground mt-6">
+              Already have an account?{" "}
+              <Button 
+                variant="ghost" 
+                onClick={() => navigate('/signin')} 
+                className="text-primary hover:text-primary/80 p-0 h-auto font-medium underline underline-offset-4"
+              >
+                Sign In
+              </Button>
             </div>
           </CardContent>
         </Card>
       </div>
+
+      {/* Footer */}
+      <footer className="relative z-10 text-center p-6 text-xs text-muted-foreground">
+        FroshMeet is a student-run platform and is not officially affiliated with or endorsed by any college or university.
+        <br />
+        By creating an account, you agree to our Terms and Privacy Policy.
+      </footer>
     </div>
   );
 }

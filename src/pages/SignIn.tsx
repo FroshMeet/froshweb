@@ -78,7 +78,7 @@ const SignIn = () => {
         <Card className="w-full max-w-md bg-card/80 backdrop-blur-xl border-border/40 shadow-2xl">
           <CardHeader className="text-center pb-8">
             <div className="space-y-4">
-              <h1 className="text-3xl font-bold text-foreground">
+              <h1 className="text-3xl font-bold text-primary animate-pulse">
                 Welcome Back
               </h1>
               <p className="text-muted-foreground">
@@ -102,7 +102,7 @@ const SignIn = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   autoFocus
-                  className="h-12 bg-background/50 border-border/60 focus:border-primary/60 focus:ring-2 focus:ring-primary/20 transition-all duration-300"
+                  className="h-12 bg-background/50 border-border/60 focus:border-primary focus:ring-2 focus:ring-primary/40 focus:shadow-[0_0_10px_rgba(59,130,246,0.3)] transition-all duration-300"
                 />
               </div>
 
@@ -119,7 +119,7 @@ const SignIn = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    className="h-12 bg-background/50 border-border/60 focus:border-primary/60 focus:ring-2 focus:ring-primary/20 transition-all duration-300 pr-12"
+                    className="h-12 bg-background/50 border-border/60 focus:border-primary focus:ring-2 focus:ring-primary/40 focus:shadow-[0_0_10px_rgba(59,130,246,0.3)] transition-all duration-300 pr-12"
                   />
                   <Button
                     type="button"
@@ -153,7 +153,7 @@ const SignIn = () => {
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="w-full h-12 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground font-semibold shadow-lg hover:shadow-[0_0_30px_rgba(59,130,246,0.4)] transition-all duration-300 disabled:opacity-50"
+                className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg hover:shadow-[0_0_20px_rgba(59,130,246,0.5)] hover:scale-[1.02] transition-all duration-300 disabled:opacity-50"
               >
                 {isLoading ? (
                   <div className="flex items-center space-x-2">
@@ -178,9 +178,9 @@ const SignIn = () => {
               {/* Continue as Guest */}
               <Button
                 type="button"
-                variant="outline"
+                variant="ghost"
                 onClick={() => navigate('/community')}
-                className="w-full h-12 border-border/60 hover:bg-muted/20 hover:border-primary/40 transition-all duration-300"
+                className="w-full h-12 text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all duration-300"
               >
                 Continue as Guest
               </Button>
@@ -191,7 +191,7 @@ const SignIn = () => {
                 <Button
                   type="button"
                   variant="ghost"
-                  onClick={() => navigate('/community')}
+                  onClick={() => navigate('/signup')}
                   className="text-primary hover:text-primary/80 p-0 h-auto font-medium underline underline-offset-4"
                 >
                   Create an account
