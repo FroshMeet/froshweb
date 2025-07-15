@@ -99,6 +99,26 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
     setSearchTerm("");
   };
 
+  // Get proper acronym from search terms - use the EXACT same logic as homepage
+  const getAcronym = (school: any) => {
+    // Find the shortest uppercase acronym from search terms that's 2-6 characters
+    const acronyms = school.searchTerms.filter((term: string) => 
+      term === term.toUpperCase() && 
+      term.length >= 2 && 
+      term.length <= 6 && 
+      /^[A-Z]+$/.test(term) &&
+      term !== school.label.toUpperCase() // Exclude full name in caps
+    );
+    
+    if (acronyms.length > 0) {
+      // Sort by length and return the shortest one
+      return acronyms.sort((a, b) => a.length - b.length)[0];
+    }
+    
+    // Fallback to first letters of each word if no acronym found
+    return school.label.split(' ').map((word: string) => word.charAt(0)).join('').toUpperCase();
+  };
+
   const resetForm = () => {
     setCurrentStep(0);
     setSelectedSchool(preSelectedSchool || "");
@@ -250,26 +270,18 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
               />
               {searchTerm && filteredSchools.length > 0 && (
                 <div className="absolute top-full left-0 right-0 bg-card border border-border rounded-lg mt-2 z-[9999] shadow-2xl animate-fade-scale-in">
-                  {filteredSchools.slice(0, 5).map((school) => {
-                    // Get proper acronym from search terms
-                    const acronyms = school.searchTerms.filter((term: string) => 
-                      term === term.toUpperCase() && term.length <= 6 && /^[A-Z]+$/.test(term)
-                    );
-                    const acronym = acronyms.length > 0 ? acronyms[0] : school.label.split(' ').map((word: string) => word.charAt(0)).join('').toUpperCase();
-                    
-                    return (
-                      <div
-                        key={school.value}
-                        className="p-4 hover:bg-muted/50 cursor-pointer border-b border-border/40 last:border-b-0 transition-colors"
-                        onClick={() => handleSchoolSelect(school.value)}
-                      >
-                        <div className="flex items-center gap-3">
-                          <div className="text-sm font-bold text-primary">{acronym}</div>
-                          <div className="text-sm text-foreground">{school.label}</div>
-                        </div>
+                  {filteredSchools.slice(0, 5).map((school) => (
+                    <div
+                      key={school.value}
+                      className="p-4 hover:bg-muted/50 cursor-pointer border-b border-border/40 last:border-b-0 transition-colors"
+                      onClick={() => handleSchoolSelect(school.value)}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="text-sm font-bold text-primary">{getAcronym(school)}</div>
+                        <div className="text-sm text-foreground">{school.label}</div>
                       </div>
-                    );
-                  })}
+                    </div>
+                  ))}
                 </div>
               )}
             </div>

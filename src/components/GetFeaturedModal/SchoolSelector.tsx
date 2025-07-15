@@ -76,13 +76,24 @@ export const SchoolSelector: React.FC<SchoolSelectorProps> = ({
     setSearchTerm("");
   };
 
-  // Get proper acronym from search terms
+  // Get proper acronym from search terms - use the EXACT same logic as homepage
   const getAcronym = (school: any) => {
-    // Find the shortest uppercase acronym from search terms
+    // Find the shortest uppercase acronym from search terms that's 2-6 characters
     const acronyms = school.searchTerms.filter((term: string) => 
-      term === term.toUpperCase() && term.length <= 6 && /^[A-Z]+$/.test(term)
+      term === term.toUpperCase() && 
+      term.length >= 2 && 
+      term.length <= 6 && 
+      /^[A-Z]+$/.test(term) &&
+      term !== school.label.toUpperCase() // Exclude full name in caps
     );
-    return acronyms.length > 0 ? acronyms[0] : school.label.split(' ').map((word: string) => word.charAt(0)).join('').toUpperCase();
+    
+    if (acronyms.length > 0) {
+      // Sort by length and return the shortest one
+      return acronyms.sort((a, b) => a.length - b.length)[0];
+    }
+    
+    // Fallback to first letters of each word if no acronym found
+    return school.label.split(' ').map((word: string) => word.charAt(0)).join('').toUpperCase();
   };
 
   return (
