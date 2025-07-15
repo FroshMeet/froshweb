@@ -141,6 +141,11 @@ const Homepage = () => {
     navigate(`/${slug}`);
   };
 
+  const handleGetFeaturedClick = () => {
+    console.log("Get Featured button clicked!");
+    setShowGetFeaturedModal(true);
+  };
+
   const filteredSchools = searchSchools(searchTerm);
 
   return (
@@ -276,7 +281,7 @@ const Homepage = () => {
                   </div>
                   
                   <Button
-                    onClick={() => setShowGetFeaturedModal(true)}
+                    onClick={handleGetFeaturedClick}
                     className="w-full bg-gradient-to-r from-pink-500 via-purple-500 to-orange-500 hover:from-pink-600 hover:via-purple-600 hover:to-orange-600 text-white border-0 h-12 shadow-lg hover:shadow-xl transition-all duration-300"
                   >
                     <Instagram className="h-4 w-4 mr-2" />
@@ -441,7 +446,7 @@ const Homepage = () => {
               
               {/* CTA Button */}
               <Button
-                onClick={() => setShowGetFeaturedModal(true)}
+                onClick={handleGetFeaturedClick}
                 className="bg-white text-purple-600 hover:bg-white/90 h-16 px-8 text-lg font-semibold rounded-2xl shadow-2xl hover:shadow-white/20 transition-all duration-300 hover:scale-105 group"
               >
                 <div className="w-6 h-6 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 rounded-lg flex items-center justify-center mr-3">
