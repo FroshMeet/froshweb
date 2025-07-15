@@ -207,14 +207,11 @@ const Homepage = () => {
                   college community
                 </span>
               </h1>
-              <p className="text-xl text-muted-foreground mb-4 max-w-lg">
+              <p className="text-xl text-muted-foreground mb-8 max-w-lg">
                 FroshMeet helps you find roommates, group chats, and new friends at your school, before the year even starts.
               </p>
-              <p className="text-lg text-muted-foreground mb-6 max-w-lg">
-                Now live for Class of 2030 at 60+ colleges across the U.S.
-              </p>
               <p className="text-lg text-primary font-semibold mb-8 max-w-lg">
-                🚀 Join early, stand out, and get featured on your school's Instagram.
+                🚀 Join early, stand out, and get featured on your school's Instagram. Now live for Class of 2030 at 85+ colleges across the U.S & Canada.
               </p>
               
               {/* School Search */}
@@ -289,7 +286,7 @@ const Homepage = () => {
               </div>
 
               <p className="text-sm text-muted-foreground">
-                ⚠️ FroshMeet is student-run and not affiliated with any college or university.
+                ⚠️ FroshMeet is a student-run platform and is not officially affiliated with or endorsed by any college or university.
               </p>
             </div>
             
@@ -305,7 +302,7 @@ const Homepage = () => {
         </div>
       </section>
 
-      {/* Featured Schools Carousel */}
+      {/* Popular Schools Carousel */}
       <section className="py-20 bg-card/20 overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16 animate-fade-in">
