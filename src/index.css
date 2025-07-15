@@ -1,55 +1,77 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Enhanced FroshMeet Design System */
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. */
 
 @layer base {
   :root {
-    /* Enhanced dark theme with FroshMeet blue focus */
-    --background: 0 0% 2%; /* Deeper black */
+  /* Dark theme as default - primarily black with slightly lighter variants */
+    --background: 0 0% 3%; /* Very dark, almost black */
     --foreground: 0 0% 98%; /* Pure white text */
 
-    --card: 0 0% 4%; /* Slightly lighter for cards */
+    --card: 0 0% 5%; /* Slightly lighter black for cards */
     --card-foreground: 0 0% 98%;
 
-    --popover: 0 0% 4%;
+    --popover: 0 0% 5%;
     --popover-foreground: 0 0% 98%;
 
-    /* FroshMeet Blue - our signature color */
-    --primary: 214 100% 50%; /* Vibrant FroshMeet blue */
+    --primary: 214 100% 45%; /* Darker blue for futuristic laser tag vibes */
     --primary-foreground: 0 0% 98%;
 
-    --secondary: 0 0% 6%; /* Subtle gray */
+    --secondary: 0 0% 8%; /* Dark gray */
     --secondary-foreground: 0 0% 98%;
 
-    --muted: 0 0% 5%; /* Muted backgrounds */
-    --muted-foreground: 0 0% 70%; /* Readable muted text */
+    --muted: 0 0% 7%; /* Muted dark */
+    --muted-foreground: 0 0% 65%; /* Medium gray text */
 
-    --accent: 214 100% 55%; /* Accent blue variant */
+    --accent: 214 100% 45%;
     --accent-foreground: 0 0% 98%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 12%; /* Subtle borders */
-    --input: 0 0% 6%; /* Input backgrounds */
-    --ring: 214 100% 50%; /* Focus rings */
+    --border: 0 0% 15%; /* Subtle borders */
+    --input: 0 0% 7%; /* Dark inputs */
+    --ring: 214 100% 45%;
 
-    /* Enhanced neon effects */
+    /* Neon accent colors for futuristic vibes */
     --neon-cyan: 180 100% 50%;
-    --neon-magenta: 300 100% 60%;
-    --neon-violet: 270 100% 60%;
-    --neon-glow: 214 100% 50%;
-    
-    /* Gradient definitions */
-    --gradient-primary: linear-gradient(135deg, hsl(214, 100%, 60%), hsl(214, 100%, 45%));
-    --gradient-hero: linear-gradient(135deg, hsl(214, 100%, 50%), hsl(270, 100%, 60%));
-    --gradient-card: linear-gradient(135deg, hsl(0, 0%, 4%), hsl(0, 0%, 6%));
-    --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    --neon-magenta: 300 100% 50%;
+    --neon-violet: 270 100% 50%;
+    --neon-glow: 214 100% 45%;
+    --primary-rgb: 59, 130, 246;
 
     --radius: 1rem;
+
+    /* Gradients for modern look */
+    --gradient-primary: linear-gradient(135deg, hsl(214, 100%, 55%), hsl(214, 100%, 45%));
+    --gradient-neon: linear-gradient(135deg, hsl(180, 100%, 50%), hsl(270, 100%, 50%));
+    --gradient-background: linear-gradient(180deg, hsl(0, 0%, 3%), hsl(0, 0%, 1%));
+    --gradient-card: linear-gradient(135deg, hsl(0, 0%, 5%), hsl(0, 0%, 7%));
+  }
+
+  /* Keep light theme for reference but make dark the default */
+  .light {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 5%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 5%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 5%;
+    --primary: 214 100% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 5%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 214 100% 60%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 90%;
+    --input: 0 0% 96%;
+    --ring: 214 100% 60%;
   }
 }
 
@@ -64,7 +86,6 @@
     height: 100%;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
     @apply bg-background text-foreground;
-    scroll-behavior: smooth;
   }
 
   #root {
@@ -72,219 +93,65 @@
     width: 100%;
   }
 
-  /* Enhanced typography hierarchy */
+  /* Gen Z Typography */
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'Manrope', 'Inter', sans-serif;
     font-weight: 700;
-    letter-spacing: -0.025em;
-    line-height: 1.2;
+    letter-spacing: -0.02em;
   }
 
-  h1 { @apply text-4xl md:text-5xl lg:text-6xl; }
-  h2 { @apply text-3xl md:text-4xl; }
-  h3 { @apply text-2xl md:text-3xl; }
-  h4 { @apply text-xl md:text-2xl; }
-  h5 { @apply text-lg md:text-xl; }
-  h6 { @apply text-base md:text-lg; }
-
-  /* Smooth scrollbar */
-  ::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
-  }
-  
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background: hsl(var(--muted-foreground) / 0.3);
-    border-radius: 2px;
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-    background: hsl(var(--primary) / 0.5);
+  /* Mobile-optimized interactions */
+  .tap-highlight {
+    -webkit-tap-highlight-color: rgba(59, 130, 246, 0.1);
   }
 
-  /* Enhanced glass morphism effects */
-  .glass {
-    background: var(--gradient-glass);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+  /* Smooth animations */
+  * {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .glass-card {
-    background: var(--gradient-card);
-    backdrop-filter: blur(20px);
-    border: 1px solid hsl(var(--border));
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  /* Card shadows for depth with neon glow */
+  .card-shadow {
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.3), 0 2px 8px -2px rgba(0, 0, 0, 0.2);
   }
 
-  /* Enhanced shadows */
-  .shadow-glow {
-    box-shadow: 0 0 20px hsl(var(--primary) / 0.3), 0 0 40px hsl(var(--primary) / 0.1);
+  .card-shadow-lg {
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.4), 0 4px 16px -4px rgba(0, 0, 0, 0.3);
   }
 
-  .shadow-intense {
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 8px 20px rgba(0, 0, 0, 0.2);
+  /* Neon glow effects for futuristic feel */
+  .neon-glow {
+    box-shadow: 0 0 10px hsl(var(--neon-glow) / 0.5), 0 0 20px hsl(var(--neon-glow) / 0.3);
   }
 
-  /* Interactive elements */
-  .interactive {
-    @apply transition-all duration-300 ease-out;
+  .neon-glow-strong {
+    box-shadow: 0 0 15px hsl(var(--neon-glow) / 0.8), 0 0 30px hsl(var(--neon-glow) / 0.5), 0 0 45px hsl(var(--neon-glow) / 0.3);
   }
 
-  .interactive:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  }
-
-  .interactive:active {
-    transform: translateY(0);
-  }
-
-  /* Button enhancements */
-  .btn-primary {
-    background: var(--gradient-primary);
-    @apply shadow-glow;
-  }
-
-  .btn-primary:hover {
-    background: linear-gradient(135deg, hsl(214, 100%, 65%), hsl(214, 100%, 50%));
-    @apply shadow-glow;
-    transform: translateY(-1px);
-  }
-
-  /* Card hover effects */
-  .card-hover {
-    @apply transition-all duration-300 ease-out;
-  }
-
-  .card-hover:hover {
-    transform: translateY(-4px) scale(1.02);
-    @apply shadow-intense;
-  }
-
-  /* Text gradient effects */
-  .text-gradient {
-    background: var(--gradient-hero);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  /* Enhanced animations */
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-8px); }
-  }
-
-  @keyframes pulse-glow {
-    0%, 100% { 
-      box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
-    }
-    50% { 
-      box-shadow: 0 0 30px hsl(var(--primary) / 0.6), 0 0 60px hsl(var(--primary) / 0.2);
-    }
-  }
-
-  @keyframes slide-up {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes slide-in-right {
-    from {
-      opacity: 0;
-      transform: translateX(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  @keyframes scale-in {
-    from {
-      opacity: 0;
-      transform: scale(0.9);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-
-  @keyframes shimmer {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
-  }
-
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
-  }
-
-  .animate-pulse-glow {
-    animation: pulse-glow 2s ease-in-out infinite;
-  }
-
-  .animate-slide-up {
-    animation: slide-up 0.6s ease-out;
-  }
-
-  .animate-slide-in-right {
-    animation: slide-in-right 0.6s ease-out;
-  }
-
-  .animate-scale-in {
-    animation: scale-in 0.4s ease-out;
-  }
-
-  /* Loading skeleton */
-  .skeleton {
-    background: linear-gradient(90deg, hsl(var(--muted)) 25%, hsl(var(--muted-foreground) / 0.1) 50%, hsl(var(--muted)) 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
-  }
-
-  /* Mobile optimizations */
-  @media (max-width: 768px) {
-    .glass, .glass-card {
-      backdrop-filter: blur(10px);
-    }
-  }
-
-  /* High contrast mode support */
-  @media (prefers-contrast: high) {
-    :root {
-      --background: 0 0% 0%;
-      --foreground: 0 0% 100%;
-      --border: 0 0% 50%;
-    }
-  }
-
-  /* Reduced motion support */
-  @media (prefers-reduced-motion: reduce) {
-    * {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
+  /* Special styling for capital A letters */
+  .capital-a-glow {
+    filter: drop-shadow(0 0 3px hsl(214, 100%, 35%));
   }
 }
 
-/* Hide scrollbars globally but keep functionality */
-.hide-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
+/* Confetti Animation */
+@keyframes confetti {
+  0% {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    top: 30%;
+    left: 60%;
+    transform: translate(-50%, -50%) scale(1.5) rotate(180deg);
+    opacity: 0.8;
+  }
+  100% {
+    top: 20%;
+    left: 70%;
+    transform: translate(-50%, -50%) scale(0.5) rotate(360deg);
+    opacity: 0;
+  }
 }
