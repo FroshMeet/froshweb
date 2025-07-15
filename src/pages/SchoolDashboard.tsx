@@ -714,7 +714,7 @@ export default function SchoolDashboard() {
         {/* Chat Tab */}
         {activeTab === "chat" && (
           <div className="text-center py-16 animate-fade-in">
-            <MessageSquare className="h-20 w-20 text-primary mx-auto mb-6 neon-glow" />
+            <MessageSquare className="h-20 w-20 text-primary mx-auto mb-6" />
             <h3 className="text-3xl font-bold mb-4 text-foreground">School Chat Rooms</h3>
             <p className="text-muted-foreground mb-8 max-w-md mx-auto text-lg">
               {user ? 'Join conversations with your classmates in dedicated chat rooms' : 'Create an account to join school-specific chat rooms and start conversations'}
