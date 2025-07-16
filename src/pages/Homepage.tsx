@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -423,7 +424,7 @@ const Homepage = () => {
 
       {/* Instagram-Style Get Featured Section */}
       <section className="py-20 bg-gradient-to-br from-purple-500 via-pink-500 via-orange-500 to-yellow-500 relative overflow-hidden">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 relative z-10">
           <div className="flex flex-col lg:flex-row items-center gap-12 max-w-6xl mx-auto">
             {/* Left Content */}
             <div className="flex-1 text-center lg:text-left animate-fade-in">
@@ -445,18 +446,20 @@ const Homepage = () => {
               </p>
               
               {/* CTA Button */}
-              <Button
-                onClick={handleGetFeaturedClick}
-                className="bg-white text-purple-600 hover:bg-white/90 h-16 px-8 text-lg font-semibold rounded-2xl shadow-2xl hover:shadow-white/20 transition-all duration-300 hover:scale-105 group"
-              >
-                <div className="w-6 h-6 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 rounded-lg flex items-center justify-center mr-3">
-                  <span className="text-white text-sm">✨</span>
-                </div>
-                Get Featured Now
-                <div className="ml-3 w-6 h-6 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 rounded-lg flex items-center justify-center group-hover:translate-x-1 transition-transform">
-                  <span className="text-white text-sm">→</span>
-                </div>
-              </Button>
+              <div className="relative z-20">
+                <Button
+                  onClick={handleGetFeaturedClick}
+                  className="bg-white text-purple-600 hover:bg-white/90 h-16 px-8 text-lg font-semibold rounded-2xl shadow-2xl hover:shadow-white/20 transition-all duration-300 hover:scale-105 group relative z-30 pointer-events-auto"
+                >
+                  <div className="w-6 h-6 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 rounded-lg flex items-center justify-center mr-3">
+                    <span className="text-white text-sm">✨</span>
+                  </div>
+                  Get Featured Now
+                  <div className="ml-3 w-6 h-6 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 rounded-lg flex items-center justify-center group-hover:translate-x-1 transition-transform">
+                    <span className="text-white text-sm">→</span>
+                  </div>
+                </Button>
+              </div>
             </div>
             
             {/* Right Image Placeholder */}
@@ -481,7 +484,7 @@ const Homepage = () => {
         </div>
         
         {/* Background decoration with Instagram gradient colors */}
-        <div className="absolute top-0 left-0 w-full h-full opacity-10">
+        <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
           <div className="absolute top-10 left-10 w-32 h-32 border border-white/30 rounded-full"></div>
           <div className="absolute bottom-20 right-20 w-24 h-24 border border-white/30 rounded-full"></div>
           <div className="absolute top-1/2 left-1/3 w-16 h-16 border border-white/30 rounded-full"></div>
