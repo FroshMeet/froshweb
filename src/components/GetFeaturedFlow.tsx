@@ -165,6 +165,7 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
   const handleSchoolSelect = (schoolSlug: string) => {
     setSelectedSchool(schoolSlug);
     setSearchTerm("");
+    nextStep(); // Automatically advance to next step
   };
 
   const resetForm = () => {
@@ -305,6 +306,18 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
               <p className="text-muted-foreground">Select your university to get featured on their Instagram</p>
               <p className="text-sm text-primary font-medium mt-2">Posting costs $5</p>
             </div>
+            
+            {selectedSchool && (
+              <div className="bg-primary/10 border border-primary/20 rounded-lg p-4 mb-4">
+                <div className="flex items-center gap-2">
+                  <Check className="h-5 w-5 text-primary" />
+                  <span className="font-medium text-foreground">
+                    {SCHOOL_DATABASE.find(s => s.slug === selectedSchool)?.name}
+                  </span>
+                </div>
+              </div>
+            )}
+            
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
               <Input
@@ -363,8 +376,7 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <h2 className="text-2xl font-bold text-foreground mb-2">Tell Your Story</h2>
-              <p className="text-muted-foreground">Share 1-2 lines about yourself</p>
+              <h2 className="text-2xl font-bold text-foreground mb-2">Your Bio</h2>
             </div>
             <Textarea
               placeholder="Share your excitement about college, a fun fact about yourself, or what you're looking forward to..."
@@ -372,10 +384,10 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
               onChange={(e) => setBio(e.target.value)}
               rows={4}
               className="resize-none text-lg"
-              maxLength={150}
+              maxLength={100}
             />
             <div className="text-right">
-              <span className="text-sm text-muted-foreground">{bio.length}/150</span>
+              <span className="text-sm text-muted-foreground">{bio.length}/100</span>
             </div>
           </div>
         );
