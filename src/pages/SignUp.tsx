@@ -55,7 +55,7 @@ export default function SignUp() {
           </Button>
           <div className="flex items-center space-x-3">
             <img 
-              src="/lovable-uploads/e9020b20-5a8d-4a80-a4e0-9d917c7c5e5c.png"
+              src="/lovable-uploads/aae3dcfc-f3d8-4318-9704-4e40ab0380fd.png"
               alt="FroshMeet Logo" 
               className="h-12 w-auto"
             />

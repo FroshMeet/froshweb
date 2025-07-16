@@ -64,7 +64,7 @@ const SignIn = () => {
           </Button>
           <div className="flex items-center space-x-3">
             <img 
-              src={isMobile ? "/lovable-uploads/70c5411f-00f7-43f3-9004-7c6c2fc6cb12.png" : "/lovable-uploads/f95a4d92-a40d-46a3-9199-c970d7098828.png"}
+              src="/lovable-uploads/aae3dcfc-f3d8-4318-9704-4e40ab0380fd.png"
               alt="FroshMeet Logo" 
               className={isMobile ? "h-8 w-auto" : "h-12 w-auto"}
             />
