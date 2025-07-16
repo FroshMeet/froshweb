@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -422,6 +421,38 @@ const Homepage = () => {
         </div>
       </section>
 
+      {/* Instagram Feed Preview */}
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16 animate-fade-in">
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+              See what's happening
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Follow @FroshMeet on Instagram for student stories, tips, and community highlights
+            </p>
+          </div>
+          
+          <div className="max-w-4xl mx-auto">
+            <Card className="bg-card/50 border-border/40 p-8 text-center">
+              <Instagram className="h-16 w-16 text-primary mx-auto mb-6" />
+              <h3 className="text-2xl font-bold text-foreground mb-4">@FroshMeet Instagram Feed</h3>
+              <p className="text-muted-foreground mb-6">
+                Connect with us on Instagram to see real student stories and stay updated with the latest from the FroshMeet community
+              </p>
+              <Button 
+                variant="outline" 
+                className="bg-gradient-to-r from-pink-500 to-purple-500 border-0 text-white hover:from-pink-600 hover:to-purple-600"
+                onClick={() => window.open('https://instagram.com/froshmeet', '_blank')}
+              >
+                <Instagram className="h-5 w-5 mr-2" />
+                Follow @FroshMeet
+              </Button>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* Instagram-Style Get Featured Section */}
       <section className="py-20 bg-gradient-to-br from-purple-500 via-pink-500 via-orange-500 to-yellow-500 relative overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
@@ -531,38 +562,6 @@ const Homepage = () => {
                 Contact
               </Button>
             </nav>
-          </div>
-        </div>
-      </section>
-
-      {/* Instagram Feed Preview */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16 animate-fade-in">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              See what's happening
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Follow @FroshMeet on Instagram for student stories, tips, and community highlights
-            </p>
-          </div>
-          
-          <div className="max-w-4xl mx-auto">
-            <Card className="bg-card/50 border-border/40 p-8 text-center">
-              <Instagram className="h-16 w-16 text-primary mx-auto mb-6" />
-              <h3 className="text-2xl font-bold text-foreground mb-4">@FroshMeet Instagram Feed</h3>
-              <p className="text-muted-foreground mb-6">
-                Connect with us on Instagram to see real student stories and stay updated with the latest from the FroshMeet community
-              </p>
-              <Button 
-                variant="outline" 
-                className="bg-gradient-to-r from-pink-500 to-purple-500 border-0 text-white hover:from-pink-600 hover:to-purple-600"
-                onClick={() => window.open('https://instagram.com/froshmeet', '_blank')}
-              >
-                <Instagram className="h-5 w-5 mr-2" />
-                Follow @FroshMeet
-              </Button>
-            </Card>
           </div>
         </div>
       </section>
