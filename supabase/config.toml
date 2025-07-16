@@ -1,1 +1,10 @@
 project_id = "zdicoswxpkpdnmxnhrrn"
+
+[functions.verify-instagram-payment]
+verify_jwt = false
+
+[functions.create-instagram-payment]
+verify_jwt = true
+
+[functions.create-guest-payment]
+verify_jwt = false

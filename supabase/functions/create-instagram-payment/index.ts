@@ -70,7 +70,7 @@ serve(async (req) => {
         },
       ],
       mode: "payment",
-      success_url: `${req.headers.get("origin")}/payment-success?profile_id=${profileId}`,
+      success_url: `${req.headers.get("origin")}/instagram-submission?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${req.headers.get("origin")}/create-profile`,
       metadata: {
         profile_id: profileId,

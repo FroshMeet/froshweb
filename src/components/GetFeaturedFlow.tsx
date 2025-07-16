@@ -9,6 +9,7 @@ import { Instagram, Upload, X, ArrowLeft, ArrowRight, Check, DollarSign } from "
 import { useToast } from "@/hooks/use-toast";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { supabase } from "@/integrations/supabase/client";
 
 // Use the EXACT same school database as homepage
 const SCHOOL_DATABASE = [
@@ -247,29 +248,26 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
   const handlePayment = async () => {
     setIsSubmitting(true);
     
-    // Simulate Stripe payment
-    setTimeout(() => {
-      setIsCompleted(true);
-      setIsSubmitting(false);
-      
-      // Add confetti effect
-      const confetti = document.createElement('div');
-      confetti.innerHTML = '🎉';
-      confetti.style.position = 'fixed';
-      confetti.style.fontSize = '2rem';
-      confetti.style.zIndex = '9999';
-      confetti.style.animation = 'confetti 3s ease-out forwards';
-      document.body.appendChild(confetti);
-      
-      setTimeout(() => {
-        document.body.removeChild(confetti);
-      }, 3000);
-      
-      toast({
-        title: "🔥 You're in!",
-        description: "We'll feature your profile soon on Instagram!",
+    try {
+      const { data, error } = await supabase.functions.invoke('create-guest-payment', {
+        body: { school: selectedSchool }
       });
-    }, 2000);
+
+      if (error) throw error;
+
+      if (data?.url) {
+        window.open(data.url, '_blank');
+      }
+    } catch (error) {
+      console.error('Payment error:', error);
+      toast({
+        title: "Payment failed",
+        description: "Please try again or contact support",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const renderStepContent = () => {

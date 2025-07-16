@@ -109,12 +109,10 @@ export default function GuestInstagramPost() {
 
       // Now initiate payment
       const { data: paymentData, error: paymentError } = await supabase.functions.invoke(
-        'create-instagram-payment',
+        'create-guest-payment',
         {
           body: {
-            profileId: profile.id,
-            amount: 500, // $5.00
-            isGuest: true
+            school: school?.toUpperCase() || ''
           }
         }
       );

@@ -68,6 +68,51 @@ export type Database = {
         }
         Relationships: []
       }
+      submissions: {
+        Row: {
+          bio: string
+          created_at: string
+          has_been_posted: boolean
+          has_paid: boolean
+          id: string
+          image_urls: string[]
+          major: string
+          name: string
+          school: string
+          stripe_session_id: string | null
+          timestamp: string
+          updated_at: string
+        }
+        Insert: {
+          bio: string
+          created_at?: string
+          has_been_posted?: boolean
+          has_paid?: boolean
+          id?: string
+          image_urls?: string[]
+          major: string
+          name: string
+          school: string
+          stripe_session_id?: string | null
+          timestamp?: string
+          updated_at?: string
+        }
+        Update: {
+          bio?: string
+          created_at?: string
+          has_been_posted?: boolean
+          has_paid?: boolean
+          id?: string
+          image_urls?: string[]
+          major?: string
+          name?: string
+          school?: string
+          stripe_session_id?: string | null
+          timestamp?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
