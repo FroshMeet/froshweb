@@ -462,9 +462,7 @@ const Homepage = () => {
               <p className="text-xl text-muted-foreground mb-8 max-w-lg">
                 FroshMeet helps you find roommates, group chats, and new friends at your school, before the year even starts.
               </p>
-              <p className="text-lg text-primary font-semibold mb-8 max-w-lg">
-                🚀 Join early, stand out, and get featured on your school's Instagram. Now live for Class of 2030 at 85+ colleges across the U.S & Canada.
-              </p>
+              <p className="text-lg text-primary font-semibold mb-8 max-w-lg">🚀 Now live for Class of 2030 at 85+ colleges across the U.S &amp; Canada.</p>
               
               {/* School Search */}
               <div className="max-w-md mb-8">
