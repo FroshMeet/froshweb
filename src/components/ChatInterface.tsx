@@ -1,19 +1,30 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { MessageSquare, Send, Share2, AlertTriangle, Instagram, Phone, Users, ArrowLeft } from "lucide-react";
+import { MessageSquare, Send, Share2, AlertTriangle, Instagram, Phone, Users, ArrowLeft, Hash } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import IncomingRequests from "./IncomingRequests";
+import SchoolChatPopup from "./SchoolChatPopup";
+import VerificationModal from "./VerificationModal";
+import SchoolGroupChat from "./SchoolGroupChat";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const ChatInterface = () => {
   const [selectedChat, setSelectedChat] = useState(null);
   const [message, setMessage] = useState("");
   const [showSocialShare, setShowSocialShare] = useState(false);
   const [agreedToWarning, setAgreedToWarning] = useState(false);
+  const [showSchoolChatPopup, setShowSchoolChatPopup] = useState(false);
+  const [showVerificationModal, setShowVerificationModal] = useState(false);
+  const [showSchoolGroupChat, setShowSchoolGroupChat] = useState(false);
+  const [userProfile, setUserProfile] = useState(null);
+  const [hasSeenPopup, setHasSeenPopup] = useState(false);
+  const { toast } = useToast();
   const [incomingRequests, setIncomingRequests] = useState([
     {
       id: 1,
@@ -70,6 +81,41 @@ const ChatInterface = () => {
       time: "1m ago"
     }
   ];
+
+  // Mock user profile - in real app this would come from auth context
+  const mockUserProfile = {
+    user_id: 'mock-user-id',
+    school: 'Berkeley',
+    name: 'Sarah Chen',
+    verified: true
+  };
+
+  useEffect(() => {
+    // Check if user should see school chat popup
+    if (!hasSeenPopup && mockUserProfile.school && mockUserProfile.verified) {
+      setShowSchoolChatPopup(true);
+      setHasSeenPopup(true);
+    }
+  }, [hasSeenPopup]);
+
+  const handleJoinSchoolChat = () => {
+    setShowSchoolChatPopup(false);
+    setShowSchoolGroupChat(true);
+  };
+
+  const handleStartVerification = () => {
+    setShowVerificationModal(false);
+    // In real app, this would navigate to verification flow
+    toast({
+      title: "Verification Started",
+      description: "Check your email for verification instructions"
+    });
+  };
+
+  const handleVerifyFromPopup = () => {
+    setShowSchoolChatPopup(false);
+    setShowVerificationModal(true);
+  };
 
   const getUnsplashUrl = (photoId) => {
     return `https://images.unsplash.com/${photoId}?w=100&h=100&fit=crop&crop=face`;
@@ -210,6 +256,32 @@ const ChatInterface = () => {
           
           <TabsContent value="chats" className="mt-6">
             <div className="grid gap-4">
+              {/* School Group Chat - Pinned at top */}
+              {mockUserProfile.verified && (
+                <Card 
+                  className="cursor-pointer hover:shadow-lg transition-shadow duration-200 border-primary/50 bg-primary/5"
+                  onClick={() => setShowSchoolGroupChat(true)}
+                >
+                  <CardContent className="p-4">
+                    <div className="flex items-center space-x-4">
+                      <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
+                        <Hash className="h-6 w-6 text-primary" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex justify-between items-start">
+                          <h4 className="font-medium text-foreground flex items-center gap-2">
+                            📣 {mockUserProfile.school} Exclusive GC
+                            <Badge variant="secondary" className="text-xs">VERIFIED</Badge>
+                          </h4>
+                          <span className="text-xs text-muted-foreground">Now</span>
+                        </div>
+                        <p className="text-sm text-muted-foreground">Connect with verified classmates</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+              
               {mockChats.map((chat) => (
                 <Card 
                   key={chat.id}
@@ -340,6 +412,34 @@ const ChatInterface = () => {
       </Card>
 
       <SocialShareModal contact={selectedChat} />
+      
+      {/* School Group Chat Popup */}
+      {showSchoolChatPopup && (
+        <SchoolChatPopup
+          schoolName={mockUserProfile.school}
+          isVerified={mockUserProfile.verified}
+          onJoinChat={handleJoinSchoolChat}
+          onVerify={handleVerifyFromPopup}
+          onDismiss={() => setShowSchoolChatPopup(false)}
+        />
+      )}
+
+      {/* Verification Modal */}
+      <VerificationModal
+        isOpen={showVerificationModal}
+        onClose={() => setShowVerificationModal(false)}
+        schoolName={mockUserProfile.school}
+        onStartVerification={handleStartVerification}
+      />
+
+      {/* School Group Chat Interface */}
+      {showSchoolGroupChat && (
+        <SchoolGroupChat
+          schoolName={mockUserProfile.school}
+          userProfile={mockUserProfile}
+          onClose={() => setShowSchoolGroupChat(false)}
+        />
+      )}
     </div>
   );
 };
