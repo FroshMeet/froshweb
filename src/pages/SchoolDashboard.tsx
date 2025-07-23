@@ -225,33 +225,35 @@ export default function SchoolDashboard() {
             </div>
 
             {/* Enhanced CTAs */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
-              <Button 
-                onClick={handleCreateAccount}
-                size="lg"
-                className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold px-8 py-4 rounded-2xl neon-glow transition-all duration-300 hover:scale-105"
-              >
-                <UserPlus className="h-5 w-5 mr-2" />
-                Sign Up Free
-              </Button>
-              <Button 
-                onClick={() => {
-                  if (!user) {
-                    navigate('/signup');
-                  } else {
-                    setActiveTab("chat");
-                  }
-                }}
-                size="lg"
-                className="bg-gradient-to-r from-primary/80 to-primary text-primary-foreground font-bold px-8 py-4 rounded-2xl neon-glow transition-all duration-300 hover:scale-105"
-              >
-                <Users className="h-5 w-5 mr-2" />
-                Join {schoolDisplayName}'s GC
-              </Button>
+            <div className="flex flex-col gap-4 justify-center items-center mb-6 max-w-md mx-auto">
+              <div className="flex flex-col sm:flex-row gap-4 w-full">
+                <Button 
+                  onClick={handleCreateAccount}
+                  size="lg"
+                  className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground font-bold px-8 py-4 rounded-2xl neon-glow transition-all duration-300 hover:scale-105"
+                >
+                  <UserPlus className="h-5 w-5 mr-2" />
+                  Sign Up Free
+                </Button>
+                <Button 
+                  onClick={() => {
+                    if (!user) {
+                      navigate('/signup');
+                    } else {
+                      setActiveTab("chat");
+                    }
+                  }}
+                  size="lg"
+                  className="flex-1 bg-gradient-to-r from-primary/80 to-primary text-primary-foreground font-bold px-8 py-4 rounded-2xl neon-glow transition-all duration-300 hover:scale-105"
+                >
+                  <Users className="h-5 w-5 mr-2" />
+                  Join {schoolDisplayName}'s GC
+                </Button>
+              </div>
               <Button 
                 onClick={handleGuestInstagramPost}
                 size="lg"
-                className="bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] text-white border-0 hover:opacity-90 font-bold px-8 py-4 rounded-2xl transition-all duration-300 hover:scale-105"
+                className="w-full bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] text-white border-0 hover:opacity-90 font-bold px-8 py-4 rounded-2xl transition-all duration-300 hover:scale-105"
               >
                 <Instagram className="h-5 w-5 mr-2" />
                 Post on {schoolDisplayName}'s Insta
