@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -44,6 +43,24 @@ const SwipeCards = ({
   };
 
   const handleSwipe = (action: 'like' | 'pass') => {
+    // For pass action, always proceed to next profile regardless of guest status
+    if (action === 'pass') {
+      onSwipeAction(action);
+      setCurrentPhotoIndex(0);
+      if (currentIndex < profiles.length - 1) {
+        setCurrentIndex(currentIndex + 1);
+      } else {
+        setCurrentIndex(0);
+      }
+      return;
+    }
+
+    // For like action, check guest status
+    if (action === 'like' && isGuest && onGuestAction) {
+      onGuestAction();
+      return;
+    }
+
     onSwipeAction(action);
     setCurrentPhotoIndex(0);
     if (currentIndex < profiles.length - 1) {
