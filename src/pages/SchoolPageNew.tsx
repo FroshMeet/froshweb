@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Users, Plus, Instagram, ExternalLink, ArrowLeft, Heart } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { getSchoolName } from "@/config/schoolNameMapping";
+import SchoolGroupChatCTA from "@/components/SchoolGroupChatCTA";
 
 interface Profile {
   id: string;
@@ -124,6 +125,16 @@ export default function SchoolPage() {
               </Button>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* School Group Chat CTA */}
+      <div className="max-w-6xl mx-auto px-6 py-8">
+        <div className="max-w-md mx-auto">
+          <SchoolGroupChatCTA 
+            schoolSlug={school || ''}
+            onJoinClick={() => navigate('/sign-up')}
+          />
         </div>
       </div>
 
