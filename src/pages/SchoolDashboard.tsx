@@ -33,6 +33,7 @@ import PublicProfileBrowser from "@/components/PublicProfileBrowser";
 import { GetFeaturedFlow } from "@/components/GetFeaturedFlow";
 import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
+import SchoolGroupChatCTA from "@/components/SchoolGroupChatCTA";
 
 interface Profile {
   id: string;
@@ -713,29 +714,21 @@ export default function SchoolDashboard() {
 
         {/* Chat Tab */}
         {activeTab === "chat" && (
-          <div className="text-center py-16 animate-fade-in">
-            <MessageSquare className="h-20 w-20 text-primary mx-auto mb-6" />
-            <h3 className="text-3xl font-bold mb-4 text-foreground">School Chat Rooms</h3>
-            <p className="text-muted-foreground mb-8 max-w-md mx-auto text-lg">
-              {user ? 'Join conversations with your classmates in dedicated chat rooms' : 'Create an account to join school-specific chat rooms and start conversations'}
-            </p>
-            {user ? (
-              <Button size="lg" className="bg-primary hover:bg-primary/90 px-8 py-4 rounded-2xl font-bold neon-glow">
-                <MessageSquare className="h-5 w-5 mr-2" />
-                Join Chat Rooms
-              </Button>
-            ) : (
-              <div className="space-y-6">
-                <p className="text-primary font-medium">Account required for chat access</p>
-                <Button 
-                  onClick={handleCreateAccount}
-                  size="lg"
-                  className="bg-primary hover:bg-primary/90 px-8 py-4 rounded-2xl font-bold neon-glow"
-                >
-                  Create Account to Chat
-                </Button>
-              </div>
-            )}
+          <div className="max-w-md mx-auto py-8 animate-fade-in">
+            <SchoolGroupChatCTA 
+              schoolSlug={school || ''}
+              onJoinClick={() => {
+                if (!user) {
+                  navigate('/signup');
+                } else {
+                  // Handle joining chat (to be implemented)
+                  toast({
+                    title: "Coming Soon!",
+                    description: "Group chat feature will be available soon",
+                  });
+                }
+              }}
+            />
           </div>
         )}
 
