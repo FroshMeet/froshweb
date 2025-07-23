@@ -68,6 +68,100 @@ export type Database = {
         }
         Relationships: []
       }
+      school_chat_members: {
+        Row: {
+          id: string
+          joined_at: string
+          last_seen: string | null
+          school_chat_id: string
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          joined_at?: string
+          last_seen?: string | null
+          school_chat_id: string
+          user_id: string
+        }
+        Update: {
+          id?: string
+          joined_at?: string
+          last_seen?: string | null
+          school_chat_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "school_chat_members_school_chat_id_fkey"
+            columns: ["school_chat_id"]
+            isOneToOne: false
+            referencedRelation: "school_chats"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      school_chat_messages: {
+        Row: {
+          created_at: string
+          id: string
+          message: string
+          school_chat_id: string
+          updated_at: string
+          user_id: string
+          user_name: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message: string
+          school_chat_id: string
+          updated_at?: string
+          user_id: string
+          user_name: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message?: string
+          school_chat_id?: string
+          updated_at?: string
+          user_id?: string
+          user_name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "school_chat_messages_school_chat_id_fkey"
+            columns: ["school_chat_id"]
+            isOneToOne: false
+            referencedRelation: "school_chats"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      school_chats: {
+        Row: {
+          created_at: string
+          id: string
+          message_count: number
+          school: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message_count?: number
+          school: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message_count?: number
+          school?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       submissions: {
         Row: {
           bio: string
@@ -113,12 +207,48 @@ export type Database = {
         }
         Relationships: []
       }
+      user_profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          id: string
+          name: string | null
+          school: string | null
+          updated_at: string
+          user_id: string
+          verified: boolean
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          id?: string
+          name?: string | null
+          school?: string | null
+          updated_at?: string
+          user_id: string
+          verified?: boolean
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          id?: string
+          name?: string | null
+          school?: string | null
+          updated_at?: string
+          user_id?: string
+          verified?: boolean
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_or_create_school_chat: {
+        Args: { school_name: string }
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never
