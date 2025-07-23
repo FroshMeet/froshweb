@@ -270,7 +270,7 @@ const ChatInterface = () => {
                       <div className="flex-1 min-w-0">
                         <div className="flex justify-between items-start">
                           <h4 className="font-medium text-foreground flex items-center gap-2">
-                            📣 {mockUserProfile.school} Exclusive GC
+                            📣 {mockUserProfile.school}'s GC
                             <Badge variant="secondary" className="text-xs">VERIFIED</Badge>
                           </h4>
                           <span className="text-xs text-muted-foreground">Now</span>

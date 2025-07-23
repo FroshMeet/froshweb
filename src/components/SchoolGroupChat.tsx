@@ -167,7 +167,7 @@ const SchoolGroupChat = ({ schoolName, userProfile, onClose }: SchoolGroupChatPr
               <Hash className="h-5 w-5 text-primary" />
             </div>
             <div>
-              <h2 className="text-lg font-bold">📣 {schoolName} Exclusive GC</h2>
+              <h2 className="text-lg font-bold">📣 {schoolName}'s GC</h2>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Users className="h-4 w-4" />
                 <span>{memberCount} verified members</span>
@@ -189,7 +189,7 @@ const SchoolGroupChat = ({ schoolName, userProfile, onClose }: SchoolGroupChatPr
                 <Users className="h-8 w-8 text-muted-foreground" />
               </div>
               <p className="text-muted-foreground">
-                Welcome to the {schoolName} Exclusive GC! 
+                Welcome to {schoolName}'s GC! 
                 <br />
                 Start the conversation with your verified classmates.
               </p>

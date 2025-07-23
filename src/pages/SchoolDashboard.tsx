@@ -235,6 +235,20 @@ export default function SchoolDashboard() {
                 Sign Up Free
               </Button>
               <Button 
+                onClick={() => {
+                  if (!user) {
+                    navigate('/signup');
+                  } else {
+                    setActiveTab("chat");
+                  }
+                }}
+                size="lg"
+                className="bg-gradient-to-r from-primary/80 to-primary text-primary-foreground font-bold px-8 py-4 rounded-2xl neon-glow transition-all duration-300 hover:scale-105"
+              >
+                <Users className="h-5 w-5 mr-2" />
+                Join {schoolDisplayName}'s GC
+              </Button>
+              <Button 
                 onClick={handleGuestInstagramPost}
                 size="lg"
                 className="bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] text-white border-0 hover:opacity-90 font-bold px-8 py-4 rounded-2xl transition-all duration-300 hover:scale-105"
