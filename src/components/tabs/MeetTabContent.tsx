@@ -26,7 +26,8 @@ const MeetTabContent = ({
   });
 
   const handleSwipeAction = (action: string) => {
-    if (isGuest && onGuestAction && action === "like") {
+    // Only trigger guest action for like and message actions, not for pass/skip
+    if (isGuest && onGuestAction && (action === "like" || action === "message")) {
       onGuestAction();
       return;
     }
