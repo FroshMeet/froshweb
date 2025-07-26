@@ -209,48 +209,60 @@ export type Database = {
       }
       user_profiles: {
         Row: {
+          auth_provider: string | null
           avatar_url: string | null
           bio: string | null
           class_year: string | null
+          college_email: string | null
           created_at: string
           id: string
           interests: string[] | null
           looking_for_roommate: boolean | null
           major: string | null
           name: string | null
+          phone_number: string | null
           school: string | null
           updated_at: string
           user_id: string
+          verification_status: string | null
           verified: boolean
         }
         Insert: {
+          auth_provider?: string | null
           avatar_url?: string | null
           bio?: string | null
           class_year?: string | null
+          college_email?: string | null
           created_at?: string
           id?: string
           interests?: string[] | null
           looking_for_roommate?: boolean | null
           major?: string | null
           name?: string | null
+          phone_number?: string | null
           school?: string | null
           updated_at?: string
           user_id: string
+          verification_status?: string | null
           verified?: boolean
         }
         Update: {
+          auth_provider?: string | null
           avatar_url?: string | null
           bio?: string | null
           class_year?: string | null
+          college_email?: string | null
           created_at?: string
           id?: string
           interests?: string[] | null
           looking_for_roommate?: boolean | null
           major?: string | null
           name?: string | null
+          phone_number?: string | null
           school?: string | null
           updated_at?: string
           user_id?: string
+          verification_status?: string | null
           verified?: boolean
         }
         Relationships: []
@@ -263,6 +275,10 @@ export type Database = {
       get_or_create_school_chat: {
         Args: { school_name: string }
         Returns: string
+      }
+      verify_college_email: {
+        Args: { user_id_param: string; college_email_param: string }
+        Returns: boolean
       }
     }
     Enums: {
