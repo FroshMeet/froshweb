@@ -5,8 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { MessageSquare, Send, Share2, AlertTriangle, Instagram, Phone, Users, ArrowLeft, Hash } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { MessageSquare, Send, Share2, AlertTriangle, Instagram, Phone, Users, ArrowLeft, Hash, Mail } from "lucide-react";
 import IncomingRequests from "./IncomingRequests";
 import SchoolChatPopup from "./SchoolChatPopup";
 import VerificationModal from "./VerificationModal";
@@ -267,96 +266,114 @@ const ChatInterface = () => {
     );
   }
 
+  const [showRequestedChats, setShowRequestedChats] = useState(false);
+
   if (!selectedChat) {
     return (
       <div className="max-w-4xl mx-auto pb-32">
-        <div className="text-center mb-6">
-          <h2 className="text-2xl font-bold text-foreground mb-2">Messages</h2>
-          <p className="text-muted-foreground">Connect with your matches and study groups</p>
+        <div className="flex justify-between items-center mb-6">
+          <div className="text-center flex-1">
+            <h2 className="text-2xl font-bold text-foreground mb-2">Messages</h2>
+            <p className="text-muted-foreground">Connect with your matches and study groups</p>
+          </div>
+          {/* Requested Chats Icon - Top Right */}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowRequestedChats(true)}
+            className="relative"
+          >
+            <Mail className="h-4 w-4 mr-2" />
+            Requests
+            {incomingRequests.length > 0 && (
+              <Badge variant="destructive" className="ml-2 px-1 py-0 text-xs min-w-[20px] h-5">
+                {incomingRequests.length}
+              </Badge>
+            )}
+          </Button>
         </div>
 
-        <Tabs defaultValue="chats" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="chats">Conversations</TabsTrigger>
-            <TabsTrigger value="requests">Requests ({incomingRequests.length})</TabsTrigger>
-          </TabsList>
+        <div className="grid gap-4">
+          {/* School Group Chat - Pinned at top for logged in users */}
+          {userProfile?.verified && (
+            <Card 
+              className="cursor-pointer hover:shadow-lg transition-shadow duration-200 border-primary/50 bg-primary/5"
+              onClick={() => setShowSchoolGroupChat(true)}
+            >
+              <CardContent className="p-4">
+                <div className="flex items-center space-x-4">
+                  <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
+                    <Hash className="h-6 w-6 text-primary" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex justify-between items-start">
+                      <h4 className="font-medium text-foreground flex items-center gap-2">
+                        {userProfile.school} Group Chat
+                        <Badge variant="secondary" className="text-xs">PINNED</Badge>
+                      </h4>
+                      <span className="text-xs text-muted-foreground">Now</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground">Connect with verified {userProfile.school} classmates</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )}
           
-          <TabsContent value="chats" className="mt-6">
-            <div className="grid gap-4">
-              {/* School Group Chat - Pinned at top for logged in users */}
-              {userProfile?.verified && (
-                <Card 
-                  className="cursor-pointer hover:shadow-lg transition-shadow duration-200 border-primary/50 bg-primary/5"
-                  onClick={() => setShowSchoolGroupChat(true)}
-                >
-                  <CardContent className="p-4">
-                    <div className="flex items-center space-x-4">
-                      <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
-                        <Hash className="h-6 w-6 text-primary" />
+          {/* Regular conversations */}
+          {mockChats.map((chat) => (
+            <Card 
+              key={chat.id}
+              className="cursor-pointer hover:shadow-lg transition-shadow duration-200"
+              onClick={() => setSelectedChat(chat)}
+            >
+              <CardContent className="p-4">
+                <div className="flex items-center space-x-4">
+                  <div className="relative">
+                    <img
+                      src={getUnsplashUrl(chat.avatar)}
+                      alt={chat.name}
+                      className="w-12 h-12 rounded-full object-cover"
+                    />
+                    {chat.unread > 0 && (
+                      <div className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
+                        <span className="text-xs text-white font-bold">{chat.unread}</span>
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex justify-between items-start">
-                          <h4 className="font-medium text-foreground flex items-center gap-2">
-                            School's Group Chat
-                            <Badge variant="secondary" className="text-xs">PINNED</Badge>
-                          </h4>
-                          <span className="text-xs text-muted-foreground">Now</span>
-                        </div>
-                        <p className="text-sm text-muted-foreground">Connect with verified {userProfile.school} classmates</p>
-                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="flex-1 min-w-0">
+                    <div className="flex justify-between items-start">
+                      <h4 className="font-medium text-foreground truncate">{chat.name}</h4>
+                      <span className="text-xs text-muted-foreground">{chat.time}</span>
                     </div>
-                  </CardContent>
-                </Card>
-              )}
-              
-              {/* Regular conversations */}
-              {mockChats.map((chat) => (
-                <Card 
-                  key={chat.id}
-                  className="cursor-pointer hover:shadow-lg transition-shadow duration-200"
-                  onClick={() => setSelectedChat(chat)}
-                >
-                  <CardContent className="p-4">
-                    <div className="flex items-center space-x-4">
-                      <div className="relative">
-                        <img
-                          src={getUnsplashUrl(chat.avatar)}
-                          alt={chat.name}
-                          className="w-12 h-12 rounded-full object-cover"
-                        />
-                        {chat.unread > 0 && (
-                          <div className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
-                            <span className="text-xs text-white font-bold">{chat.unread}</span>
-                          </div>
-                        )}
-                      </div>
-                      
-                      <div className="flex-1 min-w-0">
-                        <div className="flex justify-between items-start">
-                          <h4 className="font-medium text-foreground truncate">{chat.name}</h4>
-                          <span className="text-xs text-muted-foreground">{chat.time}</span>
-                        </div>
-                        <p className="text-sm text-muted-foreground truncate">{chat.lastMessage}</p>
-                        <div className="flex space-x-2 mt-1">
-                          <Badge variant="outline" className="text-xs">{chat.major}</Badge>
-                          <Badge variant="outline" className="text-xs">{chat.dorm}</Badge>
-                        </div>
-                      </div>
+                    <p className="text-sm text-muted-foreground truncate">{chat.lastMessage}</p>
+                    <div className="flex space-x-2 mt-1">
+                      <Badge variant="outline" className="text-xs">{chat.major}</Badge>
+                      <Badge variant="outline" className="text-xs">{chat.dorm}</Badge>
                     </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
 
-          <TabsContent value="requests" className="mt-6">
-            <IncomingRequests 
-              requests={incomingRequests}
-              onAccept={handleAcceptRequest}
-              onReject={handleRejectRequest}
-            />
-          </TabsContent>
-        </Tabs>
+        {/* Requested Chats Sheet */}
+        <Sheet open={showRequestedChats} onOpenChange={setShowRequestedChats}>
+          <SheetContent>
+            <SheetHeader>
+              <SheetTitle>Requested Chats</SheetTitle>
+            </SheetHeader>
+            <div className="mt-6">
+              <IncomingRequests 
+                requests={incomingRequests}
+                onAccept={handleAcceptRequest}
+                onReject={handleRejectRequest}
+              />
+            </div>
+          </SheetContent>
+        </Sheet>
       </div>
     );
   }
