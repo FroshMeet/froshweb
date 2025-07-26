@@ -40,7 +40,7 @@ const FroshMeetSwipeInterface = ({
   onGuestAction,
   meetMode = "everyone",
   setMeetMode,
-  schoolName = "UMN"
+  schoolName = "BU"
 }: FroshMeetSwipeInterfaceProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);

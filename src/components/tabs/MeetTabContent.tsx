@@ -9,12 +9,14 @@ interface MeetTabContentProps {
   profiles: any[];
   isGuest?: boolean;
   onGuestAction?: () => void;
+  schoolName?: string;
 }
 
 const MeetTabContent = ({
   profiles,
   isGuest = false,
-  onGuestAction
+  onGuestAction,
+  schoolName = "BU"
 }: MeetTabContentProps) => {
   const [meetMode, setMeetMode] = useState("everyone");
 
@@ -44,7 +46,7 @@ const MeetTabContent = ({
         onGuestAction={onGuestAction}
         meetMode={meetMode}
         setMeetMode={setMeetMode}
-        schoolName="UMN"
+        schoolName={schoolName}
       />
     </div>
   );
