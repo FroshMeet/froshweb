@@ -270,13 +270,7 @@ const FroshMeetSwipeInterface = ({
                 
                 <div className="flex items-center space-x-2 text-white/80">
                   <MapPin className="h-4 w-4" />
-                  <span className="font-medium">{schoolName}</span>
-                  {scopeMode === "worldwide" && (
-                    <>
-                      <span>•</span>
-                      <Globe className="h-4 w-4" />
-                    </>
-                  )}
+                  <span className="font-medium">{currentProfile.location || schoolName}</span>
                 </div>
 
                 {currentProfile.lookingFor?.includes("Roommate") && (
@@ -392,15 +386,8 @@ const FroshMeetSwipeInterface = ({
                     <div className="flex items-center space-x-2 text-muted-foreground">
                       <School className="h-4 w-4" />
                       <button className="font-medium text-froshmeet-blue hover:underline">
-                        {schoolName}
+                        {currentProfile.location || schoolName}
                       </button>
-                      {scopeMode === "worldwide" && (
-                        <>
-                          <span>•</span>
-                          <Globe className="h-4 w-4" />
-                          <span className="text-sm">Worldwide</span>
-                        </>
-                      )}
                     </div>
                   </div>
 
