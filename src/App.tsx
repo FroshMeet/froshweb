@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
+import Footer from "./components/layout/Footer";
 import Homepage from "./pages/Homepage";
 import About from "./pages/About";
 import Features from "./pages/Features";
@@ -35,28 +36,33 @@ const AppRouter = () => (
       <Sonner />
       <BrowserRouter>
         <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/features" element={<Features />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/auth" element={<SignIn />} />
-          <Route path="/community" element={<Community />} />
-          <Route path="/create-profile" element={<CreateProfile />} />
-          <Route path="/payment-success" element={<PaymentSuccess />} />
-          <Route path="/profile-success" element={<ProfileSuccess />} />
-          <Route path="/:school" element={<SchoolDashboard />} />
-          <Route path="/:school/insta" element={<SchoolInstagramPage />} />
-          <Route path="/:school/insta/posts" element={<SchoolInstagramPosts />} />
-          <Route path="/:school/post-to-insta" element={<PostToInstagram />} />
-          <Route path="/guest-post-to-insta" element={<GuestInstagramPost />} />
-          <Route path="/:school/guest-post-to-insta" element={<GuestInstagramPost />} />
-          <Route path="/instagram-submission" element={<InstagramSubmission />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <div className="min-h-screen flex flex-col">
+          <div className="flex-1">
+            <Routes>
+              <Route path="/" element={<Homepage />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/features" element={<Features />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/signin" element={<SignIn />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/auth" element={<SignIn />} />
+              <Route path="/community" element={<Community />} />
+              <Route path="/create-profile" element={<CreateProfile />} />
+              <Route path="/payment-success" element={<PaymentSuccess />} />
+              <Route path="/profile-success" element={<ProfileSuccess />} />
+              <Route path="/:school" element={<SchoolDashboard />} />
+              <Route path="/:school/insta" element={<SchoolInstagramPage />} />
+              <Route path="/:school/insta/posts" element={<SchoolInstagramPosts />} />
+              <Route path="/:school/post-to-insta" element={<PostToInstagram />} />
+              <Route path="/guest-post-to-insta" element={<GuestInstagramPost />} />
+              <Route path="/:school/guest-post-to-insta" element={<GuestInstagramPost />} />
+              <Route path="/instagram-submission" element={<InstagramSubmission />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </div>
+          <Footer />
+        </div>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
