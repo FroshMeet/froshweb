@@ -18,9 +18,7 @@ const TermsOfService = () => {
           </div>
           
           <div className="prose prose-invert max-w-none space-y-8">
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              Welcome to FroshMeet, a service of FroshMeet LLC. By using our platform — including submitting a student profile or making a purchase — you agree to the following Terms:
-            </p>
+            <p className="text-lg text-muted-foreground leading-relaxed">Welcome to FroshMeet. By using our platform, whether you are submitting a student profile or making a purchase, you agree to the following terms:</p>
             
             <div className="space-y-6">
               <div>
