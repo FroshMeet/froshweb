@@ -94,12 +94,11 @@ const ChatInterface = () => {
   } : null;
 
   useEffect(() => {
-    // Check if user should see school chat popup
-    if (!hasSeenPopup && userProfile?.school && userProfile?.verified) {
-      setShowSchoolChatPopup(true);
+    // Don't auto-open group chat, just ensure it's available for verified users
+    if (userProfile?.verified) {
       setHasSeenPopup(true);
     }
-  }, [hasSeenPopup, userProfile]);
+  }, [userProfile]);
 
   const handleJoinSchoolChat = () => {
     setShowSchoolChatPopup(false);

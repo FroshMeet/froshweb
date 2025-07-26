@@ -440,11 +440,8 @@ export default function SchoolDashboard() {
                 if (!currentUser && !isDevMode) {
                   navigate('/signup');
                 } else {
-                  // Handle joining chat (to be implemented)
-                  toast({
-                    title: "Coming Soon!",
-                    description: "Group chat feature will be available soon",
-                  });
+                  // Navigate to chat tab and open group chat
+                  setActiveTab('chats');
                 }
               }}
             />
