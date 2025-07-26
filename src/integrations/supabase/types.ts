@@ -210,8 +210,13 @@ export type Database = {
       user_profiles: {
         Row: {
           avatar_url: string | null
+          bio: string | null
+          class_year: string | null
           created_at: string
           id: string
+          interests: string[] | null
+          looking_for_roommate: boolean | null
+          major: string | null
           name: string | null
           school: string | null
           updated_at: string
@@ -220,8 +225,13 @@ export type Database = {
         }
         Insert: {
           avatar_url?: string | null
+          bio?: string | null
+          class_year?: string | null
           created_at?: string
           id?: string
+          interests?: string[] | null
+          looking_for_roommate?: boolean | null
+          major?: string | null
           name?: string | null
           school?: string | null
           updated_at?: string
@@ -230,8 +240,13 @@ export type Database = {
         }
         Update: {
           avatar_url?: string | null
+          bio?: string | null
+          class_year?: string | null
           created_at?: string
           id?: string
+          interests?: string[] | null
+          looking_for_roommate?: boolean | null
+          major?: string | null
           name?: string | null
           school?: string | null
           updated_at?: string
