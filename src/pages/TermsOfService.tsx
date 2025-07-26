@@ -23,9 +23,7 @@ const TermsOfService = () => {
             <div className="space-y-6">
               <div>
                 <h2 className="text-2xl font-semibold text-foreground mb-3">1. Acceptance of Terms</h2>
-                <p className="text-muted-foreground leading-relaxed">
-                  By submitting content or making any payment, you acknowledge that you've read and agree to these Terms.
-                </p>
+                <p className="text-muted-foreground leading-relaxed">By submitting content or making any payment, you acknowledge that you have read and agree to these Terms.</p>
               </div>
               
               <div>
@@ -65,9 +63,7 @@ const TermsOfService = () => {
               
               <div>
                 <h2 className="text-2xl font-semibold text-foreground mb-3">7. Changes to Terms</h2>
-                <p className="text-muted-foreground leading-relaxed">
-                  We may update these Terms at any time. Continued use constitutes acceptance of any new terms.
-                </p>
+                <p className="text-muted-foreground leading-relaxed">We may update these Terms at any time. Continued use constitutes acceptance of any new Terms.</p>
               </div>
             </div>
             
