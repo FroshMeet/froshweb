@@ -11,10 +11,14 @@ import IncomingRequests from "./IncomingRequests";
 import SchoolChatPopup from "./SchoolChatPopup";
 import VerificationModal from "./VerificationModal";
 import SchoolGroupChat from "./SchoolGroupChat";
+import SchoolGroupChatCTA from "./SchoolGroupChatCTA";
+import GuestMessageDialog from "./GuestMessageDialog";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useAppState } from "@/hooks/useAppState";
 
 const ChatInterface = () => {
+  const { currentUser, isGuest, guestSchool, handleGuestAction, handleCreateAccount } = useAppState();
   const [selectedChat, setSelectedChat] = useState(null);
   const [message, setMessage] = useState("");
   const [showSocialShare, setShowSocialShare] = useState(false);
@@ -22,7 +26,7 @@ const ChatInterface = () => {
   const [showSchoolChatPopup, setShowSchoolChatPopup] = useState(false);
   const [showVerificationModal, setShowVerificationModal] = useState(false);
   const [showSchoolGroupChat, setShowSchoolGroupChat] = useState(false);
-  const [userProfile, setUserProfile] = useState(null);
+  const [showGuestDialog, setShowGuestDialog] = useState(false);
   const [hasSeenPopup, setHasSeenPopup] = useState(false);
   const { toast } = useToast();
   const [incomingRequests, setIncomingRequests] = useState([
@@ -82,21 +86,21 @@ const ChatInterface = () => {
     }
   ];
 
-  // Mock user profile - in real app this would come from auth context
-  const mockUserProfile = {
-    user_id: 'mock-user-id',
-    school: 'Berkeley',
-    name: 'Sarah Chen',
-    verified: true
-  };
+  // Get user profile from app state
+  const userProfile = currentUser ? {
+    user_id: currentUser.id,
+    school: currentUser.college,
+    name: currentUser.name,
+    verified: true // Assume dev user is verified
+  } : null;
 
   useEffect(() => {
     // Check if user should see school chat popup
-    if (!hasSeenPopup && mockUserProfile.school && mockUserProfile.verified) {
+    if (!hasSeenPopup && userProfile?.school && userProfile?.verified) {
       setShowSchoolChatPopup(true);
       setHasSeenPopup(true);
     }
-  }, [hasSeenPopup]);
+  }, [hasSeenPopup, userProfile]);
 
   const handleJoinSchoolChat = () => {
     setShowSchoolChatPopup(false);
@@ -132,10 +136,18 @@ const ChatInterface = () => {
   };
 
   const handleSendMessage = () => {
+    if (isGuest) {
+      handleGuestAction();
+      return;
+    }
     if (message.trim()) {
       console.log("Sending message:", message);
       setMessage("");
     }
+  };
+
+  const handleGuestJoinChat = () => {
+    setShowGuestDialog(true);
   };
 
   const SocialShareModal = ({ contact }) => (
@@ -232,6 +244,29 @@ const ChatInterface = () => {
     </Sheet>
   );
 
+  // Guest view - show school group chat CTA
+  if (isGuest) {
+    return (
+      <div className="max-w-4xl mx-auto pb-32">
+        <div className="text-center mb-6">
+          <h2 className="text-2xl font-bold text-foreground mb-2">Messages</h2>
+          <p className="text-muted-foreground">Connect with your matches and study groups</p>
+        </div>
+
+        <SchoolGroupChatCTA 
+          schoolSlug={guestSchool}
+          onJoinClick={handleGuestJoinChat}
+        />
+
+        <GuestMessageDialog
+          isOpen={showGuestDialog}
+          onClose={() => setShowGuestDialog(false)}
+          onCreateAccount={handleCreateAccount}
+        />
+      </div>
+    );
+  }
+
   if (!selectedChat) {
     return (
       <div className="max-w-4xl mx-auto pb-32">
@@ -240,24 +275,16 @@ const ChatInterface = () => {
           <p className="text-muted-foreground">Connect with your matches and study groups</p>
         </div>
 
-        <Tabs defaultValue="requests" className="w-full">
+        <Tabs defaultValue="chats" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="requests">Requests ({incomingRequests.length})</TabsTrigger>
             <TabsTrigger value="chats">Conversations</TabsTrigger>
+            <TabsTrigger value="requests">Requests ({incomingRequests.length})</TabsTrigger>
           </TabsList>
-          
-          <TabsContent value="requests" className="mt-6">
-            <IncomingRequests 
-              requests={incomingRequests}
-              onAccept={handleAcceptRequest}
-              onReject={handleRejectRequest}
-            />
-          </TabsContent>
           
           <TabsContent value="chats" className="mt-6">
             <div className="grid gap-4">
-              {/* School Group Chat - Pinned at top */}
-              {mockUserProfile.verified && (
+              {/* School Group Chat - Pinned at top for logged in users */}
+              {userProfile?.verified && (
                 <Card 
                   className="cursor-pointer hover:shadow-lg transition-shadow duration-200 border-primary/50 bg-primary/5"
                   onClick={() => setShowSchoolGroupChat(true)}
@@ -270,18 +297,19 @@ const ChatInterface = () => {
                       <div className="flex-1 min-w-0">
                         <div className="flex justify-between items-start">
                           <h4 className="font-medium text-foreground flex items-center gap-2">
-                            📣 {mockUserProfile.school}'s GC
-                            <Badge variant="secondary" className="text-xs">VERIFIED</Badge>
+                            School's Group Chat
+                            <Badge variant="secondary" className="text-xs">PINNED</Badge>
                           </h4>
                           <span className="text-xs text-muted-foreground">Now</span>
                         </div>
-                        <p className="text-sm text-muted-foreground">Connect with verified classmates</p>
+                        <p className="text-sm text-muted-foreground">Connect with verified {userProfile.school} classmates</p>
                       </div>
                     </div>
                   </CardContent>
                 </Card>
               )}
               
+              {/* Regular conversations */}
               {mockChats.map((chat) => (
                 <Card 
                   key={chat.id}
@@ -319,6 +347,14 @@ const ChatInterface = () => {
                 </Card>
               ))}
             </div>
+          </TabsContent>
+
+          <TabsContent value="requests" className="mt-6">
+            <IncomingRequests 
+              requests={incomingRequests}
+              onAccept={handleAcceptRequest}
+              onReject={handleRejectRequest}
+            />
           </TabsContent>
         </Tabs>
       </div>
@@ -414,10 +450,10 @@ const ChatInterface = () => {
       <SocialShareModal contact={selectedChat} />
       
       {/* School Group Chat Popup */}
-      {showSchoolChatPopup && (
+      {showSchoolChatPopup && userProfile && (
         <SchoolChatPopup
-          schoolName={mockUserProfile.school}
-          isVerified={mockUserProfile.verified}
+          schoolName={userProfile.school}
+          isVerified={userProfile.verified}
           onJoinChat={handleJoinSchoolChat}
           onVerify={handleVerifyFromPopup}
           onDismiss={() => setShowSchoolChatPopup(false)}
@@ -425,18 +461,20 @@ const ChatInterface = () => {
       )}
 
       {/* Verification Modal */}
-      <VerificationModal
-        isOpen={showVerificationModal}
-        onClose={() => setShowVerificationModal(false)}
-        schoolName={mockUserProfile.school}
-        onStartVerification={handleStartVerification}
-      />
+      {showVerificationModal && userProfile && (
+        <VerificationModal
+          isOpen={showVerificationModal}
+          onClose={() => setShowVerificationModal(false)}
+          schoolName={userProfile.school}
+          onStartVerification={handleStartVerification}
+        />
+      )}
 
       {/* School Group Chat Interface */}
-      {showSchoolGroupChat && (
+      {showSchoolGroupChat && userProfile && (
         <SchoolGroupChat
-          schoolName={mockUserProfile.school}
-          userProfile={mockUserProfile}
+          schoolName={userProfile.school}
+          userProfile={userProfile}
           onClose={() => setShowSchoolGroupChat(false)}
         />
       )}
