@@ -1,8 +1,8 @@
 
-import ChatInterface from "../ChatInterface";
+import EnhancedChatInterface from "../EnhancedChatInterface";
 
 const ChatsTabContent = () => {
-  return <ChatInterface />;
+  return <EnhancedChatInterface />;
 };
 
 export default ChatsTabContent;
