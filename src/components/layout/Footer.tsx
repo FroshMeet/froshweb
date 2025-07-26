@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Instagram } from "lucide-react";
+import { Instagram, Music, Youtube } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
@@ -19,8 +19,29 @@ const Footer = () => {
               before stepping foot on campus.
             </p>
             <div className="flex space-x-4">
-              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="text-muted-foreground hover:text-primary"
+                onClick={() => window.open('https://www.instagram.com/froshmeet/', '_blank')}
+              >
                 <Instagram className="h-5 w-5" />
+              </Button>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="text-muted-foreground hover:text-primary"
+                onClick={() => window.open('https://www.tiktok.com/@froshmeet', '_blank')}
+              >
+                <Music className="h-5 w-5" />
+              </Button>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="text-muted-foreground hover:text-primary"
+                onClick={() => window.open('https://www.youtube.com/@FroshMeet', '_blank')}
+              >
+                <Youtube className="h-5 w-5" />
               </Button>
             </div>
           </div>
