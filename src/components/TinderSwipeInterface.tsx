@@ -37,8 +37,8 @@ interface MatchCelebrationProps {
 }
 
 const MatchCelebration = ({ matchedUser, onClose, onSendMessage }: MatchCelebrationProps) => (
-  <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <Card className="w-full max-w-md bg-gradient-to-br from-pink-500/20 to-purple-600/20 border-pink-500/30 animate-scale-in">
+  <div className="fixed inset-0 bg-black/90 backdrop-blur-lg z-50 flex items-center justify-center p-4 animate-fade-in">
+    <Card className="mobile-card max-w-sm bg-gradient-to-br from-primary/20 to-accent/20 border-primary/30 animate-bounce-in neon-glow-strong">
       <CardContent className="p-8 text-center">
         <div className="mb-6">
           <div className="flex justify-center mb-4">
@@ -69,18 +69,18 @@ const MatchCelebration = ({ matchedUser, onClose, onSendMessage }: MatchCelebrat
           </p>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-4">
           <Button
             onClick={onSendMessage}
-            className="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-semibold py-3 neon-glow"
+            className="touch-target w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary hover:to-primary/90 text-white font-semibold py-4 rounded-2xl neon-glow btn-pulse"
           >
-            <MessageCircle className="h-4 w-4 mr-2" />
+            <MessageCircle className="h-5 w-5 mr-3" />
             Send Message
           </Button>
           <Button
             variant="outline"
             onClick={onClose}
-            className="w-full border-pink-500/30 text-foreground hover:bg-pink-500/10"
+            className="touch-target w-full border-primary/30 text-foreground hover:bg-primary/10 py-4 rounded-2xl"
           >
             Keep Swiping
           </Button>
@@ -263,11 +263,13 @@ const TinderSwipeInterface = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
+    <div className="min-h-screen bg-background relative overflow-hidden safe-area">
       {/* Header */}
-      <div className="relative z-10 flex justify-between items-center p-6 max-w-4xl mx-auto">
-        <div className="text-center flex-1">
-          <h1 className="text-2xl font-bold text-primary">Discover</h1>
+      <div className="relative z-10 mobile-container py-4 border-b border-border/20">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-primary neon-glow animate-fade-in">
+            Discover
+          </h1>
           <p className="text-sm text-muted-foreground">
             {profiles.length - currentIndex} profiles remaining
           </p>
@@ -275,12 +277,12 @@ const TinderSwipeInterface = () => {
       </div>
 
       {/* Main Swipe Area */}
-      <div className="relative z-10 flex justify-center px-4 pb-32">
-        <div className="w-full max-w-sm relative">
+      <div className="relative z-10 mobile-container py-6 pb-32">
+        <div className="w-full relative animate-slide-up">
           {/* Profile Card */}
-          <Card className="w-full bg-card/90 backdrop-blur-xl border-border/40 shadow-2xl overflow-hidden">
+          <Card className="mobile-card shadow-2xl overflow-hidden card-shadow-lg transform transition-all duration-300 hover:scale-[1.02] animate-bounce-in">
             {/* Profile Image */}
-            <div className="relative h-96 bg-gradient-to-br from-primary/20 to-accent/20">
+            <div className="relative h-80 sm:h-96 bg-gradient-to-br from-primary/20 to-accent/20">
               <div className="absolute inset-0 bg-muted/50 flex items-center justify-center">
                 <div className="text-center">
                   <div className="w-32 h-32 rounded-full bg-primary/20 mx-auto mb-4 flex items-center justify-center">
@@ -344,24 +346,24 @@ const TinderSwipeInterface = () => {
           </Card>
 
           {/* Action Buttons */}
-          <div className="flex justify-center space-x-6 mt-8">
+          <div className="flex justify-center space-x-8 mt-8">
             <Button
               onClick={() => handleSwipe('left')}
               disabled={isSwipeDisabled}
               size="lg"
               variant="outline"
-              className="w-16 h-16 rounded-full border-2 border-red-500/30 hover:border-red-500 hover:bg-red-500/10 transition-all duration-300 disabled:opacity-50"
+              className="touch-target w-20 h-20 rounded-full border-2 border-red-500/30 hover:border-red-500 hover:bg-red-500/10 transition-all duration-300 disabled:opacity-50 hover:scale-110 active:scale-95 tap-highlight"
             >
-              <X className="h-8 w-8 text-red-500" />
+              <X className="h-10 w-10 text-red-500" />
             </Button>
             
             <Button
               onClick={() => handleSwipe('right')}
               disabled={isSwipeDisabled}
               size="lg"
-              className="w-16 h-16 rounded-full bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 text-white shadow-lg hover:shadow-[0_0_20px_rgba(244,63,94,0.5)] transition-all duration-300 neon-glow disabled:opacity-50"
+              className="touch-target w-20 h-20 rounded-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary hover:to-primary/90 text-white shadow-lg neon-glow-strong transition-all duration-300 disabled:opacity-50 hover:scale-110 active:scale-95 tap-highlight btn-pulse"
             >
-              <Heart className="h-8 w-8" fill="currentColor" />
+              <Heart className="h-10 w-10" fill="currentColor" />
             </Button>
           </div>
 

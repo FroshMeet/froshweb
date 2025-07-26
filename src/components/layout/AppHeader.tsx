@@ -8,8 +8,8 @@ interface AppHeaderProps {
 
 const AppHeader = ({ displayUser, isGuest }: AppHeaderProps) => {
   return (
-    <header className="bg-card/95 backdrop-blur-xl border-b border-border/50 flex-shrink-0 z-40 card-shadow">
-      <div className="max-w-md mx-auto px-6 py-4 flex items-center justify-between">
+    <header className="bg-card/95 backdrop-blur-xl border-b border-border/50 flex-shrink-0 z-40 card-shadow safe-area">
+      <div className="mobile-container py-4 flex items-center justify-between">
         <div className="flex items-center space-x-3">
           <div className={`w-10 h-10 bg-gradient-to-r ${getSchoolLogo(displayUser.college)} rounded-2xl shadow-lg flex items-center justify-center`}>
             <span className="text-white font-bold text-lg">
@@ -25,7 +25,7 @@ const AppHeader = ({ displayUser, isGuest }: AppHeaderProps) => {
             </p>
           </div>
         </div>
-        <Badge variant="secondary" className="bg-primary/10 text-primary border-0 font-semibold px-3 py-1.5 text-xs rounded-full">
+        <Badge variant="secondary" className="bg-primary/10 text-primary border-0 font-semibold px-4 py-2 text-xs rounded-full neon-glow animate-fade-in">
           {isGuest ? "Guest" : `Class of ${displayUser.classOf}`}
         </Badge>
       </div>

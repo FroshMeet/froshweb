@@ -8,16 +8,16 @@ interface BottomNavigationProps {
 
 const BottomNavigation = ({ activeTab, setActiveTab }: BottomNavigationProps) => {
   return (
-    <nav className="bg-card/95 backdrop-blur-xl border-t border-border/50 card-shadow z-50">
-      <div className="max-w-md mx-auto px-4 py-3">
-        <div className="flex justify-between items-center">
+    <nav className="bg-card/95 backdrop-blur-xl border-t border-border/50 card-shadow z-50 safe-area">
+      <div className="mobile-container py-3">
+        <div className="flex justify-between items-center gap-1">
           <Button 
             variant={activeTab === "discover" ? "default" : "ghost"} 
             size="sm" 
             onClick={() => setActiveTab("discover")} 
-            className={`flex flex-col items-center justify-center h-12 w-16 rounded-2xl transition-all duration-200 ${
+            className={`touch-target flex flex-col items-center justify-center h-16 flex-1 rounded-2xl transition-all duration-300 tap-highlight ${
               activeTab === "discover" 
-                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25 scale-105" 
+                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25 scale-105 neon-glow" 
                 : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
             }`}
           >
@@ -29,9 +29,9 @@ const BottomNavigation = ({ activeTab, setActiveTab }: BottomNavigationProps) =>
             variant={activeTab === "chats" ? "default" : "ghost"} 
             size="sm" 
             onClick={() => setActiveTab("chats")} 
-            className={`flex flex-col items-center justify-center h-12 w-16 rounded-2xl transition-all duration-200 ${
+            className={`touch-target flex flex-col items-center justify-center h-16 flex-1 rounded-2xl transition-all duration-300 tap-highlight ${
               activeTab === "chats" 
-                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25 scale-105" 
+                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25 scale-105 neon-glow" 
                 : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
             }`}
           >
@@ -43,9 +43,9 @@ const BottomNavigation = ({ activeTab, setActiveTab }: BottomNavigationProps) =>
             variant={activeTab === "meet" ? "default" : "ghost"} 
             size="lg" 
             onClick={() => setActiveTab("meet")} 
-            className={`flex flex-col items-center justify-center h-14 w-16 rounded-2xl transition-all duration-200 ${
+            className={`touch-target flex flex-col items-center justify-center h-18 flex-1 rounded-2xl transition-all duration-300 tap-highlight ${
               activeTab === "meet" 
-                ? "bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-lg shadow-primary/30 scale-110" 
+                ? "bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-lg shadow-primary/30 scale-110 neon-glow-strong btn-pulse" 
                 : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
             }`}
           >
@@ -57,9 +57,9 @@ const BottomNavigation = ({ activeTab, setActiveTab }: BottomNavigationProps) =>
             variant={activeTab === "community" ? "default" : "ghost"} 
             size="sm" 
             onClick={() => setActiveTab("community")} 
-            className={`flex flex-col items-center justify-center h-12 w-16 rounded-2xl transition-all duration-200 ${
+            className={`touch-target flex flex-col items-center justify-center h-16 flex-1 rounded-2xl transition-all duration-300 tap-highlight ${
               activeTab === "community" 
-                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25 scale-105" 
+                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25 scale-105 neon-glow" 
                 : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
             }`}
           >
@@ -71,9 +71,9 @@ const BottomNavigation = ({ activeTab, setActiveTab }: BottomNavigationProps) =>
             variant={activeTab === "profile" ? "default" : "ghost"} 
             size="sm" 
             onClick={() => setActiveTab("profile")} 
-            className={`flex flex-col items-center justify-center h-12 w-16 rounded-2xl transition-all duration-200 ${
+            className={`touch-target flex flex-col items-center justify-center h-16 flex-1 rounded-2xl transition-all duration-300 tap-highlight ${
               activeTab === "profile" 
-                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25 scale-105" 
+                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25 scale-105 neon-glow" 
                 : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
             }`}
           >
