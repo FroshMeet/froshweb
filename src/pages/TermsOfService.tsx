@@ -23,7 +23,7 @@ const TermsOfService = () => {
             <div className="space-y-6">
               <div>
                 <h2 className="text-2xl font-semibold text-foreground mb-3">1. Acceptance of Terms</h2>
-                <p className="text-muted-foreground leading-relaxed">By submitting content or making any payment, you acknowledge that you have read and agree to these Terms.</p>
+                <p className="text-muted-foreground leading-relaxed">By submitting content or making any payment, you acknowledge that you have read, understood, and agree to these Terms.</p>
               </div>
               
               <div>
@@ -35,35 +35,27 @@ const TermsOfService = () => {
               
               <div>
                 <h2 className="text-2xl font-semibold text-foreground mb-3">3. Authorization to Use Your Content</h2>
-                <p className="text-muted-foreground leading-relaxed">
-                  You give FroshMeet full permission to use your submitted name, photo, school info, bio, and any other content for student discovery, social media posts, and marketing. You confirm you have the rights to the content you share.
-                </p>
+                <p className="text-muted-foreground leading-relaxed">You grant FroshMeet full permission to use your submitted name, photo, school information, bio, and any other content for student discovery, social media posts, and marketing purposes. You confirm that you have the necessary rights to share the content you submit.</p>
               </div>
               
               <div>
                 <h2 className="text-2xl font-semibold text-foreground mb-3">4. Content Standards</h2>
-                <p className="text-muted-foreground leading-relaxed">
-                  Users are responsible for ensuring their submissions are accurate and appropriate. We may reject or remove content that violates our guidelines or standards at our discretion.
-                </p>
+                <p className="text-muted-foreground leading-relaxed">Users are responsible for ensuring that their submissions are accurate and appropriate. FroshMeet reserves the right to reject or remove any content that violates our guidelines or standards at our sole discretion.</p>
               </div>
               
               <div>
                 <h2 className="text-2xl font-semibold text-foreground mb-3">5. Service Changes</h2>
-                <p className="text-muted-foreground leading-relaxed">
-                  FroshMeet reserves the right to modify or discontinue any features, pricing, or services at any time.
-                </p>
+                <p className="text-muted-foreground leading-relaxed">FroshMeet reserves the right to modify, suspend, or discontinue any features, pricing, or services at any time, with or without notice.</p>
               </div>
               
               <div>
                 <h2 className="text-2xl font-semibold text-foreground mb-3">6. Governing Law</h2>
-                <p className="text-muted-foreground leading-relaxed">
-                  These Terms are governed by the laws of the United States.
-                </p>
+                <p className="text-muted-foreground leading-relaxed">These Terms shall be governed by and construed in accordance with the laws of the United States.</p>
               </div>
               
               <div>
                 <h2 className="text-2xl font-semibold text-foreground mb-3">7. Changes to Terms</h2>
-                <p className="text-muted-foreground leading-relaxed">We may update these Terms at any time. Continued use constitutes acceptance of any new Terms.</p>
+                <p className="text-muted-foreground leading-relaxed">We may update these Terms from time to time. Continued use of the platform after any updates constitutes your acceptance of the revised Terms.</p>
               </div>
             </div>
             
