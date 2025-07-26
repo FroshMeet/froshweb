@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useAuth } from "@/contexts/AuthContext";
 
 // Dev mode user for testing
 const DEV_USER = {
@@ -18,58 +19,57 @@ const DEV_USER = {
 };
 
 export const useAppState = () => {
-  const [currentUser, setCurrentUser] = useState(null);
+  const { user, userProfile } = useAuth();
   const [isGuest, setIsGuest] = useState(false);
   const [guestSchool, setGuestSchool] = useState("");
   const [activeTab, setActiveTab] = useState("meet");
   const [showGuestDialog, setShowGuestDialog] = useState(false);
   const [isDevMode, setIsDevMode] = useState(true); // Enable dev mode by default
 
-  // Enable dev mode automatically when no user is logged in
-  useEffect(() => {
-    if (!currentUser && isDevMode) {
-      console.log("🧪 Dev Mode: Auto-signing in dev user for testing");
-      setCurrentUser(DEV_USER);
-      setIsGuest(false);
-    }
-  }, [currentUser, isDevMode]);
+  // Determine current user - prioritize real auth, fallback to dev mode
+  const currentUser = user ? {
+    id: user.id,
+    name: userProfile?.name || user.email?.split('@')[0] || "User",
+    college: userProfile?.school || "Unknown School",
+    major: userProfile?.major || "Undeclared",
+    bio: userProfile?.bio || "New FroshMeet user",
+    interests: userProfile?.interests || [],
+    lookingForRoommate: userProfile?.looking_for_roommate || false,
+    classOf: userProfile?.class_year || "2029"
+  } : (isDevMode ? DEV_USER : null);
 
   const handleGuestContinue = (selectedSchool: string) => {
     setIsGuest(true);
     setGuestSchool(selectedSchool);
-    setCurrentUser(null);
   };
 
   const handleCreateAccount = () => {
     setIsGuest(false);
-    setCurrentUser(null);
     setShowGuestDialog(false);
+    // Navigation will be handled by the auth system
   };
 
   const handleGuestAction = () => {
-    // In dev mode, don't show guest dialog, just log the action
-    if (isDevMode) {
+    // For guests trying to access restricted features, show signup dialog
+    if (isGuest || (!user && !isDevMode)) {
+      setShowGuestDialog(true);
+      return;
+    }
+    
+    // In dev mode, just log the action
+    if (isDevMode && !user) {
       console.log("🧪 Dev Mode: Guest action triggered (normally would show signup)");
       return;
     }
-    setShowGuestDialog(true);
   };
 
   const toggleDevMode = () => {
     setIsDevMode(!isDevMode);
-    if (!isDevMode) {
-      setCurrentUser(DEV_USER);
-      setIsGuest(false);
-    } else {
-      setCurrentUser(null);
-    }
   };
 
   return {
     currentUser,
-    setCurrentUser,
-    isGuest,
-    setIsGuest,
+    isGuest: isGuest || (!user && !isDevMode),
     guestSchool,
     setGuestSchool,
     activeTab,

@@ -1,4 +1,5 @@
 
+import { useNavigate } from "react-router-dom";
 import {
   Dialog,
   DialogContent,
@@ -16,6 +17,12 @@ interface GuestMessageDialogProps {
 }
 
 const GuestMessageDialog = ({ isOpen, onClose, onCreateAccount }: GuestMessageDialogProps) => {
+  const navigate = useNavigate();
+  
+  const handleCreateAccount = () => {
+    onCreateAccount();
+    navigate('/signup');
+  };
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md bg-card border-border">
@@ -42,7 +49,7 @@ const GuestMessageDialog = ({ isOpen, onClose, onCreateAccount }: GuestMessageDi
             <Button variant="outline" onClick={onClose} className="flex-1 border-border text-foreground hover:bg-muted">
               Continue Browsing
             </Button>
-            <Button onClick={onCreateAccount} className="flex-1 bg-primary hover:bg-primary/90 neon-glow">
+            <Button onClick={handleCreateAccount} className="flex-1 bg-primary hover:bg-primary/90 neon-glow">
               Create Account
             </Button>
           </div>

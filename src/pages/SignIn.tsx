@@ -6,29 +6,39 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Eye, EyeOff, ArrowLeft } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
 
 const SignIn = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
+  const { signIn } = useAuth();
+  const { toast } = useToast();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setError("");
     
-    // Simulate sign-in process
-    setTimeout(() => {
+    const { error } = await signIn(email, password);
+    
+    if (error) {
+      setError(error.message);
       setIsLoading(false);
-      navigate('/community');
-    }, 1500);
+    }
+    // Success is handled in the auth context with navigation
   };
 
   const handleForgotPassword = () => {
-    // Handle forgot password logic
-    console.log("Forgot password clicked");
+    toast({
+      title: "Password Reset",
+      description: "Password reset functionality coming soon!",
+    });
   };
 
   return (
@@ -89,6 +99,12 @@ const SignIn = () => {
           
           <CardContent>
             <form onSubmit={handleSignIn} className="space-y-6">
+              {/* Error Message */}
+              {error && (
+                <div className="p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-lg">
+                  {error}
+                </div>
+              )}
               {/* Email Field */}
               <div className="space-y-2">
                 <Label htmlFor="email" className="text-foreground font-medium">
