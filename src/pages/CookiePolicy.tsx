@@ -25,16 +25,28 @@ const CookiePolicy = () => {
           
           <div className="prose prose-invert max-w-none space-y-6">
             <div className="text-lg text-muted-foreground leading-relaxed space-y-4">
-              <p>
-                FroshMeet uses basic cookies to ensure website functionality and enhance user experience.
+              <p className="text-sm text-muted-foreground mb-4">
+                Effective Date: 07/25/2025
               </p>
               
               <p>
-                We do not use cookies for advertising or behavioral tracking. Analytics tools (e.g., Plausible or Google Analytics) may collect anonymized usage data to help us improve the platform.
+                FroshMeet uses essential cookies to ensure website functionality and to enhance the user experience. These cookies support core features such as user navigation and secure access.
               </p>
               
               <p>
-                You may disable cookies in your browser settings if desired, but some features may not work properly.
+                FroshMeet does not use cookies for advertising or behavioral tracking. However, third-party analytics tools (such as Plausible or Google Analytics) may utilize anonymized data to help us understand how users interact with the platform and to improve performance.
+              </p>
+              
+              <p>
+                You may choose to disable cookies through your browser settings. Please note that disabling cookies may affect the functionality or availability of certain features on the website.
+              </p>
+              
+              <p>
+                If you have any questions or concerns regarding this Cookie Policy, please contact us at{" "}
+                <a href="mailto:support@froshmeet.com" className="text-primary hover:text-primary/80 underline font-semibold">
+                  support@froshmeet.com
+                </a>
+                .
               </p>
             </div>
           </div>

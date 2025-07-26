@@ -25,24 +25,32 @@ const PrivacyPolicy = () => {
           
           <div className="prose prose-invert max-w-none space-y-6">
             <div className="text-lg text-muted-foreground leading-relaxed space-y-4">
-              <p>
-                FroshMeet collects limited information provided by users, such as name, school, graduation year, and profile media, for the purpose of showcasing student profiles and enabling social discovery.
+              <p className="text-sm text-muted-foreground mb-4">
+                Effective Date: 07/25/2025
               </p>
               
               <p>
-                We may use submitted data for promotional purposes, such as posting it to Instagram accounts associated with FroshMeet.
+                FroshMeet collects limited personal information provided voluntarily by users, including name, school, graduation year, and profile media. This information is used for the purpose of showcasing student profiles and enabling social discovery.
               </p>
               
               <p>
-                All information is securely stored via Supabase. We do not sell personal data to third parties.
+                Submitted data may also be used for promotional purposes, such as being featured on Instagram accounts affiliated with FroshMeet.
               </p>
               
               <p>
-                Users may request edits or deletion of their profile by contacting{" "}
-                <a href="mailto:support@froshmeet.com" className="text-primary hover:text-primary/80 underline">
+                All user data is securely stored through Supabase. FroshMeet does not sell, rent, or share personal information with third parties for marketing purposes.
+              </p>
+              
+              <p>
+                Users may request the correction or deletion of their profile and personal data at any time by contacting{" "}
+                <a href="mailto:support@froshmeet.com" className="text-primary hover:text-primary/80 underline font-semibold">
                   support@froshmeet.com
                 </a>
                 .
+              </p>
+              
+              <p>
+                By using FroshMeet, you consent to the collection and use of your information as described in this Privacy Policy.
               </p>
             </div>
           </div>
