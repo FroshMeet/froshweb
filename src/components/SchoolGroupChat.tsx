@@ -217,22 +217,33 @@ const SchoolGroupChat = ({ schoolName, userProfile, onClose }: SchoolGroupChatPr
 
       {/* Message Input */}
       <div className="flex-shrink-0 p-4 border-t border-border bg-card">
-        <div className="flex gap-2">
-          <Input
-            placeholder={`Message the ${schoolName} group...`}
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-            className="flex-1"
-          />
-          <Button 
-            onClick={sendMessage}
-            disabled={!newMessage.trim()}
-            className="neon-glow"
-          >
-            <Send className="h-4 w-4" />
-          </Button>
-        </div>
+        {userProfile.verified ? (
+          <div className="flex gap-2">
+            <Input
+              placeholder={`Message the ${schoolName} group...`}
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+              className="flex-1"
+            />
+            <Button 
+              onClick={sendMessage}
+              disabled={!newMessage.trim()}
+              className="neon-glow"
+            >
+              <Send className="h-4 w-4" />
+            </Button>
+          </div>
+        ) : (
+          <div className="text-center p-4 bg-muted/50 rounded-lg">
+            <p className="text-sm text-muted-foreground mb-2">
+              Verify your {schoolName} email to send messages
+            </p>
+            <Button variant="outline" size="sm">
+              Verify Email
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

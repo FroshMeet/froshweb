@@ -8,9 +8,11 @@ import { getSchoolDisplayName } from "@/config/schoolDisplayMapping";
 interface SchoolGroupChatCTAProps {
   schoolSlug: string;
   onJoinClick: () => void;
+  isGuest?: boolean;
+  isVerified?: boolean;
 }
 
-const SchoolGroupChatCTA = ({ schoolSlug, onJoinClick }: SchoolGroupChatCTAProps) => {
+const SchoolGroupChatCTA = ({ schoolSlug, onJoinClick, isGuest = false, isVerified = false }: SchoolGroupChatCTAProps) => {
   const schoolAcronym = getSchoolDisplayName(schoolSlug);
 
   return (
@@ -30,11 +32,17 @@ const SchoolGroupChatCTA = ({ schoolSlug, onJoinClick }: SchoolGroupChatCTAProps
           {/* Title */}
           <div>
             <h3 className="text-xl font-bold text-foreground mb-1">
-              Join {schoolAcronym}'s Group Chat
+              {isGuest ? `Join ${schoolAcronym}'s Group Chat` : 
+               isVerified ? `${schoolAcronym} Group Chat` : 
+               `${schoolAcronym} Group Chat`}
             </h3>
             <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
               <Lock className="h-3 w-3" />
-              <span>Verified {schoolAcronym} Students Only</span>
+              <span>
+                {isGuest ? `Verified ${schoolAcronym} Students Only` :
+                 isVerified ? "Verified Chat Access" :
+                 "View-only until verified"}
+              </span>
             </div>
           </div>
 
@@ -57,11 +65,15 @@ const SchoolGroupChatCTA = ({ schoolSlug, onJoinClick }: SchoolGroupChatCTAProps
             size="lg"
           >
             <Users className="h-4 w-4 mr-2" />
-            Join {schoolAcronym} Chat
+            {isGuest ? `Join ${schoolAcronym} Chat` :
+             isVerified ? `Open ${schoolAcronym} Chat` :
+             `View ${schoolAcronym} Chat`}
           </Button>
 
           <p className="text-xs text-muted-foreground">
-            Sign up required • Free to join
+            {isGuest ? "Sign up required • Free to join" :
+             isVerified ? "Send messages and connect" :
+             "Verify email to send messages"}
           </p>
         </div>
       </CardContent>

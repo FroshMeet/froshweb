@@ -16,6 +16,7 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
+import { useAppState } from "@/hooks/useAppState";
 import GuestMessageDialog from "./GuestMessageDialog";
 
 interface Profile {
@@ -93,25 +94,23 @@ const MatchCelebration = ({ matchedUser, onClose, onSendMessage }: MatchCelebrat
 const TinderSwipeInterface = () => {
   const { user, userProfile } = useAuth();
   const { toast } = useToast();
+  const { isGuest, isAuthenticated, handleGuestAction, showGuestDialog, setShowGuestDialog } = useAppState();
   
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [showMatchCelebration, setShowMatchCelebration] = useState(false);
   const [matchedUser, setMatchedUser] = useState<Profile | null>(null);
-  const [showGuestDialog, setShowGuestDialog] = useState(false);
   const [isSwipeDisabled, setIsSwipeDisabled] = useState(false);
-
-  const isGuest = !user;
   const currentProfile = profiles[currentIndex];
 
   useEffect(() => {
-    if (user) {
+    if (isAuthenticated) {
       loadPotentialMatches();
     } else {
       setIsLoading(false);
     }
-  }, [user]);
+  }, [isAuthenticated]);
 
   const loadPotentialMatches = async () => {
     if (!user) return;
@@ -141,7 +140,7 @@ const TinderSwipeInterface = () => {
 
   const handleSwipe = async (direction: 'left' | 'right') => {
     if (isGuest) {
-      setShowGuestDialog(true);
+      handleGuestAction();
       return;
     }
 

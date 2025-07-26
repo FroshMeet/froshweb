@@ -502,7 +502,7 @@ const EnhancedChatInterface = () => {
 
       <div className="grid gap-4">
         {/* School Group Chat - Pinned */}
-        {userProfile?.verified && (
+        {user && userProfile && (
           <Card 
             className="cursor-pointer hover:shadow-lg transition-shadow duration-200 border-primary/50 bg-primary/5"
             onClick={() => setShowSchoolGroupChat(true)}
@@ -521,7 +521,7 @@ const EnhancedChatInterface = () => {
                     <span className="text-xs text-muted-foreground">Now</span>
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    Connect with verified {userProfile.school} classmates
+                    {userProfile.verified ? `Connect with verified ${userProfile.school} classmates` : "View-only until verified"}
                   </p>
                 </div>
               </div>
