@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Instagram, Music, Youtube } from "lucide-react";
+import { Instagram, Music2, Youtube } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
@@ -33,7 +33,7 @@ const Footer = () => {
                 className="text-muted-foreground hover:text-primary"
                 onClick={() => window.open('https://www.tiktok.com/@froshmeet', '_blank')}
               >
-                <Music className="h-5 w-5" />
+                <Music2 className="h-5 w-5" />
               </Button>
               <Button 
                 variant="ghost" 
