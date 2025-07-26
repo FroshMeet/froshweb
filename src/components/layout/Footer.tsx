@@ -43,13 +43,13 @@ const Footer = () => {
           <div>
             <h3 className="font-semibold text-foreground mb-4">Legal</h3>
             <div className="space-y-2">
-              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground w-full justify-start p-0 h-auto">
+              <Button variant="ghost" size="sm" onClick={() => navigate('/privacy-policy')} className="text-muted-foreground hover:text-foreground w-full justify-start p-0 h-auto">
                 Privacy Policy
               </Button>
-              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground w-full justify-start p-0 h-auto">
+              <Button variant="ghost" size="sm" onClick={() => navigate('/terms-of-service')} className="text-muted-foreground hover:text-foreground w-full justify-start p-0 h-auto">
                 Terms of Service
               </Button>
-              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground w-full justify-start p-0 h-auto">
+              <Button variant="ghost" size="sm" onClick={() => navigate('/cookie-policy')} className="text-muted-foreground hover:text-foreground w-full justify-start p-0 h-auto">
                 Cookie Policy
               </Button>
             </div>
