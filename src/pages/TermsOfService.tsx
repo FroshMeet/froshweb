@@ -1,18 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
 const TermsOfService = () => {
   const navigate = useNavigate();
-
-  return (
-    <div className="min-h-screen bg-background text-foreground">
+  return <div className="min-h-screen bg-background text-foreground">
       <div className="container mx-auto px-4 py-8 max-w-4xl">
-        <Button 
-          variant="ghost" 
-          onClick={() => navigate(-1)}
-          className="mb-6 text-muted-foreground hover:text-foreground"
-        >
+        <Button variant="ghost" onClick={() => navigate(-1)} className="mb-6 text-muted-foreground hover:text-foreground">
           <ArrowLeft className="h-4 w-4 mr-2" />
           Back
         </Button>
@@ -21,7 +14,7 @@ const TermsOfService = () => {
           <div>
             <h1 className="text-4xl font-bold text-foreground mb-4">Terms of Service</h1>
             <div className="w-20 h-1 bg-primary rounded-full"></div>
-            <p className="text-muted-foreground mt-4">Effective Date: 11/29/2023</p>
+            <p className="text-muted-foreground mt-4">Effective Date: 07/25/2025</p>
           </div>
           
           <div className="prose prose-invert max-w-none space-y-8">
@@ -96,8 +89,6 @@ const TermsOfService = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default TermsOfService;
