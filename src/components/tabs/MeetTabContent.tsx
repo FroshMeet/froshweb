@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Heart, Users } from "lucide-react";
-import SwipeCards from "../SwipeCards";
+import FroshMeetSwipeInterface from "../FroshMeetSwipeInterface";
 
 interface MeetTabContentProps {
   profiles: any[];
@@ -16,11 +16,11 @@ const MeetTabContent = ({
   isGuest = false,
   onGuestAction
 }: MeetTabContentProps) => {
-  const [meetMode, setMeetMode] = useState("general");
+  const [meetMode, setMeetMode] = useState("everyone");
 
   const filteredProfiles = profiles.filter(profile => {
-    if (meetMode === "roommate") {
-      return profile.lookingFor.includes("Roommate");
+    if (meetMode === "roommates") {
+      return profile.lookingFor?.includes("Roommate");
     }
     return true;
   });
@@ -36,7 +36,7 @@ const MeetTabContent = ({
 
   return (
     <div className="h-full w-full overflow-hidden">
-      <SwipeCards 
+      <FroshMeetSwipeInterface 
         profiles={filteredProfiles} 
         onShowIcebreakers={() => {}} 
         onSwipeAction={handleSwipeAction} 
@@ -44,6 +44,7 @@ const MeetTabContent = ({
         onGuestAction={onGuestAction}
         meetMode={meetMode}
         setMeetMode={setMeetMode}
+        schoolName="UMN"
       />
     </div>
   );

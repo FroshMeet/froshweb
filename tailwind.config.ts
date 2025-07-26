@@ -62,6 +62,11 @@ export default {
 					violet: 'hsl(var(--neon-violet))',
 					glow: 'hsl(var(--neon-glow))'
 				},
+				froshmeet: {
+					blue: 'hsl(var(--froshmeet-blue))',
+					'blue-glow': 'hsl(var(--froshmeet-blue-glow))',
+					'blue-dark': 'hsl(var(--froshmeet-blue-dark))'
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
