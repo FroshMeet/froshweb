@@ -35,8 +35,9 @@ const ModernChatInterface = () => {
   const [showGuestDialog, setShowGuestDialog] = useState(false);
   const [messages, setMessages] = useState<any[]>([]);
   
-  // Check if user is in dev mode (development or test user)
-  const isDev = user?.email === 'dev@frosh.com' || process.env.NODE_ENV === 'development';
+  // Use dev mode from environment or specific dev users
+  const isDev = process.env.NODE_ENV === 'development';
+  const hasUser = user || isDev;
   
   const handleCreateAccount = () => {
     setShowGuestDialog(false);
@@ -143,7 +144,7 @@ const ModernChatInterface = () => {
   }
 
   // Guest view - show CTA to join group chat
-  if (!user) {
+  if (!hasUser) {
     return (
       <div className="flex flex-col h-full bg-background max-w-md mx-auto">
         {/* Header */}
