@@ -238,88 +238,112 @@ const TinderSwipeInterface = () => {
         </Card>
       </div>;
   }
-  return <div className="min-h-screen bg-background relative overflow-hidden safe-area">
+  return (
+    <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
-      <div className="relative z-10 mobile-container py-4 border-b border-border/20">
+      <div className="px-4 py-6 border-b border-border/20">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-primary neon-glow animate-fade-in">Meet the Class of 2030
-
-        </h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
+            Meet the Class of 2030
+          </h1>
           <p className="text-sm text-muted-foreground">
             {profiles.length - currentIndex} profiles remaining
           </p>
         </div>
       </div>
 
-      {/* Main Swipe Area */}
-      <div className="relative z-10 mobile-container py-6 pb-32">
-        <div className="w-full relative animate-slide-up">
+      {/* Main Content Area */}
+      <div className="flex-1 flex items-center justify-center p-4">
+        <div className="w-full max-w-sm mx-auto">
           {/* Profile Card */}
-          <Card className="mobile-card shadow-2xl overflow-hidden card-shadow-lg transform transition-all duration-300 hover:scale-[1.02] animate-bounce-in">
-            {/* Profile Image */}
-            <div className="relative h-80 sm:h-96 bg-gradient-to-br from-primary/20 to-accent/20">
-              <div className="absolute inset-0 bg-muted/50 flex items-center justify-center">
+          <Card className="w-full bg-card/90 backdrop-blur-sm border border-border/50 overflow-hidden shadow-2xl">
+            {/* Profile Image Area */}
+            <div className="relative aspect-[3/4] bg-gradient-to-br from-primary/20 to-accent/20">
+              <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center">
-                  <div className="w-32 h-32 rounded-full bg-primary/20 mx-auto mb-4 flex items-center justify-center">
-                    <span className="text-4xl font-bold text-primary">
+                  <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-primary/30 mx-auto mb-4 flex items-center justify-center border-2 border-primary/50">
+                    <span className="text-3xl md:text-4xl font-bold text-white">
                       {currentProfile.name[0]}
                     </span>
                   </div>
-                  <h2 className="text-2xl font-bold text-foreground">
+                  <h2 className="text-xl md:text-2xl font-bold text-white mb-1">
                     {currentProfile.name}
                   </h2>
+                  <p className="text-sm text-white/70">
+                    {currentProfile.major}
+                  </p>
                 </div>
               </div>
               
-              {/* Looking for Roommate Badge */}
-              {currentProfile.looking_for_roommate && <div className="absolute top-4 right-4">
+              {/* Roommate Badge */}
+              {currentProfile.looking_for_roommate && (
+                <div className="absolute top-4 right-4">
                   <Badge className="bg-gradient-to-r from-purple-500 to-pink-500 text-white">
                     <Home className="h-3 w-3 mr-1" />
                     Roommate
                   </Badge>
-                </div>}
+                </div>
+              )}
             </div>
 
-            <CardContent className="p-6">
-              {/* Basic Info */}
+            {/* Profile Info */}
+            <CardContent className="p-4 md:p-6">
+              {/* School Info */}
               <div className="mb-4">
                 <div className="flex items-center text-sm text-muted-foreground mb-2">
-                  <MapPin className="h-4 w-4 mr-1" />
+                  <MapPin className="h-4 w-4 mr-2" />
                   {currentProfile.school}
                 </div>
-                <div className="flex items-center text-sm text-muted-foreground mb-2">
-                  <GraduationCap className="h-4 w-4 mr-1" />
-                  {currentProfile.major} • Class of {currentProfile.class_year}
+                <div className="flex items-center text-sm text-muted-foreground">
+                  <GraduationCap className="h-4 w-4 mr-2" />
+                  Class of {currentProfile.class_year}
                 </div>
               </div>
 
               {/* Bio */}
-              {currentProfile.bio && <div className="mb-4">
+              {currentProfile.bio && (
+                <div className="mb-4">
                   <p className="text-sm text-foreground leading-relaxed">
                     {currentProfile.bio}
                   </p>
-                </div>}
+                </div>
+              )}
 
               {/* Interests */}
-              {currentProfile.interests && currentProfile.interests.length > 0 && <div className="mb-4">
+              {currentProfile.interests && currentProfile.interests.length > 0 && (
+                <div>
                   <p className="text-xs font-medium text-muted-foreground mb-2">INTERESTS</p>
                   <div className="flex flex-wrap gap-2">
-                    {currentProfile.interests.slice(0, 6).map((interest, index) => <Badge key={index} variant="secondary" className="text-xs">
+                    {currentProfile.interests.slice(0, 6).map((interest, index) => (
+                      <Badge key={index} variant="secondary" className="text-xs">
                         {interest}
-                      </Badge>)}
+                      </Badge>
+                    ))}
                   </div>
-                </div>}
+                </div>
+              )}
             </CardContent>
           </Card>
 
           {/* Action Buttons */}
-          <div className="flex justify-center space-x-8 mt-8">
-            <Button onClick={() => handleSwipe('left')} disabled={isSwipeDisabled} size="lg" variant="outline" className="touch-target w-20 h-20 rounded-full border-2 border-red-500/30 hover:border-red-500 hover:bg-red-500/10 transition-all duration-300 disabled:opacity-50 hover:scale-110 active:scale-95 tap-highlight">
-              <X className="h-10 w-10 text-red-500" />
+          <div className="flex justify-center items-center gap-8 mt-8">
+            <Button 
+              onClick={() => handleSwipe('left')} 
+              disabled={isSwipeDisabled} 
+              size="lg" 
+              variant="outline" 
+              className="w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-destructive/50 hover:border-destructive hover:bg-destructive/10 transition-all duration-300 disabled:opacity-50 hover:scale-110 active:scale-95"
+            >
+              <X className="h-8 w-8 md:h-10 md:w-10 text-destructive" />
             </Button>
             
-            <Button onClick={() => handleSwipe('right')} disabled={isSwipeDisabled} size="lg" className="touch-target w-20 h-20 rounded-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary hover:to-primary/90 text-white shadow-lg neon-glow-strong transition-all duration-300 disabled:opacity-50 hover:scale-110 active:scale-95 tap-highlight btn-pulse">
-              <Heart className="h-10 w-10" fill="currentColor" />
+            <Button 
+              onClick={() => handleSwipe('right')} 
+              disabled={isSwipeDisabled} 
+              size="lg" 
+              className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary hover:to-primary/90 text-white shadow-lg transition-all duration-300 disabled:opacity-50 hover:scale-110 active:scale-95"
+            >
+              <Heart className="h-8 w-8 md:h-10 md:w-10" fill="currentColor" />
             </Button>
           </div>
 
@@ -333,7 +357,14 @@ const TinderSwipeInterface = () => {
       </div>
 
       {/* Match Celebration */}
-      {showMatchCelebration && matchedUser && <MatchCelebration matchedUser={matchedUser} onClose={() => setShowMatchCelebration(false)} onSendMessage={handleSendMessage} />}
-    </div>;
+      {showMatchCelebration && matchedUser && (
+        <MatchCelebration 
+          matchedUser={matchedUser} 
+          onClose={() => setShowMatchCelebration(false)} 
+          onSendMessage={handleSendMessage} 
+        />
+      )}
+    </div>
+  );
 };
 export default TinderSwipeInterface;
