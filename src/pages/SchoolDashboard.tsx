@@ -422,7 +422,12 @@ export default function SchoolDashboard() {
               </div>
             )}
             
-            <MeetTabContent />
+            <MeetTabContent 
+              profiles={mockProfiles}
+              isGuest={!currentUser && !isDevMode}
+              onGuestAction={appStateGuestAction}
+              schoolName={schoolDisplayName}
+            />
           </div>
         )}
 

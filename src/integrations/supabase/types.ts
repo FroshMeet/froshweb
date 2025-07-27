@@ -424,24 +424,6 @@ export type Database = {
         Args: { school_name: string }
         Returns: string
       }
-      get_potential_matches: {
-        Args: { user_id_param: string; limit_count?: number }
-        Returns: {
-          user_id: string
-          name: string
-          avatar_url: string
-          school: string
-          major: string
-          bio: string
-          class_year: string
-          interests: string[]
-          looking_for_roommate: boolean
-        }[]
-      }
-      handle_swipe: {
-        Args: { swiper_id: string; target_id: string; swipe_direction: string }
-        Returns: Json
-      }
       verify_college_email: {
         Args: { user_id_param: string; college_email_param: string }
         Returns: boolean

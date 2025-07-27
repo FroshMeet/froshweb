@@ -111,36 +111,12 @@
 
   /* Mobile-optimized interactions */
   .tap-highlight {
-    -webkit-tap-highlight-color: rgba(1, 92, 210, 0.1);
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    user-select: none;
+    -webkit-tap-highlight-color: rgba(59, 130, 246, 0.1);
   }
 
-  /* Smooth animations - Gen Z optimized */
+  /* Smooth animations */
   * {
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  /* Mobile-first responsive breakpoints */
-  .mobile-container {
-    @apply max-w-md mx-auto px-4;
-  }
-
-  .mobile-card {
-    @apply w-full bg-card/90 backdrop-blur-xl border-border/40 rounded-3xl;
-  }
-
-  /* Gesture-friendly touch targets */
-  .touch-target {
-    min-height: 44px;
-    min-width: 44px;
-  }
-
-  /* iOS-style momentum scrolling */
-  .smooth-scroll {
-    -webkit-overflow-scrolling: touch;
-    overflow-scrolling: touch;
   }
 
   /* Card shadows for depth with neon glow */
@@ -159,42 +135,6 @@
 
   .neon-glow-strong {
     box-shadow: 0 0 15px hsl(var(--neon-glow) / 0.8), 0 0 30px hsl(var(--neon-glow) / 0.5), 0 0 45px hsl(var(--neon-glow) / 0.3);
-  }
-
-  /* Gen Z button effects */
-  .btn-pulse {
-    animation: pulse-glow 2s infinite;
-  }
-
-  @keyframes pulse-glow {
-    0%, 100% { 
-      box-shadow: 0 0 5px hsl(var(--primary) / 0.5), 0 0 10px hsl(var(--primary) / 0.3); 
-    }
-    50% { 
-      box-shadow: 0 0 15px hsl(var(--primary) / 0.8), 0 0 25px hsl(var(--primary) / 0.6); 
-    }
-  }
-
-  /* Swipe feedback */
-  .swipe-left {
-    transform: translateX(-100px) rotate(-15deg);
-    opacity: 0;
-  }
-
-  .swipe-right {
-    transform: translateX(100px) rotate(15deg);
-    opacity: 0;
-  }
-
-  /* Mobile keyboard adjustments */
-  .keyboard-avoid {
-    padding-bottom: env(keyboard-inset-height, 0px);
-  }
-
-  /* Status bar safe area */
-  .safe-area {
-    padding-top: env(safe-area-inset-top, 0px);
-    padding-bottom: env(safe-area-inset-bottom, 0px);
   }
 
   /* Special styling for capital A letters */

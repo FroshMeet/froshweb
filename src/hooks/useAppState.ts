@@ -35,9 +35,8 @@ export const useAppState = () => {
     bio: userProfile?.bio || "New FroshMeet user",
     interests: userProfile?.interests || [],
     lookingForRoommate: userProfile?.looking_for_roommate || false,
-    classOf: userProfile?.class_year || "2029",
-    verified: userProfile?.verified || false
-  } : (isDevMode ? { ...DEV_USER, verified: true } : null);
+    classOf: userProfile?.class_year || "2029"
+  } : (isDevMode ? DEV_USER : null);
 
   const handleGuestContinue = (selectedSchool: string) => {
     setIsGuest(true);
@@ -51,14 +50,17 @@ export const useAppState = () => {
   };
 
   const handleGuestAction = () => {
-    // Only show guest dialog for true guests (not dev mode or logged in users)
-    if (!user && !isDevMode) {
+    // For guests trying to access restricted features, show signup dialog
+    if (isGuest || (!user && !isDevMode)) {
       setShowGuestDialog(true);
       return;
     }
     
-    // In dev mode or with real auth, actions should work normally
-    console.log("🧪 Action available - user authenticated or in dev mode");
+    // In dev mode, just log the action
+    if (isDevMode && !user) {
+      console.log("🧪 Dev Mode: Guest action triggered (normally would show signup)");
+      return;
+    }
   };
 
   const toggleDevMode = () => {
@@ -67,7 +69,7 @@ export const useAppState = () => {
 
   return {
     currentUser,
-    isGuest: !user && !isDevMode,
+    isGuest: isGuest || (!user && !isDevMode),
     guestSchool,
     setGuestSchool,
     activeTab,
@@ -78,8 +80,6 @@ export const useAppState = () => {
     handleCreateAccount,
     handleGuestAction,
     isDevMode,
-    toggleDevMode,
-    isAuthenticated: !!(user || isDevMode),
-    isVerified: !!(user ? userProfile?.verified : isDevMode)
+    toggleDevMode
   };
 };
