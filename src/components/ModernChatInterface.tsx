@@ -83,6 +83,7 @@ const ModernChatInterface = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const isGuest = !user && !isDevMode;
+  const isDev = isDevMode && !user;
 
   useEffect(() => {
     if (user) {
@@ -90,7 +91,8 @@ const ModernChatInterface = () => {
       loadMessageRequests();
       subscribeToRealtime();
     } else if (isDevMode) {
-      // Load mock data in dev mode
+      // Load mock data in dev mode with realistic profiles
+      console.log("🧪 Dev Mode: Loading mock conversations and message requests");
       setConversations(mockConversations);
       setMessageRequests(mockMessageRequests);
       setIsLoading(false);
@@ -585,10 +587,10 @@ const ModernChatInterface = () => {
   return (
     <div className="flex flex-col h-full max-w-md mx-auto bg-background">
       {/* Dev Mode Banner */}
-      {isDevMode && !user && (
+      {isDev && (
         <div className="bg-yellow-500/10 border-b border-yellow-500/20 px-4 py-2">
           <p className="text-xs text-yellow-600 text-center font-medium">
-            [DEV MODE] • Test conversations loaded
+            [DEV MODE] • Mock conversations & message requests loaded for testing
           </p>
         </div>
       )}
@@ -619,7 +621,7 @@ const ModernChatInterface = () => {
       <ScrollArea className="flex-1">
         <div className="p-2">
           {/* Pinned School Group Chat */}
-          {(userProfile?.verified || (isDevMode && !user)) && (
+          {(userProfile?.verified || isDev) && (
             <div className="mb-2">
               <Card 
                 className="cursor-pointer hover:bg-muted/50 transition-colors duration-200 border-froshmeet-blue/20 bg-froshmeet-blue/5"
@@ -634,16 +636,21 @@ const ModernChatInterface = () => {
                       <div className="flex justify-between items-start">
                         <div className="flex items-center space-x-2">
                           <h4 className="font-semibold text-foreground">
-                            {userProfile?.school || "UCLA"} Group Chat
+                            {userProfile?.school || currentUser?.college || "UCLA"} Group Chat
                           </h4>
                           <Badge variant="secondary" className="text-xs bg-froshmeet-blue/10 text-froshmeet-blue">
                             PINNED
                           </Badge>
+                          {isDev && (
+                            <Badge variant="secondary" className="text-xs bg-yellow-500/10 text-yellow-600">
+                              DEV
+                            </Badge>
+                          )}
                         </div>
                         <span className="text-xs text-muted-foreground">now</span>
                       </div>
                       <p className="text-sm text-muted-foreground">
-                        Connect with verified classmates
+                        {isDev ? "Mock group chat for testing UI" : "Connect with verified classmates"}
                       </p>
                     </div>
                   </div>
@@ -792,12 +799,12 @@ const ModernChatInterface = () => {
       </Sheet>
 
       {/* School Group Chat */}
-      {showSchoolGroupChat && (userProfile || (isDevMode && !user)) && (
+      {showSchoolGroupChat && (userProfile || isDev) && (
         <SchoolGroupChat
-          schoolName={userProfile?.school || "UCLA"}
+          schoolName={userProfile?.school || currentUser?.college || "UCLA"}
           userProfile={{
             user_id: user?.id || "dev-user-123",
-            name: userProfile?.name || "Dev Student",
+            name: userProfile?.name || currentUser?.name || "Dev Student",
             verified: userProfile?.verified || true
           }}
           onClose={() => setShowSchoolGroupChat(false)}
