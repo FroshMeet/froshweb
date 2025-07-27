@@ -66,65 +66,91 @@ export const mockProfiles = [
     id: 4,
     name: "Jordan Kim",
     age: 19,
-    college: "Stanford University",
+    college: "UCLA",
     classOf: "2028", 
     major: "Computer Science",
     bio: "Full-stack developer who loves hackathons and late-night coding sessions. Always building something new!",
     interests: ["Programming", "AI/ML", "Gaming", "Hackathons", "Open Source"],
     photos: ["photo-1507003211169-0a1dd7228f2d", "photo-1566492031773-4f4e44671d66"],
     lookingFor: ["Friends", "Study Buddy", "Project Partner"],
-    location: "Stanford University"
+    location: "UCLA"
   },
   {
     id: 5,
     name: "Emma Johnson",
     age: 18,
-    college: "Harvard University",
+    college: "UCLA",
     classOf: "2029",
     major: "International Relations", 
     bio: "Passionate about global affairs and social justice. Love traveling and learning new languages!",
     interests: ["Politics", "Languages", "Travel", "Debate", "Model UN"],
     photos: ["photo-1544005313-94ddf0286df2", "photo-1517841905240-472988babdf9"],
     lookingFor: ["Friends", "Study Buddy", "Roommate"],
-    location: "Harvard University"
+    location: "UCLA"
   },
   {
     id: 6,
     name: "Marcus Thompson", 
     age: 18,
-    college: "MIT",
+    college: "UCLA",
     classOf: "2029",
     major: "Mechanical Engineering",
     bio: "Love building robots and solving complex problems. When I'm not in the lab, you'll find me on the basketball court!",
     interests: ["Robotics", "Basketball", "3D Printing", "Design", "Sports"],
     photos: ["photo-1507591064344-4c6ce005b128", "photo-1552058544-f2b08422138a"],
     lookingFor: ["Friends", "Study Buddy", "Roommate"],
-    location: "MIT"
+    location: "UCLA"
   },
   {
     id: 7,
     name: "Sophia Chen",
     age: 18,
-    college: "NYU",
+    college: "UCLA",
     classOf: "2029", 
     major: "Film & Television",
-    bio: "Aspiring filmmaker with a passion for storytelling. Love indie films, photography, and exploring NYC!",
-    interests: ["Filmmaking", "Photography", "Art", "Music", "NYC"],
+    bio: "Aspiring filmmaker with a passion for storytelling. Love indie films, photography, and exploring LA!",
+    interests: ["Filmmaking", "Photography", "Art", "Music", "LA"],
     photos: ["photo-1438761681033-6461ffad8d80", "photo-1494790108755-2616b6fc6da8"],
     lookingFor: ["Friends", "Creative Partners", "Roommate"],
-    location: "NYU"
+    location: "UCLA"
   },
   {
     id: 8,
     name: "Diego Martinez",
     age: 19,
-    college: "UC Berkeley",
+    college: "UCLA",
     classOf: "2028",
     major: "Environmental Science",
     bio: "Climate activist and nature enthusiast. Love hiking, sustainability projects, and making a positive impact!",
     interests: ["Environment", "Hiking", "Sustainability", "Activism", "Outdoors"],
     photos: ["photo-1472099645785-5658abf4ff4e", "photo-1560250097-0b93528c311a"],
     lookingFor: ["Friends", "Activity Partners"],
-    location: "UC Berkeley"
+    location: "UCLA"
+  },
+  {
+    id: 9,
+    name: "Zoe Williams",
+    age: 18,
+    college: "UCLA",
+    classOf: "2029",
+    major: "Psychology",
+    bio: "Interested in human behavior and mental health advocacy. Love music festivals and deep conversations!",
+    interests: ["Psychology", "Music", "Mental Health", "Concerts", "Reading"],
+    photos: ["photo-1494790108755-2616b6fc6da8", "photo-1517841905240-472988babdf9"],
+    lookingFor: ["Friends", "Study Buddy"],
+    location: "UCLA"
+  },
+  {
+    id: 10,
+    name: "Ryan Lee",
+    age: 19,
+    college: "UCLA",
+    classOf: "2028",
+    major: "Economics",
+    bio: "Future investment banker with a love for finance and fitness. Always looking for workout buddies!",
+    interests: ["Finance", "Fitness", "Economics", "Investment", "Gym"],
+    photos: ["photo-1507003211169-0a1dd7228f2d", "photo-1552058544-f2b08422138a"],
+    lookingFor: ["Friends", "Workout Partner"],
+    location: "UCLA"
   }
 ];

@@ -21,6 +21,8 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import SchoolGroupChat from "./SchoolGroupChat";
 import GuestMessageDialog from "./GuestMessageDialog";
+import { mockConversations, mockMessageRequests } from "@/data/mockConversations";
+import { useAppState } from "@/hooks/useAppState";
 
 interface Conversation {
   id: string;
@@ -66,6 +68,7 @@ interface Message {
 const EnhancedChatInterface = () => {
   const { user, userProfile } = useAuth();
   const { toast } = useToast();
+  const { isDevMode } = useAppState();
   
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [messageRequests, setMessageRequests] = useState<MessageRequest[]>([]);
@@ -80,14 +83,21 @@ const EnhancedChatInterface = () => {
   const isGuest = !user;
 
   useEffect(() => {
-    if (user) {
-      loadConversations();
-      loadMessageRequests();
-      subscribeToRealtime();
+    if (user || isDevMode) {
+      if (isDevMode) {
+        // Use mock data in dev mode
+        setConversations(mockConversations);
+        setMessageRequests(mockMessageRequests);
+        setIsLoading(false);
+      } else {
+        loadConversations();
+        loadMessageRequests();
+        subscribeToRealtime();
+      }
     } else {
       setIsLoading(false);
     }
-  }, [user]);
+  }, [user, isDevMode]);
 
   const loadConversations = async () => {
     if (!user) return;
@@ -502,7 +512,7 @@ const EnhancedChatInterface = () => {
 
       <div className="grid gap-4">
         {/* School Group Chat - Pinned */}
-        {user && userProfile && (
+        {(user && userProfile) || isDevMode ? (
           <Card 
             className="cursor-pointer hover:shadow-lg transition-shadow duration-200 border-primary/50 bg-primary/5"
             onClick={() => setShowSchoolGroupChat(true)}
@@ -515,19 +525,19 @@ const EnhancedChatInterface = () => {
                 <div className="flex-1 min-w-0">
                   <div className="flex justify-between items-start">
                     <h4 className="font-medium text-foreground flex items-center gap-2">
-                      {userProfile.school} Group Chat
+                      {isDevMode ? "Boston University" : userProfile?.school} Group Chat
                       <Badge variant="secondary" className="text-xs">PINNED</Badge>
                     </h4>
                     <span className="text-xs text-muted-foreground">Now</span>
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    {userProfile.verified ? `Connect with verified ${userProfile.school} classmates` : "View-only until verified"}
+                    {(userProfile?.verified || isDevMode) ? `Connect with verified ${isDevMode ? "Boston University" : userProfile?.school} classmates` : "View-only until verified"}
                   </p>
                 </div>
               </div>
             </CardContent>
           </Card>
-        )}
+        ) : null}
         
         {/* Private Conversations */}
         {conversations.map((conversation) => (
@@ -655,13 +665,13 @@ const EnhancedChatInterface = () => {
       </Sheet>
 
       {/* School Group Chat */}
-      {showSchoolGroupChat && userProfile && (
+      {showSchoolGroupChat && ((userProfile && user) || isDevMode) && (
         <SchoolGroupChat
-          schoolName={userProfile.school!}
+          schoolName={isDevMode ? "Boston University" : userProfile!.school!}
           userProfile={{
-            user_id: user!.id,
-            name: userProfile.name!,
-            verified: userProfile.verified
+            user_id: isDevMode ? "dev-user" : user!.id,
+            name: isDevMode ? "Dev User" : userProfile!.name!,
+            verified: isDevMode ? true : userProfile!.verified
           }}
           onClose={() => setShowSchoolGroupChat(false)}
         />

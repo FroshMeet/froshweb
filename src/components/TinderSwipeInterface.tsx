@@ -18,6 +18,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { useAppState } from "@/hooks/useAppState";
 import GuestMessageDialog from "./GuestMessageDialog";
+import { mockProfiles } from "@/data/mockData";
 
 interface Profile {
   user_id: string;
@@ -94,7 +95,7 @@ const MatchCelebration = ({ matchedUser, onClose, onSendMessage }: MatchCelebrat
 const TinderSwipeInterface = () => {
   const { user, userProfile } = useAuth();
   const { toast } = useToast();
-  const { isGuest, isAuthenticated, handleGuestAction, showGuestDialog, setShowGuestDialog } = useAppState();
+  const { isGuest, isAuthenticated, handleGuestAction, showGuestDialog, setShowGuestDialog, isDevMode } = useAppState();
   
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -105,12 +106,30 @@ const TinderSwipeInterface = () => {
   const currentProfile = profiles[currentIndex];
 
   useEffect(() => {
-    if (isAuthenticated) {
-      loadPotentialMatches();
+    if (isAuthenticated || isDevMode) {
+      if (isDevMode) {
+        // Use mock data in dev mode
+        const mockProfilesFormatted = mockProfiles.map(p => ({
+          user_id: p.id.toString(),
+          name: p.name,
+          avatar_url: undefined,
+          school: p.college,
+          major: p.major,
+          bio: p.bio,
+          class_year: p.classOf,
+          interests: p.interests,
+          looking_for_roommate: p.lookingFor.includes("Roommate")
+        }));
+        setProfiles(mockProfilesFormatted);
+        setCurrentIndex(0);
+        setIsLoading(false);
+      } else {
+        loadPotentialMatches();
+      }
     } else {
       setIsLoading(false);
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, isDevMode]);
 
   const loadPotentialMatches = async () => {
     if (!user) return;
