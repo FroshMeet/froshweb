@@ -1,8 +1,8 @@
 
-import EnhancedChatInterface from "../EnhancedChatInterface";
+import ModernChatInterface from "../ModernChatInterface";
 
 const ChatsTabContent = () => {
-  return <EnhancedChatInterface />;
+  return <ModernChatInterface />;
 };
 
 export default ChatsTabContent;
