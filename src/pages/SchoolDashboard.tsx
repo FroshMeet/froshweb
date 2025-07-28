@@ -37,6 +37,7 @@ import SchoolGroupChatCTA from "@/components/SchoolGroupChatCTA";
 import { useAppState } from "@/hooks/useAppState";
 import { mockProfiles } from "@/data/mockData";
 import MeetTabContent from "@/components/tabs/MeetTabContent";
+import ChatsTabContent from "@/components/tabs/ChatsTabContent";
 
 interface Profile {
   id: string;
@@ -433,18 +434,8 @@ export default function SchoolDashboard() {
 
         {/* Chat Tab */}
         {activeTab === "chat" && (
-          <div className="max-w-md mx-auto py-8 animate-fade-in">
-            <SchoolGroupChatCTA 
-              schoolSlug={school || ''}
-              onJoinClick={() => {
-                if (!currentUser && !isDevMode) {
-                  navigate('/signup');
-                } else {
-                  // Navigate to chat tab and open group chat
-                  setActiveTab('chats');
-                }
-              }}
-            />
+          <div className="h-[calc(100vh-200px)] animate-fade-in">
+            <ChatsTabContent />
           </div>
         )}
 
