@@ -25,7 +25,11 @@ import { useAuth } from "@/contexts/AuthContext";
 import GuestMessageDialog from "./GuestMessageDialog";
 import { useToast } from "@/hooks/use-toast";
 
-const ModernChatInterface = () => {
+interface ModernChatInterfaceProps {
+  schoolName?: string;
+}
+
+const ModernChatInterface = ({ schoolName }: ModernChatInterfaceProps) => {
   const navigate = useNavigate();
   const { user, userProfile, isLoading } = useAuth();
   const { toast } = useToast();
@@ -152,7 +156,7 @@ const ModernChatInterface = () => {
   // Guest view - show CTA to join group chat
   if (isGuestMode) {
     return (
-      <div className="flex flex-col h-full bg-background max-w-md mx-auto">
+      <div className="flex flex-col h-full bg-background max-w-2xl mx-auto">  {/* Increased max-width for desktop */}
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-border">
           <h1 className="text-xl font-bold text-foreground">Chats</h1>
@@ -195,11 +199,11 @@ const ModernChatInterface = () => {
     const isGroupChat = selectedChat === "group-chat";
     const conversation = mockConversations.find(c => c.id === selectedChat);
     const chatTitle = isGroupChat 
-      ? `${userProfile?.school || "UCLA"} Group Chat`
+      ? `${schoolName || userProfile?.school || "School"} Group Chat`
       : conversation?.other_user.name || "Chat";
 
     return (
-      <div className="flex flex-col h-full bg-background max-w-md mx-auto">
+      <div className="flex flex-col h-full bg-background max-w-2xl mx-auto">  {/* Increased max-width for desktop */}
         {/* Chat Header */}
         <div className="flex items-center justify-between p-4 border-b border-border bg-card">
           <div className="flex items-center space-x-3">
@@ -311,11 +315,11 @@ const ModernChatInterface = () => {
   }
 
   // Get user's school for group chat
-  const userSchool = userProfile?.school || "UCLA";
+  const userSchool = schoolName || userProfile?.school || "School";
 
   // Main chat interface for logged-in users  
   return (
-    <div className="flex flex-col h-full bg-background max-w-md mx-auto">
+    <div className="flex flex-col h-full bg-background max-w-2xl mx-auto">  {/* Increased max-width for desktop */}
       {/* Dev Mode Banner */}
       {isDev && (
         <div className="bg-primary/10 border-b border-primary/20 px-4 py-2">
@@ -328,12 +332,12 @@ const ModernChatInterface = () => {
       )}
 
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-border">
+      <div className="flex items-center justify-between p-4 md:p-6 border-b border-border">  {/* Added responsive padding */}
         <div className="flex items-center space-x-4">
-          <h1 className="text-xl font-bold text-foreground">Chats</h1>
+          <h1 className="text-xl md:text-2xl font-bold text-foreground">Chats</h1>  {/* Added responsive text size */}
         </div>
         
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 md:space-x-3">  {/* Added responsive spacing */}
           {/* Requests Button */}
           <Button 
             variant="ghost" 

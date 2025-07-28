@@ -1,8 +1,12 @@
 
 import ModernChatInterface from "../ModernChatInterface";
 
-const ChatsTabContent = () => {
-  return <ModernChatInterface />;
+interface ChatsTabContentProps {
+  schoolName?: string;
+}
+
+const ChatsTabContent = ({ schoolName }: ChatsTabContentProps) => {
+  return <ModernChatInterface schoolName={schoolName} />;
 };
 
 export default ChatsTabContent;

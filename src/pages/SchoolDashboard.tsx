@@ -435,7 +435,7 @@ export default function SchoolDashboard() {
         {/* Chat Tab */}
         {activeTab === "chat" && (
           <div className="h-[calc(100vh-200px)] animate-fade-in">
-            <ChatsTabContent />
+            <ChatsTabContent schoolName={schoolDisplayName} />
           </div>
         )}
 
