@@ -166,7 +166,7 @@ const ModernChatInterface = () => {
               </p>
             </div>
             <Button 
-              onClick={() => setShowGuestDialog(true)} 
+              onClick={() => navigate('/signup')} 
               className="w-full neon-glow"
               size="lg"
             >
