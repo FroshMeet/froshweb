@@ -35,9 +35,15 @@ const ModernChatInterface = () => {
   const [showGuestDialog, setShowGuestDialog] = useState(false);
   const [messages, setMessages] = useState<any[]>([]);
   
-  // Use dev mode from environment or specific dev users
+  // Get dev mode state from useAppState hook
   const isDev = process.env.NODE_ENV === 'development';
-  const hasUser = user || isDev;
+  
+  // Simplified user detection:
+  // - If authenticated user exists, show chat
+  // - If in dev mode (no auth but development), show chat with dev banner
+  // - Otherwise, show guest CTA
+  const shouldShowChat = user || isDev;
+  const isGuestMode = !user && !isDev;
   
   const handleCreateAccount = () => {
     setShowGuestDialog(false);
@@ -144,7 +150,7 @@ const ModernChatInterface = () => {
   }
 
   // Guest view - show CTA to join group chat
-  if (!hasUser) {
+  if (isGuestMode) {
     return (
       <div className="flex flex-col h-full bg-background max-w-md mx-auto">
         {/* Header */}
