@@ -109,9 +109,9 @@ const MeetTabContent = ({
       <div className="h-full w-full flex items-center justify-center">
         <div className="text-center px-6">
           <Heart className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-foreground mb-2">No Students Yet</h3>
+          <h3 className="text-lg font-semibold text-foreground mb-2">👋 Be the First Face on Campus - Post Now!</h3>
           <p className="text-muted-foreground max-w-sm mx-auto">
-            Be the first to create your profile and connect with other {schoolName} students!
+            Create your profile and connect with other {schoolName} students!
           </p>
         </div>
       </div>
