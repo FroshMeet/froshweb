@@ -424,7 +424,7 @@ export default function SchoolDashboard() {
             )}
             
             <MeetTabContent 
-              profiles={mockProfiles}
+              profiles={isDevMode ? mockProfiles : []}
               isGuest={!currentUser && !isDevMode}
               onGuestAction={appStateGuestAction}
               schoolName={schoolDisplayName}
