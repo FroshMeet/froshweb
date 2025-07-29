@@ -40,7 +40,17 @@ const FroshMeetSwipeInterface = ({
   const getUnsplashUrl = (photoId: string) => {
     return `https://images.unsplash.com/${photoId}?w=600&h=800&fit=crop&crop=face`;
   };
-  const currentProfile = profiles[currentIndex];
+  // Filter profiles based on scope mode
+  const filteredProfiles = profiles.filter(profile => {
+    if (scopeMode === "school") {
+      // Show only students from the same school
+      return profile.school === schoolName;
+    }
+    // Worldwide: show all students
+    return true;
+  });
+
+  const currentProfile = filteredProfiles[currentIndex];
   const photos = currentProfile?.photos || ["photo-1649972904349-6e44c42644a7"];
   const currentPhoto = photos[currentPhotoIndex];
   const handleSwipe = (action: 'like' | 'skip') => {
@@ -50,7 +60,7 @@ const FroshMeetSwipeInterface = ({
     }
     onSwipeAction(action);
     setCurrentPhotoIndex(0);
-    if (currentIndex < profiles.length - 1) {
+    if (currentIndex < filteredProfiles.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
       setCurrentIndex(0);
@@ -80,7 +90,7 @@ const FroshMeetSwipeInterface = ({
     }
     console.log("Sending message:", message, "to", currentProfile?.name);
   };
-  if (!profiles || profiles.length === 0 || !currentProfile) {
+  if (!filteredProfiles || filteredProfiles.length === 0 || !currentProfile) {
     return <div className="h-full flex items-center justify-center bg-background">
         <p className="text-muted-foreground">No profiles to show right now</p>
       </div>;
@@ -94,32 +104,38 @@ const FroshMeetSwipeInterface = ({
         </div>
 
         {/* Filter Tabs */}
-        <div className="flex items-center justify-between mt-4">
-          <div className="flex space-x-1">
-            <button onClick={() => setMeetMode && setMeetMode("everyone")} className={`px-4 py-2 rounded-2xl font-medium transition-all ${meetMode === "everyone" ? "bg-froshmeet-blue text-white shadow-lg" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}>
+        <div className="flex flex-col space-y-3 mt-4">
+          {/* Mode Buttons */}
+          <div className="flex space-x-2">
+            <button onClick={() => setMeetMode && setMeetMode("everyone")} className={`px-3 py-2 rounded-xl text-sm font-medium transition-all ${meetMode === "everyone" ? "bg-froshmeet-blue text-white shadow-lg" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}>
               Everyone
             </button>
-            <button onClick={() => setMeetMode && setMeetMode("roommates")} className={`px-4 py-2 rounded-2xl font-medium transition-all ${meetMode === "roommates" ? "bg-froshmeet-blue text-white shadow-lg" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}>
+            <button onClick={() => setMeetMode && setMeetMode("roommates")} className={`px-3 py-2 rounded-xl text-sm font-medium transition-all ${meetMode === "roommates" ? "bg-froshmeet-blue text-white shadow-lg" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}>
               Roommates
             </button>
           </div>
 
-          {/* Scope Toggle (only for Everyone mode) */}
-          {meetMode === "everyone" && <div className="flex items-center space-x-2">
-              <button onClick={() => setScopeMode("school")} className={`px-3 py-1.5 rounded-xl text-sm font-medium transition-all ${scopeMode === "school" ? "bg-froshmeet-blue/20 text-froshmeet-blue" : "text-muted-foreground hover:text-foreground"}`}>
-                <School className="h-4 w-4 inline mr-1" />
-                Your School
-              </button>
-              <button onClick={() => setScopeMode("worldwide")} className={`px-3 py-1.5 rounded-xl text-sm font-medium transition-all ${scopeMode === "worldwide" ? "bg-froshmeet-blue/20 text-froshmeet-blue" : "text-muted-foreground hover:text-foreground"}`}>
-                <Globe className="h-4 w-4 inline mr-1" />
-                Worldwide
-              </button>
-            </div>}
+          {/* Scope Toggle and Filter */}
+          <div className="flex items-center justify-between">
+            {/* Scope Toggle (only for Everyone mode) */}
+            {meetMode === "everyone" && (
+              <div className="flex items-center space-x-2">
+                <button onClick={() => setScopeMode("school")} className={`px-2 py-1.5 rounded-lg text-xs font-medium transition-all ${scopeMode === "school" ? "bg-froshmeet-blue/20 text-froshmeet-blue" : "text-muted-foreground hover:text-foreground"}`}>
+                  <School className="h-3 w-3 inline mr-1" />
+                  Your School
+                </button>
+                <button onClick={() => setScopeMode("worldwide")} className={`px-2 py-1.5 rounded-lg text-xs font-medium transition-all ${scopeMode === "worldwide" ? "bg-froshmeet-blue/20 text-froshmeet-blue" : "text-muted-foreground hover:text-foreground"}`}>
+                  <Globe className="h-3 w-3 inline mr-1" />
+                  Worldwide
+                </button>
+              </div>
+            )}
 
-          {/* Filter Button */}
-          <Button variant="outline" size="sm" onClick={() => setShowFilters(true)} className="border-froshmeet-blue/20 text-froshmeet-blue hover:bg-froshmeet-blue/10">
-            <Filter className="h-4 w-4" />
-          </Button>
+            {/* Filter Button */}
+            <Button variant="outline" size="sm" onClick={() => setShowFilters(true)} className="border-froshmeet-blue/20 text-froshmeet-blue hover:bg-froshmeet-blue/10 ml-auto">
+              <Filter className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -180,18 +196,16 @@ const FroshMeetSwipeInterface = ({
           </div>
 
           {/* Action Buttons */}
-          <div className="bg-card p-4 flex space-x-3">
-            <Button variant="outline" className="flex-1 border-gray-300 text-gray-600 hover:bg-gray-50 hover:text-gray-700 h-12" onClick={() => handleSwipe('skip')}>
-              <X className="h-5 w-5 mr-2" />
-              Skip
+          <div className="bg-card p-4 flex justify-between space-x-2">
+            <Button variant="outline" className="w-20 border-gray-300 text-gray-600 hover:bg-gray-50 hover:text-gray-700 h-12" onClick={() => handleSwipe('skip')}>
+              <X className="h-5 w-5" />
             </Button>
             <Button className="flex-1 bg-froshmeet-blue hover:bg-froshmeet-blue-dark text-white h-12 hover:shadow-[var(--glow-blue)] transition-all duration-300" onClick={handleMessage}>
               <MessageSquare className="h-5 w-5 mr-2" />
               Message
             </Button>
-            <Button className="flex-1 bg-pink-500 hover:bg-pink-600 text-white h-12" onClick={() => handleSwipe('like')}>
-              <Heart className="h-5 w-5 mr-2" />
-              Like
+            <Button className="w-20 bg-pink-500 hover:bg-pink-600 text-white h-12" onClick={() => handleSwipe('like')}>
+              <Heart className="h-5 w-5" />
             </Button>
           </div>
         </div>

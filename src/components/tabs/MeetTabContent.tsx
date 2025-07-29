@@ -22,8 +22,10 @@ const MeetTabContent = ({
 
   const filteredProfiles = profiles.filter(profile => {
     if (meetMode === "roommates") {
-      return profile.lookingFor?.includes("Roommate");
+      // Roommates: Only show students from same school who are looking for roommates
+      return profile.lookingFor?.includes("Roommate") && profile.school === schoolName;
     }
+    // Everyone mode will be filtered in FroshMeetSwipeInterface based on scope
     return true;
   });
 
