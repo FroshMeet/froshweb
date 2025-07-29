@@ -74,7 +74,17 @@ const MeetTabContent = ({
   const activeProfiles = isDevMode ? profiles : realProfiles;
 
   const filteredProfiles = activeProfiles.filter(profile => {
-    // In dev mode or normal mode, show all profiles - filtering will happen in FroshMeetSwipeInterface
+    // In dev mode: show all profiles without filtering
+    if (isDevMode) {
+      return true;
+    }
+    
+    // In normal mode: filter by meetMode and schoolName
+    if (meetMode === "roommates") {
+      return profile.lookingFor?.includes("Roommate") && profile.school === schoolName;
+    }
+    
+    // Everyone mode: show all profiles (scope filtering handled in FroshMeetSwipeInterface)
     return true;
   });
 
@@ -106,7 +116,7 @@ const MeetTabContent = ({
         <div className="text-center px-6">
           <Heart className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
           <h3 className="text-lg font-semibold text-foreground mb-2">
-            {isDevMode ? "No mock profiles available" : "👋 Be the First Face on Campus - Post Now!"}
+            {isDevMode ? "👀 No mock profiles loaded. Check mockData.ts!" : "👋 Be the First Face on Campus — Post Now!"}
           </h3>
           <p className="text-muted-foreground max-w-sm mx-auto">
             {isDevMode 
