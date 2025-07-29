@@ -6,6 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Checkbox } from "@/components/ui/checkbox";
 import { Heart, X, MessageSquare, MapPin, BookOpen, Instagram, ChevronLeft, ChevronRight, Filter, Users, Globe, School, User } from "lucide-react";
 import IcebreakerModal from "./IcebreakerModal";
+import { useAppState } from "@/hooks/useAppState";
 interface FroshMeetSwipeInterfaceProps {
   profiles: any[];
   onShowIcebreakers: () => void;
@@ -26,6 +27,7 @@ const FroshMeetSwipeInterface = ({
   setMeetMode,
   schoolName = "BU"
 }: FroshMeetSwipeInterfaceProps) => {
+  const { isDevMode } = useAppState();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [showIcebreakers, setShowIcebreakers] = useState(false);
@@ -42,6 +44,11 @@ const FroshMeetSwipeInterface = ({
   };
   // Filter profiles based on scope mode
   const filteredProfiles = profiles.filter(profile => {
+    // In dev mode: show all profiles without school filtering
+    if (isDevMode) {
+      return true;
+    }
+    
     if (scopeMode === "school") {
       // Show only students from the same school
       return profile.school === schoolName;
