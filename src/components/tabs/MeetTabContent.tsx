@@ -23,38 +23,17 @@ const MeetTabContent = ({
   const [meetMode, setMeetMode] = useState("everyone");
   const { isDevMode } = useAppState();
 
-  // Helper function to check if profile school matches current school
-  const isSchoolMatch = (profileSchool: string, currentSchool: string) => {
-    // Normalize school names for comparison
-    const normalizeSchool = (school: string) => {
-      return school.toLowerCase()
-        .replace(/university/g, '')
-        .replace(/college/g, '')
-        .replace(/\s+/g, ' ')
-        .trim();
-    };
-    
-    const normalizedProfile = normalizeSchool(profileSchool);
-    const normalizedCurrent = normalizeSchool(currentSchool);
-    
-    // Check exact match or if one contains the other
-    return normalizedProfile === normalizedCurrent || 
-           normalizedProfile.includes(normalizedCurrent) || 
-           normalizedCurrent.includes(normalizedProfile);
-  };
-
   // Filter profiles based on meetMode and schoolName
   const displayedProfiles = profiles.filter(profile => {
-    // First filter by school (for both dev and normal mode)
-    const matchesSchool = isSchoolMatch(profile.school || profile.college, schoolName);
-    
-    if (!matchesSchool) return false;
-    
-    // Then filter by meetMode
     if (meetMode === "roommates") {
-      return profile.lookingFor?.includes("Roommate");
+      // In dev mode, just filter by roommate preference (ignore school matching for testing)
+      if (isDevMode) {
+        return profile.lookingFor?.includes("Roommate");
+      }
+      // In normal mode, filter by both roommate preference and school
+      return profile.lookingFor?.includes("Roommate") && profile.school === schoolName;
     }
-    return true; // Everyone mode: show all profiles from this school
+    return true; // Everyone mode: show all profiles
   });
 
   // Debug logging
