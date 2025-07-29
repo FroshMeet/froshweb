@@ -452,24 +452,7 @@ export default function SchoolDashboard() {
         {/* Meet Tab - New FroshMeet Interface */}
         {activeTab === "meet" && (
           <div className="h-[calc(100vh-200px)] animate-fade-in">
-            {/* Dev Mode Indicator */}
-            {isDevMode && (
-              <div className="mb-4 bg-froshmeet-blue/10 border border-froshmeet-blue/20 rounded-xl p-3 text-center">
-                <p className="text-sm text-froshmeet-blue font-medium">
-                  🧪 Dev Mode Active - Testing with mock profiles
-                </p>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  onClick={toggleDevMode}
-                  className="mt-2 text-xs border-froshmeet-blue/30 text-froshmeet-blue hover:bg-froshmeet-blue/10"
-                >
-                  Toggle Dev Mode
-                </Button>
-              </div>
-            )}
-            
-            <MeetTabContent 
+            <MeetTabContent
               profiles={meetProfiles}
               isGuest={!currentUser && !isDevMode}
               onGuestAction={appStateGuestAction}
