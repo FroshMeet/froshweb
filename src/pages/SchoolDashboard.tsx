@@ -57,6 +57,7 @@ export default function SchoolDashboard() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [profiles, setProfiles] = useState<Profile[]>([]);
+  const [meetProfiles, setMeetProfiles] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [showGuestDialog, setShowGuestDialog] = useState(false);
   const [activeTab, setActiveTab] = useState("discover");
@@ -121,14 +122,49 @@ export default function SchoolDashboard() {
       if (!school) return;
       
       try {
-        const { data, error } = await supabase
+        // Fetch Instagram profiles for Discover tab
+        const { data: instagramData, error: instagramError } = await supabase
           .from('instagram_profiles')
           .select('*')
           .eq('school', school.toUpperCase())
           .order('created_at', { ascending: false });
 
-        if (error) throw error;
-        setProfiles(data || []);
+        if (instagramError) throw instagramError;
+        setProfiles(instagramData || []);
+
+        // Fetch user profiles for Meet tab (only in normal mode)
+        if (!isDevMode) {
+          const { data: userProfilesData, error: userProfilesError } = await supabase
+            .from('user_profiles')
+            .select('*')
+            .eq('verified', true)
+            .order('created_at', { ascending: false });
+
+          if (userProfilesError) throw userProfilesError;
+          
+          // Transform to match expected format
+          const transformedProfiles = (userProfilesData || []).map(profile => ({
+            id: profile.user_id,
+            name: profile.name,
+            age: 18, // Default age
+            college: profile.school,
+            school: profile.school,
+            classOf: profile.class_year,
+            major: profile.major,
+            bio: profile.bio,
+            interests: profile.interests || [],
+            photos: profile.avatar_url ? [profile.avatar_url] : ["photo-1649972904349-6e44c42644a7"],
+            lookingFor: profile.looking_for_roommate ? ["Friends", "Roommate"] : ["Friends"],
+            location: profile.school,
+            profilePic: profile.avatar_url || "photo-1649972904349-6e44c42644a7",
+            lookingForRoommate: profile.looking_for_roommate
+          }));
+          
+          setMeetProfiles(transformedProfiles);
+        } else {
+          // In dev mode, use mock profiles
+          setMeetProfiles(mockProfiles);
+        }
       } catch (error) {
         console.error('Error fetching profiles:', error);
       } finally {
@@ -137,7 +173,7 @@ export default function SchoolDashboard() {
     };
 
     fetchProfiles();
-  }, [school]);
+  }, [school, isDevMode]);
 
   const handleGuestAction = (feature: string) => {
     if (!currentUser) {
@@ -424,7 +460,7 @@ export default function SchoolDashboard() {
             )}
             
             <MeetTabContent 
-              profiles={isDevMode ? mockProfiles : []}
+              profiles={meetProfiles}
               isGuest={!currentUser && !isDevMode}
               onGuestAction={appStateGuestAction}
               schoolName={schoolDisplayName}

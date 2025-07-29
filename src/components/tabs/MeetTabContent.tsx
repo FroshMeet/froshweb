@@ -21,65 +21,15 @@ const MeetTabContent = ({
   schoolName = "BU"
 }: MeetTabContentProps) => {
   const [meetMode, setMeetMode] = useState("everyone");
-  const [realProfiles, setRealProfiles] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
   const { isDevMode } = useAppState();
 
-  // Fetch real profiles when not in dev mode
-  useEffect(() => {
-    const fetchRealProfiles = async () => {
-      if (isDevMode) return; // Use passed mock profiles in dev mode
-      
-      setLoading(true);
-      try {
-        const { data, error } = await supabase
-          .from('user_profiles')
-          .select('*')
-          .eq('verified', true)
-          .order('created_at', { ascending: false });
-
-        if (error) throw error;
-        
-        // Transform to match expected format
-        const transformedProfiles = (data || []).map(profile => ({
-          id: profile.user_id,
-          name: profile.name,
-          age: 18, // Default age
-          college: profile.school,
-          school: profile.school,
-          classOf: profile.class_year,
-          major: profile.major,
-          bio: profile.bio,
-          interests: profile.interests || [],
-          photos: profile.avatar_url ? [profile.avatar_url] : ["photo-1649972904349-6e44c42644a7"],
-          lookingFor: profile.looking_for_roommate ? ["Friends", "Roommate"] : ["Friends"],
-          location: profile.school,
-          profilePic: profile.avatar_url || "photo-1649972904349-6e44c42644a7",
-          lookingForRoommate: profile.looking_for_roommate
-        }));
-        
-        setRealProfiles(transformedProfiles);
-      } catch (error) {
-        console.error('Error fetching real profiles:', error);
-        setRealProfiles([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchRealProfiles();
-  }, [isDevMode]);
-
-  // In dev mode: use mock profiles directly without filtering
-  // In normal mode: use real profiles with filtering
-  const displayedProfiles = isDevMode 
-    ? profiles 
-    : realProfiles.filter(profile => {
-        if (meetMode === "roommates") {
-          return profile.lookingFor?.includes("Roommate") && profile.school === schoolName;
-        }
-        return true; // Everyone mode: show all profiles
-      });
+  // Filter profiles based on meetMode and schoolName
+  const displayedProfiles = profiles.filter(profile => {
+    if (meetMode === "roommates") {
+      return profile.lookingFor?.includes("Roommate") && profile.school === schoolName;
+    }
+    return true; // Everyone mode: show all profiles
+  });
 
   // Debug logging
   console.log('MeetTabContent debug:', {
@@ -87,7 +37,6 @@ const MeetTabContent = ({
     meetMode,
     schoolName,
     profilesLength: profiles.length,
-    realProfilesLength: realProfiles.length,
     displayedProfilesLength: displayedProfiles.length
   });
 
@@ -100,32 +49,17 @@ const MeetTabContent = ({
     console.log("Swipe action:", action);
   };
 
-  // Show loading state when fetching real profiles
-  if (!isDevMode && loading) {
-    return (
-      <div className="h-full w-full flex items-center justify-center">
-        <div className="text-center">
-          <Loader2 className="h-8 w-8 animate-spin text-primary mx-auto mb-4" />
-          <p className="text-muted-foreground">Loading profiles...</p>
-        </div>
-      </div>
-    );
-  }
-
   // Show empty state when no profiles available
-  if (displayedProfiles.length === 0 && !loading) {
+  if (displayedProfiles.length === 0) {
     return (
       <div className="h-full w-full flex items-center justify-center">
         <div className="text-center px-6">
           <Heart className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
           <h3 className="text-lg font-semibold text-foreground mb-2">
-            {isDevMode ? "👀 No mock profiles loaded. Check mockData.ts!" : "👋 Be the First Face on Campus — Post Now!"}
+            👋 Be the First Face on Campus — Post Now!
           </h3>
           <p className="text-muted-foreground max-w-sm mx-auto">
-            {isDevMode 
-              ? "Mock profiles should appear here in dev mode" 
-              : `Create your profile and connect with other ${schoolName} students!`
-            }
+            Create your profile and connect with other {schoolName} students!
           </p>
         </div>
       </div>
