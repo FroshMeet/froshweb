@@ -240,14 +240,24 @@ export default function SchoolDashboard() {
         </div>
         
         <div className="max-w-6xl mx-auto px-4 relative">
-          <Button 
-            variant="ghost" 
-            onClick={() => navigate('/')}
-            className="mb-8 text-muted-foreground hover:text-foreground"
-          >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Home
-          </Button>
+          <div className="flex justify-between items-center mb-8">
+            <Button 
+              variant="ghost" 
+              onClick={() => navigate('/')}
+              className="text-muted-foreground hover:text-foreground"
+            >
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back to Home
+            </Button>
+            
+            <Button 
+              variant={isDevMode ? "default" : "outline"}
+              onClick={toggleDevMode}
+              className={`${isDevMode ? "bg-primary text-primary-foreground" : "border-primary/50 text-primary hover:bg-primary/10"} rounded-xl font-medium`}
+            >
+              {isDevMode ? "DEV ON" : "DEV OFF"}
+            </Button>
+          </div>
           
           <div className="text-center">
             {/* School name with enhanced animation and FroshMeet blue */}
