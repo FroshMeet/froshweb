@@ -26,6 +26,11 @@ const MeetTabContent = ({
   // Filter profiles based on meetMode and schoolName
   const displayedProfiles = profiles.filter(profile => {
     if (meetMode === "roommates") {
+      // In dev mode, just filter by roommate preference (ignore school matching for testing)
+      if (isDevMode) {
+        return profile.lookingFor?.includes("Roommate");
+      }
+      // In normal mode, filter by both roommate preference and school
       return profile.lookingFor?.includes("Roommate") && profile.school === schoolName;
     }
     return true; // Everyone mode: show all profiles
