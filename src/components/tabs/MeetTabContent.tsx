@@ -104,14 +104,19 @@ const MeetTabContent = ({
   }
 
   // Show empty state when no profiles available
-  if (!isDevMode && activeProfiles.length === 0 && !loading) {
+  if (activeProfiles.length === 0 && !loading) {
     return (
       <div className="h-full w-full flex items-center justify-center">
         <div className="text-center px-6">
           <Heart className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-foreground mb-2">👋 Be the First Face on Campus - Post Now!</h3>
+          <h3 className="text-lg font-semibold text-foreground mb-2">
+            {isDevMode ? "No mock profiles available" : "👋 Be the First Face on Campus - Post Now!"}
+          </h3>
           <p className="text-muted-foreground max-w-sm mx-auto">
-            Create your profile and connect with other {schoolName} students!
+            {isDevMode 
+              ? "Mock profiles should appear here in dev mode" 
+              : `Create your profile and connect with other ${schoolName} students!`
+            }
           </p>
         </div>
       </div>
