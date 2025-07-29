@@ -70,22 +70,25 @@ const MeetTabContent = ({
     fetchRealProfiles();
   }, [isDevMode]);
 
-  // Use dev mode profiles or real profiles
-  const activeProfiles = isDevMode ? profiles : realProfiles;
+  // In dev mode: use mock profiles directly without filtering
+  // In normal mode: use real profiles with filtering
+  const displayedProfiles = isDevMode 
+    ? profiles 
+    : realProfiles.filter(profile => {
+        if (meetMode === "roommates") {
+          return profile.lookingFor?.includes("Roommate") && profile.school === schoolName;
+        }
+        return true; // Everyone mode: show all profiles
+      });
 
-  const filteredProfiles = activeProfiles.filter(profile => {
-    // In dev mode: show all profiles without filtering
-    if (isDevMode) {
-      return true;
-    }
-    
-    // In normal mode: filter by meetMode and schoolName
-    if (meetMode === "roommates") {
-      return profile.lookingFor?.includes("Roommate") && profile.school === schoolName;
-    }
-    
-    // Everyone mode: show all profiles (scope filtering handled in FroshMeetSwipeInterface)
-    return true;
+  // Debug logging
+  console.log('MeetTabContent debug:', {
+    isDevMode,
+    meetMode,
+    schoolName,
+    profilesLength: profiles.length,
+    realProfilesLength: realProfiles.length,
+    displayedProfilesLength: displayedProfiles.length
   });
 
   const handleSwipeAction = (action: string) => {
@@ -110,7 +113,7 @@ const MeetTabContent = ({
   }
 
   // Show empty state when no profiles available
-  if (activeProfiles.length === 0 && !loading) {
+  if (displayedProfiles.length === 0 && !loading) {
     return (
       <div className="h-full w-full flex items-center justify-center">
         <div className="text-center px-6">
@@ -132,7 +135,7 @@ const MeetTabContent = ({
   return (
     <div className="h-full w-full overflow-hidden">
       <FroshMeetSwipeInterface 
-        profiles={filteredProfiles} 
+        profiles={displayedProfiles} 
         onShowIcebreakers={() => {}} 
         onSwipeAction={handleSwipeAction} 
         isGuest={isGuest} 
