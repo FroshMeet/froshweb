@@ -59,7 +59,7 @@ const AppRouter = () => (
                 <Route path="/:school" element={<SchoolDashboard />} />
                 <Route path="/:school/insta" element={<SchoolInstagramPage />} />
                 <Route path="/:school/insta/posts" element={<SchoolInstagramPosts />} />
-                <Route path="/:school/post-to-insta" element={<PostToInstagram />} />
+                <Route path="/post-to-insta" element={<PostToInstagram />} />
                 <Route path="/guest-post-to-insta" element={<GuestInstagramPost />} />
                 <Route path="/:school/guest-post-to-insta" element={<GuestInstagramPost />} />
                 <Route path="/instagram-submission" element={<InstagramSubmission />} />

@@ -55,7 +55,7 @@ export default function ProfileSuccess() {
               </div>
               
               <Button 
-                onClick={() => navigate(`/${school?.toLowerCase()}/post-to-insta?profileId=${profileId}`)}
+                onClick={() => navigate(`/post-to-insta?profileId=${profileId}&school=${school?.toLowerCase()}`)}
                 className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
               >
                 📲 Post to {schoolInstagram} for $5
