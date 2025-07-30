@@ -18,6 +18,7 @@ interface Profile {
 }
 
 export default function PostToInstagram() {
+  const { school } = useParams<{ school: string }>();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -27,7 +28,6 @@ export default function PostToInstagram() {
   const [paymentLoading, setPaymentLoading] = useState(false);
   
   const profileId = searchParams.get('profileId');
-  const school = searchParams.get('school');
   const schoolInstagram = `@${school}2030class`;
 
   useEffect(() => {
