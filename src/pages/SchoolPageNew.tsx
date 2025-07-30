@@ -174,7 +174,7 @@ export default function SchoolPage() {
                 <Card 
                   key={profile.id} 
                   className="overflow-hidden hover:shadow-lg transition-all duration-200 cursor-pointer group"
-                  onClick={() => navigate(`/${school}/post-to-insta?profileId=${profile.id}`)}
+                  onClick={() => navigate(`/post-to-insta?profileId=${profile.id}&school=${school}`)}
                 >
                   <div className="relative">
                     {profile.photos && profile.photos.length > 0 && (

@@ -192,7 +192,7 @@ export default function SchoolDashboard() {
   const [showGetFeaturedFlow, setShowGetFeaturedFlow] = useState(false);
 
   const handleGuestInstagramPost = () => {
-    navigate(`/${school}/post-to-insta`);
+    setShowGetFeaturedFlow(true);
   };
 
   // Mock sample profiles for grid view
