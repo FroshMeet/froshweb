@@ -192,6 +192,27 @@ export type Database = {
           },
         ]
       }
+      rate_limit_log: {
+        Row: {
+          action_type: string
+          attempted_at: string | null
+          id: string
+          identifier: string
+        }
+        Insert: {
+          action_type: string
+          attempted_at?: string | null
+          id?: string
+          identifier: string
+        }
+        Update: {
+          action_type?: string
+          attempted_at?: string | null
+          id?: string
+          identifier?: string
+        }
+        Relationships: []
+      }
       school_chat_members: {
         Row: {
           id: string
@@ -420,9 +441,36 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      check_rate_limit: {
+        Args: {
+          user_identifier: string
+          action_type: string
+          max_attempts?: number
+          time_window_minutes?: number
+        }
+        Returns: boolean
+      }
       get_or_create_school_chat: {
         Args: { school_name: string }
         Returns: string
+      }
+      get_potential_matches: {
+        Args: { user_id_param: string; limit_count?: number }
+        Returns: {
+          user_id: string
+          name: string
+          avatar_url: string
+          school: string
+          major: string
+          bio: string
+          class_year: string
+          interests: string[]
+          looking_for_roommate: boolean
+        }[]
+      }
+      handle_swipe: {
+        Args: { swiper_id: string; target_id: string; swipe_direction: string }
+        Returns: Json
       }
       verify_college_email: {
         Args: { user_id_param: string; college_email_param: string }
