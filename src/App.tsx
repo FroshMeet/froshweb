@@ -9,6 +9,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import Footer from "./components/layout/Footer";
 import Homepage from "./pages/Homepage";
 import About from "./pages/About";
+import Kian from "./pages/Kian";
 import Features from "./pages/Features";
 import Contact from "./pages/Contact";
 import SignIn from "./pages/SignIn";
@@ -46,6 +47,7 @@ const AppRouter = () => (
               <Routes>
                 <Route path="/" element={<Homepage />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/kian" element={<Kian />} />
                 <Route path="/features" element={<Features />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/signin" element={<SignIn />} />

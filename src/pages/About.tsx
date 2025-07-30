@@ -169,6 +169,23 @@ const About = () => {
                 </CardContent>
               </Card>
             </div>
+            
+            {/* Quote Section */}
+            <div className="text-center mt-16 animate-fade-in">
+              <blockquote className="text-2xl md:text-3xl font-medium text-foreground italic mb-6 max-w-4xl mx-auto">
+                "College is more fun when it doesn't start with blank faces and awkward dms."
+              </blockquote>
+              <p className="text-lg text-muted-foreground">
+                -{" "}
+                <Button 
+                  variant="link" 
+                  onClick={() => navigate('/kian')}
+                  className="text-primary hover:text-primary/80 p-0 h-auto font-normal text-lg underline-offset-4"
+                >
+                  kian, CEO of FroshMeet
+                </Button>
+              </p>
+            </div>
           </div>
         </div>
       </section>
