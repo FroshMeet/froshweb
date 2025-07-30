@@ -68,16 +68,57 @@ export const InstagramSubmissionForm: React.FC = () => {
     return Promise.all(uploadPromises);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!formData.name || !formData.school || !formData.major || formData.photos.length === 0) {
-      toast.error('Please fill in all required fields and upload at least one photo');
-      return;
+  // Enhanced validation and security
+  const validateSubmission = (): { isValid: boolean; message?: string } => {
+    const trimmedName = formData.name.trim();
+    if (!trimmedName || trimmedName.length < 1 || trimmedName.length > 100) {
+      return { isValid: false, message: 'Name must be between 1 and 100 characters' };
+    }
+
+    if (!formData.school) {
+      return { isValid: false, message: 'Please select a school' };
+    }
+
+    const trimmedMajor = formData.major.trim();
+    if (!trimmedMajor || trimmedMajor.length < 1 || trimmedMajor.length > 100) {
+      return { isValid: false, message: 'Major must be between 1 and 100 characters' };
     }
 
     if (formData.bio.length > 100) {
-      toast.error('Bio must be 100 characters or less');
+      return { isValid: false, message: 'Bio must be 100 characters or less' };
+    }
+
+    if (formData.photos.length === 0) {
+      return { isValid: false, message: 'Please upload at least one photo' };
+    }
+
+    if (formData.photos.length > 20) {
+      return { isValid: false, message: 'Maximum 20 photos allowed' };
+    }
+
+    // Validate file types and sizes
+    for (const photo of formData.photos) {
+      if (!photo.type.startsWith('image/')) {
+        return { isValid: false, message: 'Only image files are allowed' };
+      }
+      if (photo.size > 10 * 1024 * 1024) { // 10MB limit
+        return { isValid: false, message: 'Each photo must be under 10MB' };
+      }
+    }
+
+    return { isValid: true };
+  };
+
+  const sanitizeInput = (input: string): string => {
+    return input.trim().replace(/[<>]/g, '');
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    const validation = validateSubmission();
+    if (!validation.isValid) {
+      toast.error(validation.message || 'Please check your submission');
       return;
     }
 
@@ -87,14 +128,14 @@ export const InstagramSubmissionForm: React.FC = () => {
       // Upload photos to storage
       const imageUrls = await uploadPhotos();
       
-      // Save submission to database
+      // Save submission to database with sanitized data
       const { error } = await supabase
         .from('submissions')
         .insert({
-          name: formData.name,
+          name: sanitizeInput(formData.name),
           school: formData.school,
-          major: formData.major,
-          bio: formData.bio,
+          major: sanitizeInput(formData.major),
+          bio: sanitizeInput(formData.bio),
           image_urls: imageUrls,
           stripe_session_id: sessionId,
           has_paid: true,

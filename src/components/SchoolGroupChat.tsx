@@ -113,17 +113,54 @@ const SchoolGroupChat = ({ schoolName, userProfile, onClose }: SchoolGroupChatPr
     setMemberCount(count || 0);
   };
 
+  // Enhanced message validation and security
+  const validateMessage = (message: string): { isValid: boolean; message?: string } => {
+    const trimmed = message.trim();
+    if (trimmed.length === 0) return { isValid: false, message: 'Message cannot be empty' };
+    if (trimmed.length > 1000) return { isValid: false, message: 'Message too long (max 1000 characters)' };
+    
+    // Basic content filtering
+    const inappropriateWords = ['spam', 'scam', 'fake']; // Basic example
+    if (inappropriateWords.some(word => trimmed.toLowerCase().includes(word))) {
+      return { isValid: false, message: 'Message contains inappropriate content' };
+    }
+    
+    return { isValid: true };
+  };
+
+  const sanitizeMessage = (message: string): string => {
+    return message.trim().replace(/[<>]/g, '');
+  };
+
   const sendMessage = async () => {
     if (!newMessage.trim() || !chatId) return;
 
+    const validation = validateMessage(newMessage);
+    if (!validation.isValid) {
+      toast({
+        title: "Invalid Message",
+        description: validation.message,
+        variant: "destructive"
+      });
+      return;
+    }
+
     try {
+      // Rate limiting check
+      await supabase.rpc('check_rate_limit', {
+        user_identifier: userProfile.user_id,
+        action_type: 'chat_message'
+      });
+
+      const sanitizedMessage = sanitizeMessage(newMessage);
+
       const { error } = await supabase
         .from('school_chat_messages')
         .insert({
           school_chat_id: chatId,
           user_id: userProfile.user_id,
           user_name: userProfile.name || 'Anonymous',
-          message: newMessage.trim()
+          message: sanitizedMessage
         });
 
       if (error) throw error;
