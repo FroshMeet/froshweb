@@ -208,24 +208,6 @@ const Contact = () => {
                       </div>
                     </Card>
 
-                    <Card className="bg-card/50 border-border/40 p-6">
-                      <div className="flex items-start space-x-4">
-                        <div className="w-12 h-12 bg-gradient-to-r from-green-500/20 to-green-600/40 rounded-xl flex items-center justify-center">
-                          <MessageSquare className="h-6 w-6 text-green-500" />
-                        </div>
-                        <div>
-                          <h3 className="font-bold text-foreground mb-2">Live Chat</h3>
-                          <p className="text-muted-foreground mb-2">Quick support through the app</p>
-                          <Button 
-                            size="sm" 
-                            onClick={() => navigate('/community')}
-                            className="bg-green-500 hover:bg-green-600 text-white"
-                          >
-                            Visit Community
-                          </Button>
-                        </div>
-                      </div>
-                    </Card>
                   </div>
 
                   <div className="pt-8 border-t border-border/40">
@@ -242,6 +224,26 @@ const Contact = () => {
                       <div>
                         <p className="font-medium text-foreground mb-1">How do you ensure user safety?</p>
                         <p className="text-muted-foreground">We verify all users, moderate conversations, and have strict community guidelines.</p>
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground mb-1">What universities does FroshMeet support?</p>
+                        <p className="text-muted-foreground">We support all major universities and colleges in the US. Check our university list during signup.</p>
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground mb-1">Can I change my profile information later?</p>
+                        <p className="text-muted-foreground">Yes, you can edit your profile, photos, and interests anytime through the app settings.</p>
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground mb-1">How do I report inappropriate behavior?</p>
+                        <p className="text-muted-foreground">Use the report button on any profile or message. Our team reviews all reports within 24 hours.</p>
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground mb-1">Why can't I see all profiles?</p>
+                        <p className="text-muted-foreground">We only show verified students from your university and nearby schools for safety.</p>
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground mb-1">How do roommate matching features work?</p>
+                        <p className="text-muted-foreground">Answer compatibility questions and we'll suggest potential roommates based on lifestyle preferences.</p>
                       </div>
                     </div>
                   </div>
