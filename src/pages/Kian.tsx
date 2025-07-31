@@ -77,7 +77,7 @@ const Kian = () => {
             
             <Card className="bg-card/50 border-border/40 animate-fade-in">
               <CardContent className="p-12">
-                <p className="text-xl text-muted-foreground leading-relaxed">Hi, I'm kian. I created FroshMeet</p>
+                <p className="text-xl text-muted-foreground leading-relaxed">Hi, I'm kian. I'm 18 years old, originally from Iran, and currently a student at UC Santa Cruz. </p>
               </CardContent>
             </Card>
           </div>
