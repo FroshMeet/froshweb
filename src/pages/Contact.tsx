@@ -173,37 +173,39 @@ const Contact = () => {
                   </div>
 
                   <div className="space-y-6 flex-1">
-                    <Card className="bg-card/50 border-border/40 p-6">
+                    <Card className="bg-card/50 border-border/40 p-8">
                       <div className="flex items-start space-x-4">
-                        <div className="w-12 h-12 bg-gradient-to-r from-primary/20 to-primary/40 rounded-xl flex items-center justify-center">
-                          <Mail className="h-6 w-6 text-primary" />
+                        <div className="w-16 h-16 bg-gradient-to-r from-primary/20 to-primary/40 rounded-xl flex items-center justify-center">
+                          <Mail className="h-8 w-8 text-primary" />
                         </div>
-                        <div>
-                          <h3 className="font-bold text-foreground mb-2">Email Support</h3>
-                          <p className="text-muted-foreground mb-2">For general inquiries and support</p>
-                          <a href="mailto:support@froshmeet.com" className="text-primary hover:text-primary/80 transition-colors">
+                        <div className="flex-1">
+                          <h3 className="text-xl font-bold text-foreground mb-3">Email Support</h3>
+                          <p className="text-muted-foreground mb-4 leading-relaxed">For general inquiries, technical support, and partnership opportunities</p>
+                          <a href="mailto:support@froshmeet.com" className="text-primary hover:text-primary/80 transition-colors font-medium">
                             support@froshmeet.com
                           </a>
+                          <p className="text-sm text-muted-foreground mt-2">We typically respond within 24 hours</p>
                         </div>
                       </div>
                     </Card>
 
-                    <Card className="bg-card/50 border-border/40 p-6">
+                    <Card className="bg-card/50 border-border/40 p-8">
                       <div className="flex items-start space-x-4">
-                        <div className="w-12 h-12 bg-gradient-to-r from-pink-500/20 to-purple-500/40 rounded-xl flex items-center justify-center">
-                          <Instagram className="h-6 w-6 text-pink-500" />
+                        <div className="w-16 h-16 bg-gradient-to-r from-pink-500/20 to-purple-500/40 rounded-xl flex items-center justify-center">
+                          <Instagram className="h-8 w-8 text-pink-500" />
                         </div>
-                        <div>
-                          <h3 className="font-bold text-foreground mb-2">Social Media</h3>
-                          <p className="text-muted-foreground mb-2">Follow us for updates and community highlights</p>
+                        <div className="flex-1">
+                          <h3 className="text-xl font-bold text-foreground mb-3">Social Media</h3>
+                          <p className="text-muted-foreground mb-4 leading-relaxed">Follow us for updates, community highlights, and behind-the-scenes content</p>
                           <a 
                             href="https://instagram.com/froshmeet" 
                             target="_blank" 
                             rel="noopener noreferrer"
-                            className="text-primary hover:text-primary/80 transition-colors"
+                            className="text-primary hover:text-primary/80 transition-colors font-medium"
                           >
                             @FroshMeet
                           </a>
+                          <p className="text-sm text-muted-foreground mt-2">Join our growing community of college students</p>
                         </div>
                       </div>
                     </Card>
