@@ -45,7 +45,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send email to support
     const emailResponse = await resend.emails.send({
-      from: "FroshMeet Contact <onboarding@resend.dev>",
+      from: "FroshMeet Contact <contact@froshmeet.com>",
       to: ["support@froshmeet.com"],
       replyTo: email,
       subject: `Contact Form Submission from ${name}`,
@@ -80,7 +80,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send confirmation email to user
     await resend.emails.send({
-      from: "FroshMeet Support <onboarding@resend.dev>",
+      from: "FroshMeet Support <support@froshmeet.com>",
       to: [email],
       subject: "We received your message - FroshMeet",
       html: `
