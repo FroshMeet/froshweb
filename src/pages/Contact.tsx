@@ -162,8 +162,8 @@ const Contact = () => {
               </div>
 
               {/* Contact Information */}
-              <div className="animate-slide-in-right">
-                <div className="space-y-8">
+              <div className="animate-slide-in-right h-full flex flex-col">
+                <div className="space-y-8 flex-1">
                   <div>
                     <h2 className="text-3xl font-bold text-foreground mb-6">Get in touch with us</h2>
                     <p className="text-lg text-muted-foreground leading-relaxed mb-8">
@@ -172,7 +172,7 @@ const Contact = () => {
                     </p>
                   </div>
 
-                  <div className="space-y-6">
+                  <div className="space-y-6 flex-1">
                     <Card className="bg-card/50 border-border/40 p-6">
                       <div className="flex items-start space-x-4">
                         <div className="w-12 h-12 bg-gradient-to-r from-primary/20 to-primary/40 rounded-xl flex items-center justify-center">
@@ -207,47 +207,53 @@ const Contact = () => {
                         </div>
                       </div>
                     </Card>
-
-                  </div>
-
-                  <div className="pt-8 border-t border-border/40">
-                    <h3 className="font-bold text-foreground mb-4">Frequently Asked Questions</h3>
-                    <div className="space-y-4 text-sm">
-                      <div>
-                        <p className="font-medium text-foreground mb-1">How do I verify my student status?</p>
-                        <p className="text-muted-foreground">You'll need your university email address and student ID during registration.</p>
-                      </div>
-                      <div>
-                        <p className="font-medium text-foreground mb-1">Is FroshMeet free to use?</p>
-                        <p className="text-muted-foreground">Yes! FroshMeet is completely free for all college students.</p>
-                      </div>
-                      <div>
-                        <p className="font-medium text-foreground mb-1">How do you ensure user safety?</p>
-                        <p className="text-muted-foreground">We verify all users, moderate conversations, and have strict community guidelines.</p>
-                      </div>
-                      <div>
-                        <p className="font-medium text-foreground mb-1">What universities does FroshMeet support?</p>
-                        <p className="text-muted-foreground">We support all major universities and colleges in the US. Check our university list during signup.</p>
-                      </div>
-                      <div>
-                        <p className="font-medium text-foreground mb-1">Can I change my profile information later?</p>
-                        <p className="text-muted-foreground">Yes, you can edit your profile, photos, and interests anytime through the app settings.</p>
-                      </div>
-                      <div>
-                        <p className="font-medium text-foreground mb-1">How do I report inappropriate behavior?</p>
-                        <p className="text-muted-foreground">Use the report button on any profile or message. Our team reviews all reports within 24 hours.</p>
-                      </div>
-                      <div>
-                        <p className="font-medium text-foreground mb-1">Why can't I see all profiles?</p>
-                        <p className="text-muted-foreground">We only show verified students from your university and nearby schools for safety.</p>
-                      </div>
-                      <div>
-                        <p className="font-medium text-foreground mb-1">How do roommate matching features work?</p>
-                        <p className="text-muted-foreground">Answer compatibility questions and we'll suggest potential roommates based on lifestyle preferences.</p>
-                      </div>
-                    </div>
                   </div>
                 </div>
+              </div>
+            </div>
+            
+            {/* FAQ Section - Full Width */}
+            <div className="mt-16">
+              <div className="animate-fade-in">
+                <Card className="bg-card/50 border-border/40">
+                  <CardContent className="p-8">
+                    <h2 className="text-3xl font-bold text-foreground mb-8 text-center">Frequently Asked Questions</h2>
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <p className="font-medium text-foreground mb-2">How do I verify my student status?</p>
+                        <p className="text-muted-foreground text-sm">You'll need your university email address and student ID during registration.</p>
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground mb-2">Is FroshMeet free to use?</p>
+                        <p className="text-muted-foreground text-sm">Yes! FroshMeet is completely free for all college students.</p>
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground mb-2">How do you ensure user safety?</p>
+                        <p className="text-muted-foreground text-sm">We verify all users, moderate conversations, and have strict community guidelines.</p>
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground mb-2">What universities does FroshMeet support?</p>
+                        <p className="text-muted-foreground text-sm">We support all major universities and colleges in the US. Check our university list during signup.</p>
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground mb-2">Can I change my profile information later?</p>
+                        <p className="text-muted-foreground text-sm">Yes, you can edit your profile, photos, and interests anytime through the app settings.</p>
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground mb-2">How do I report inappropriate behavior?</p>
+                        <p className="text-muted-foreground text-sm">Use the report button on any profile or message. Our team reviews all reports within 24 hours.</p>
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground mb-2">Why can't I see all profiles?</p>
+                        <p className="text-muted-foreground text-sm">We only show verified students from your university and nearby schools for safety.</p>
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground mb-2">How do roommate matching features work?</p>
+                        <p className="text-muted-foreground text-sm">Answer compatibility questions and we'll suggest potential roommates based on lifestyle preferences.</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
             </div>
           </div>
