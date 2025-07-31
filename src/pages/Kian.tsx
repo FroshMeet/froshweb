@@ -70,7 +70,7 @@ const Kian = () => {
             
             {/* Profile Photo */}
             <div className="mb-8 animate-fade-in">
-              <img src="/lovable-uploads/c3c223ba-561b-46c7-a410-e551d6b9a0bf.png" alt="Kian in graduation cap" className="w-80 h-80 mx-auto rounded-2xl object-cover shadow-2xl border border-border/20" />
+              <img src="/lovable-uploads/c3c223ba-561b-46c7-a410-e551d6b9a0bf.png" alt="Kian in graduation cap" className="w-64 h-64 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] mx-auto rounded-2xl object-cover shadow-2xl border border-border/20" />
             </div>
             
             <Card className="bg-card/50 border-border/40 animate-fade-in">
