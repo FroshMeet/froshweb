@@ -77,7 +77,7 @@ const Kian = () => {
             
             <Card className="bg-card/50 border-border/40 animate-fade-in">
               <CardContent className="p-12">
-                <p className="text-xl text-muted-foreground leading-relaxed">Hi, I'm kian. I'm 18 years old, originally from Iran, and currently a student at UC Santa Cruz. </p>
+                <p className="text-xl text-muted-foreground leading-relaxed">Hi, I'm kian. I'm 18 years old, originally from Iran, and currently a student at UC Santa Cruz. I created FroshMeet because I saw how hard it can be to meet people when you're just starting college. Everyone's new, everyone's online, but no one really knows how to break the ice. I wanted to build something that made those first connections easier. FroshMeet helps you find your people before the awkward intros, before the first day, and before college starts to feel lonely.</p>
               </CardContent>
             </Card>
           </div>
