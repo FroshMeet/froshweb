@@ -63,9 +63,7 @@ const Kian = () => {
       <section className="py-20 md:py-32">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center animate-fade-in-up">
-            <Badge variant="secondary" className="mb-6 bg-primary/10 text-primary border-primary/20">
-              Meet the CEO
-            </Badge>
+            <Badge variant="secondary" className="mb-6 bg-primary/10 text-primary border-primary/20">CEO</Badge>
             <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-6 leading-tight">
               <span className="bg-gradient-to-r from-primary via-primary to-primary/80 bg-clip-text text-transparent">kian</span>
             </h1>
