@@ -7,6 +7,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Mail, MessageSquare, Instagram } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const Contact = () => {
   const navigate = useNavigate();
@@ -16,13 +18,41 @@ const Contact = () => {
     email: "",
     message: ""
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Contact form submission logic would go here
-    console.log("Contact form submitted:", formData);
-    // Reset form
-    setFormData({ name: "", email: "", message: "" });
+    
+    if (isSubmitting) return;
+    
+    setIsSubmitting(true);
+    
+    try {
+      const { data, error } = await supabase.functions.invoke('send-contact-email', {
+        body: {
+          name: formData.name,
+          email: formData.email,
+          message: formData.message
+        }
+      });
+
+      if (error) {
+        console.error('Error sending contact email:', error);
+        toast.error("Failed to send message. Please try again.");
+        return;
+      }
+
+      toast.success("Message sent successfully! We'll get back to you soon.");
+      
+      // Reset form
+      setFormData({ name: "", email: "", message: "" });
+      
+    } catch (error) {
+      console.error('Unexpected error:', error);
+      toast.error("Failed to send message. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleInputChange = (field: string, value: string) => {
@@ -153,8 +183,9 @@ const Contact = () => {
                         type="submit" 
                         className="w-full h-12 bg-primary hover:bg-primary/90"
                         size="lg"
+                        disabled={isSubmitting}
                       >
-                        Send Message
+                        {isSubmitting ? "Sending..." : "Send Message"}
                       </Button>
                     </form>
                   </CardContent>
