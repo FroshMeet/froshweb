@@ -71,28 +71,28 @@ const Kian = () => {
             {/* Profile Photo */}
             <div className="mb-8 animate-fade-in">
               <img src="/lovable-uploads/c3c223ba-561b-46c7-a410-e551d6b9a0bf.png" alt="Kian in graduation cap" className="w-64 h-64 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] mx-auto rounded-2xl object-cover shadow-2xl border border-border/20" />
-              
-              {/* Social Media Icons */}
-              <div className="flex justify-center space-x-6 mt-6">
-                <a 
-                  href="https://www.youtube.com/@kiandom" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-primary transition-colors duration-200"
-                >
-                  <Youtube className="h-8 w-8" />
-                </a>
-                <div className="text-muted-foreground">
-                  <Linkedin className="h-8 w-8" />
-                </div>
-              </div>
             </div>
             
-            <Card className="bg-card/50 border-border/40 animate-fade-in">
+            <Card className="bg-card/50 border-border/40 animate-fade-in mb-8">
               <CardContent className="p-12">
                 <p className="text-xl text-muted-foreground leading-relaxed">Hi, I'm kian. I'm 18 years old, originally from Iran, and currently a student at UC Santa Cruz. I created FroshMeet because I saw how hard it can be to meet people when you're just starting college. Everyone's new, everyone's online, but no one really knows how to break the ice. I wanted to build something that made those first connections easier. FroshMeet helps you find your people before the awkward intros, before the first day, and before college starts to feel lonely.</p>
               </CardContent>
             </Card>
+
+            {/* Social Media Icons */}
+            <div className="flex justify-center space-x-6 animate-fade-in">
+              <a 
+                href="https://www.youtube.com/@kiandom" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-colors duration-200"
+              >
+                <Youtube className="h-8 w-8" />
+              </a>
+              <div className="text-muted-foreground">
+                <Linkedin className="h-8 w-8" />
+              </div>
+            </div>
           </div>
         </div>
       </section>
