@@ -86,7 +86,16 @@ const Kian = () => {
               </span>
             </h1>
             
-            <Card className="bg-card/50 border-border/40 mt-12 animate-fade-in">
+            {/* Profile Photo */}
+            <div className="mb-8 animate-fade-in">
+              <img 
+                src="/lovable-uploads/c3c223ba-561b-46c7-a410-e551d6b9a0bf.png"
+                alt="Kian in graduation cap"
+                className="w-80 h-80 mx-auto rounded-2xl object-cover shadow-2xl border border-border/20"
+              />
+            </div>
+            
+            <Card className="bg-card/50 border-border/40 animate-fade-in">
               <CardContent className="p-12">
                 <p className="text-xl text-muted-foreground leading-relaxed">
                   Hi im kian type shit
@@ -98,7 +107,7 @@ const Kian = () => {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-border/40 bg-background py-16">
+      <footer className="border-t border-border/40 bg-background py-8">
         <div className="container mx-auto px-4">
           <div className="text-center">
             <p className="text-sm text-muted-foreground leading-relaxed">
