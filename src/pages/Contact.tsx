@@ -9,7 +9,6 @@ import { Mail, MessageSquare, Instagram } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-
 const Contact = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
@@ -19,34 +18,34 @@ const Contact = () => {
     message: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
     if (isSubmitting) return;
-    
     setIsSubmitting(true);
-    
     try {
-      const { data, error } = await supabase.functions.invoke('send-contact-email', {
+      const {
+        data,
+        error
+      } = await supabase.functions.invoke('send-contact-email', {
         body: {
           name: formData.name,
           email: formData.email,
           message: formData.message
         }
       });
-
       if (error) {
         console.error('Error sending contact email:', error);
         toast.error("Failed to send message. Please try again.");
         return;
       }
-
       toast.success("Message sent successfully! We'll get back to you soon.");
-      
+
       // Reset form
-      setFormData({ name: "", email: "", message: "" });
-      
+      setFormData({
+        name: "",
+        email: "",
+        message: ""
+      });
     } catch (error) {
       console.error('Unexpected error:', error);
       toast.error("Failed to send message. Please try again.");
@@ -54,27 +53,20 @@ const Contact = () => {
       setIsSubmitting(false);
     }
   };
-
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
   };
-
-  return (
-    <div className="min-h-screen bg-background">
+  return <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="sticky top-0 border-b border-border/40 bg-background/80 backdrop-blur-xl z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <div 
-              className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity"
-              onClick={() => navigate('/')}
-            >
-              <img 
-                src={isMobile ? "/lovable-uploads/a880e910-33fe-4ce7-b556-01f73d623057.png" : "/lovable-uploads/e9020b20-5a8d-4a80-a4e0-9d917c7c5e5c.png"}
-                alt="FroshMeet Logo" 
-                className={isMobile ? "h-10 w-auto" : "h-16 w-auto"}
-              />
+            <div className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate('/')}>
+              <img src={isMobile ? "/lovable-uploads/a880e910-33fe-4ce7-b556-01f73d623057.png" : "/lovable-uploads/e9020b20-5a8d-4a80-a4e0-9d917c7c5e5c.png"} alt="FroshMeet Logo" className={isMobile ? "h-10 w-auto" : "h-16 w-auto"} />
             </div>
             
             {/* Centered Navigation */}
@@ -143,48 +135,24 @@ const Contact = () => {
                         <label className="block text-sm font-medium text-foreground mb-2">
                           Your Name
                         </label>
-                        <Input
-                          placeholder="Enter your full name"
-                          value={formData.name}
-                          onChange={(e) => handleInputChange("name", e.target.value)}
-                          className="h-12 bg-background/50"
-                          required
-                        />
+                        <Input placeholder="Enter your full name" value={formData.name} onChange={e => handleInputChange("name", e.target.value)} className="h-12 bg-background/50" required />
                       </div>
                       
                       <div>
                         <label className="block text-sm font-medium text-foreground mb-2">
                           Email Address
                         </label>
-                        <Input
-                          type="email"
-                          placeholder="Enter your email address"
-                          value={formData.email}
-                          onChange={(e) => handleInputChange("email", e.target.value)}
-                          className="h-12 bg-background/50"
-                          required
-                        />
+                        <Input type="email" placeholder="Enter your email address" value={formData.email} onChange={e => handleInputChange("email", e.target.value)} className="h-12 bg-background/50" required />
                       </div>
                       
                       <div>
                         <label className="block text-sm font-medium text-foreground mb-2">
                           Message
                         </label>
-                        <Textarea
-                          placeholder="Tell us how we can help you..."
-                          value={formData.message}
-                          onChange={(e) => handleInputChange("message", e.target.value)}
-                          className="min-h-32 bg-background/50"
-                          required
-                        />
+                        <Textarea placeholder="Tell us how we can help you..." value={formData.message} onChange={e => handleInputChange("message", e.target.value)} className="min-h-32 bg-background/50" required />
                       </div>
                       
-                      <Button 
-                        type="submit" 
-                        className="w-full h-12 bg-primary hover:bg-primary/90"
-                        size="lg"
-                        disabled={isSubmitting}
-                      >
+                      <Button type="submit" className="w-full h-12 bg-primary hover:bg-primary/90" size="lg" disabled={isSubmitting}>
                         {isSubmitting ? "Sending..." : "Send Message"}
                       </Button>
                     </form>
@@ -215,7 +183,7 @@ const Contact = () => {
                           <a href="mailto:support@froshmeet.com" className="text-primary hover:text-primary/80 transition-colors">
                             support@froshmeet.com
                           </a>
-                          <p className="text-xs text-muted-foreground mt-2">We typically respond within 24 hours</p>
+                          <p className="text-xs text-muted-foreground mt-2">We typically respond within 72 hours</p>
                         </div>
                       </div>
                     </Card>
@@ -228,12 +196,7 @@ const Contact = () => {
                         <div className="flex-1">
                           <h3 className="font-bold text-foreground mb-2">Social Media</h3>
                           <p className="text-muted-foreground mb-2">Follow us for updates and community highlights</p>
-                          <a 
-                            href="https://instagram.com/froshmeet" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-primary hover:text-primary/80 transition-colors"
-                          >
+                          <a href="https://instagram.com/froshmeet" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80 transition-colors">
                             @FroshMeet
                           </a>
                           <p className="text-xs text-muted-foreground mt-2">Join our growing community</p>
@@ -304,8 +267,6 @@ const Contact = () => {
           </div>
         </div>
       </footer>
-    </div>
-  );
+    </div>;
 };
-
 export default Contact;
