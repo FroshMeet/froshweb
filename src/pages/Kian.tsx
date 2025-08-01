@@ -89,9 +89,14 @@ const Kian = () => {
               >
                 <Youtube className="h-8 w-8" />
               </a>
-              <div className="text-muted-foreground">
+              <a 
+                href="https://www.linkedin.com/in/kianhabibi/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-colors duration-200"
+              >
                 <Linkedin className="h-8 w-8" />
-              </div>
+              </a>
             </div>
           </div>
         </div>
