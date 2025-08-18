@@ -61,7 +61,7 @@ export default function Hero() {
         <div>
           {/* Headline split to give "Class of 2030" its own row */}
           <h1 className="font-extrabold leading-[1.05] animate-fade-in">
-            <span className="block text-4xl md:text-6xl">Meet the</span>
+            <span className="block text-4xl md:text-6xl">Meet</span>
             <span className="block text-[#0661d8] text-5xl md:text-7xl">Class of 2030</span>
             <span className="block text-4xl md:text-6xl">before Day One.</span>
           </h1>
