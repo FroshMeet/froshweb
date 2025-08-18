@@ -9,6 +9,7 @@ import heroImage from "@/assets/hero-college-students.jpg";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { GetFeaturedFlow } from "@/components/GetFeaturedFlow";
 import Hero from "@/components/landing/Hero";
+import GetFeaturedBar from "@/components/marketing/GetFeaturedBar";
 const SCHOOL_DATABASE = [{
   name: "University of California, Los Angeles",
   acronym: "UCLA",
@@ -654,6 +655,9 @@ const Homepage = () => {
 
       {/* Get Featured Flow */}
       <GetFeaturedFlow open={showGetFeaturedModal} onOpenChange={setShowGetFeaturedModal} />
+      
+      {/* Get Featured Sticky Bar */}
+      <GetFeaturedBar onOpen={handleGetFeaturedClick} />
     </div>;
 };
 export default Homepage;
