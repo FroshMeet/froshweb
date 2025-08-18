@@ -587,70 +587,7 @@ const Homepage = () => {
       </section>
 
       {/* Instagram-Style Get Featured Section */}
-      <section className="py-20 bg-gradient-to-br from-purple-500 via-pink-500 via-orange-500 to-yellow-500 relative overflow-hidden">
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="flex flex-col lg:flex-row items-center gap-12 max-w-6xl mx-auto">
-            {/* Left Content */}
-            <div className="flex-1 text-center lg:text-left animate-fade-in">
-              {/* Instagram Icon */}
-              <div className="flex justify-center lg:justify-start mb-8">
-                <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
-                  <Instagram className="h-8 w-8 text-white" />
-                </div>
-              </div>
-              
-              {/* Heading */}
-              <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
-                Ready to Get Featured?
-              </h2>
-              
-              {/* Subtitle */}
-              <p className="text-xl md:text-2xl text-white/80 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-                Join thousands of students showcasing their personalities and getting featured on their school's Instagram
-              </p>
-              
-              {/* CTA Button */}
-              <div className="relative z-20">
-                <Button onClick={handleGetFeaturedClick} className="bg-white text-purple-600 hover:bg-white/90 h-16 px-8 text-lg font-semibold rounded-2xl shadow-2xl hover:shadow-white/20 transition-all duration-300 hover:scale-105 group relative z-30 pointer-events-auto">
-                  <div className="w-6 h-6 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 rounded-lg flex items-center justify-center mr-3">
-                    <span className="text-white text-sm">✨</span>
-                  </div>
-                  Get Featured Now
-                  <div className="ml-3 w-6 h-6 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 rounded-lg flex items-center justify-center group-hover:translate-x-1 transition-transform">
-                    <span className="text-white text-sm">→</span>
-                  </div>
-                </Button>
-              </div>
-            </div>
-            
-            {/* Right Image Placeholder */}
-            <div className="flex-1 lg:max-w-md animate-slide-in-right">
-              <div className="relative">
-                {/* Glowing border effect with Instagram gradient */}
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-400 via-pink-400 via-orange-400 to-yellow-400 rounded-3xl blur-xl opacity-30"></div>
-                <div className="relative bg-white/10 backdrop-blur-sm rounded-3xl p-1">
-                  <div className="bg-gradient-to-br from-white/20 to-white/5 rounded-2xl h-96 flex items-center justify-center text-white/60">
-                    <div className="text-center">
-                      <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <Users className="h-10 w-10 text-white/80" />
-                      </div>
-                      <p className="text-lg font-medium">Example Student Profile</p>
-                      <p className="text-sm text-white/60 mt-2">Showcase your personality</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        {/* Background decoration with Instagram gradient colors */}
-        <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-          <div className="absolute top-10 left-10 w-32 h-32 border border-white/30 rounded-full"></div>
-          <div className="absolute bottom-20 right-20 w-24 h-24 border border-white/30 rounded-full"></div>
-          <div className="absolute top-1/2 left-1/3 w-16 h-16 border border-white/30 rounded-full"></div>
-        </div>
-      </section>
+      
 
       {/* Dark Footer with Navigation */}
       
