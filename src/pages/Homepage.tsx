@@ -9,7 +9,7 @@ import heroImage from "@/assets/hero-college-students.jpg";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { GetFeaturedFlow } from "@/components/GetFeaturedFlow";
 import Hero from "@/components/landing/Hero";
-import GetFeaturedBar from "@/components/marketing/GetFeaturedBar";
+import GetFeaturedPromo from "@/components/marketing/GetFeaturedPromo";
 const SCHOOL_DATABASE = [{
   name: "University of California, Los Angeles",
   acronym: "UCLA",
@@ -449,6 +449,9 @@ const Homepage = () => {
       {/* Hero Section */}
       <Hero />
 
+      {/* Get Featured Promo */}
+      <GetFeaturedPromo onOpen={handleGetFeaturedClick} />
+
       {/* Popular Schools Carousel */}
       <section className="py-20 bg-card/20 overflow-hidden">
         <div className="container mx-auto px-4">
@@ -655,9 +658,6 @@ const Homepage = () => {
 
       {/* Get Featured Flow */}
       <GetFeaturedFlow open={showGetFeaturedModal} onOpenChange={setShowGetFeaturedModal} />
-      
-      {/* Get Featured Sticky Bar */}
-      <GetFeaturedBar onOpen={handleGetFeaturedClick} />
     </div>;
 };
 export default Homepage;
