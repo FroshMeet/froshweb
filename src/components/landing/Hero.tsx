@@ -97,7 +97,7 @@ export default function Hero() {
             </Button>
           </div>
 
-          <div className="mt-5 text-xs text-zinc-400">Freshmen-only • Safe • Free</div>
+          <div className="mt-5 text-xs text-zinc-400">⚠️ FroshMeet is a student-run platform and is not officially affiliated with or endorsed by any college or university.</div>
         </div>
 
         {/* Phone/UI preview (built in code; crisp without external asset) */}
