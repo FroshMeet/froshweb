@@ -63,7 +63,7 @@ export default function Hero() {
           <h1 className="font-extrabold leading-[1.05] animate-fade-in">
             <span className="block text-5xl md:text-7xl">Meet</span>
             <span className="text-[#0661d8] text-5xl md:text-7xl">Class of 2030</span>
-            <span className="block text-5xl md:text-7xl">before Day One.</span>
+            <span className="block text-5xl md:text-7xl">before Day One</span>
           </h1>
 
           <p className="text-zinc-300 mt-4 max-w-xl text-lg md:text-xl animate-fade-in" style={{
