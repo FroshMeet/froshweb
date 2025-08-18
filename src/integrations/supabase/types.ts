@@ -441,6 +441,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      can_view_profile: {
+        Args: { profile_user_id: string; viewer_id: string }
+        Returns: boolean
+      }
       check_rate_limit: {
         Args: {
           action_type: string

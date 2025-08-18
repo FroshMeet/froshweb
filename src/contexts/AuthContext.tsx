@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { validateEmail, validatePassword, validateAndSanitizeInput, validateRateLimit } from '@/utils/security';
 
 interface UserProfile {
   id: string;
@@ -141,25 +142,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return () => subscription.unsubscribe();
   }, []);
 
-  // Enhanced input validation and security
-  const validateEmail = (email: string): boolean => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email) && email.length <= 254;
-  };
-
-  const validatePassword = (password: string): { isValid: boolean; message?: string } => {
-    if (password.length < 8) {
-      return { isValid: false, message: 'Password must be at least 8 characters long' };
-    }
-    if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(password)) {
-      return { isValid: false, message: 'Password must contain uppercase, lowercase, and numeric characters' };
-    }
-    return { isValid: true };
-  };
-
-  const sanitizeInput = (input: string): string => {
-    return input.trim().replace(/[<>]/g, '');
-  };
+  // Use imported security utilities
 
   const signUp = async (email: string, password: string, name: string) => {
     try {
@@ -173,16 +156,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return { error: new Error(passwordValidation.message) };
       }
 
-      const sanitizedName = sanitizeInput(name);
-      if (sanitizedName.length < 1 || sanitizedName.length > 100) {
-        return { error: new Error('Name must be between 1 and 100 characters') };
+      const nameValidation = validateAndSanitizeInput(name, {
+        minLength: 1,
+        maxLength: 100,
+        fieldName: 'Name',
+        checkContent: true
+      });
+      if (!nameValidation.isValid) {
+        return { error: new Error(nameValidation.message) };
       }
 
       // Rate limiting check
-      await supabase.rpc('check_rate_limit', {
-        user_identifier: email,
-        action_type: 'signup'
-      });
+      const rateLimitOk = await validateRateLimit(email, 'signup', supabase);
+      if (!rateLimitOk) {
+        return { error: new Error('Too many signup attempts. Please try again later.') };
+      }
 
       cleanupAuthState();
       
@@ -195,7 +183,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         options: {
           emailRedirectTo: redirectUrl,
           data: {
-            name: sanitizedName,
+            name: nameValidation.sanitized,
             school: detectedSchool
           }
         }
@@ -242,10 +230,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
 
       // Rate limiting check
-      await supabase.rpc('check_rate_limit', {
-        user_identifier: email,
-        action_type: 'signin'
-      });
+      const rateLimitOk = await validateRateLimit(email, 'signin', supabase);
+      if (!rateLimitOk) {
+        return { error: new Error('Too many signin attempts. Please try again later.') };
+      }
 
       cleanupAuthState();
       

@@ -5,6 +5,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { X, Send, Hash, Users } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { validateAndSanitizeInput, validateRateLimit } from '@/utils/security';
 
 interface SchoolGroupChatProps {
   schoolName: string;
@@ -113,33 +114,22 @@ const SchoolGroupChat = ({ schoolName, userProfile, onClose }: SchoolGroupChatPr
     setMemberCount(count || 0);
   };
 
-  // Enhanced message validation and security
-  const validateMessage = (message: string): { isValid: boolean; message?: string } => {
-    const trimmed = message.trim();
-    if (trimmed.length === 0) return { isValid: false, message: 'Message cannot be empty' };
-    if (trimmed.length > 1000) return { isValid: false, message: 'Message too long (max 1000 characters)' };
-    
-    // Basic content filtering
-    const inappropriateWords = ['spam', 'scam', 'fake']; // Basic example
-    if (inappropriateWords.some(word => trimmed.toLowerCase().includes(word))) {
-      return { isValid: false, message: 'Message contains inappropriate content' };
-    }
-    
-    return { isValid: true };
-  };
-
-  const sanitizeMessage = (message: string): string => {
-    return message.trim().replace(/[<>]/g, '');
-  };
+  // Use imported security utilities
 
   const sendMessage = async () => {
     if (!newMessage.trim() || !chatId) return;
 
-    const validation = validateMessage(newMessage);
-    if (!validation.isValid) {
+    const messageValidation = validateAndSanitizeInput(newMessage, {
+      minLength: 1,
+      maxLength: 1000,
+      fieldName: 'Message',
+      checkContent: true
+    });
+    
+    if (!messageValidation.isValid) {
       toast({
         title: "Invalid Message",
-        description: validation.message,
+        description: messageValidation.message,
         variant: "destructive"
       });
       return;
@@ -147,12 +137,15 @@ const SchoolGroupChat = ({ schoolName, userProfile, onClose }: SchoolGroupChatPr
 
     try {
       // Rate limiting check
-      await supabase.rpc('check_rate_limit', {
-        user_identifier: userProfile.user_id,
-        action_type: 'chat_message'
-      });
-
-      const sanitizedMessage = sanitizeMessage(newMessage);
+      const rateLimitOk = await validateRateLimit(userProfile.user_id, 'chat_message', supabase);
+      if (!rateLimitOk) {
+        toast({
+          title: "Rate Limited",
+          description: "Please wait before sending another message",
+          variant: "destructive"
+        });
+        return;
+      }
 
       const { error } = await supabase
         .from('school_chat_messages')
@@ -160,7 +153,7 @@ const SchoolGroupChat = ({ schoolName, userProfile, onClose }: SchoolGroupChatPr
           school_chat_id: chatId,
           user_id: userProfile.user_id,
           user_name: userProfile.name || 'Anonymous',
-          message: sanitizedMessage
+          message: messageValidation.sanitized
         });
 
       if (error) throw error;

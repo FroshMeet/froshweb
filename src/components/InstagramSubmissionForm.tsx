@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { APPROVED_SCHOOLS } from '@/config/approvedSchools';
+import { validateAndSanitizeInput, validateFileUpload } from '@/utils/security';
 
 interface FormData {
   name: string;
@@ -70,22 +71,41 @@ export const InstagramSubmissionForm: React.FC = () => {
 
   // Enhanced validation and security
   const validateSubmission = (): { isValid: boolean; message?: string } => {
-    const trimmedName = formData.name.trim();
-    if (!trimmedName || trimmedName.length < 1 || trimmedName.length > 100) {
-      return { isValid: false, message: 'Name must be between 1 and 100 characters' };
+    // Validate name
+    const nameValidation = validateAndSanitizeInput(formData.name, {
+      minLength: 1,
+      maxLength: 100,
+      fieldName: 'Name',
+      checkContent: true
+    });
+    if (!nameValidation.isValid) {
+      return { isValid: false, message: nameValidation.message };
     }
 
     if (!formData.school) {
       return { isValid: false, message: 'Please select a school' };
     }
 
-    const trimmedMajor = formData.major.trim();
-    if (!trimmedMajor || trimmedMajor.length < 1 || trimmedMajor.length > 100) {
-      return { isValid: false, message: 'Major must be between 1 and 100 characters' };
+    // Validate major
+    const majorValidation = validateAndSanitizeInput(formData.major, {
+      minLength: 1,
+      maxLength: 100,
+      fieldName: 'Major',
+      checkContent: true
+    });
+    if (!majorValidation.isValid) {
+      return { isValid: false, message: majorValidation.message };
     }
 
-    if (formData.bio.length > 100) {
-      return { isValid: false, message: 'Bio must be 100 characters or less' };
+    // Validate bio
+    const bioValidation = validateAndSanitizeInput(formData.bio, {
+      minLength: 0,
+      maxLength: 100,
+      fieldName: 'Bio',
+      checkContent: true
+    });
+    if (!bioValidation.isValid) {
+      return { isValid: false, message: bioValidation.message };
     }
 
     if (formData.photos.length === 0) {
@@ -96,22 +116,17 @@ export const InstagramSubmissionForm: React.FC = () => {
       return { isValid: false, message: 'Maximum 20 photos allowed' };
     }
 
-    // Validate file types and sizes
+    // Validate each photo
     for (const photo of formData.photos) {
-      if (!photo.type.startsWith('image/')) {
-        return { isValid: false, message: 'Only image files are allowed' };
-      }
-      if (photo.size > 10 * 1024 * 1024) { // 10MB limit
-        return { isValid: false, message: 'Each photo must be under 10MB' };
+      const fileValidation = validateFileUpload(photo);
+      if (!fileValidation.isValid) {
+        return { isValid: false, message: fileValidation.message };
       }
     }
 
     return { isValid: true };
   };
 
-  const sanitizeInput = (input: string): string => {
-    return input.trim().replace(/[<>]/g, '');
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -129,13 +144,17 @@ export const InstagramSubmissionForm: React.FC = () => {
       const imageUrls = await uploadPhotos();
       
       // Save submission to database with sanitized data
+      const nameValidation = validateAndSanitizeInput(formData.name, { fieldName: 'Name' });
+      const majorValidation = validateAndSanitizeInput(formData.major, { fieldName: 'Major' });
+      const bioValidation = validateAndSanitizeInput(formData.bio, { fieldName: 'Bio' });
+      
       const { error } = await supabase
         .from('submissions')
         .insert({
-          name: sanitizeInput(formData.name),
+          name: nameValidation.sanitized,
           school: formData.school,
-          major: sanitizeInput(formData.major),
-          bio: sanitizeInput(formData.bio),
+          major: majorValidation.sanitized,
+          bio: bioValidation.sanitized,
           image_urls: imageUrls,
           stripe_session_id: sessionId,
           has_paid: true,
