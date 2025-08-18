@@ -8,6 +8,7 @@ import { Search, Users, MessageSquare, Calendar, Shield, Instagram } from "lucid
 import heroImage from "@/assets/hero-college-students.jpg";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { GetFeaturedFlow } from "@/components/GetFeaturedFlow";
+import Hero from "@/components/landing/Hero";
 const SCHOOL_DATABASE = [{
   name: "University of California, Los Angeles",
   acronym: "UCLA",
@@ -445,83 +446,7 @@ const Homepage = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-20 md:py-32">
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-card opacity-90"></div>
-        <div className="relative container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="animate-fade-in-up">
-              <Badge variant="secondary" className="mb-6 bg-primary/10 text-primary border-primary/20">
-                🎓 Meet Your College Crew Before Day One
-              </Badge>
-              <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-6 leading-tight">
-                Connect with your{" "}
-                <span className="bg-gradient-to-r from-primary via-primary to-primary/80 bg-clip-text text-transparent">
-                  college community
-                </span>
-              </h1>
-              <p className="text-xl text-muted-foreground mb-8 max-w-lg">
-                FroshMeet helps you find roommates, group chats, and new friends at your school, before the year even starts.
-              </p>
-              <p className="text-lg text-primary font-semibold mb-8 max-w-lg">🚀 Now live for Class of 2030 at 100+ colleges across the U.S & Canada.</p>
-              
-              {/* School Search */}
-              <div className="max-w-md mb-8">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                  <Input placeholder="Search for your school..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="h-14 pl-10 text-lg bg-card/50 border-border/40" />
-                   {searchTerm && filteredSchools.length > 0 && <div className="absolute top-full left-0 right-0 bg-card border border-border rounded-lg mt-2 z-50 max-h-60 overflow-y-auto shadow-2xl animate-fade-scale-in">
-                      {filteredSchools.slice(0, 5).map(school => <div key={school.name} className="p-4 hover:bg-muted/50 cursor-pointer border-b border-border/40 last:border-b-0 transition-colors" onClick={() => {
-                    setSearchTerm("");
-                    handleSchoolSelect(school.name, school.slug);
-                  }}>
-                          <div className="flex items-center gap-3">
-                            <div className="text-sm font-bold text-primary">{school.acronym}</div>
-                            <div className="text-sm text-foreground">{school.name}</div>
-                          </div>
-                        </div>)}
-                    </div>}
-                </div>
-                
-                <div className="flex gap-3 mt-4">
-                  <Button onClick={() => searchTerm && filteredSchools.length > 0 && handleSchoolSelect(filteredSchools[0].name, filteredSchools[0].slug)} disabled={!searchTerm || filteredSchools.length === 0} className="flex-1 h-12 text-base bg-primary hover:bg-primary/90" size="lg">
-                    Explore {searchTerm && filteredSchools.length > 0 ? filteredSchools[0].name : "School"}
-                  </Button>
-                  <Button variant="outline" onClick={() => navigate('/community')} className="h-12 px-6">
-                    Browse Schools
-                  </Button>
-                </div>
-                
-                {/* Get Featured Promotion */}
-                <div className="mt-8 p-6 bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-orange-500/10 rounded-2xl border border-gradient-to-r border-pink-500/20">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-pink-500 via-purple-500 to-orange-500 rounded-xl flex items-center justify-center">
-                      <Instagram className="h-6 w-6 text-white" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-bold text-foreground">Get Featured on Instagram</h3>
-                      <p className="text-sm text-muted-foreground">Share your story with thousands of students</p>
-                    </div>
-                  </div>
-                  
-                  <Button onClick={handleGetFeaturedClick} className="w-full bg-gradient-to-r from-pink-500 via-purple-500 to-orange-500 hover:from-pink-600 hover:via-purple-600 hover:to-orange-600 text-white border-0 h-12 shadow-lg hover:shadow-xl transition-all duration-300">
-                    <Instagram className="h-4 w-4 mr-2" />
-                    Start Your Feature Application
-                  </Button>
-                </div>
-              </div>
-
-              <p className="text-sm text-muted-foreground">
-                ⚠️ FroshMeet is a student-run platform and is not officially affiliated with or endorsed by any college or university.
-              </p>
-            </div>
-            
-            <div className="relative animate-slide-in-right">
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/5 rounded-3xl transform rotate-3"></div>
-              <img src="/lovable-uploads/f95a4d92-a40d-46a3-9199-c970d7098828.png" alt="College students connecting and making friends" className="relative rounded-3xl shadow-2xl w-full h-auto" />
-            </div>
-          </div>
-        </div>
-      </section>
+      <Hero />
 
       {/* Popular Schools Carousel */}
       <section className="py-20 bg-card/20 overflow-hidden">
