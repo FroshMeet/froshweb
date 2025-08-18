@@ -7,7 +7,7 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instanciate createClient with right options
+  // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "12.2.3 (519615d)"
@@ -443,10 +443,10 @@ export type Database = {
     Functions: {
       check_rate_limit: {
         Args: {
-          user_identifier: string
           action_type: string
           max_attempts?: number
           time_window_minutes?: number
+          user_identifier: string
         }
         Returns: boolean
       }
@@ -455,25 +455,25 @@ export type Database = {
         Returns: string
       }
       get_potential_matches: {
-        Args: { user_id_param: string; limit_count?: number }
+        Args: { limit_count?: number; user_id_param: string }
         Returns: {
-          user_id: string
-          name: string
           avatar_url: string
-          school: string
-          major: string
           bio: string
           class_year: string
           interests: string[]
           looking_for_roommate: boolean
+          major: string
+          name: string
+          school: string
+          user_id: string
         }[]
       }
       handle_swipe: {
-        Args: { swiper_id: string; target_id: string; swipe_direction: string }
+        Args: { swipe_direction: string; swiper_id: string; target_id: string }
         Returns: Json
       }
       verify_college_email: {
-        Args: { user_id_param: string; college_email_param: string }
+        Args: { college_email_param: string; user_id_param: string }
         Returns: boolean
       }
     }
