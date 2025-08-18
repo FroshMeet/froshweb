@@ -46,33 +46,35 @@ const Footer = () => {
             </div>
           </div>
           
-          <div>
-            <h3 className="font-semibold text-foreground mb-4">Company</h3>
-            <div className="space-y-2">
-              <Button variant="ghost" size="sm" onClick={() => navigate('/about')} className="text-muted-foreground hover:text-foreground w-full justify-start p-0 h-auto">
-                About
-              </Button>
-              <Button variant="ghost" size="sm" onClick={() => navigate('/features')} className="text-muted-foreground hover:text-foreground w-full justify-start p-0 h-auto">
-                Features
-              </Button>
-              <Button variant="ghost" size="sm" onClick={() => navigate('/contact')} className="text-muted-foreground hover:text-foreground w-full justify-start p-0 h-auto">
-                Contact
-              </Button>
+          <div className="grid grid-cols-2 md:contents gap-8 md:gap-0 md:col-span-2">
+            <div>
+              <h3 className="font-semibold text-foreground mb-4">Company</h3>
+              <div className="space-y-2">
+                <Button variant="ghost" size="sm" onClick={() => navigate('/about')} className="text-muted-foreground hover:text-foreground w-full justify-start p-0 h-auto">
+                  About
+                </Button>
+                <Button variant="ghost" size="sm" onClick={() => navigate('/features')} className="text-muted-foreground hover:text-foreground w-full justify-start p-0 h-auto">
+                  Features
+                </Button>
+                <Button variant="ghost" size="sm" onClick={() => navigate('/contact')} className="text-muted-foreground hover:text-foreground w-full justify-start p-0 h-auto">
+                  Contact
+                </Button>
+              </div>
             </div>
-          </div>
-          
-          <div>
-            <h3 className="font-semibold text-foreground mb-4">Legal</h3>
-            <div className="space-y-2">
-              <Button variant="ghost" size="sm" onClick={() => navigate('/privacy-policy')} className="text-muted-foreground hover:text-foreground w-full justify-start p-0 h-auto">
-                Privacy Policy
-              </Button>
-              <Button variant="ghost" size="sm" onClick={() => navigate('/terms-of-service')} className="text-muted-foreground hover:text-foreground w-full justify-start p-0 h-auto">
-                Terms of Service
-              </Button>
-              <Button variant="ghost" size="sm" onClick={() => navigate('/cookie-policy')} className="text-muted-foreground hover:text-foreground w-full justify-start p-0 h-auto">
-                Cookie Policy
-              </Button>
+            
+            <div>
+              <h3 className="font-semibold text-foreground mb-4">Legal</h3>
+              <div className="space-y-2">
+                <Button variant="ghost" size="sm" onClick={() => navigate('/privacy-policy')} className="text-muted-foreground hover:text-foreground w-full justify-start p-0 h-auto">
+                  Privacy Policy
+                </Button>
+                <Button variant="ghost" size="sm" onClick={() => navigate('/terms-of-service')} className="text-muted-foreground hover:text-foreground w-full justify-start p-0 h-auto">
+                  Terms of Service
+                </Button>
+                <Button variant="ghost" size="sm" onClick={() => navigate('/cookie-policy')} className="text-muted-foreground hover:text-foreground w-full justify-start p-0 h-auto">
+                  Cookie Policy
+                </Button>
+              </div>
             </div>
           </div>
         </div>
