@@ -61,18 +61,18 @@ export default function Hero() {
         <div>
           {/* Headline split to give "Class of 2030" its own row */}
           <h1 className="font-extrabold leading-[1.05] animate-fade-in">
-            <span className="block text-4xl md:text-6xl">Meet</span>
-            <span className="block text-[#0661d8] text-5xl md:text-7xl">Class of 2030</span>
-            <span className="block text-4xl md:text-6xl">before Day One.</span>
+            <span className="block text-5xl md:text-7xl lg:text-8xl">Meet</span>
+            <span className="block text-[#0661d8] text-6xl md:text-8xl lg:text-9xl">Class of 2030</span>
+            <span className="block text-5xl md:text-7xl lg:text-8xl">before Day One.</span>
           </h1>
 
-          <p className="text-zinc-300 mt-4 max-w-xl animate-fade-in" style={{
+          <p className="text-zinc-300 mt-4 max-w-xl text-lg md:text-xl animate-fade-in" style={{
           animationDelay: '0.1s'
         }}>
             Find roommates, group chats, and new friends at your school — before the year even starts.
           </p>
 
-          <p className="mt-3 font-semibold text-[#0661d8] animate-fade-in" style={{
+          <p className="mt-3 font-semibold text-[#0661d8] text-base md:text-lg animate-fade-in" style={{
           animationDelay: '0.18s'
         }}>
             🎓 Launching for Class of 2030 at 100+ colleges.
@@ -82,9 +82,9 @@ export default function Hero() {
           <div className="mt-7 flex flex-col sm:flex-row gap-3 animate-fade-in" style={{
           animationDelay: '0.26s'
         }}>
-            <SearchableSelect options={schoolOptions} value={selectedSchool} onValueChange={handleSchoolSelect} placeholder="Search for your school…" className="w-full" />
+            <SearchableSelect options={schoolOptions} value={selectedSchool} onValueChange={handleSchoolSelect} placeholder="Search for your school…" className="w-full text-base" />
 
-            <Button onClick={() => navigate('/community')} className="w-full sm:w-auto px-5 py-3 rounded-2xl font-semibold bg-primary hover:bg-primary/90">
+            <Button onClick={() => navigate('/community')} className="w-full sm:w-auto px-6 py-4 text-base rounded-2xl font-semibold bg-primary hover:bg-primary/90">
               Explore School
             </Button>
           </div>
