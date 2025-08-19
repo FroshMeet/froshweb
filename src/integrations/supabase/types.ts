@@ -438,10 +438,55 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      public_profiles: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          class_year: string | null
+          created_at: string | null
+          interests: string[] | null
+          looking_for_roommate: boolean | null
+          major: string | null
+          name: string | null
+          school: string | null
+          user_id: string | null
+          verified: boolean | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          class_year?: string | null
+          created_at?: string | null
+          interests?: string[] | null
+          looking_for_roommate?: boolean | null
+          major?: string | null
+          name?: string | null
+          school?: string | null
+          user_id?: string | null
+          verified?: boolean | null
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          class_year?: string | null
+          created_at?: string | null
+          interests?: string[] | null
+          looking_for_roommate?: boolean | null
+          major?: string | null
+          name?: string | null
+          school?: string | null
+          user_id?: string | null
+          verified?: boolean | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       can_view_profile: {
+        Args: { profile_user_id: string; viewer_id: string }
+        Returns: boolean
+      }
+      can_view_profile_basic: {
         Args: { profile_user_id: string; viewer_id: string }
         Returns: boolean
       }
