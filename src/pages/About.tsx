@@ -5,27 +5,17 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Users, Shield, Heart, Target } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
-
 const About = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
-
-  return (
-    <div className="min-h-screen bg-background">
+  return <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="sticky top-0 border-b border-border/40 bg-background/80 backdrop-blur-xl z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <div 
-              className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity"
-              onClick={() => navigate('/')}
-            >
-              <img 
-                src={isMobile ? "/lovable-uploads/a880e910-33fe-4ce7-b556-01f73d623057.png" : "/lovable-uploads/e9020b20-5a8d-4a80-a4e0-9d917c7c5e5c.png"}
-                alt="FroshMeet Logo" 
-                className={isMobile ? "h-10 w-auto" : "h-16 w-auto"}
-              />
+            <div className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate('/')}>
+              <img src={isMobile ? "/lovable-uploads/a880e910-33fe-4ce7-b556-01f73d623057.png" : "/lovable-uploads/e9020b20-5a8d-4a80-a4e0-9d917c7c5e5c.png"} alt="FroshMeet Logo" className={isMobile ? "h-10 w-auto" : "h-16 w-auto"} />
             </div>
             
             {/* Centered Navigation */}
@@ -145,7 +135,9 @@ const About = () => {
                 </CardContent>
               </Card>
               
-              <Card className="bg-card/50 border-border/40 hover:bg-card/80 transition-all duration-300 hover:scale-105 animate-scale-in" style={{ animationDelay: '0.1s' }}>
+              <Card className="bg-card/50 border-border/40 hover:bg-card/80 transition-all duration-300 hover:scale-105 animate-scale-in" style={{
+              animationDelay: '0.1s'
+            }}>
                 <CardContent className="p-8 text-center">
                   <div className="w-16 h-16 bg-gradient-to-r from-primary/20 to-primary/40 rounded-2xl flex items-center justify-center mx-auto mb-6">
                     <Shield className="h-8 w-8 text-primary" />
@@ -157,7 +149,9 @@ const About = () => {
                 </CardContent>
               </Card>
               
-              <Card className="bg-card/50 border-border/40 hover:bg-card/80 transition-all duration-300 hover:scale-105 animate-scale-in" style={{ animationDelay: '0.2s' }}>
+              <Card className="bg-card/50 border-border/40 hover:bg-card/80 transition-all duration-300 hover:scale-105 animate-scale-in" style={{
+              animationDelay: '0.2s'
+            }}>
                 <CardContent className="p-8 text-center">
                   <div className="w-16 h-16 bg-gradient-to-r from-primary/20 to-primary/40 rounded-2xl flex items-center justify-center mx-auto mb-6">
                     <Heart className="h-8 w-8 text-primary" />
@@ -177,11 +171,7 @@ const About = () => {
               </blockquote>
               <p className="text-lg text-muted-foreground">
                 -{" "}
-                <Button 
-                  variant="link" 
-                  onClick={() => navigate('/kian')}
-                  className="text-primary hover:text-primary/80 p-0 h-auto font-normal text-lg underline-offset-4"
-                >
+                <Button variant="link" onClick={() => navigate('/kian')} className="text-primary hover:text-primary/80 p-0 h-auto font-normal text-lg underline-offset-4">
                   kian, CEO of FroshMeet
                 </Button>
               </p>
@@ -201,11 +191,7 @@ const About = () => {
               <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
                 Join thousands of students who have already found their people through FroshMeet
               </p>
-              <Button 
-                size="lg" 
-                onClick={() => navigate('/community')}
-                className="bg-primary hover:bg-primary/90 text-lg px-8 py-4 h-auto"
-              >
+              <Button size="lg" onClick={() => navigate('/community')} className="bg-primary hover:bg-primary/90 text-lg px-8 py-4 h-auto">
                 Start Connecting Today
               </Button>
             </CardContent>
@@ -214,18 +200,7 @@ const About = () => {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-border/40 bg-background py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center">
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              © 2025 FroshMeet. All rights reserved. FroshMeet is a registered trademark of FroshMeet LLC. 
-              FroshMeet is not officially partnered with any university.
-            </p>
-          </div>
-        </div>
-      </footer>
-    </div>
-  );
+      
+    </div>;
 };
-
 export default About;
