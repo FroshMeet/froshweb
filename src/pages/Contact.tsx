@@ -257,16 +257,7 @@ const Contact = () => {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-border/40 bg-background py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center">
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              © 2025 FroshMeet. All rights reserved. FroshMeet is a registered trademark of FroshMeet LLC. 
-              FroshMeet is not officially partnered with any university.
-            </p>
-          </div>
-        </div>
-      </footer>
+      
     </div>;
 };
 export default Contact;
