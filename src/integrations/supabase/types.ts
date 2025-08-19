@@ -438,48 +438,7 @@ export type Database = {
       }
     }
     Views: {
-      public_profiles: {
-        Row: {
-          avatar_url: string | null
-          bio: string | null
-          class_year: string | null
-          created_at: string | null
-          interests: string[] | null
-          looking_for_roommate: boolean | null
-          major: string | null
-          name: string | null
-          school: string | null
-          user_id: string | null
-          verified: boolean | null
-        }
-        Insert: {
-          avatar_url?: string | null
-          bio?: string | null
-          class_year?: string | null
-          created_at?: string | null
-          interests?: string[] | null
-          looking_for_roommate?: boolean | null
-          major?: string | null
-          name?: string | null
-          school?: string | null
-          user_id?: string | null
-          verified?: boolean | null
-        }
-        Update: {
-          avatar_url?: string | null
-          bio?: string | null
-          class_year?: string | null
-          created_at?: string | null
-          interests?: string[] | null
-          looking_for_roommate?: boolean | null
-          major?: string | null
-          name?: string | null
-          school?: string | null
-          user_id?: string | null
-          verified?: boolean | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       can_view_profile: {
