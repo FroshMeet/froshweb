@@ -98,7 +98,7 @@ const About = () => {
                 <Card className="bg-card/50 border-border/40 p-6 text-center">
                   <GraduationCap className="h-12 w-12 text-primary mx-auto mb-4" />
                   <h4 className="font-bold text-foreground mb-2">100</h4>
-                  <p className="text-sm text-muted-foreground">Students Connected</p>
+                  <p className="text-sm text-muted-foreground">Supported Schools</p>
                 </Card>
                 <Card className="bg-card/50 border-border/40 p-6 text-center">
                   <Shield className="h-12 w-12 text-primary mx-auto mb-4" />
