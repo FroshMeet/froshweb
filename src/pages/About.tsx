@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Users, Shield, Heart, Target } from "lucide-react";
+import { GraduationCap, Shield, Heart, Target, Users } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 const About = () => {
   const navigate = useNavigate();
@@ -96,7 +96,7 @@ const About = () => {
               
               <div className="grid grid-cols-2 gap-4 animate-slide-in-right">
                 <Card className="bg-card/50 border-border/40 p-6 text-center">
-                  <Users className="h-12 w-12 text-primary mx-auto mb-4" />
+                  <GraduationCap className="h-12 w-12 text-primary mx-auto mb-4" />
                   <h4 className="font-bold text-foreground mb-2">50K+</h4>
                   <p className="text-sm text-muted-foreground">Students Connected</p>
                 </Card>
