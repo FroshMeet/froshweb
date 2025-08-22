@@ -6,90 +6,15 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search, Check } from 'lucide-react';
 
-// School database from Homepage - exact same smart search logic
-const SCHOOL_DATABASE = [{
-  name: "University of California, Los Angeles",
-  acronym: "UCLA",
-  searchTerms: ["ucla", "los angeles", "westwood"],
-  slug: "ucla"
-}, {
-  name: "Stanford University",
-  acronym: "Stanford",
-  searchTerms: ["stanford", "palo alto"],
-  slug: "stanford"
-}, {
-  name: "University of California, Berkeley",
-  acronym: "UC Berkeley",
-  searchTerms: ["berkeley", "cal", "uc berkeley", "ucb"],
-  slug: "uc-berkeley"
-}, {
-  name: "University of Southern California",
-  acronym: "USC",
-  searchTerms: ["usc", "southern california", "trojans"],
-  slug: "usc"
-}, {
-  name: "Harvard University",
-  acronym: "Harvard",
-  searchTerms: ["harvard", "cambridge"],
-  slug: "harvard"
-}, {
-  name: "Arizona State University",
-  acronym: "ASU",
-  searchTerms: ["asu", "arizona state", "tempe"],
-  slug: "asu"
-}];
+import { SmartSchoolSearch } from '@/components/SmartSchoolSearch';
+import { School } from '@/data/schools';
 export default function Hero() {
   const navigate = useNavigate();
-  const [selectedSchool, setSelectedSchool] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedSchool, setSelectedSchool] = useState<School | null>(null);
 
-  // Smart search function (copied from GetFeaturedFlow)
-  const searchSchools = (query: string) => {
-    if (!query.trim()) return [];
-    
-    const searchTerm = query.toLowerCase().trim();
-    const results = [];
-    
-    SCHOOL_DATABASE.forEach(school => {
-      const searchableText = [
-        school.name.toLowerCase(),
-        school.acronym.toLowerCase(),
-        ...school.searchTerms.map(term => term.toLowerCase())
-      ];
-      
-      let bestScore = 0;
-      
-      searchableText.forEach(text => {
-        // Exact match (highest priority)
-        if (text === searchTerm) {
-          bestScore = Math.max(bestScore, 100);
-        }
-        // Starts with (medium priority)  
-        else if (text.startsWith(searchTerm)) {
-          bestScore = Math.max(bestScore, 50);
-        }
-        // Contains (lowest priority)
-        else if (text.includes(searchTerm)) {
-          bestScore = Math.max(bestScore, 25);
-        }
-      });
-      
-      if (bestScore > 0) {
-        results.push({ ...school, score: bestScore });
-      }
-    });
-    
-    return results
-      .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name))
-      .slice(0, 10);
-  };
-
-  const filteredSchools = searchSchools(searchTerm);
-  
-  const handleSchoolSelect = (schoolSlug: string) => {
-    setSelectedSchool(schoolSlug);
-    setSearchTerm("");
-    navigate(`/${schoolSlug}`);
+  const handleSchoolSelect = (school: School) => {
+    setSelectedSchool(school);
+    navigate(`/${school.id}`);
   };
   return <section className="relative overflow-hidden">
       {/* subtle blue glow */}
@@ -121,48 +46,17 @@ export default function Hero() {
             🎓 Launching for Class of 2030 at 100+ colleges.
           </p>
 
-          {/* Selected school display */}
-          {selectedSchool && (
-            <div className="mt-6 bg-primary/10 border border-primary/20 rounded-lg p-4 animate-fade-in" style={{
-              animationDelay: '0.24s'
-            }}>
-              <div className="flex items-center gap-2">
-                <Check className="h-5 w-5 text-primary" />
-                <span className="font-medium text-foreground">
-                  {SCHOOL_DATABASE.find(s => s.slug === selectedSchool)?.name}
-                </span>
-              </div>
-            </div>
-          )}
-
-          {/* Search + Explore row */}
+          {/* Smart School Search */}
           <div className="mt-7 flex flex-col sm:flex-row gap-3 animate-fade-in" style={{
-          animationDelay: '0.26s'
-        }}>
-            <div className="relative w-full">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-              <Input
+            animationDelay: '0.26s'
+          }}>
+            <div className="flex-1">
+              <SmartSchoolSearch
+                onSelect={handleSchoolSelect}
                 placeholder="Search for your school…"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="h-12 pl-10 text-base bg-card/50 border-border/40 rounded-2xl"
+                selectedSchool={selectedSchool}
+                className="w-full"
               />
-              {searchTerm && filteredSchools.length > 0 && (
-                <div className="absolute top-full left-0 right-0 bg-card border border-border rounded-2xl mt-2 z-[9999] shadow-2xl animate-fade-scale-in">
-                  {filteredSchools.slice(0, 5).map((school) => (
-                    <div
-                      key={school.slug}
-                      className="p-4 hover:bg-muted/50 cursor-pointer border-b border-border/40 last:border-b-0 transition-colors first:rounded-t-2xl last:rounded-b-2xl"
-                      onClick={() => handleSchoolSelect(school.slug)}
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="text-sm font-bold text-primary">{school.acronym}</div>
-                        <div className="text-sm text-foreground">{school.name}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
             </div>
 
             <Button onClick={() => navigate('/community')} className="w-full sm:w-auto px-6 py-4 text-base rounded-2xl font-semibold bg-primary hover:bg-primary/90">
