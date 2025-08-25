@@ -10,452 +10,518 @@ export interface ApprovedSchool {
 }
 
 export const APPROVED_SCHOOLS: Record<string, ApprovedSchool> = {
-  // Arizona State University
-  'asu': {
-    name: 'Arizona State University',
-    displayName: 'ASU',
-    instagramUsername: 'asu.2030official'
-  },
-  
-  // Boston University
-  'bu': {
-    name: 'Boston University',
-    displayName: 'BU',
-    instagramUsername: 'bu2030meet'
-  },
-  
-  // Brown University
-  'brown': {
-    name: 'Brown University',
-    displayName: 'Brown',
-    instagramUsername: 'brownuniversity2030'
-  },
-  
-  // Cal Poly Pomona
-  'cal-poly-pomona': {
-    name: 'California State Polytechnic University, Pomona',
-    displayName: 'Cal Poly Pomona',
-    instagramUsername: 'calpolypomona2030'
-  },
-  
-  // Cal Poly SLO
-  'cal-poly-slo': {
-    name: 'California Polytechnic State University, San Luis Obispo',
-    displayName: 'Cal Poly SLO',
-    instagramUsername: 'calpolyslo2030meet'
-  },
-  
-  // Cal State Long Beach
-  'csulb': {
-    name: 'California State University, Long Beach',
-    displayName: 'CSULB',
-    instagramUsername: 'csulb2030meet'
-  },
-  
-  // Chico State
-  'chico-state': {
-    name: 'California State University, Chico',
-    displayName: 'Chico State',
-    instagramUsername: 'chicostate2030meet'
-  },
-  
-  // Caltech
-  'caltech': {
-    name: 'California Institute of Technology',
-    displayName: 'Caltech',
-    instagramUsername: 'caltech2030'
-  },
-  
-  // Carnegie Mellon
-  'cmu': {
-    name: 'Carnegie Mellon University',
-    displayName: 'CMU',
-    instagramUsername: 'cmu2030meet'
-  },
-  
-  // Columbia
-  'columbia': {
-    name: 'Columbia University',
-    displayName: 'Columbia',
-    instagramUsername: 'columbiaclassof2030'
-  },
-  
-  // Cornell
-  'cornell': {
-    name: 'Cornell University',
-    displayName: 'Cornell',
-    instagramUsername: 'cornell2030meet'
-  },
-  
-  // University of Colorado Boulder
-  'cu-boulder': {
-    name: 'University of Colorado Boulder',
-    displayName: 'CU Boulder',
-    instagramUsername: 'cuboulder2030meet'
-  },
-  
-  // Dartmouth
-  'dartmouth': {
-    name: 'Dartmouth College',
-    displayName: 'Dartmouth',
-    instagramUsername: 'dartmouth2030'
-  },
-  
-  // Duke
-  'duke': {
-    name: 'Duke University',
-    displayName: 'Duke',
-    instagramUsername: 'duke2030meet'
-  },
-  
-  // Florida State
-  'fsu': {
-    name: 'Florida State University',
-    displayName: 'FSU',
-    instagramUsername: 'fsu2030students'
-  },
-  
-  // Georgetown
-  'georgetown': {
-    name: 'Georgetown University',
-    displayName: 'Georgetown',
-    instagramUsername: 'georgetown2030meet'
-  },
-  
-  // Harvard
+  // Ivy League
   'harvard': {
     name: 'Harvard University',
     displayName: 'Harvard',
     instagramUsername: 'harvard2030class'
   },
-  
-  // Indiana University Bloomington
-  'iu-bloomington': {
-    name: 'Indiana University Bloomington',
-    displayName: 'IU Bloomington',
-    instagramUsername: 'iubloomington2030'
+  'upenn': {
+    name: 'University of Pennsylvania',
+    displayName: 'UPenn',
+    instagramUsername: 'upenn2030class'
   },
-  
-  // MIT
-  'mit': {
-    name: 'Massachusetts Institute of Technology',
-    displayName: 'MIT',
-    instagramUsername: 'mit2030class'
-  },
-  
-  // Michigan State
-  'michigan-state': {
-    name: 'Michigan State University',
-    displayName: 'Michigan State',
-    instagramUsername: 'msu2030meet'
-  },
-  
-  // Northeastern
-  'northeastern': {
-    name: 'Northeastern University',
-    displayName: 'Northeastern',
-    instagramUsername: 'northeastern2030meet'
-  },
-  
-  // Northwestern
-  'northwestern': {
-    name: 'Northwestern University',
-    displayName: 'Northwestern',
-    instagramUsername: 'northwestern2030'
-  },
-  
-  // NYU
-  'nyu': {
-    name: 'New York University',
-    displayName: 'NYU',
-    instagramUsername: 'nyu2030meet'
-  },
-  
-  // Ohio State
-  'ohio-state': {
-    name: 'Ohio State University',
-    displayName: 'Ohio State',
-    instagramUsername: 'osu2030class'
-  },
-  
-  // Penn State
-  'penn-state': {
-    name: 'Pennsylvania State University',
-    displayName: 'Penn State',
-    instagramUsername: 'pennstate2030meet'
-  },
-  
-  // Princeton
   'princeton': {
     name: 'Princeton University',
     displayName: 'Princeton',
     instagramUsername: 'princeton2030class'
   },
-  
-  // Purdue
-  'purdue': {
-    name: 'Purdue University',
-    displayName: 'Purdue',
-    instagramUsername: 'purdue2030meet'
+  'columbia': {
+    name: 'Columbia University',
+    displayName: 'Columbia',
+    instagramUsername: 'columbia2030meet'
   },
-  
-  // Rice
-  'rice': {
-    name: 'Rice University',
-    displayName: 'Rice',
-    instagramUsername: 'rice2030meet'
+  'yale': {
+    name: 'Yale University',
+    displayName: 'Yale',
+    instagramUsername: 'yale2030class'
   },
-  
-  // Sacramento State
-  'sac-state': {
-    name: 'California State University, Sacramento',
-    displayName: 'Sac State',
-    instagramUsername: 'sacstate2030meet'
+  'cornell': {
+    name: 'Cornell University',
+    displayName: 'Cornell',
+    instagramUsername: 'cornell2030meet'
   },
-  
-  // SF State
-  'sf-state': {
-    name: 'San Francisco State University',
-    displayName: 'SF State',
-    instagramUsername: 'sfsu2030meet'
+  'dartmouth': {
+    name: 'Dartmouth College',
+    displayName: 'Dartmouth',
+    instagramUsername: 'dartmouth2030'
   },
-  
-  // San Diego State
-  'sdsu': {
-    name: 'San Diego State University',
-    displayName: 'SDSU',
-    instagramUsername: 'sdsu2030meet_'
+  'brown': {
+    name: 'Brown University',
+    displayName: 'Brown',
+    instagramUsername: 'brown2030meet'
   },
-  
-  // San Jose State
-  'sjsu': {
-    name: 'San Jose State University',
-    displayName: 'SJSU',
-    instagramUsername: 'sjsu2030meet'
+
+  // University of California
+  'ucsc': {
+    name: 'University of California, Santa Cruz',
+    displayName: 'UCSC',
+    instagramUsername: 'ucsc2030class'
   },
-  
-  // Stanford
+  'berkeley': {
+    name: 'University of California, Berkeley',
+    displayName: 'UC Berkeley / Cal',
+    instagramUsername: 'berkeley2030meet'
+  },
+  'ucsd': {
+    name: 'University of California, San Diego',
+    displayName: 'UCSD',
+    instagramUsername: 'ucsd2030meet'
+  },
+  'uci': {
+    name: 'University of California, Irvine',
+    displayName: 'UCI',
+    instagramUsername: 'uci2030meet'
+  },
+  'ucd': {
+    name: 'University of California, Davis',
+    displayName: 'UCD',
+    instagramUsername: 'ucdavis2030meet'
+  },
+  'ucsb': {
+    name: 'University of California, Santa Barbara',
+    displayName: 'UCSB',
+    instagramUsername: 'ucsb2030class'
+  },
+  'ucm': {
+    name: 'University of California, Merced',
+    displayName: 'UCM',
+    instagramUsername: 'ucmerced2030'
+  },
+  'ucr': {
+    name: 'University of California, Riverside',
+    displayName: 'UCR',
+    instagramUsername: 'ucr2030meet'
+  },
+  'ucla': {
+    name: 'University of California, Los Angeles',
+    displayName: 'UCLA',
+    instagramUsername: 'ucla2030meet'
+  },
+
+  // California Privates & CSU
   'stanford': {
     name: 'Stanford University',
     displayName: 'Stanford',
     instagramUsername: 'stanford2030class'
   },
-  
-  // Texas A&M
-  'texas-aandm': {
-    name: 'Texas A&M University',
-    displayName: 'Texas A&M',
-    instagramUsername: 'tamu2030meet'
+  'caltech': {
+    name: 'California Institute of Technology',
+    displayName: 'Caltech',
+    instagramUsername: 'caltech2030'
   },
-  
-  // University of Arizona
-  'uarizona': {
-    name: 'University of Arizona',
-    displayName: 'UArizona',
-    instagramUsername: 'uarizona2030meet'
-  },
-  
-  // University of Alabama
-  'ua': {
-    name: 'University of Alabama',
-    displayName: 'UA',
-    instagramUsername: 'ualabama2030'
-  },
-  
-  // UC Berkeley
-  'uc-berkeley': {
-    name: 'University of California, Berkeley',
-    displayName: 'UC Berkeley',
-    instagramUsername: 'ucberkeley.2030'
-  },
-  
-  // UC Davis
-  'uc-davis': {
-    name: 'University of California, Davis',
-    displayName: 'UC Davis',
-    instagramUsername: 'uc.davis2030'
-  },
-  
-  // UC Irvine
-  'uc-irvine': {
-    name: 'University of California, Irvine',
-    displayName: 'UC Irvine',
-    instagramUsername: 'ucirvineclassof2030'
-  },
-  
-  // UCLA
-  'ucla': {
-    name: 'University of California, Los Angeles',
-    displayName: 'UCLA',
-    instagramUsername: 'ucla2030.official'
-  },
-  
-  // UC Merced
-  'uc-merced': {
-    name: 'University of California, Merced',
-    displayName: 'UC Merced',
-    instagramUsername: 'ucmerced2030'
-  },
-  
-  // UC Riverside
-  'uc-riverside': {
-    name: 'University of California, Riverside',
-    displayName: 'UC Riverside',
-    instagramUsername: 'ucr2030meet'
-  },
-  
-  // UCSB
-  'ucsb': {
-    name: 'University of California, Santa Barbara',
-    displayName: 'UCSB',
-    instagramUsername: 'ucsb2030_'
-  },
-  
-  // UC Santa Cruz
-  'uc-santa-cruz': {
-    name: 'University of California, Santa Cruz',
-    displayName: 'UC Santa Cruz',
-    instagramUsername: 'ucsc2030class'
-  },
-  
-  // UCSD
-  'ucsd': {
-    name: 'University of California, San Diego',
-    displayName: 'UCSD',
-    instagramUsername: 'ucsandiego2030class'
-  },
-  
-  // UCF
-  'ucf': {
-    name: 'University of Central Florida',
-    displayName: 'UCF',
-    instagramUsername: 'ucf2030meet'
-  },
-  
-  // University of Chicago
-  'uchicago': {
-    name: 'University of Chicago',
-    displayName: 'UChicago',
-    instagramUsername: 'uchicago2030'
-  },
-  
-  // University of Florida
-  'uf': {
-    name: 'University of Florida',
-    displayName: 'UF',
-    instagramUsername: 'usf2030class'
-  },
-  
-  // University of Georgia
-  'uga': {
-    name: 'University of Georgia',
-    displayName: 'UGA',
-    instagramUsername: 'uga2030meet'
-  },
-  
-  // UIUC
-  'uiuc': {
-    name: 'University of Illinois Urbana-Champaign',
-    displayName: 'UIUC',
-    instagramUsername: 'uiuc2030class'
-  },
-  
-  // University of Michigan
-  'umich': {
-    name: 'University of Michigan',
-    displayName: 'UMich',
-    instagramUsername: 'umich2030.class'
-  },
-  
-  // University of Minnesota
-  'umn': {
-    name: 'University of Minnesota',
-    displayName: 'UMN',
-    instagramUsername: 'umn2030meet'
-  },
-  
-  // University of Miami
-  'umiami': {
-    name: 'University of Miami',
-    displayName: 'UMiami',
-    instagramUsername: 'umiami2030meet'
-  },
-  
-  // UNC Chapel Hill
-  'unc': {
-    name: 'University of North Carolina at Chapel Hill',
-    displayName: 'UNC Chapel Hill',
-    instagramUsername: 'unc2030class_'
-  },
-  
-  // University of Oregon
-  'uoregon': {
-    name: 'University of Oregon',
-    displayName: 'UOregon',
-    instagramUsername: 'uoregon2030meet'
-  },
-  
-  // UPenn
-  'upenn': {
-    name: 'University of Pennsylvania',
-    displayName: 'UPenn',
-    instagramUsername: 'upenn.2030'
-  },
-  
-  // USC
   'usc': {
     name: 'University of Southern California',
     displayName: 'USC',
     instagramUsername: 'usc2030meet'
   },
-  
-  // UT Austin
-  'ut-austin': {
-    name: 'University of Texas at Austin',
-    displayName: 'UT Austin',
-    instagramUsername: 'utaustin.2030'
+  'sfsu': {
+    name: 'San Francisco State University',
+    displayName: 'SFSU',
+    instagramUsername: 'sfsu2030class'
   },
-  
-  // University of Virginia
+  'csulb': {
+    name: 'California State University, Long Beach',
+    displayName: 'CSULB / Long Beach State',
+    instagramUsername: 'csulb2030class'
+  },
+  'cpp': {
+    name: 'California State Polytechnic University, Pomona',
+    displayName: 'Cal Poly Pomona',
+    instagramUsername: 'cpp2030class'
+  },
+  'sdsu': {
+    name: 'San Diego State University',
+    displayName: 'SDSU',
+    instagramUsername: 'sdsu2030.fm'
+  },
+  'sjsu': {
+    name: 'San José State University',
+    displayName: 'SJSU',
+    instagramUsername: 'sjsu2030meet'
+  },
+  'chico': {
+    name: 'California State University, Chico',
+    displayName: 'Chico State',
+    instagramUsername: 'csuchico2030'
+  },
+  'cpslo': {
+    name: 'California Polytechnic State University, San Luis Obispo',
+    displayName: 'Cal Poly SLO',
+    instagramUsername: 'calpolyslo2030meet'
+  },
+  'csuf': {
+    name: 'California State University, Fullerton',
+    displayName: 'CSUF / Fullerton',
+    instagramUsername: 'csuf2030class'
+  },
+  'lmu': {
+    name: 'Loyola Marymount University',
+    displayName: 'LMU',
+    instagramUsername: 'lmu2030meet'
+  },
+
+  // NorCal Colleges
+  'sierra': {
+    name: 'Sierra College',
+    displayName: 'Sierra',
+    instagramUsername: 'sierra2030class'
+  },
+  'flc': {
+    name: 'Folsom Lake College',
+    displayName: 'FLC',
+    instagramUsername: 'flc2030'
+  },
+  'arc': {
+    name: 'American River College',
+    displayName: 'ARC',
+    instagramUsername: 'arc2030class'
+  },
+  'jessup': {
+    name: 'Jessup University',
+    displayName: 'Jessup',
+    instagramUsername: 'jessup2030'
+  },
+  'sacstate': {
+    name: 'Sacramento State',
+    displayName: 'Sac State',
+    instagramUsername: 'sacstate2030'
+  },
+  'mjc': {
+    name: 'Modesto Junior College',
+    displayName: 'MJC',
+    instagramUsername: 'modesto2030class'
+  },
+  'yuba': {
+    name: 'Yuba College',
+    displayName: 'Yuba',
+    instagramUsername: 'yuba2030class'
+  },
+  'uop': {
+    name: 'University of the Pacific',
+    displayName: 'UOP / Pacific',
+    instagramUsername: 'uop2030class'
+  },
+  'scc': {
+    name: 'Sacramento City College',
+    displayName: 'SCC',
+    instagramUsername: 'sacramento2030class'
+  },
+  'ltcc': {
+    name: 'Lake Tahoe Community College',
+    displayName: 'LTCC',
+    instagramUsername: 'laketahoe2030'
+  },
+
+  // Other Major U.S. & Canadian Universities
+  'nyu': {
+    name: 'New York University',
+    displayName: 'NYU',
+    instagramUsername: 'nyu2030meet'
+  },
+  'fsu': {
+    name: 'Florida State University',
+    displayName: 'FSU',
+    instagramUsername: 'fsu2030meet'
+  },
+  'mit': {
+    name: 'Massachusetts Institute of Technology',
+    displayName: 'MIT',
+    instagramUsername: 'mit2030class'
+  },
+  'duke': {
+    name: 'Duke University',
+    displayName: 'Duke',
+    instagramUsername: 'duke2030meet'
+  },
+  'uf': {
+    name: 'University of Florida',
+    displayName: 'UF',
+    instagramUsername: 'usf2030class'
+  },
+  'unc': {
+    name: 'University of North Carolina at Chapel Hill',
+    displayName: 'UNC / UNC-Chapel Hill',
+    instagramUsername: 'unc2030fm'
+  },
   'uva': {
     name: 'University of Virginia',
     displayName: 'UVA',
     instagramUsername: 'uva2030meet'
   },
-  
-  // University of Washington
-  'uw': {
-    name: 'University of Washington',
-    displayName: 'UW',
-    instagramUsername: 'uwash2030'
+  'northwestern': {
+    name: 'Northwestern University',
+    displayName: 'Northwestern',
+    instagramUsername: 'northwestern2030'
   },
-  
-  // UW-Madison
-  'uw-madison': {
-    name: 'University of Wisconsin–Madison',
-    displayName: 'UW-Madison',
-    instagramUsername: 'uwm2030meet'
-  },
-  
-  // Vanderbilt
   'vanderbilt': {
     name: 'Vanderbilt University',
     displayName: 'Vanderbilt',
     instagramUsername: 'vanderbilt2030'
   },
-  
-  // Virginia Tech
-  'virginia-tech': {
+  'georgetown': {
+    name: 'Georgetown University',
+    displayName: 'Georgetown',
+    instagramUsername: 'georgetown2030meet'
+  },
+  'bu': {
+    name: 'Boston University',
+    displayName: 'BU',
+    instagramUsername: 'bu2030meet'
+  },
+  'miami': {
+    name: 'University of Miami',
+    displayName: 'UMiami / The U',
+    instagramUsername: 'miami2030meet'
+  },
+  'psu': {
+    name: 'Pennsylvania State University',
+    displayName: 'Penn State',
+    instagramUsername: 'psu2030students'
+  },
+  'uoft': {
+    name: 'University of Toronto',
+    displayName: 'UofT',
+    instagramUsername: 'uoft2030class'
+  },
+  'uconn': {
+    name: 'University of Connecticut',
+    displayName: 'UConn',
+    instagramUsername: 'uconn2030meet'
+  },
+  'northeastern': {
+    name: 'Northeastern University',
+    displayName: 'Northeastern / NEU',
+    instagramUsername: 'northeastern2030meet'
+  },
+  'uga': {
+    name: 'University of Georgia',
+    displayName: 'UGA',
+    instagramUsername: 'uga2030meet'
+  },
+  'bama': {
+    name: 'University of Alabama',
+    displayName: 'Alabama / Bama',
+    instagramUsername: 'ualabama2030'
+  },
+
+  // Big Ten & Midwest
+  'uchicago': {
+    name: 'University of Chicago',
+    displayName: 'UChicago',
+    instagramUsername: 'uchicago2030'
+  },
+  'umich': {
+    name: 'University of Michigan',
+    displayName: 'UMich / Michigan',
+    instagramUsername: 'mich2030class'
+  },
+  'umn': {
+    name: 'University of Minnesota, Twin Cities',
+    displayName: 'UMN / Minnesota',
+    instagramUsername: 'umn2030students'
+  },
+  'cincy': {
+    name: 'University of Cincinnati',
+    displayName: 'UC / Cincinnati',
+    instagramUsername: 'cincy2030fm'
+  },
+  'uiowa': {
+    name: 'University of Iowa',
+    displayName: 'UIowa / Iowa',
+    instagramUsername: 'uiowa2030class'
+  },
+  'cuboulder': {
+    name: 'University of Colorado Boulder',
+    displayName: 'CU Boulder',
+    instagramUsername: 'cuboulder2030class'
+  },
+  'uwmadison': {
+    name: 'University of Wisconsin–Madison',
+    displayName: 'UW–Madison / Wisconsin',
+    instagramUsername: 'uwm2030class'
+  },
+  'uiuc': {
+    name: 'University of Illinois Urbana-Champaign',
+    displayName: 'UIUC / Illinois',
+    instagramUsername: 'uiuc2030co'
+  },
+  'purdue': {
+    name: 'Purdue University',
+    displayName: 'Purdue',
+    instagramUsername: 'purdue2030meet'
+  },
+  'msu': {
+    name: 'Michigan State University',
+    displayName: 'MSU',
+    instagramUsername: 'msu2030meet'
+  },
+  'osu': {
+    name: 'Ohio State University',
+    displayName: 'OSU / Ohio State',
+    instagramUsername: 'osu2030class'
+  },
+  'ou': {
+    name: 'University of Oklahoma',
+    displayName: 'OU',
+    instagramUsername: 'ou2030meet'
+  },
+  'cmu': {
+    name: 'Carnegie Mellon University',
+    displayName: 'CMU',
+    instagramUsername: 'cmu2030meet'
+  },
+  'iu': {
+    name: 'Indiana University Bloomington',
+    displayName: 'IU / Indiana',
+    instagramUsername: 'iub2030'
+  },
+
+  // South & West
+  'asu': {
+    name: 'Arizona State University',
+    displayName: 'ASU',
+    instagramUsername: 'asu2030meet'
+  },
+  'utaustin': {
+    name: 'University of Texas at Austin',
+    displayName: 'UT Austin / Texas',
+    instagramUsername: 'utaustin2030meet'
+  },
+  'uw': {
+    name: 'University of Washington',
+    displayName: 'UW',
+    instagramUsername: 'uwash2030'
+  },
+  'rice': {
+    name: 'Rice University',
+    displayName: 'Rice',
+    instagramUsername: 'rice2030meet'
+  },
+  'uarizona': {
+    name: 'University of Arizona',
+    displayName: 'UArizona / Arizona',
+    instagramUsername: 'uarizona2030meet'
+  },
+  'tamu': {
+    name: 'Texas A&M University',
+    displayName: 'Texas A&M / A&M',
+    instagramUsername: 'tamu2030meet'
+  },
+  'oregon': {
+    name: 'University of Oregon',
+    displayName: 'UO / Oregon',
+    instagramUsername: 'oregon2030class'
+  },
+  'ucf': {
+    name: 'University of Central Florida',
+    displayName: 'UCF',
+    instagramUsername: 'ucf2030students'
+  },
+  'olemiss': {
+    name: 'University of Mississippi',
+    displayName: 'Ole Miss',
+    instagramUsername: 'olemiss2030meet'
+  },
+  'boise': {
+    name: 'Boise State University',
+    displayName: 'Boise State',
+    instagramUsername: 'boisestate2030class'
+  },
+  'utah': {
+    name: 'University of Utah',
+    displayName: 'U of U / Utah',
+    instagramUsername: 'utah2030class'
+  },
+  'utk': {
+    name: 'University of Tennessee, Knoxville',
+    displayName: 'UTK / Tennessee',
+    instagramUsername: 'utk2030students'
+  },
+  'arkansas': {
+    name: 'University of Arkansas',
+    displayName: 'Arkansas',
+    instagramUsername: 'arkansas2030class'
+  },
+  'vt': {
     name: 'Virginia Polytechnic Institute and State University',
     displayName: 'Virginia Tech',
     instagramUsername: 'vt2030meet'
   },
-  
-  // Yale
-  'yale': {
-    name: 'Yale University',
-    displayName: 'Yale',
-    instagramUsername: 'yaleclassof2030'
+  'lsu': {
+    name: 'Louisiana State University',
+    displayName: 'LSU',
+    instagramUsername: 'lsu2030co'
+  },
+  'rutgers': {
+    name: 'Rutgers University',
+    displayName: 'Rutgers',
+    instagramUsername: 'rutgers2030class'
+  },
+  'clemson': {
+    name: 'Clemson University',
+    displayName: 'Clemson',
+    instagramUsername: 'clemson2030students'
+  },
+  'auburn': {
+    name: 'Auburn University',
+    displayName: 'Auburn',
+    instagramUsername: 'auburn2030students'
+  },
+  'scar': {
+    name: 'University of South Carolina',
+    displayName: 'USC (East Coast) / South Carolina',
+    instagramUsername: 'uofsc2030meet'
+  },
+  'ttu': {
+    name: 'Texas Tech University',
+    displayName: 'Texas Tech',
+    instagramUsername: 'ttu2030students'
+  },
+  'kentucky': {
+    name: 'University of Kentucky',
+    displayName: 'UK',
+    instagramUsername: 'ukentucky2030'
+  },
+  'mizzou': {
+    name: 'University of Missouri',
+    displayName: 'Mizzou',
+    instagramUsername: 'mizzou2030students'
+  },
+  'nebraska': {
+    name: 'University of Nebraska–Lincoln',
+    displayName: 'UNL / Nebraska',
+    instagramUsername: 'unlincoln2030'
+  },
+  'pitt': {
+    name: 'University of Pittsburgh',
+    displayName: 'Pitt',
+    instagramUsername: 'pitt2030students'
+  },
+  'kstate': {
+    name: 'Kansas State University',
+    displayName: 'K-State',
+    instagramUsername: 'kansas2030meet'
+  },
+  'jhu': {
+    name: 'Johns Hopkins University',
+    displayName: 'JHU / Hopkins',
+    instagramUsername: 'jhu2030class'
+  },
+  'wfu': {
+    name: 'Wake Forest University',
+    displayName: 'Wake Forest',
+    instagramUsername: 'wfu2030class'
+  },
+  'tufts': {
+    name: 'Tufts University',
+    displayName: 'Tufts',
+    instagramUsername: 'tufts2030meet'
+  },
+  'emory': {
+    name: 'Emory University',
+    displayName: 'Emory',
+    instagramUsername: 'emory2030class'
   }
 };
 
