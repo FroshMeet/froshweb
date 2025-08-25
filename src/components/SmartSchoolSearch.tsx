@@ -27,6 +27,7 @@ export const SmartSchoolSearch: React.FC<SmartSchoolSearchProps> = ({
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
+  const selectedItemRef = useRef<HTMLDivElement>(null);
   
   const { searchResults, search } = useSchoolSearch();
 
@@ -54,13 +55,17 @@ export const SmartSchoolSearch: React.FC<SmartSchoolSearchProps> = ({
     switch (e.key) {
       case 'ArrowDown':
         e.preventDefault();
-        setSelectedIndex(prev => 
-          prev < searchResults.length - 1 ? prev + 1 : prev
-        );
+        setSelectedIndex(prev => {
+          const newIndex = prev < searchResults.length - 1 ? prev + 1 : prev;
+          return newIndex;
+        });
         break;
       case 'ArrowUp':
         e.preventDefault();
-        setSelectedIndex(prev => prev > 0 ? prev - 1 : -1);
+        setSelectedIndex(prev => {
+          const newIndex = prev > 0 ? prev - 1 : -1;
+          return newIndex;
+        });
         break;
       case 'Enter':
         e.preventDefault();
@@ -96,6 +101,16 @@ export const SmartSchoolSearch: React.FC<SmartSchoolSearchProps> = ({
       inputRef.current.focus();
     }
   }, [autoFocus]);
+
+  // Scroll selected item into view
+  useEffect(() => {
+    if (selectedIndex >= 0 && selectedItemRef.current && resultsRef.current) {
+      selectedItemRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+      });
+    }
+  }, [selectedIndex]);
 
   return (
     <div className={cn("w-full", className)}>
@@ -136,13 +151,14 @@ export const SmartSchoolSearch: React.FC<SmartSchoolSearchProps> = ({
         {isOpen && searchResults.length > 0 && (
           <div 
             ref={resultsRef}
-            className="absolute top-full left-0 right-0 bg-card border border-border rounded-2xl mt-2 z-[9999] shadow-2xl animate-fade-scale-in overflow-hidden"
+            className="absolute top-full left-0 right-0 bg-card border border-border rounded-2xl mt-2 z-[9999] shadow-2xl animate-fade-scale-in overflow-hidden max-h-80 overflow-y-auto"
             role="listbox"
             aria-label="School search results"
           >
             {searchResults.map((school, index) => (
               <div
                 key={school.id}
+                ref={selectedIndex === index ? selectedItemRef : undefined}
                 className={cn(
                   "p-4 cursor-pointer border-b border-border/40 last:border-b-0 transition-all duration-150",
                   "hover:bg-muted/50 focus:bg-muted/50",
