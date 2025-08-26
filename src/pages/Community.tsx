@@ -7,6 +7,7 @@ import { Search, ArrowLeft } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { schools, School } from "@/data/schools";
 import { useSchoolSearch } from "@/hooks/useSchoolSearch";
+import { APPROVED_SCHOOLS } from "@/config/approvedSchools";
 
 // Import logos
 import harvardLogo from "@/assets/logos/harvard.png";
@@ -41,7 +42,23 @@ const Community = () => {
   }, [searchQuery, search]);
 
   const handleSchoolClick = (school: School) => {
-    navigate(`/${school.id}`);
+    // Create a slug mapping from school data to approved school slugs
+    const getSchoolSlug = (schoolData: School): string => {
+      // First try to find by exact name match in approved schools
+      const approvedSchool = Object.entries(APPROVED_SCHOOLS).find(([slug, data]) => 
+        data.name === schoolData.name
+      );
+      
+      if (approvedSchool) {
+        return approvedSchool[0];
+      }
+      
+      // Fallback to school.id if no approved school found
+      return schoolData.id;
+    };
+    
+    const slug = getSchoolSlug(school);
+    navigate(`/${slug}`);
   };
 
   const getSchoolInitials = (name: string) => {

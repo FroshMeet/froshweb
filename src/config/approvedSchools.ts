@@ -52,13 +52,13 @@ export const APPROVED_SCHOOLS: Record<string, ApprovedSchool> = {
     instagramUsername: 'brown2030meet'
   },
 
-  // University of California
+  // UC System
   'ucsc': {
     name: 'University of California, Santa Cruz',
     displayName: 'UCSC',
     instagramUsername: 'ucsc2030class'
   },
-  'berkeley': {
+  'ucberkeley': {
     name: 'University of California, Berkeley',
     displayName: 'UC Berkeley / Cal',
     instagramUsername: 'berkeley2030meet'
@@ -73,7 +73,7 @@ export const APPROVED_SCHOOLS: Record<string, ApprovedSchool> = {
     displayName: 'UCI',
     instagramUsername: 'uci2030meet'
   },
-  'ucd': {
+  'ucdavis': {
     name: 'University of California, Davis',
     displayName: 'UCD',
     instagramUsername: 'ucdavis2030meet'
@@ -83,7 +83,7 @@ export const APPROVED_SCHOOLS: Record<string, ApprovedSchool> = {
     displayName: 'UCSB',
     instagramUsername: 'ucsb2030class'
   },
-  'ucm': {
+  'ucmerced': {
     name: 'University of California, Merced',
     displayName: 'UCM',
     instagramUsername: 'ucmerced2030'
@@ -99,7 +99,7 @@ export const APPROVED_SCHOOLS: Record<string, ApprovedSchool> = {
     instagramUsername: 'ucla2030meet'
   },
 
-  // California Privates & CSU
+  // California Privates & CSU System
   'stanford': {
     name: 'Stanford University',
     displayName: 'Stanford',
@@ -140,12 +140,12 @@ export const APPROVED_SCHOOLS: Record<string, ApprovedSchool> = {
     displayName: 'SJSU',
     instagramUsername: 'sjsu2030meet'
   },
-  'chico': {
+  'csuchico': {
     name: 'California State University, Chico',
     displayName: 'Chico State',
     instagramUsername: 'csuchico2030'
   },
-  'cpslo': {
+  'calpolyslo': {
     name: 'California Polytechnic State University, San Luis Obispo',
     displayName: 'Cal Poly SLO',
     instagramUsername: 'calpolyslo2030meet'
@@ -197,7 +197,7 @@ export const APPROVED_SCHOOLS: Record<string, ApprovedSchool> = {
     displayName: 'Yuba',
     instagramUsername: 'yuba2030class'
   },
-  'uop': {
+  'pacific': {
     name: 'University of the Pacific',
     displayName: 'UOP / Pacific',
     instagramUsername: 'uop2030class'
@@ -213,7 +213,7 @@ export const APPROVED_SCHOOLS: Record<string, ApprovedSchool> = {
     instagramUsername: 'laketahoe2030'
   },
 
-  // Other Major U.S. & Canadian Universities
+  // Other US & Canada Universities
   'nyu': {
     name: 'New York University',
     displayName: 'NYU',
@@ -234,7 +234,7 @@ export const APPROVED_SCHOOLS: Record<string, ApprovedSchool> = {
     displayName: 'Duke',
     instagramUsername: 'duke2030meet'
   },
-  'uf': {
+  'ufl': {
     name: 'University of Florida',
     displayName: 'UF',
     instagramUsername: 'usf2030class'
@@ -274,12 +274,12 @@ export const APPROVED_SCHOOLS: Record<string, ApprovedSchool> = {
     displayName: 'UMiami / The U',
     instagramUsername: 'miami2030meet'
   },
-  'psu': {
+  'pennstate': {
     name: 'Pennsylvania State University',
     displayName: 'Penn State',
     instagramUsername: 'psu2030students'
   },
-  'uoft': {
+  'utoronto': {
     name: 'University of Toronto',
     displayName: 'UofT',
     instagramUsername: 'uoft2030class'
@@ -299,13 +299,13 @@ export const APPROVED_SCHOOLS: Record<string, ApprovedSchool> = {
     displayName: 'UGA',
     instagramUsername: 'uga2030meet'
   },
-  'bama': {
+  'ua': {
     name: 'University of Alabama',
     displayName: 'Alabama / Bama',
     instagramUsername: 'ualabama2030'
   },
 
-  // Big Ten & Midwest
+  // Midwest & Rust Belt
   'uchicago': {
     name: 'University of Chicago',
     displayName: 'UChicago',
@@ -321,7 +321,7 @@ export const APPROVED_SCHOOLS: Record<string, ApprovedSchool> = {
     displayName: 'UMN / Minnesota',
     instagramUsername: 'umn2030students'
   },
-  'cincy': {
+  'ucincy': {
     name: 'University of Cincinnati',
     displayName: 'UC / Cincinnati',
     instagramUsername: 'cincy2030fm'
@@ -371,7 +371,7 @@ export const APPROVED_SCHOOLS: Record<string, ApprovedSchool> = {
     displayName: 'CMU',
     instagramUsername: 'cmu2030meet'
   },
-  'iu': {
+  'indiana': {
     name: 'Indiana University Bloomington',
     displayName: 'IU / Indiana',
     instagramUsername: 'iub2030'
@@ -388,7 +388,7 @@ export const APPROVED_SCHOOLS: Record<string, ApprovedSchool> = {
     displayName: 'UT Austin / Texas',
     instagramUsername: 'utaustin2030meet'
   },
-  'uw': {
+  'uwashington': {
     name: 'University of Washington',
     displayName: 'UW',
     instagramUsername: 'uwash2030'
@@ -408,7 +408,7 @@ export const APPROVED_SCHOOLS: Record<string, ApprovedSchool> = {
     displayName: 'Texas A&M / A&M',
     instagramUsername: 'tamu2030meet'
   },
-  'oregon': {
+  'uoregon': {
     name: 'University of Oregon',
     displayName: 'UO / Oregon',
     instagramUsername: 'oregon2030class'
@@ -423,7 +423,7 @@ export const APPROVED_SCHOOLS: Record<string, ApprovedSchool> = {
     displayName: 'Ole Miss',
     instagramUsername: 'olemiss2030meet'
   },
-  'boise': {
+  'boisestate': {
     name: 'Boise State University',
     displayName: 'Boise State',
     instagramUsername: 'boisestate2030class'
@@ -438,7 +438,7 @@ export const APPROVED_SCHOOLS: Record<string, ApprovedSchool> = {
     displayName: 'UTK / Tennessee',
     instagramUsername: 'utk2030students'
   },
-  'arkansas': {
+  'uarkansas': {
     name: 'University of Arkansas',
     displayName: 'Arkansas',
     instagramUsername: 'arkansas2030class'
@@ -468,7 +468,7 @@ export const APPROVED_SCHOOLS: Record<string, ApprovedSchool> = {
     displayName: 'Auburn',
     instagramUsername: 'auburn2030students'
   },
-  'scar': {
+  'uscsc': {
     name: 'University of South Carolina',
     displayName: 'USC (East Coast) / South Carolina',
     instagramUsername: 'uofsc2030meet'
@@ -478,7 +478,7 @@ export const APPROVED_SCHOOLS: Record<string, ApprovedSchool> = {
     displayName: 'Texas Tech',
     instagramUsername: 'ttu2030students'
   },
-  'kentucky': {
+  'uky': {
     name: 'University of Kentucky',
     displayName: 'UK',
     instagramUsername: 'ukentucky2030'
@@ -488,7 +488,7 @@ export const APPROVED_SCHOOLS: Record<string, ApprovedSchool> = {
     displayName: 'Mizzou',
     instagramUsername: 'mizzou2030students'
   },
-  'nebraska': {
+  'unl': {
     name: 'University of Nebraska–Lincoln',
     displayName: 'UNL / Nebraska',
     instagramUsername: 'unlincoln2030'
@@ -508,7 +508,7 @@ export const APPROVED_SCHOOLS: Record<string, ApprovedSchool> = {
     displayName: 'JHU / Hopkins',
     instagramUsername: 'jhu2030class'
   },
-  'wfu': {
+  'wakeforest': {
     name: 'Wake Forest University',
     displayName: 'Wake Forest',
     instagramUsername: 'wfu2030class'
