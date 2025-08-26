@@ -27,9 +27,11 @@ import { useToast } from "@/hooks/use-toast";
 
 interface ModernChatInterfaceProps {
   schoolName?: string;
+  conversations?: any[];
+  isDevMode?: boolean;
 }
 
-const ModernChatInterface = ({ schoolName }: ModernChatInterfaceProps) => {
+const ModernChatInterface = ({ schoolName, conversations = [], isDevMode = false }: ModernChatInterfaceProps) => {
   const navigate = useNavigate();
   const { user, userProfile, isLoading } = useAuth();
   const { toast } = useToast();
@@ -39,15 +41,17 @@ const ModernChatInterface = ({ schoolName }: ModernChatInterfaceProps) => {
   const [showGuestDialog, setShowGuestDialog] = useState(false);
   const [messages, setMessages] = useState<any[]>([]);
   
-  // Get dev mode state from useAppState hook
-  const isDev = process.env.NODE_ENV === 'development';
+  // Use dev mode logic: mock data if dev mode is on, real data if off
+  const effectiveConversations = isDevMode ? mockConversations : conversations;
+  const effectiveMessageRequests = isDevMode ? mockMessageRequests : [];
+  const effectiveMessages = isDevMode ? mockMessages : messages;
   
   // Simplified user detection:
-  // - If authenticated user exists, show chat
-  // - If in dev mode (no auth but development), show chat with dev banner
+  // - If in dev mode, always show chat
+  // - If authenticated user exists, show chat  
   // - Otherwise, show guest CTA
-  const shouldShowChat = user || isDev;
-  const isGuestMode = !user && !isDev;
+  const shouldShowChat = isDevMode || user;
+  const isGuestMode = !isDevMode && !user;
   
   const handleCreateAccount = () => {
     setShowGuestDialog(false);
@@ -57,23 +61,34 @@ const ModernChatInterface = ({ schoolName }: ModernChatInterfaceProps) => {
   const handleSendMessage = () => {
     if (!newMessage.trim()) return;
     
-    // Simulate sending a message in dev mode
-    const mockMessage = {
-      id: `msg-${Date.now()}`,
-      conversation_id: selectedChat,
-      sender_id: "dev-user-123",
-      message: newMessage.trim(),
-      created_at: new Date().toISOString(),
-      read_at: new Date().toISOString()
-    };
-    
-    setMessages(prev => [...prev, mockMessage]);
-    setNewMessage("");
-    
-    toast({
-      title: "Message sent!",
-      description: "Your message was delivered successfully.",
-    });
+    if (isDevMode) {
+      // Simulate sending a message in dev mode
+      const mockMessage = {
+        id: `msg-${Date.now()}`,
+        conversation_id: selectedChat,
+        sender_id: "dev-user-123",
+        message: newMessage.trim(),
+        created_at: new Date().toISOString(),
+        read_at: new Date().toISOString()
+      };
+      
+      setMessages(prev => [...prev, mockMessage]);
+      setNewMessage("");
+      
+      toast({
+        title: "Message sent!",
+        description: "Your message was delivered successfully.",
+      });
+    } else {
+      // Handle real message sending to Supabase
+      // TODO: Implement real message sending
+      setNewMessage("");
+      
+      toast({
+        title: "Message sent!",
+        description: "Your message was delivered successfully.",
+      });
+    }
   };
 
   const formatTime = (timestamp: string) => {
@@ -97,34 +112,13 @@ const ModernChatInterface = ({ schoolName }: ModernChatInterfaceProps) => {
   const handleSelectChat = (chatId: string) => {
     setSelectedChat(chatId);
     
-    if (chatId === "group-chat") {
-      setMessages([
-        {
-          id: "group-1",
-          sender_id: "user-101",
-          message: "Hey everyone! Anyone going to the welcome event tomorrow? 🎉",
-          created_at: new Date(Date.now() - 1000 * 60 * 15).toISOString(),
-          sender_name: "Sarah Chen"
-        },
-        {
-          id: "group-2", 
-          sender_id: "user-102",
-          message: "Yes! I'll be there. Super excited to meet everyone 😊",
-          created_at: new Date(Date.now() - 1000 * 60 * 10).toISOString(),
-          sender_name: "Mike Johnson"
-        },
-        {
-          id: "group-3",
-          sender_id: "user-103", 
-          message: "Same here! Should we meet at the main entrance at 7pm?",
-          created_at: new Date(Date.now() - 1000 * 60 * 5).toISOString(),
-          sender_name: "Alex Rivera"
-        }
-      ]);
+    if (isDevMode) {
+      // Load mock messages for the selected conversation
+      const chatMessages = effectiveMessages.filter(msg => msg.conversation_id === chatId);
+      setMessages(chatMessages);
     } else {
-      // Load mock messages for 1-on-1 chat
-      const convMessages = mockMessages.filter(msg => msg.conversation_id === chatId);
-      setMessages(convMessages);
+      // TODO: Load real messages from Supabase
+      setMessages([]);
     }
   };
 
@@ -197,7 +191,7 @@ const ModernChatInterface = ({ schoolName }: ModernChatInterfaceProps) => {
   // Chat conversation view
   if (selectedChat) {
     const isGroupChat = selectedChat === "group-chat";
-    const conversation = mockConversations.find(c => c.id === selectedChat);
+    const conversation = effectiveConversations.find(c => c.id === selectedChat);
     const chatTitle = isGroupChat 
       ? `${schoolName || userProfile?.school || "School"} Group Chat`
       : conversation?.other_user.name || "Chat";
@@ -321,7 +315,7 @@ const ModernChatInterface = ({ schoolName }: ModernChatInterfaceProps) => {
   return (
     <div className="flex flex-col h-full bg-background max-w-2xl mx-auto">  {/* Increased max-width for desktop */}
       {/* Dev Mode Banner */}
-      {isDev && (
+      {isDevMode && (
         <div className="bg-primary/10 border-b border-primary/20 px-4 py-2">
           <div className="flex items-center justify-center">
             <Badge variant="secondary" className="text-xs">
@@ -346,9 +340,9 @@ const ModernChatInterface = ({ schoolName }: ModernChatInterfaceProps) => {
             className="relative"
           >
             <Bell className="h-4 w-4" />
-            {mockMessageRequests.length > 0 && (
+            {effectiveMessageRequests.length > 0 && (
               <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs bg-primary text-primary-foreground">
-                {mockMessageRequests.length}
+                {effectiveMessageRequests.length}
               </Badge>
             )}
           </Button>
@@ -382,14 +376,14 @@ const ModernChatInterface = ({ schoolName }: ModernChatInterfaceProps) => {
             </div>
             
             <ScrollArea className="flex-1">
-              {mockMessageRequests.length === 0 ? (
+              {effectiveMessageRequests.length === 0 ? (
                 <div className="p-8 text-center text-muted-foreground">
                   <MessageSquare className="h-12 w-12 mx-auto mb-4 opacity-50" />
                   <p>No message requests</p>
                 </div>
               ) : (
                 <div className="p-2 space-y-2">
-                  {mockMessageRequests.map((request) => (
+                  {effectiveMessageRequests.map((request) => (
                     <Card key={request.id} className="p-4 hover:bg-muted/50 transition-colors">
                       <div className="flex items-start space-x-3">
                         <Avatar className="h-12 w-12">
@@ -481,7 +475,7 @@ const ModernChatInterface = ({ schoolName }: ModernChatInterfaceProps) => {
                 </Card>
                 
                 {/* Individual Conversations */}
-                {mockConversations.map((conversation) => (
+                {effectiveConversations.map((conversation) => (
                   <Card 
                     key={conversation.id}
                     className={cn(

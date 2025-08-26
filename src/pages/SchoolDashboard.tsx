@@ -38,6 +38,7 @@ import { useAppState } from "@/hooks/useAppState";
 import { mockProfiles } from "@/data/mockData";
 import MeetTabContent from "@/components/tabs/MeetTabContent";
 import ChatsTabContent from "@/components/tabs/ChatsTabContent";
+import DiscoverTabContent from "@/components/tabs/DiscoverTabContent";
 
 interface Profile {
   id: string;
@@ -391,61 +392,14 @@ export default function SchoolDashboard() {
         
         {/* Discover Tab */}
         {activeTab === "discover" && (
-          <div className="space-y-6 animate-fade-in">
-            {/* Sticky Search Bar Only - Removed Toggle */}
-            <div className="sticky top-4 z-40 bg-card/95 backdrop-blur-xl border border-border/50 rounded-2xl p-4 card-shadow">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                <Input
-                  placeholder="Search by name, major, class year..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 h-12 bg-background/50 border-border/40 rounded-xl"
-                />
-              </div>
-            </div>
-
-            {/* Results count */}
-            <div className="text-sm text-muted-foreground">
-              {filteredProfiles.length} students found
-            </div>
-
-            {/* Profile Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {filteredProfiles.map((profile) => (
-                <Card key={profile.id} className="group overflow-hidden hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 cursor-pointer hover:scale-105 bg-card/50 backdrop-blur-sm border-border/40">
-                  <div className="aspect-square bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center relative overflow-hidden">
-                    <Users className="h-16 w-16 text-primary/60" />
-                    {Math.random() > 0.5 && (
-                      <Badge className="absolute top-2 right-2 bg-primary/90 text-primary-foreground text-xs">
-                        Roommate
-                      </Badge>
-                    )}
-                  </div>
-                  <CardContent className="p-4">
-                    <h4 className="font-bold text-foreground text-sm">{profile.name}</h4>
-                    <p className="text-xs text-muted-foreground">Class of {profile.year}</p>
-                    <p className="text-xs text-primary font-medium mt-1">{profile.major}</p>
-                    <Button 
-                      size="sm" 
-                      variant="outline" 
-                      className="w-full mt-3 border-primary/50 text-primary hover:bg-primary/10 rounded-xl"
-                      onClick={() => handleGuestAction("viewing profiles")}
-                    >
-                      View Profile
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-
-            {filteredProfiles.length === 0 && (
-              <div className="text-center py-16">
-                <Search className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-xl font-semibold mb-2">No students found</h3>
-                <p className="text-muted-foreground">Try adjusting your search or filters</p>
-              </div>
-            )}
+          <div className="h-[calc(100vh-200px)] animate-fade-in">
+            <DiscoverTabContent
+              profiles={[]} // Pass empty array as DiscoverTabContent handles its own data fetching
+              isGuest={!currentUser && !isDevMode}
+              onGuestAction={appStateGuestAction}
+              currentUser={currentUser}
+              schoolName={schoolDisplayName}
+            />
           </div>
         )}
 
@@ -464,7 +418,9 @@ export default function SchoolDashboard() {
         {/* Chat Tab */}
         {activeTab === "chat" && (
           <div className="h-[calc(100vh-200px)] animate-fade-in">
-            <ChatsTabContent schoolName={schoolDisplayName} />
+            <ChatsTabContent 
+              schoolName={schoolDisplayName}
+            />
           </div>
         )}
 
