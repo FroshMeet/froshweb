@@ -120,6 +120,35 @@ export const mockMessageRequests = [
 ];
 
 export const mockMessages = [
+  // Group chat messages (for group-chat conversation)
+  {
+    id: "group-msg-1",
+    conversation_id: "group-chat",
+    sender_id: "user-alex",
+    user_name: "Alex Chen",
+    message: "Welcome to the group chat everyone! 🎉",
+    created_at: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
+    read_at: new Date().toISOString()
+  },
+  {
+    id: "group-msg-2",
+    conversation_id: "group-chat",
+    sender_id: "user-sarah",
+    user_name: "Sarah Kim",
+    message: "Thanks! Excited to meet everyone",
+    created_at: new Date(Date.now() - 1000 * 60 * 15).toISOString(),
+    read_at: new Date().toISOString()
+  },
+  {
+    id: "group-msg-3",
+    conversation_id: "group-chat",
+    sender_id: "dev-user-123",
+    user_name: "Dev Student",
+    message: "This is awesome! Can't wait for orientation week",
+    created_at: new Date(Date.now() - 1000 * 60 * 5).toISOString(),
+    read_at: new Date().toISOString()
+  },
+
   // Conversation with Kim Chen (conv-1)
   {
     id: "msg-1",
