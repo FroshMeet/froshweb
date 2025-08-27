@@ -19,7 +19,8 @@ import {
   X,
   ArrowLeft,
   UserPlus,
-  UserMinus
+  UserMinus,
+  Plus
 } from "lucide-react";
 import { mockConversations, mockMessageRequests, mockMessages } from "@/data/mockConversations";
 import { cn } from "@/lib/utils";
@@ -817,58 +818,88 @@ const ModernChatInterface = ({ schoolName, conversations = [], isDevMode = false
                   </div>
                 </Card>
                 
-                {/* Individual Conversations */}
-                {effectiveConversations.map((conversation) => (
-                  <Card 
-                    key={conversation.id}
-                    className={cn(
-                      "p-3 cursor-pointer transition-all duration-200 hover:bg-muted/50",
-                      selectedChat === conversation.id && "bg-muted"
-                    )}
-                    onClick={() => handleSelectChat(conversation.id)}
-                  >
-                    <div className="flex items-center space-x-3">
-                      <div className="relative">
-                        <Avatar className="h-12 w-12">
-                          <AvatarImage 
-                            src={`https://images.unsplash.com/${conversation.other_user.avatar_url}?w=100&h=100&fit=crop&crop=face`} 
-                          />
-                          <AvatarFallback>
-                            {conversation.other_user.name.split(' ').map(n => n[0]).join('')}
-                          </AvatarFallback>
-                        </Avatar>
-                        {conversation.unread_count > 0 && (
-                          <div className="absolute -top-1 -right-1">
-                            <Badge className="h-5 w-5 rounded-full p-0 text-xs bg-primary text-primary-foreground">
-                              {conversation.unread_count}
-                            </Badge>
-                          </div>
-                        )}
-                      </div>
-                      
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between mb-1">
-                          <h3 className={cn(
-                            "text-sm truncate",
-                            conversation.unread_count > 0 ? "font-semibold text-foreground" : "font-medium text-foreground"
-                          )}>
-                            {conversation.other_user.name}
-                          </h3>
-                          <span className="text-xs text-muted-foreground">
-                            {formatTime(conversation.last_message.sent_at)}
-                          </span>
-                        </div>
-                        <p className={cn(
-                          "text-sm truncate",
-                          conversation.unread_count > 0 ? "text-foreground font-medium" : "text-muted-foreground"
-                        )}>
-                          {conversation.last_message.sender_id === "dev-user-123" ? "You: " : ""}
-                          {conversation.last_message.content}
-                        </p>
-                      </div>
+                {/* Individual Conversations or Empty State */}
+                {effectiveConversations.length === 0 ? (
+                  /* Empty state for DMs - only shown when no conversations exist */
+                  <div className="p-6 text-center">
+                    <MessageSquare className="h-12 w-12 mx-auto mb-4 opacity-50 text-muted-foreground" />
+                    <h3 className="text-lg font-semibold text-foreground mb-2">
+                      Start the first chat at {userSchool}
+                    </h3>
+                    <p className="text-sm text-muted-foreground mb-6">
+                      Connect with classmates and start conversations
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-3 justify-center max-w-sm mx-auto">
+                      <Button 
+                        onClick={() => navigate('/meet')}
+                        className="bg-primary hover:bg-primary/90"
+                      >
+                        <Users className="h-4 w-4 mr-2" />
+                        Message a classmate
+                      </Button>
+                      <Button 
+                        variant="outline"
+                        onClick={() => navigate('/signup')}
+                      >
+                        <Plus className="h-4 w-4 mr-2" />
+                        Invite friends
+                      </Button>
                     </div>
-                  </Card>
-                ))}
+                  </div>
+                ) : (
+                  /* Individual Conversations */
+                  effectiveConversations.map((conversation) => (
+                    <Card 
+                      key={conversation.id}
+                      className={cn(
+                        "p-3 cursor-pointer transition-all duration-200 hover:bg-muted/50",
+                        selectedChat === conversation.id && "bg-muted"
+                      )}
+                      onClick={() => handleSelectChat(conversation.id)}
+                    >
+                      <div className="flex items-center space-x-3">
+                        <div className="relative">
+                          <Avatar className="h-12 w-12">
+                            <AvatarImage 
+                              src={`https://images.unsplash.com/${conversation.other_user.avatar_url}?w=100&h=100&fit=crop&crop=face`} 
+                            />
+                            <AvatarFallback>
+                              {conversation.other_user.name.split(' ').map(n => n[0]).join('')}
+                            </AvatarFallback>
+                          </Avatar>
+                          {conversation.unread_count > 0 && (
+                            <div className="absolute -top-1 -right-1">
+                              <Badge className="h-5 w-5 rounded-full p-0 text-xs bg-primary text-primary-foreground">
+                                {conversation.unread_count}
+                              </Badge>
+                            </div>
+                          )}
+                        </div>
+                        
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between mb-1">
+                            <h3 className={cn(
+                              "text-sm truncate",
+                              conversation.unread_count > 0 ? "font-semibold text-foreground" : "font-medium text-foreground"
+                            )}>
+                              {conversation.other_user.name}
+                            </h3>
+                            <span className="text-xs text-muted-foreground">
+                              {formatTime(conversation.last_message.sent_at)}
+                            </span>
+                          </div>
+                          <p className={cn(
+                            "text-sm truncate",
+                            conversation.unread_count > 0 ? "text-foreground font-medium" : "text-muted-foreground"
+                          )}>
+                            {conversation.last_message.sender_id === "dev-user-123" ? "You: " : ""}
+                            {conversation.last_message.content}
+                          </p>
+                        </div>
+                      </div>
+                    </Card>
+                  ))
+                )}
               </div>
             </ScrollArea>
           </div>

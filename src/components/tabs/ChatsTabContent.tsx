@@ -89,41 +89,7 @@ const ChatsTabContent = ({ schoolName }: ChatsTabContentProps) => {
     );
   }
 
-  // Show empty state when dev mode is OFF and no real data
-  if (!isDevMode && effectiveConversations.length === 0) {
-    return (
-      <div className="h-full w-full flex items-center justify-center">
-        <div className="text-center px-6">
-          <MessageSquare className="h-16 w-16 text-muted-foreground mx-auto mb-6 opacity-50" />
-          <h3 className="text-2xl font-bold text-foreground mb-4">
-            Start the first chat at {schoolName}
-          </h3>
-          <p className="text-muted-foreground max-w-md mx-auto mb-8">
-            Be the first to break the ice! Connect with classmates and start conversations.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-sm mx-auto">
-            <Button 
-              onClick={() => navigate(`/meet`)}
-              size="lg"
-              className="bg-primary hover:bg-primary/90"
-            >
-              <Users className="h-5 w-5 mr-2" />
-              Message a classmate
-            </Button>
-            <Button 
-              variant="outline"
-              onClick={() => navigate('/signup')}
-              size="lg"
-            >
-              <Plus className="h-5 w-5 mr-2" />
-              Invite friends
-            </Button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
+  // Always show ModernChatInterface - it handles the pinned group chat + empty states
   return <ModernChatInterface 
     schoolName={schoolName} 
     conversations={effectiveConversations}
