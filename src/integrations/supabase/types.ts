@@ -192,6 +192,56 @@ export type Database = {
           },
         ]
       }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          class_year: string | null
+          created_at: string
+          display_name: string | null
+          id: string
+          school_slug: string
+          status: string | null
+          tags: string[] | null
+          user_id: string
+          username: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          class_year?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          school_slug: string
+          status?: string | null
+          tags?: string[] | null
+          user_id: string
+          username?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          class_year?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          school_slug?: string
+          status?: string | null
+          tags?: string[] | null
+          user_id?: string
+          username?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_school_slug_fkey"
+            columns: ["school_slug"]
+            isOneToOne: false
+            referencedRelation: "schools"
+            referencedColumns: ["slug"]
+          },
+        ]
+      }
       rate_limit_log: {
         Row: {
           action_type: string
@@ -304,6 +354,151 @@ export type Database = {
           message_count?: number
           school?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      school_conversation_members: {
+        Row: {
+          conversation_id: string
+          is_muted: boolean | null
+          joined_at: string
+          last_read_at: string | null
+          role: string | null
+          user_id: string
+        }
+        Insert: {
+          conversation_id: string
+          is_muted?: boolean | null
+          joined_at?: string
+          last_read_at?: string | null
+          role?: string | null
+          user_id: string
+        }
+        Update: {
+          conversation_id?: string
+          is_muted?: boolean | null
+          joined_at?: string
+          last_read_at?: string | null
+          role?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "school_conversation_members_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "school_conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      school_conversations: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          last_message_at: string | null
+          metadata: Json | null
+          school_slug: string
+          title: string | null
+          type: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          last_message_at?: string | null
+          metadata?: Json | null
+          school_slug: string
+          title?: string | null
+          type: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          last_message_at?: string | null
+          metadata?: Json | null
+          school_slug?: string
+          title?: string | null
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "school_conversations_school_slug_fkey"
+            columns: ["school_slug"]
+            isOneToOne: false
+            referencedRelation: "schools"
+            referencedColumns: ["slug"]
+          },
+        ]
+      }
+      school_messages: {
+        Row: {
+          content_text: string
+          content_type: string | null
+          conversation_id: string
+          created_at: string
+          deleted_at: string | null
+          id: string
+          reply_to_id: string | null
+          sender_id: string
+        }
+        Insert: {
+          content_text: string
+          content_type?: string | null
+          conversation_id: string
+          created_at?: string
+          deleted_at?: string | null
+          id?: string
+          reply_to_id?: string | null
+          sender_id: string
+        }
+        Update: {
+          content_text?: string
+          content_type?: string | null
+          conversation_id?: string
+          created_at?: string
+          deleted_at?: string | null
+          id?: string
+          reply_to_id?: string | null
+          sender_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "school_messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "school_conversations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "school_messages_reply_to_id_fkey"
+            columns: ["reply_to_id"]
+            isOneToOne: false
+            referencedRelation: "school_messages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      schools: {
+        Row: {
+          created_at: string
+          ig_handle: string | null
+          name: string
+          slug: string
+        }
+        Insert: {
+          created_at?: string
+          ig_handle?: string | null
+          name: string
+          slug: string
+        }
+        Update: {
+          created_at?: string
+          ig_handle?: string | null
+          name?: string
+          slug?: string
         }
         Relationships: []
       }
