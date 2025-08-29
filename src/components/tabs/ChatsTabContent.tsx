@@ -11,9 +11,10 @@ import ModernChatInterface from "../ModernChatInterface";
 
 interface ChatsTabContentProps {
   schoolName?: string;
+  schoolSlug?: string;
 }
 
-const ChatsTabContent = ({ schoolName }: ChatsTabContentProps) => {
+const ChatsTabContent = ({ schoolName, schoolSlug }: ChatsTabContentProps) => {
   const [realConversations, setRealConversations] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   
@@ -29,15 +30,12 @@ const ChatsTabContent = ({ schoolName }: ChatsTabContentProps) => {
       
       setLoading(true);
       try {
-        const { data, error } = await supabase
-          .from('conversations')
-          .select(`
-            *,
-            user1:user_profiles!conversations_user1_id_fkey(name, avatar_url, school),
-            user2:user_profiles!conversations_user2_id_fkey(name, avatar_url, school)
-          `)
-          .or(`user1_id.eq.${currentUser.id},user2_id.eq.${currentUser.id}`)
-          .order('last_message_at', { ascending: false });
+        // Use new school conversation system
+        const { data, error } = await supabase.rpc('list_school_conversations', {
+          school_slug_param: schoolSlug || '',
+          user_id_param: currentUser.id,
+          limit_count: 20
+        });
 
         if (error) throw error;
         setRealConversations(data || []);
@@ -49,7 +47,7 @@ const ChatsTabContent = ({ schoolName }: ChatsTabContentProps) => {
     };
 
     fetchRealConversations();
-  }, [isDevMode, currentUser]);
+  }, [isDevMode, currentUser, schoolSlug]);
 
   // Show loading state for real data
   if (!isDevMode && loading) {
@@ -91,7 +89,8 @@ const ChatsTabContent = ({ schoolName }: ChatsTabContentProps) => {
 
   // Always show ModernChatInterface - it handles the pinned group chat + empty states
   return <ModernChatInterface 
-    schoolName={schoolName} 
+    schoolName={schoolName}
+    schoolSlug={schoolSlug}
     conversations={effectiveConversations}
     isDevMode={isDevMode}
   />;

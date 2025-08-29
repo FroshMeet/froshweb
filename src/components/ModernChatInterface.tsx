@@ -1,907 +1,516 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { 
-  MessageSquare, 
-  Send, 
-  Users, 
-  Bell,
-  Search,
-  Settings,
-  MoreHorizontal,
-  CheckCircle2,
-  X,
-  ArrowLeft,
-  UserPlus,
-  UserMinus,
-  Plus
-} from "lucide-react";
-import { mockConversations, mockMessageRequests, mockMessages } from "@/data/mockConversations";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import { Send, Users, MessageSquare, ArrowLeft, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useAuth } from "@/contexts/AuthContext";
-import GuestMessageDialog from "./GuestMessageDialog";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { useAppState } from "@/hooks/useAppState";
 
 interface ModernChatInterfaceProps {
   schoolName?: string;
+  schoolSlug?: string;
   conversations?: any[];
   isDevMode?: boolean;
 }
 
-const ModernChatInterface = ({ schoolName, conversations = [], isDevMode = false }: ModernChatInterfaceProps) => {
-  const navigate = useNavigate();
-  const { user, userProfile, isLoading } = useAuth();
-  const { toast } = useToast();
-  const [selectedChat, setSelectedChat] = useState<string | null>(null);
-  const [showRequests, setShowRequests] = useState(false);
+interface ChatMessage {
+  id: string;
+  sender_name: string;
+  message: string;
+  timestamp: string;
+  is_own?: boolean;
+}
+
+interface GroupChatSummary {
+  conversation_id: string;
+  title: string;
+  member_count: number;
+  is_member: boolean;
+}
+
+const ModernChatInterface = ({ 
+  schoolName, 
+  schoolSlug, 
+  conversations = [], 
+  isDevMode = false 
+}: ModernChatInterfaceProps) => {
+  const [selectedConversation, setSelectedConversation] = useState<string | null>(null);
   const [newMessage, setNewMessage] = useState("");
-  const [showGuestDialog, setShowGuestDialog] = useState(false);
-  const [messages, setMessages] = useState<any[]>([]);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [showGroupChat, setShowGroupChat] = useState(false);
+  const [groupChatMessages, setGroupChatMessages] = useState<ChatMessage[]>([]);
+  const [groupChatSummary, setGroupChatSummary] = useState<GroupChatSummary | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const [loadingGroupChat, setLoadingGroupChat] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
   
-  // Group chat state
-  const [groupChatMemberCount, setGroupChatMemberCount] = useState(0);
-  const [isGroupChatMember, setIsGroupChatMember] = useState(false);
-  const [groupChatId, setGroupChatId] = useState<string | null>(null);
-  const [groupChatMessages, setGroupChatMessages] = useState<any[]>([]);
-  
-  // Use dev mode logic: mock data if dev mode is on, real data if off
-  const effectiveConversations = isDevMode ? mockConversations : conversations;
-  const effectiveMessageRequests = isDevMode ? mockMessageRequests : [];
-  const effectiveMessages = isDevMode ? mockMessages : messages;
-  
+  const { currentUser } = useAppState();
+
   // Mock group chat data for dev mode
   const mockGroupChat = {
-    memberCount: 42,
-    isJoined: true,
-    messages: [
+    conversation_id: "mock_group",
+    title: `${schoolName} Group Chat`,
+    member_count: 47,
+    is_member: true
+  };
+
+  // Mock messages for dev mode
+  const mockGroupMessages: ChatMessage[] = [
+    {
+      id: "1",
+      sender_name: "Alex Johnson",
+      message: "Hey everyone! Anyone know what time the library closes today?",
+      timestamp: "2:30 PM",
+      is_own: false
+    },
+    {
+      id: "2", 
+      sender_name: "Sam Chen",
+      message: "I think it's 11 PM on weekdays. You can check their website to be sure!",
+      timestamp: "2:32 PM",
+      is_own: false
+    },
+    {
+      id: "3",
+      sender_name: "Jordan Taylor",
+      message: "Perfect, thanks! Working on my econ paper.",
+      timestamp: "2:35 PM", 
+      is_own: true
+    }
+  ];
+
+  const mockConversationMessages: { [key: string]: ChatMessage[] } = {
+    "conv_1": [
       {
-        id: "group-msg-1",
-        user_name: "Alex Chen",
-        message: "Welcome to the group chat everyone! 🎉",
-        created_at: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
-        sender_id: "user-alex"
+        id: "1",
+        sender_name: "Emma Wilson",
+        message: "Hey! Are you free to study for the midterm tomorrow?",
+        timestamp: "1:45 PM",
+        is_own: false
       },
       {
-        id: "group-msg-2", 
-        user_name: "Sarah Kim",
-        message: "Thanks! Excited to meet everyone",
-        created_at: new Date(Date.now() - 1000 * 60 * 15).toISOString(),
-        sender_id: "user-sarah"
-      },
-      {
-        id: "group-msg-3",
-        user_name: "Dev Student",
-        message: "This is awesome! Can't wait for orientation week",
-        created_at: new Date(Date.now() - 1000 * 60 * 5).toISOString(),
-        sender_id: "dev-user-123"
+        id: "2",
+        sender_name: "You",
+        message: "Yes! Want to meet at the library around 3?",
+        timestamp: "1:47 PM",
+        is_own: true
       }
     ]
   };
-  
-  // Initialize group chat when component mounts
+
   useEffect(() => {
-    if (isDevMode) {
-      // Use mock data in dev mode
-      setGroupChatMemberCount(mockGroupChat.memberCount);
-      setIsGroupChatMember(mockGroupChat.isJoined);
-      setGroupChatMessages(mockGroupChat.messages);
-    } else if (user && userProfile && schoolName) {
-      // Load real group chat data
-      initializeGroupChat();
-    }
-  }, [isDevMode, user, userProfile, schoolName]);
-
-  // Simplified user detection:
-  // - If in dev mode, always show chat
-  // - If authenticated user exists, show chat  
-  // - Otherwise, show guest CTA
-  const shouldShowChat = isDevMode || user;
-  const isGuestMode = !isDevMode && !user;
-  
-  const initializeGroupChat = async () => {
-    if (!schoolName || !userProfile) return;
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
     
-    try {
-      // Get or create school chat
-      const { data: chatData, error: chatError } = await supabase
-        .rpc('get_or_create_school_chat', { school_name: schoolName });
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
-      if (chatError) throw chatError;
-      setGroupChatId(chatData);
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages, groupChatMessages]);
 
-      // Check if user is a member
-      const { data: memberData, error: memberError } = await supabase
-        .from('school_chat_members')
-        .select('*')
-        .eq('school_chat_id', chatData)
-        .eq('user_id', userProfile.user_id)
-        .single();
-
-      setIsGroupChatMember(!!memberData && !memberError);
-
-      // Load member count
-      const { count, error: countError } = await supabase
-        .from('school_chat_members')
-        .select('*', { count: 'exact', head: true })
-        .eq('school_chat_id', chatData);
-
-      if (!countError) {
-        setGroupChatMemberCount(count || 0);
+  // Load group chat summary
+  useEffect(() => {
+    const loadGroupChatSummary = async () => {
+      if (isDevMode) {
+        setGroupChatSummary(mockGroupChat);
+        return;
       }
+      
+      if (!currentUser || !schoolSlug) return;
 
-      // Load messages if user is a member
-      if (memberData && !memberError) {
-        loadGroupChatMessages(chatData);
+      try {
+        const { data, error } = await supabase.rpc('get_school_group_chat_summary', {
+          school_slug_param: schoolSlug,
+          user_id_param: currentUser.id
+        });
+
+        if (error) throw error;
+        setGroupChatSummary(data?.[0] || null);
+      } catch (error) {
+        console.error('Error loading group chat summary:', error);
       }
+    };
 
-      // Subscribe to real-time updates
-      const channel = supabase
-        .channel(`group_chat_${chatData}`)
-        .on(
-          'postgres_changes',
-          {
-            event: 'INSERT',
-            schema: 'public',
-            table: 'school_chat_messages',
-            filter: `school_chat_id=eq.${chatData}`
-          },
-          (payload) => {
-            setGroupChatMessages(prev => [...prev, payload.new]);
-          }
-        )
-        .on(
-          'postgres_changes',
-          {
-            event: '*',
-            schema: 'public', 
-            table: 'school_chat_members',
-            filter: `school_chat_id=eq.${chatData}`
-          },
-          () => {
-            // Reload member count on membership changes
-            loadMemberCount(chatData);
-          }
-        )
-        .subscribe();
-
-      return () => {
-        supabase.removeChannel(channel);
-      };
-    } catch (error) {
-      console.error('Error initializing group chat:', error);
-    }
-  };
-
-  const loadGroupChatMessages = async (chatId: string) => {
-    const { data, error } = await supabase
-      .from('school_chat_messages')
-      .select('*')
-      .eq('school_chat_id', chatId)
-      .order('created_at', { ascending: true })
-      .limit(50);
-
-    if (!error && data) {
-      setGroupChatMessages(data);
-    }
-  };
-
-  const loadMemberCount = async (chatId: string) => {
-    const { count, error } = await supabase
-      .from('school_chat_members')
-      .select('*', { count: 'exact', head: true })
-      .eq('school_chat_id', chatId);
-
-    if (!error) {
-      setGroupChatMemberCount(count || 0);
-    }
-  };
+    loadGroupChatSummary();
+  }, [isDevMode, currentUser, schoolSlug, schoolName]);
 
   const handleJoinGroupChat = async () => {
+    if (!groupChatSummary) return;
+    
+    // In dev mode, just toggle state locally
     if (isDevMode) {
-      // Mock join in dev mode
-      setIsGroupChatMember(true);
-      setGroupChatMemberCount(prev => prev + 1);
-      toast({
-        title: "Joined group chat!",
-        description: `Welcome to the ${schoolName} group chat`,
-      });
+      setShowGroupChat(true);
+      setGroupChatMessages(mockGroupMessages);
+      toast.success("Joined group chat!");
       return;
     }
 
-    if (!groupChatId || !userProfile) return;
+    if (!currentUser) return;
 
+    setLoadingGroupChat(true);
     try {
-      await supabase
-        .from('school_chat_members')
-        .upsert({
-          user_id: userProfile.user_id,
-          school_chat_id: groupChatId
-        });
-
-      setIsGroupChatMember(true);
-      loadMemberCount(groupChatId);
-      loadGroupChatMessages(groupChatId);
-      
-      toast({
-        title: "Joined group chat!",
-        description: `Welcome to the ${schoolName} group chat`,
+      const { error } = await supabase.rpc('join_school_group_chat', {
+        conversation_id_param: groupChatSummary.conversation_id,
+        user_id_param: currentUser.id
       });
+
+      if (error) throw error;
+      
+      // Update the summary to reflect membership
+      setGroupChatSummary(prev => prev ? {
+        ...prev,
+        is_member: true,
+        member_count: prev.member_count + 1
+      } : null);
+      
+      toast.success("Joined group chat!");
     } catch (error) {
       console.error('Error joining group chat:', error);
-      toast({
-        title: "Error",
-        description: "Failed to join group chat",
-        variant: "destructive"
-      });
+      toast.error("Failed to join group chat");
+    } finally {
+      setLoadingGroupChat(false);
     }
   };
 
-  const handleLeaveGroupChat = async () => {
+  const handleOpenGroupChat = async () => {
+    setShowGroupChat(true);
+    setSelectedConversation(null);
+    
     if (isDevMode) {
-      // Mock leave in dev mode
-      setIsGroupChatMember(false);
-      setGroupChatMemberCount(prev => prev - 1);
-      setGroupChatMessages([]);
-      toast({
-        title: "Left group chat",
-        description: `You left the ${schoolName} group chat`,
-      });
+      setGroupChatMessages(mockGroupMessages);
       return;
     }
 
-    if (!groupChatId || !userProfile) return;
+    if (!groupChatSummary) return;
 
     try {
-      await supabase
-        .from('school_chat_members')
-        .delete()
-        .eq('user_id', userProfile.user_id)
-        .eq('school_chat_id', groupChatId);
-
-      setIsGroupChatMember(false);
-      setGroupChatMessages([]);
-      loadMemberCount(groupChatId);
-      
-      toast({
-        title: "Left group chat",
-        description: `You left the ${schoolName} group chat`,
+      const { data, error } = await supabase.rpc('list_school_messages', {
+        conversation_id_param: groupChatSummary.conversation_id,
+        limit_count: 50
       });
+
+      if (error) throw error;
+      
+      const formattedMessages: ChatMessage[] = (data || []).map((msg: any) => ({
+        id: msg.message_id,
+        sender_name: msg.sender_name || 'User',
+        message: msg.content_text,
+        timestamp: new Date(msg.created_at).toLocaleTimeString('en-US', {
+          hour: 'numeric',
+          minute: '2-digit',
+          hour12: true
+        }),
+        is_own: msg.sender_id === currentUser?.id
+      }));
+
+      setGroupChatMessages(formattedMessages);
     } catch (error) {
-      console.error('Error leaving group chat:', error);
-      toast({
-        title: "Error", 
-        description: "Failed to leave group chat",
-        variant: "destructive"
-      });
+      console.error('Error loading group chat messages:', error);
+      toast.error("Failed to load messages");
     }
   };
 
-  const handleCreateAccount = () => {
-    setShowGuestDialog(false);
-    navigate('/signup');
-  };
-
-  const handleSendMessage = async () => {
+  const handleSendMessage = async (e: React.FormEvent) => {
+    e.preventDefault();
     if (!newMessage.trim()) return;
-    
-    const isGroupChat = selectedChat === "group-chat";
-    
-    if (isDevMode) {
-      // Simulate sending a message in dev mode
-      const mockMessage = {
-        id: `msg-${Date.now()}`,
-        conversation_id: selectedChat,
-        sender_id: "dev-user-123",
-        user_name: "Dev Student", 
-        message: newMessage.trim(),
-        created_at: new Date().toISOString(),
-        read_at: new Date().toISOString()
-      };
-      
-      if (isGroupChat) {
-        setGroupChatMessages(prev => [...prev, mockMessage]);
-      } else {
-        setMessages(prev => [...prev, mockMessage]);
-      }
-      setNewMessage("");
-      
-      toast({
-        title: "Message sent!",
-        description: "Your message was delivered successfully.",
-      });
-    } else {
-      // Handle real message sending to Supabase
-      if (isGroupChat && groupChatId && userProfile) {
-        try {
-          await supabase
-            .from('school_chat_messages')
-            .insert({
-              school_chat_id: groupChatId,
-              user_id: userProfile.user_id,
-              user_name: userProfile.name || 'Anonymous',
-              message: newMessage.trim()
-            });
 
-          setNewMessage("");
-          
-          toast({
-            title: "Message sent!",
-            description: "Your message was delivered successfully.",
-          });
-        } catch (error) {
-          console.error('Error sending message:', error);
-          toast({
-            title: "Error",
-            description: "Failed to send message",
-            variant: "destructive"
-          });
+    const message: ChatMessage = {
+      id: Date.now().toString(),
+      sender_name: "You",
+      message: newMessage,
+      timestamp: new Date().toLocaleTimeString('en-US', { 
+        hour: 'numeric', 
+        minute: '2-digit',
+        hour12: true 
+      }),
+      is_own: true
+    };
+
+    // Add message optimistically
+    if (showGroupChat) {
+      setGroupChatMessages(prev => [...prev, message]);
+    } else if (selectedConversation) {
+      setMessages(prev => [...prev, message]);
+    }
+
+    const messageText = newMessage;
+    setNewMessage("");
+
+    // In dev mode, simulate response
+    if (isDevMode) {
+      setTimeout(() => {
+        const response: ChatMessage = {
+          id: (Date.now() + 1).toString(),
+          sender_name: showGroupChat ? "System" : "Other User",
+          message: "This is a mock response in dev mode!",
+          timestamp: new Date().toLocaleTimeString('en-US', { 
+            hour: 'numeric', 
+            minute: '2-digit',
+            hour12: true 
+          }),
+          is_own: false
+        };
+        
+        if (showGroupChat) {
+          setGroupChatMessages(prev => [...prev, response]);
+        } else {
+          setMessages(prev => [...prev, response]);
         }
-      } else {
-        // TODO: Implement real DM message sending
-        setNewMessage("");
-        
-        toast({
-          title: "Message sent!",
-          description: "Your message was delivered successfully.",
+      }, 1000);
+      return;
+    }
+
+    // Send real message
+    if (showGroupChat && groupChatSummary && currentUser) {
+      try {
+        const { error } = await supabase.rpc('send_school_message', {
+          conversation_id_param: groupChatSummary.conversation_id,
+          sender_id_param: currentUser.id,
+          content_text_param: messageText
         });
+
+        if (error) throw error;
+      } catch (error) {
+        console.error('Error sending message:', error);
+        toast.error("Failed to send message");
+        // Remove optimistic message
+        setGroupChatMessages(prev => prev.filter(msg => msg.id !== message.id));
       }
     }
   };
 
-  const formatTime = (timestamp: string) => {
-    const date = new Date(timestamp);
-    const now = new Date();
-    const diffMs = now.getTime() - date.getTime();
-    const diffHours = diffMs / (1000 * 60 * 60);
-    const diffDays = diffMs / (1000 * 60 * 60 * 24);
-
-    if (diffHours < 1) {
-      return 'now';
-    } else if (diffHours < 24) {
-      return `${Math.floor(diffHours)}h`;
-    } else if (diffDays < 7) {
-      return `${Math.floor(diffDays)}d`;
+  const handleConversationSelect = (convId: string) => {
+    setSelectedConversation(convId);
+    setShowGroupChat(false);
+    
+    if (isDevMode && mockConversationMessages[convId]) {
+      setMessages(mockConversationMessages[convId]);
     } else {
-      return date.toLocaleDateString();
+      // In production, load real messages
+      setMessages([]);
     }
   };
 
-  const handleSelectChat = (chatId: string) => {
-    setSelectedChat(chatId);
-    
-    const isGroupChat = chatId === "group-chat";
-    
-    if (isDevMode) {
-      if (isGroupChat) {
-        // Use mock group chat messages
-        setMessages(mockGroupChat.messages);
-      } else {
-        // Load mock messages for the selected conversation
-        const chatMessages = effectiveMessages.filter(msg => msg.conversation_id === chatId);
-        setMessages(chatMessages);
-      }
-    } else {
-      if (isGroupChat) {
-        // Use real group chat messages
-        setMessages(groupChatMessages);
-      } else {
-        // TODO: Load real DM messages from Supabase
-        setMessages([]);
-      }
-    }
+  const handleBackToList = () => {
+    setSelectedConversation(null);
+    setShowGroupChat(false);
+    setMessages([]);
   };
 
-  const handleAcceptRequest = (requestId: string) => {
-    toast({
-      title: "Request accepted!",
-      description: "You can now chat with this person.",
-    });
-    // Remove from requests in dev mode
-    // In production, this would create a conversation
-  };
+  const showChatList = !selectedConversation && !showGroupChat;
+  const showChat = selectedConversation || showGroupChat;
 
-  const handleDeclineRequest = (requestId: string) => {
-    toast({
-      title: "Request declined",
-      description: "The message request has been declined.",
-    });
-  };
+  // Empty state for when no conversations exist in production  
+  const showEmptyState = !isDevMode && conversations.length === 0;
 
-  // Show loading while checking auth
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-      </div>
-    );
-  }
-
-  // Guest view - show CTA to join group chat
-  if (isGuestMode) {
-    return (
-      <div className="flex flex-col h-full bg-background max-w-2xl mx-auto">  {/* Increased max-width for desktop */}
-        {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-border">
-          <h1 className="text-xl font-bold text-foreground">Chats</h1>
-        </div>
-        
-        <div className="flex-1 flex items-center justify-center p-6">
-          <div className="text-center space-y-6">
-            <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto">
-              <MessageSquare className="h-10 w-10 text-primary" />
-            </div>
-            <div>
-              <h2 className="text-xl font-semibold text-foreground mb-2">
-                Join Your School's Group Chat
-              </h2>
-              <p className="text-muted-foreground text-sm leading-relaxed max-w-sm">
-                Connect with verified students from your school and start conversations
-              </p>
-            </div>
-            <Button 
-              onClick={() => navigate('/signup')} 
-              className="w-full neon-glow"
-              size="lg"
-            >
-              Get Started
-            </Button>
-          </div>
-        </div>
-        
-        <GuestMessageDialog
-          isOpen={showGuestDialog}
-          onClose={() => setShowGuestDialog(false)}
-          onCreateAccount={handleCreateAccount}
-        />
-      </div>
-    );
-  }
-
-  // Chat conversation view
-  if (selectedChat) {
-    const isGroupChat = selectedChat === "group-chat";
-    const conversation = effectiveConversations.find(c => c.id === selectedChat);
-    const chatTitle = isGroupChat 
-      ? `${schoolName || userProfile?.school || "School"} Group Chat`
-      : conversation?.other_user.name || "Chat";
-    
-    const currentMemberCount = isDevMode ? mockGroupChat.memberCount : groupChatMemberCount;
-
-    return (
-      <div className="flex flex-col h-full bg-background max-w-2xl mx-auto">  {/* Increased max-width for desktop */}
-        {/* Chat Header */}
-        <div className="flex items-center justify-between p-4 border-b border-border bg-card">
-          <div className="flex items-center space-x-3">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setSelectedChat(null)}
-              className="p-2"
-            >
-              <ArrowLeft className="h-4 w-4" />
-            </Button>
-            
-            <Avatar className="h-10 w-10">
-              {isGroupChat ? (
-                <AvatarFallback className="bg-primary/20 text-primary">
-                  <Users className="h-5 w-5" />
-                </AvatarFallback>
-              ) : (
-                <>
-                  <AvatarImage 
-                    src={`https://images.unsplash.com/${conversation?.other_user.avatar_url}?w=100&h=100&fit=crop&crop=face`} 
-                  />
-                  <AvatarFallback>
-                    {conversation?.other_user.name.split(' ').map(n => n[0]).join('')}
-                  </AvatarFallback>
-                </>
-              )}
-            </Avatar>
-            
-            <div>
-              <h2 className="font-semibold text-sm text-foreground">{chatTitle}</h2>
-              {isGroupChat && (
-                <p className="text-xs text-muted-foreground">{currentMemberCount} members</p>
-              )}
-            </div>
-          </div>
-          
-          <Button variant="ghost" size="sm">
-            <MoreHorizontal className="h-4 w-4" />
-          </Button>
-        </div>
-
-        {/* Messages */}
-        <ScrollArea className="flex-1 p-4">
-          <div className="space-y-3">
-            {messages.length === 0 ? (
-              <div className="text-center py-8">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-muted/50 flex items-center justify-center">
-                  {isGroupChat ? <Users className="h-8 w-8 text-muted-foreground" /> : <MessageSquare className="h-8 w-8 text-muted-foreground" />}
-                </div>
-                <p className="text-muted-foreground">
-                  {isGroupChat ? "No messages yet. Say hi 👋" : "No messages yet. Start the conversation!"}
-                </p>
-              </div>
-            ) : (
-              messages.map((message) => {
-                const isOwnMessage = message.sender_id === "dev-user-123" || message.sender_id === userProfile?.user_id;
-                
-                return (
-                  <div
-                    key={message.id}
-                    className={cn(
-                      "flex",
-                      isOwnMessage ? "justify-end" : "justify-start"
-                    )}
-                  >
-                    <div className={cn(
-                      "max-w-[80%] rounded-2xl px-4 py-2",
-                      isOwnMessage
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-muted text-foreground"
-                    )}>
-                      {isGroupChat && !isOwnMessage && (
-                        <p className="text-xs font-medium mb-1 text-primary">
-                          {message.user_name || message.sender_name || "Unknown"}
-                        </p>
-                      )}
-                      <p className="text-sm">{message.message}</p>
-                      <p className={cn(
-                        "text-xs mt-1",
-                        isOwnMessage ? "text-primary-foreground/70" : "text-muted-foreground"
-                      )}>
-                        {formatTime(message.created_at)}
-                      </p>
-                    </div>
-                  </div>
-                );
-              })
-            )}
-          </div>
-        </ScrollArea>
-
-        {/* Message Input */}
-        <div className="p-4 border-t border-border bg-card">
-          {isGroupChat && !isGroupChatMember && !isDevMode ? (
-            <div className="flex items-center justify-center py-4">
-              <Button 
-                onClick={handleJoinGroupChat}
-                className="neon-glow"
-              >
-                <UserPlus className="h-4 w-4 mr-2" />
-                Join Group Chat
-              </Button>
-            </div>
-          ) : (
-            <div className="flex items-center space-x-2">
-              <Input
-                value={newMessage}
-                onChange={(e) => setNewMessage(e.target.value)}
-                placeholder={isGroupChat ? `Message the ${schoolName} group...` : "Type a message..."}
-                className="flex-1 rounded-full border-border bg-background"
-                onKeyPress={(e) => {
-                  if (e.key === 'Enter') {
-                    e.preventDefault();
-                    handleSendMessage();
-                  }
-                }}
-              />
-              <Button 
-                onClick={handleSendMessage}
-                size="sm"
-                className="rounded-full p-3 neon-glow"
-                disabled={!newMessage.trim()}
-              >
-                <Send className="h-4 w-4" />
-              </Button>
-            </div>
-          )}
-        </div>
-      </div>
-    );
-  }
-
-  // Get user's school for group chat
-  const userSchool = schoolName || userProfile?.school || "School";
-
-  // Main chat interface for logged-in users  
   return (
-    <div className="flex flex-col h-full bg-background max-w-2xl mx-auto">  {/* Increased max-width for desktop */}
-      {/* Dev Mode Banner */}
-      {isDevMode && (
-        <div className="bg-primary/10 border-b border-primary/20 px-4 py-2">
-          <div className="flex items-center justify-center">
-            <Badge variant="secondary" className="text-xs">
-              [DEV MODE] - Test conversations generated
-            </Badge>
+    <div className="h-full flex">
+      {/* Left Sidebar - Conversation List */}
+      <div className={cn(
+        "flex flex-col border-r border-border",
+        isMobile ? (showChatList ? "w-full" : "hidden") : "w-80"
+      )}>
+        {/* Header */}
+        <div className="p-4 border-b border-border">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="font-semibold">Chats</h2>
+            <Button size="sm" variant="ghost">
+              <Plus className="h-4 w-4" />
+            </Button>
           </div>
         </div>
-      )}
 
-      {/* Header */}
-      <div className="flex items-center justify-between p-4 md:p-6 border-b border-border">  {/* Added responsive padding */}
-        <div className="flex items-center space-x-4">
-          <h1 className="text-xl md:text-2xl font-bold text-foreground">Chats</h1>  {/* Added responsive text size */}
-        </div>
-        
-        <div className="flex items-center space-x-2 md:space-x-3">  {/* Added responsive spacing */}
-          {/* Requests Button */}
-          <Button 
-            variant="ghost" 
-            size="sm"
-            onClick={() => setShowRequests(!showRequests)}
-            className="relative"
-          >
-            <Bell className="h-4 w-4" />
-            {effectiveMessageRequests.length > 0 && (
-              <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs bg-primary text-primary-foreground">
-                {effectiveMessageRequests.length}
-              </Badge>
-            )}
-          </Button>
-          
-          <Button variant="ghost" size="sm">
-            <Search className="h-4 w-4" />
-          </Button>
-          
-          <Button variant="ghost" size="sm">
-            <MoreHorizontal className="h-4 w-4" />
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="flex-1">
-        {/* Show Message Requests */}
-        {showRequests ? (
-          <div className="flex-1">
-            <div className="p-4 border-b border-border">
+        {/* Pinned Group Chat */}
+        {groupChatSummary && (
+          <div className="p-4 border-b border-border">
+            <Card className="p-4 bg-gradient-to-r from-primary/10 to-primary-glow/10 border-primary/20">
               <div className="flex items-center justify-between">
-                <h2 className="font-semibold text-foreground">Message Requests</h2>
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center">
+                    <Users className="h-5 w-5 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium">{groupChatSummary.title}</h3>
+                    <p className="text-sm text-muted-foreground">
+                      {groupChatSummary.member_count} member{groupChatSummary.member_count !== 1 ? 's' : ''}
+                    </p>
+                  </div>
+                </div>
                 <Button 
-                  variant="ghost" 
-                  size="sm"
-                  onClick={() => setShowRequests(false)}
+                  size="sm" 
+                  onClick={groupChatSummary.is_member ? handleOpenGroupChat : handleJoinGroupChat}
+                  disabled={loadingGroupChat}
                 >
-                  <X className="h-4 w-4" />
+                  {groupChatSummary.is_member ? "Open" : "Join"}
                 </Button>
               </div>
-            </div>
-            
-            <ScrollArea className="flex-1">
-              {effectiveMessageRequests.length === 0 ? (
-                <div className="p-8 text-center text-muted-foreground">
-                  <MessageSquare className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                  <p>No message requests</p>
-                </div>
-              ) : (
-                <div className="p-2 space-y-2">
-                  {effectiveMessageRequests.map((request) => (
-                    <Card key={request.id} className="p-4 hover:bg-muted/50 transition-colors">
-                      <div className="flex items-start space-x-3">
-                        <Avatar className="h-12 w-12">
-                          <AvatarImage 
-                            src={`https://images.unsplash.com/${request.from_user.avatar_url}?w=100&h=100&fit=crop&crop=face`} 
-                          />
-                          <AvatarFallback>{request.from_user.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-                        </Avatar>
-                        
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center justify-between mb-1">
-                            <h3 className="font-medium text-sm text-foreground truncate">
-                              {request.from_user.name}
-                            </h3>
-                            <Badge variant="secondary" className="text-xs">
-                              {request.from_user.school}
-                            </Badge>
-                          </div>
-                          
-                          <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
-                            {request.message}
-                          </p>
-                          
-                          <div className="flex space-x-2">
-                            <Button 
-                              size="sm" 
-                              className="flex-1"
-                              onClick={() => handleAcceptRequest(request.id)}
-                            >
-                              <CheckCircle2 className="h-3 w-3 mr-1" />
-                              Accept
-                            </Button>
-                            <Button 
-                              variant="outline" 
-                              size="sm" 
-                              className="flex-1"
-                              onClick={() => handleDeclineRequest(request.id)}
-                            >
-                              Decline
-                            </Button>
-                          </div>
-                        </div>
-                      </div>
-                    </Card>
-                  ))}
-                </div>
-              )}
-            </ScrollArea>
+            </Card>
           </div>
-        ) : (
-          /* Regular Conversations List */
-          <div className="flex-1">
-            <ScrollArea className="flex-1">
-              <div className="p-2 space-y-1">
-                {/* School Group Chat - Pinned at top */}
-                <Card 
+        )}
+
+        {/* Conversations List */}
+        <ScrollArea className="flex-1">
+          {showEmptyState ? (
+            <div className="p-6 text-center">
+              <MessageSquare className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+              <h3 className="font-medium mb-2">Start the first chat at {schoolName}</h3>
+              <p className="text-sm text-muted-foreground mb-4">Connect with your classmates</p>
+              <Button size="sm">Message a classmate</Button>
+            </div>
+          ) : (
+            <div className="p-2">
+              {conversations.map((conv) => (
+                <div
+                  key={conv.id}
+                  onClick={() => handleConversationSelect(conv.id)}
                   className={cn(
-                    "p-3 cursor-pointer transition-all duration-200 hover:bg-muted/50 border-primary/30 bg-gradient-to-r from-primary/5 to-accent/5",
-                    selectedChat === "group-chat" && "bg-primary/10 border-primary/50"
+                    "p-3 rounded-lg cursor-pointer hover:bg-accent/50 transition-colors",
+                    selectedConversation === conv.id && "bg-accent"
                   )}
-                  onClick={() => handleSelectChat("group-chat")}
                 >
-                  <div className="flex items-center space-x-3">
-                    <div className="relative">
-                      <Avatar className="h-12 w-12 border-2 border-primary/30">
-                        <AvatarFallback className="bg-primary/20 text-primary font-bold">
-                          <Users className="h-6 w-6" />
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="absolute -top-1 -right-1">
-                        <Badge className="h-5 w-5 rounded-full p-0 text-xs bg-primary text-primary-foreground">
-                          <Users className="h-3 w-3" />
-                        </Badge>
-                      </div>
-                    </div>
-                    
+                  <div className="flex items-center gap-3">
+                    <Avatar className="h-10 w-10">
+                      <AvatarImage src={conv.avatar} />
+                      <AvatarFallback>{conv.name?.charAt(0)}</AvatarFallback>
+                    </Avatar>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between mb-1">
-                        <h3 className="font-semibold text-sm text-foreground truncate">
-                          {userSchool} Group Chat
-                        </h3>
-                        
-                        {/* Join/Leave Button */}
-                        {!isDevMode && (
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              isGroupChatMember ? handleLeaveGroupChat() : handleJoinGroupChat();
-                            }}
-                            className="h-6 px-2 text-xs"
-                          >
-                            {isGroupChatMember ? (
-                              <>
-                                <UserMinus className="h-3 w-3 mr-1" />
-                                Leave
-                              </>
-                            ) : (
-                              <>
-                                <UserPlus className="h-3 w-3 mr-1" />
-                                Join
-                              </>
-                            )}
-                          </Button>
-                        )}
-                         <Badge variant="secondary" className="text-xs bg-primary/20 text-primary border-primary/30">
-                          Pinned
-                        </Badge>
+                        <h4 className="font-medium truncate">{conv.name}</h4>
+                        <span className="text-xs text-muted-foreground">{conv.time}</span>
                       </div>
-                      
-                      <div className="flex items-center space-x-2">
-                        <Users className="h-3 w-3 text-muted-foreground" />
-                        <span className="text-xs text-muted-foreground">
-                          {isDevMode ? mockGroupChat.memberCount : groupChatMemberCount} members
-                        </span>
-                        {!isDevMode && !isGroupChatMember && (
-                          <Badge variant="outline" className="text-xs">
-                            Not joined
-                          </Badge>
-                        )}
-                      </div>
-                      
-                      <p className="text-xs text-muted-foreground mt-1 line-clamp-1">
-                        {isDevMode || isGroupChatMember
-                          ? "Welcome everyone! Share your thoughts here..."
-                          : "Join to see messages and connect with classmates"
-                        }
-                      </p>
+                      <p className="text-sm text-muted-foreground truncate">{conv.lastMessage}</p>
                     </div>
+                    {conv.unread > 0 && (
+                      <Badge variant="default" className="h-5 min-w-5 text-xs">
+                        {conv.unread}
+                      </Badge>
+                    )}
                   </div>
-                </Card>
-                
-                {/* Individual Conversations or Empty State */}
-                {effectiveConversations.length === 0 ? (
-                  /* Empty state for DMs - only shown when no conversations exist */
-                  <div className="p-6 text-center">
-                    <MessageSquare className="h-12 w-12 mx-auto mb-4 opacity-50 text-muted-foreground" />
-                    <h3 className="text-lg font-semibold text-foreground mb-2">
-                      Start the first chat at {userSchool}
-                    </h3>
-                    <p className="text-sm text-muted-foreground mb-6">
-                      Connect with classmates and start conversations
-                    </p>
-                    <div className="flex flex-col sm:flex-row gap-3 justify-center max-w-sm mx-auto">
-                      <Button 
-                        onClick={() => navigate('/meet')}
-                        className="bg-primary hover:bg-primary/90"
-                      >
-                        <Users className="h-4 w-4 mr-2" />
-                        Message a classmate
-                      </Button>
-                      <Button 
-                        variant="outline"
-                        onClick={() => navigate('/signup')}
-                      >
-                        <Plus className="h-4 w-4 mr-2" />
-                        Invite friends
-                      </Button>
-                    </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </ScrollArea>
+      </div>
+
+      {/* Right - Chat Area */}
+      <div className={cn(
+        "flex-1 flex flex-col",
+        isMobile && showChatList && "hidden"
+      )}>
+        {showChat ? (
+          <>
+            {/* Chat Header */}
+            <div className="p-4 border-b border-border flex items-center gap-3">
+              {isMobile && (
+                <Button variant="ghost" size="sm" onClick={handleBackToList}>
+                  <ArrowLeft className="h-4 w-4" />
+                </Button>
+              )}
+              <div className="flex items-center gap-3 flex-1">
+                <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center">
+                  {showGroupChat ? (
+                    <Users className="h-5 w-5 text-white" />
+                  ) : (
+                    <MessageSquare className="h-5 w-5 text-white" />
+                  )}
+                </div>
+                <div>
+                  <h3 className="font-medium">
+                    {showGroupChat ? groupChatSummary?.title : "Chat"}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {showGroupChat ? 
+                      `${groupChatSummary?.member_count || 0} members` : 
+                      "Online"
+                    }
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Messages */}
+            <ScrollArea className="flex-1 p-4">
+              <div className="space-y-4">
+                {(showGroupChat ? groupChatMessages : messages).length === 0 ? (
+                  <div className="text-center text-muted-foreground py-8">
+                    <MessageSquare className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                    <p>No messages yet. Say hi 👋</p>
                   </div>
                 ) : (
-                  /* Individual Conversations */
-                  effectiveConversations.map((conversation) => (
-                    <Card 
-                      key={conversation.id}
+                  (showGroupChat ? groupChatMessages : messages).map((message) => (
+                    <div
+                      key={message.id}
                       className={cn(
-                        "p-3 cursor-pointer transition-all duration-200 hover:bg-muted/50",
-                        selectedChat === conversation.id && "bg-muted"
+                        "flex gap-3",
+                        message.is_own ? "justify-end" : "justify-start"
                       )}
-                      onClick={() => handleSelectChat(conversation.id)}
                     >
-                      <div className="flex items-center space-x-3">
-                        <div className="relative">
-                          <Avatar className="h-12 w-12">
-                            <AvatarImage 
-                              src={`https://images.unsplash.com/${conversation.other_user.avatar_url}?w=100&h=100&fit=crop&crop=face`} 
-                            />
-                            <AvatarFallback>
-                              {conversation.other_user.name.split(' ').map(n => n[0]).join('')}
-                            </AvatarFallback>
-                          </Avatar>
-                          {conversation.unread_count > 0 && (
-                            <div className="absolute -top-1 -right-1">
-                              <Badge className="h-5 w-5 rounded-full p-0 text-xs bg-primary text-primary-foreground">
-                                {conversation.unread_count}
-                              </Badge>
-                            </div>
-                          )}
-                        </div>
-                        
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center justify-between mb-1">
-                            <h3 className={cn(
-                              "text-sm truncate",
-                              conversation.unread_count > 0 ? "font-semibold text-foreground" : "font-medium text-foreground"
-                            )}>
-                              {conversation.other_user.name}
-                            </h3>
-                            <span className="text-xs text-muted-foreground">
-                              {formatTime(conversation.last_message.sent_at)}
-                            </span>
-                          </div>
-                          <p className={cn(
-                            "text-sm truncate",
-                            conversation.unread_count > 0 ? "text-foreground font-medium" : "text-muted-foreground"
-                          )}>
-                            {conversation.last_message.sender_id === "dev-user-123" ? "You: " : ""}
-                            {conversation.last_message.content}
+                      {!message.is_own && (
+                        <Avatar className="h-8 w-8">
+                          <AvatarFallback className="text-xs">
+                            {message.sender_name?.charAt(0)}
+                          </AvatarFallback>
+                        </Avatar>
+                      )}
+                      <div
+                        className={cn(
+                          "max-w-xs lg:max-w-md px-4 py-2 rounded-2xl",
+                          message.is_own
+                            ? "bg-primary text-primary-foreground"
+                            : "bg-accent"
+                        )}
+                      >
+                        {!message.is_own && showGroupChat && (
+                          <p className="text-xs font-medium mb-1 opacity-70">
+                            {message.sender_name}
                           </p>
-                        </div>
+                        )}
+                        <p className="text-sm">{message.message}</p>
+                        <p className="text-xs opacity-70 mt-1">{message.timestamp}</p>
                       </div>
-                    </Card>
+                      {message.is_own && (
+                        <Avatar className="h-8 w-8">
+                          <AvatarFallback className="text-xs">You</AvatarFallback>
+                        </Avatar>
+                      )}
+                    </div>
                   ))
                 )}
+                <div ref={messagesEndRef} />
               </div>
             </ScrollArea>
+
+            {/* Message Input */}
+            <form onSubmit={handleSendMessage} className="p-4 border-t border-border">
+              <div className="flex gap-2">
+                <Input
+                  value={newMessage}
+                  onChange={(e) => setNewMessage(e.target.value)}
+                  placeholder="Type a message..."
+                  className="flex-1"
+                />
+                <Button type="submit" size="sm">
+                  <Send className="h-4 w-4" />
+                </Button>
+              </div>
+            </form>
+          </>
+        ) : (
+          <div className="flex-1 flex items-center justify-center">
+            <div className="text-center text-muted-foreground">
+              <MessageSquare className="h-16 w-16 mx-auto mb-4 opacity-50" />
+              <p>Select a conversation to start chatting</p>
+            </div>
           </div>
         )}
       </div>

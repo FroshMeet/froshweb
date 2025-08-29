@@ -657,6 +657,10 @@ export type Database = {
         Args: { school_name: string }
         Returns: string
       }
+      get_or_create_school_group_chat: {
+        Args: { school_slug_param: string }
+        Returns: string
+      }
       get_potential_matches: {
         Args: { limit_count?: number; user_id_param: string }
         Returns: {
@@ -671,9 +675,100 @@ export type Database = {
           user_id: string
         }[]
       }
+      get_school_group_chat_summary: {
+        Args: { school_slug_param: string; user_id_param: string }
+        Returns: {
+          conversation_id: string
+          is_member: boolean
+          member_count: number
+          title: string
+        }[]
+      }
       handle_swipe: {
         Args: { swipe_direction: string; swiper_id: string; target_id: string }
         Returns: Json
+      }
+      join_school_group_chat: {
+        Args: { conversation_id_param: string; user_id_param: string }
+        Returns: boolean
+      }
+      leave_school_group_chat: {
+        Args: { conversation_id_param: string; user_id_param: string }
+        Returns: boolean
+      }
+      list_school_conversations: {
+        Args: {
+          cursor_timestamp?: string
+          limit_count?: number
+          school_slug_param: string
+          user_id_param: string
+        }
+        Returns: {
+          conversation_id: string
+          last_message_at: string
+          last_message_text: string
+          title: string
+          type: string
+          unread_count: number
+        }[]
+      }
+      list_school_discover_profiles: {
+        Args: {
+          cursor_timestamp?: string
+          filters?: string[]
+          limit_count?: number
+          school_slug_param: string
+          search_query?: string
+        }
+        Returns: {
+          avatar_url: string
+          bio: string
+          class_year: string
+          created_at: string
+          display_name: string
+          tags: string[]
+          user_id: string
+          username: string
+        }[]
+      }
+      list_school_messages: {
+        Args: {
+          conversation_id_param: string
+          cursor_timestamp?: string
+          limit_count?: number
+        }
+        Returns: {
+          content_text: string
+          created_at: string
+          message_id: string
+          reply_to_id: string
+          sender_id: string
+          sender_name: string
+        }[]
+      }
+      mark_school_read: {
+        Args: {
+          conversation_id_param: string
+          message_id_param?: string
+          user_id_param: string
+        }
+        Returns: boolean
+      }
+      send_school_message: {
+        Args: {
+          content_text_param: string
+          conversation_id_param: string
+          sender_id_param: string
+        }
+        Returns: string
+      }
+      start_school_dm_or_get: {
+        Args: {
+          school_slug_param: string
+          user_a_param: string
+          user_b_param: string
+        }
+        Returns: string
       }
       verify_college_email: {
         Args: { college_email_param: string; user_id_param: string }

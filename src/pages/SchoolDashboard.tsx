@@ -393,12 +393,9 @@ export default function SchoolDashboard() {
         {/* Discover Tab */}
         {activeTab === "discover" && (
           <div className="h-[calc(100vh-200px)] animate-fade-in">
-            <DiscoverTabContent
-              profiles={[]} // Pass empty array as DiscoverTabContent handles its own data fetching
-              isGuest={!currentUser && !isDevMode}
-              onGuestAction={appStateGuestAction}
-              currentUser={currentUser}
+            <DiscoverTabContent 
               schoolName={schoolDisplayName}
+              schoolSlug={school || ''}
             />
           </div>
         )}
@@ -415,11 +412,11 @@ export default function SchoolDashboard() {
           </div>
         )}
 
-        {/* Chat Tab */}
         {activeTab === "chat" && (
           <div className="h-[calc(100vh-200px)] animate-fade-in">
             <ChatsTabContent 
               schoolName={schoolDisplayName}
+              schoolSlug={school || ''}
             />
           </div>
         )}
