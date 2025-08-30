@@ -52,6 +52,51 @@ export type Database = {
           },
         ]
       }
+      friend_requests: {
+        Row: {
+          created_at: string | null
+          from_user: string
+          id: string
+          status: string
+          to_user: string
+        }
+        Insert: {
+          created_at?: string | null
+          from_user: string
+          id?: string
+          status?: string
+          to_user: string
+        }
+        Update: {
+          created_at?: string | null
+          from_user?: string
+          id?: string
+          status?: string
+          to_user?: string
+        }
+        Relationships: []
+      }
+      friendships: {
+        Row: {
+          created_at: string | null
+          id: string
+          user_a: string
+          user_b: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          user_a: string
+          user_b: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          user_a?: string
+          user_b?: string
+        }
+        Relationships: []
+      }
       instagram_profiles: {
         Row: {
           bio: string | null
@@ -154,6 +199,33 @@ export type Database = {
         }
         Relationships: []
       }
+      messages: {
+        Row: {
+          body: string
+          created_at: string | null
+          id: string
+          recipient: string
+          sender: string
+          thread_id: string
+        }
+        Insert: {
+          body: string
+          created_at?: string | null
+          id?: string
+          recipient: string
+          sender: string
+          thread_id: string
+        }
+        Update: {
+          body?: string
+          created_at?: string | null
+          id?: string
+          recipient?: string
+          sender?: string
+          thread_id?: string
+        }
+        Relationships: []
+      }
       private_messages: {
         Row: {
           conversation_id: string
@@ -192,45 +264,80 @@ export type Database = {
           },
         ]
       }
-      profiles: {
+      profile_images: {
         Row: {
-          avatar_url: string | null
-          bio: string | null
-          class_year: string | null
-          created_at: string
-          display_name: string | null
+          created_at: string | null
           id: string
-          school_slug: string
-          status: string | null
-          tags: string[] | null
-          user_id: string
-          username: string | null
+          image_url: string
+          position: number | null
+          profile_id: string
         }
         Insert: {
-          avatar_url?: string | null
-          bio?: string | null
-          class_year?: string | null
-          created_at?: string
-          display_name?: string | null
+          created_at?: string | null
           id?: string
-          school_slug: string
-          status?: string | null
-          tags?: string[] | null
-          user_id: string
-          username?: string | null
+          image_url: string
+          position?: number | null
+          profile_id: string
         }
         Update: {
-          avatar_url?: string | null
-          bio?: string | null
-          class_year?: string | null
-          created_at?: string
-          display_name?: string | null
+          created_at?: string | null
           id?: string
+          image_url?: string
+          position?: number | null
+          profile_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profile_images_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          bio: string | null
+          class_year: number
+          cover_url: string | null
+          created_at: string | null
+          full_name: string
+          id: string
+          is_visible: boolean | null
+          pfp_url: string | null
+          school_slug: string
+          updated_at: string | null
+          user_id: string
+          username: string
+        }
+        Insert: {
+          bio?: string | null
+          class_year: number
+          cover_url?: string | null
+          created_at?: string | null
+          full_name: string
+          id?: string
+          is_visible?: boolean | null
+          pfp_url?: string | null
+          school_slug: string
+          updated_at?: string | null
+          user_id: string
+          username: string
+        }
+        Update: {
+          bio?: string | null
+          class_year?: number
+          cover_url?: string | null
+          created_at?: string | null
+          full_name?: string
+          id?: string
+          is_visible?: boolean | null
+          pfp_url?: string | null
           school_slug?: string
-          status?: string | null
-          tags?: string[] | null
+          updated_at?: string | null
           user_id?: string
-          username?: string | null
+          username?: string
         }
         Relationships: [
           {
