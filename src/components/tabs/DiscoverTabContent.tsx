@@ -3,8 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Users, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useAppState } from "@/hooks/useAppState";
-import { supabase } from "@/integrations/supabase/client";
+import { useProfiles, Profile } from "@/hooks/useProfiles";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ProfileDetailModal } from "@/components/ProfileDetailModal";
 
 interface DiscoverTabContentProps {
   schoolName?: string;
@@ -12,87 +13,31 @@ interface DiscoverTabContentProps {
 }
 
 const DiscoverTabContent = ({ schoolName, schoolSlug }: DiscoverTabContentProps) => {
-  const [profiles, setProfiles] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
+  const [showProfileModal, setShowProfileModal] = useState(false);
   
   const { isDevMode, currentUser } = useAppState();
+  const { profiles, loading, fetchProfiles } = useProfiles(schoolSlug || '');
   
-  // Mock data for dev mode
-  const mockProfiles = [
-    {
-      id: "1",
-      display_name: "Alex Johnson",
-      class_year: "2028",
-      bio: "Pre-med student looking for study buddies and new friends!",
-      tags: ["Study", "Friends"],
-      avatar_url: "/placeholder.svg"
-    },
-    {
-      id: "2", 
-      display_name: "Sam Chen",
-      class_year: "2028",
-      bio: "CS major interested in AI/ML. Love hiking and coffee!",
-      tags: ["Friends", "Study"],
-      avatar_url: "/placeholder.svg"
-    },
-    {
-      id: "3",
-      display_name: "Jordan Taylor",
-      class_year: "2028", 
-      bio: "Business major seeking roommate for sophomore year.",
-      tags: ["Roommate", "Friends"],
-      avatar_url: "/placeholder.svg"
-    },
-    {
-      id: "4",
-      display_name: "Riley Martinez",
-      class_year: "2028",
-      bio: "Psychology major passionate about mental health advocacy.",
-      tags: ["Study", "Friends"],
-      avatar_url: "/placeholder.svg"
-    },
-    {
-      id: "5",
-      display_name: "Casey Park",
-      class_year: "2028",
-      bio: "Engineering student who loves building apps and playing guitar.",
-      tags: ["Study", "Roommate"],
-      avatar_url: "/placeholder.svg"
-    }
-  ];
+  // Filter profiles by search query
+  const filteredProfiles = profiles.filter(profile =>
+    profile.full_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    profile.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    profile.bio?.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
-  // Use dev mode logic: mock data if dev mode is on, real data if off
-  const effectiveProfiles = isDevMode ? mockProfiles : profiles;
+  const handleProfileClick = (profile: Profile) => {
+    setSelectedProfile(profile);
+    setShowProfileModal(true);
+  };
 
-  useEffect(() => {
-    const fetchProfiles = async () => {
-      if (isDevMode || !currentUser || !schoolSlug) return;
-      
-      setLoading(true);
-      try {
-        const { data, error } = await supabase.rpc('list_school_discover_profiles', {
-          school_slug_param: schoolSlug,
-          filters: [],
-          search_query: searchQuery,
-          limit_count: 60
-        });
-
-        if (error) throw error;
-        setProfiles(data || []);
-      } catch (error) {
-        console.error('Error fetching profiles:', error);
-        setProfiles([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProfiles();
-  }, [isDevMode, currentUser, schoolSlug, searchQuery]);
+  const handleLoadMore = () => {
+    fetchProfiles(24, profiles.length);
+  };
 
   // Show loading state only for real data
-  if (!isDevMode && loading) {
+  if (!isDevMode && loading && profiles.length === 0) {
     return (
       <div className="h-full w-full">
         <div className="p-6 space-y-6">
@@ -124,7 +69,7 @@ const DiscoverTabContent = ({ schoolName, schoolSlug }: DiscoverTabContentProps)
   }
 
   // Dev Mode OFF and no data - show CTA (NEVER show mock data in production)
-  if (!isDevMode && effectiveProfiles.length === 0) {
+  if (!isDevMode && filteredProfiles.length === 0 && !loading) {
     return (
       <div className="h-full w-full flex items-center justify-center">
         <div className="text-center px-6 max-w-md">
@@ -167,37 +112,73 @@ const DiscoverTabContent = ({ schoolName, schoolSlug }: DiscoverTabContentProps)
 
         {/* Profiles Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {effectiveProfiles.map((profile) => (
-            <div key={profile.user_id || profile.id} className="bg-card border border-border rounded-2xl p-6 hover:shadow-lg transition-shadow">
+          {filteredProfiles.map((profile) => (
+            <div 
+              key={profile.id} 
+              className="bg-card border border-border rounded-2xl p-6 hover:shadow-lg transition-shadow cursor-pointer"
+              onClick={() => handleProfileClick(profile)}
+            >
               <div className="flex items-center gap-4 mb-4">
-                <div className="h-16 w-16 rounded-full bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center text-white font-semibold text-lg">
-                  {profile.display_name?.charAt(0) || 'U'}
+                <div className="h-16 w-16 rounded-full bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center text-white font-semibold text-lg overflow-hidden">
+                  {profile.pfp_url ? (
+                    <img src={profile.pfp_url} alt={profile.full_name} className="w-full h-full object-cover" />
+                  ) : (
+                    profile.full_name?.charAt(0) || 'U'
+                  )}
                 </div>
                 <div>
-                  <h3 className="font-semibold text-lg">{profile.display_name}</h3>
+                  <h3 className="font-semibold text-lg">{profile.full_name}</h3>
                   <p className="text-sm text-muted-foreground">Class of {profile.class_year}</p>
                 </div>
               </div>
               
-              <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
-                {profile.bio}
-              </p>
-              
-              <div className="flex flex-wrap gap-2 mb-4">
-                {profile.tags?.map((tag: string, index: number) => (
-                  <span key={index} className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full">
-                    {tag}
-                  </span>
-                ))}
-              </div>
+              {profile.bio && (
+                <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
+                  {profile.bio}
+                </p>
+              )}
+
+              {/* Show image thumbnails if available */}
+              {profile.images && profile.images.length > 0 && (
+                <div className="flex gap-2 mb-4">
+                  {profile.images.slice(0, 3).map((imageUrl, index) => (
+                    <div key={index} className="w-16 h-16 rounded-lg overflow-hidden bg-muted">
+                      <img src={imageUrl} alt="" className="w-full h-full object-cover" />
+                    </div>
+                  ))}
+                </div>
+              )}
               
               <Button className="w-full" size="sm">
-                Connect
+                View Profile
               </Button>
             </div>
           ))}
         </div>
+
+        {/* Load More Button */}
+        {!isDevMode && profiles.length > 0 && profiles.length % 24 === 0 && (
+          <div className="flex justify-center pt-4">
+            <Button 
+              variant="outline" 
+              onClick={handleLoadMore}
+              disabled={loading}
+            >
+              {loading ? "Loading..." : "Load More"}
+            </Button>
+          </div>
+        )}
       </div>
+
+      {/* Profile Detail Modal */}
+      <ProfileDetailModal
+        profile={selectedProfile}
+        open={showProfileModal}
+        onClose={() => {
+          setShowProfileModal(false);
+          setSelectedProfile(null);
+        }}
+      />
     </div>
   );
 };
