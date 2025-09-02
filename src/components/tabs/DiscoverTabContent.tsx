@@ -2,10 +2,11 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Users, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { useAppState } from "@/hooks/useAppState";
+import { useDevMode } from "@/components/dev-mode/DevModeProvider";
 import { useProfiles, Profile } from "@/hooks/useProfiles";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ProfileDetailModal } from "@/components/ProfileDetailModal";
+import DevModeToggle from "@/components/dev-mode/DevModeToggle";
 
 interface DiscoverTabContentProps {
   schoolName?: string;
@@ -17,7 +18,7 @@ const DiscoverTabContent = ({ schoolName, schoolSlug }: DiscoverTabContentProps)
   const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
   const [showProfileModal, setShowProfileModal] = useState(false);
   
-  const { isDevMode, currentUser } = useAppState();
+  const { devMode, hydrated } = useDevMode();
   const { profiles, loading, fetchProfiles } = useProfiles(schoolSlug || '');
   
   // Mock profiles for dev mode preview
@@ -116,7 +117,7 @@ const DiscoverTabContent = ({ schoolName, schoolSlug }: DiscoverTabContentProps)
   ];
 
   // Use mock profiles in dev mode, real profiles otherwise
-  const displayProfiles = isDevMode ? mockProfiles : profiles;
+  const displayProfiles = devMode ? mockProfiles : profiles;
   
   // Filter profiles by search query
   const filteredProfiles = displayProfiles.filter(profile =>
@@ -134,8 +135,12 @@ const DiscoverTabContent = ({ schoolName, schoolSlug }: DiscoverTabContentProps)
     fetchProfiles(24, profiles.length);
   };
 
-  // Show loading state only for real data
-  if (!isDevMode && loading && profiles.length === 0) {
+  // Show loading state only for real data (and only when hydrated)
+  if (!hydrated) {
+    return <div className="h-full w-full" />; // Prevent hydration mismatch
+  }
+
+  if (!devMode && loading && profiles.length === 0) {
     return (
       <div className="h-full w-full">
         <div className="p-6 space-y-6">
@@ -167,7 +172,7 @@ const DiscoverTabContent = ({ schoolName, schoolSlug }: DiscoverTabContentProps)
   }
 
   // Dev Mode OFF and no data - show CTA (NEVER show mock data in production)
-  if (!isDevMode && filteredProfiles.length === 0 && !loading) {
+  if (!devMode && filteredProfiles.length === 0 && !loading) {
     return (
       <div className="h-full w-full flex items-center justify-center">
         <div className="text-center px-6 max-w-md">
@@ -255,7 +260,7 @@ const DiscoverTabContent = ({ schoolName, schoolSlug }: DiscoverTabContentProps)
         </div>
 
         {/* Load More Button - only for real profiles */}
-        {!isDevMode && profiles.length > 0 && profiles.length % 24 === 0 && (
+        {!devMode && profiles.length > 0 && profiles.length % 24 === 0 && (
           <div className="flex justify-center pt-4">
             <Button 
               variant="outline" 
@@ -267,17 +272,20 @@ const DiscoverTabContent = ({ schoolName, schoolSlug }: DiscoverTabContentProps)
           </div>
         )}
 
-        {/* Dev Mode Indicator */}
-        {isDevMode && filteredProfiles.length > 0 && (
+        {/* Dev Mode Banner */}
+        {devMode && filteredProfiles.length > 0 && (
           <div className="flex justify-center pt-4">
-            <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg px-4 py-2">
+            <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-xl px-4 py-2">
               <p className="text-sm text-yellow-400">
-                🔧 Dev Mode: Showing mock profiles for preview
+                🔧 Dev Mode is ON — showing mock profiles & all group chats.
               </p>
             </div>
           </div>
         )}
       </div>
+
+      {/* Dev Mode Toggle */}
+      <DevModeToggle />
 
       {/* Profile Detail Modal */}
       <ProfileDetailModal

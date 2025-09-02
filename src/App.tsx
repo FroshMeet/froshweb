@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { DevModeProvider } from "@/components/dev-mode/DevModeProvider";
 import ScrollToTop from "./components/ScrollToTop";
 import Footer from "./components/layout/Footer";
 import Homepage from "./pages/Homepage";
@@ -37,7 +38,8 @@ const queryClient = new QueryClient();
 const AppRouter = () => (
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
-      <TooltipProvider>
+      <DevModeProvider>
+        <TooltipProvider>
         <Toaster />
         <Sonner />
         <BrowserRouter>
@@ -78,7 +80,8 @@ const AppRouter = () => (
             <Footer />
           </div>
         </BrowserRouter>
-      </TooltipProvider>
+        </TooltipProvider>
+      </DevModeProvider>
     </AuthProvider>
   </QueryClientProvider>
 );
