@@ -37,6 +37,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
 import SchoolGroupChatCTA from "@/components/SchoolGroupChatCTA";
 import { useAppState } from "@/hooks/useAppState";
+import { useDevMode } from "@/components/dev-mode/DevModeProvider";
 import { mockProfiles } from "@/data/mockData";
 import MeetTabContent from "@/components/tabs/MeetTabContent";
 import ChatsTabContent from "@/components/tabs/ChatsTabContent";
@@ -71,8 +72,28 @@ export default function SchoolDashboard() {
   const [meetScope, setMeetScope] = useState("school"); // "school" or "worldwide"
   const isMobile = useIsMobile();
   
-  // Dev mode integration
-  const { currentUser, isGuest, handleGuestAction: appStateGuestAction, isDevMode, toggleDevMode } = useAppState();
+  // Dev mode integration  
+  const { devMode: isDevMode, toggleDevMode } = useDevMode();
+  const { currentUser: appCurrentUser, isGuest, handleGuestAction: appStateGuestAction } = useAppState();
+  
+  // In dev mode, use DEV_USER, otherwise use real auth
+  const DEV_USER = {
+    id: "dev-user-123",
+    name: "Dev Student",
+    age: 18,
+    college: "Test University",
+    classOf: "2029",
+    major: "Computer Science",
+    bio: "Testing the FroshMeet interface!",
+    interests: ["Testing", "UI/UX", "Development"],
+    photos: ["photo-1649972904349-6e44c42644a7"],
+    lookingFor: ["Friends", "Roommate"],
+    location: "Test University",
+    profilePic: "photo-1649972904349-6e44c42644a7",
+    lookingForRoommate: true
+  };
+  
+  const currentUser = isDevMode ? DEV_USER : appCurrentUser;
   
   // Validate school slug against approved schools
   const approvedSchool = school ? getApprovedSchool(school) : null;

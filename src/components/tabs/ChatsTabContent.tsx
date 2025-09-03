@@ -5,6 +5,7 @@ import { Users, MessageSquare, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAppState } from "@/hooks/useAppState";
+import { useDevMode } from "@/components/dev-mode/DevModeProvider";
 import { mockConversations, mockMessageRequests, mockMessages } from "@/data/mockConversations";
 import { Skeleton } from "@/components/ui/skeleton";
 import ModernChatInterface from "../ModernChatInterface";
@@ -19,7 +20,8 @@ const ChatsTabContent = ({ schoolName, schoolSlug }: ChatsTabContentProps) => {
   const [loading, setLoading] = useState(false);
   
   const navigate = useNavigate();
-  const { isDevMode, currentUser } = useAppState();
+  const { devMode: isDevMode } = useDevMode();
+  const { currentUser } = useAppState();
   
   // Use dev mode logic: mock data if dev mode is on, real data if off
   const effectiveConversations = isDevMode ? mockConversations : realConversations;

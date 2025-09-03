@@ -5,6 +5,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Heart, Users, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAppState } from "@/hooks/useAppState";
+import { useDevMode } from "@/components/dev-mode/DevModeProvider";
 import FroshMeetSwipeInterface from "../FroshMeetSwipeInterface";
 
 interface MeetTabContentProps {
@@ -21,7 +22,7 @@ const MeetTabContent = ({
   schoolName = "BU"
 }: MeetTabContentProps) => {
   const [meetMode, setMeetMode] = useState("everyone");
-  const { isDevMode } = useAppState();
+  const { devMode: isDevMode } = useDevMode();
 
   // Filter profiles based on meetMode and schoolName
   const displayedProfiles = profiles.filter(profile => {

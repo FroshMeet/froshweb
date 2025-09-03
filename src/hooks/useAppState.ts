@@ -24,9 +24,9 @@ export const useAppState = () => {
   const [guestSchool, setGuestSchool] = useState("");
   const [activeTab, setActiveTab] = useState("meet");
   const [showGuestDialog, setShowGuestDialog] = useState(false);
-  const [isDevMode, setIsDevMode] = useState(true); // Enable dev mode by default
+  // Dev mode removed - now handled by DevModeProvider
 
-  // Determine current user - prioritize real auth, fallback to dev mode
+  // Determine current user - prioritize real auth, fallback to null (dev mode handled elsewhere)
   const currentUser = user ? {
     id: user.id,
     name: userProfile?.name || user.email?.split('@')[0] || "User",
@@ -36,7 +36,7 @@ export const useAppState = () => {
     interests: userProfile?.interests || [],
     lookingForRoommate: userProfile?.looking_for_roommate || false,
     classOf: userProfile?.class_year || "2029"
-  } : (isDevMode ? DEV_USER : null);
+  } : null;
 
   const handleGuestContinue = (selectedSchool: string) => {
     setIsGuest(true);
@@ -51,25 +51,15 @@ export const useAppState = () => {
 
   const handleGuestAction = () => {
     // For guests trying to access restricted features, show signup dialog
-    if (isGuest || (!user && !isDevMode)) {
+    if (isGuest || !user) {
       setShowGuestDialog(true);
       return;
     }
-    
-    // In dev mode, just log the action
-    if (isDevMode && !user) {
-      console.log("🧪 Dev Mode: Guest action triggered (normally would show signup)");
-      return;
-    }
-  };
-
-  const toggleDevMode = () => {
-    setIsDevMode(!isDevMode);
   };
 
   return {
     currentUser,
-    isGuest: isGuest || (!user && !isDevMode),
+    isGuest: isGuest || !user,
     guestSchool,
     setGuestSchool,
     activeTab,
@@ -78,8 +68,6 @@ export const useAppState = () => {
     setShowGuestDialog,
     handleGuestContinue,
     handleCreateAccount,
-    handleGuestAction,
-    isDevMode,
-    toggleDevMode
+    handleGuestAction
   };
 };

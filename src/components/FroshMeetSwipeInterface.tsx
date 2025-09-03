@@ -7,6 +7,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Heart, X, MessageSquare, MapPin, BookOpen, Instagram, ChevronLeft, ChevronRight, Filter, Users, Globe, School, User } from "lucide-react";
 import IcebreakerModal from "./IcebreakerModal";
 import { useAppState } from "@/hooks/useAppState";
+import { useDevMode } from "@/components/dev-mode/DevModeProvider";
 interface FroshMeetSwipeInterfaceProps {
   profiles: any[];
   onShowIcebreakers: () => void;
@@ -27,7 +28,7 @@ const FroshMeetSwipeInterface = ({
   setMeetMode,
   schoolName = "BU"
 }: FroshMeetSwipeInterfaceProps) => {
-  const { isDevMode } = useAppState();
+  const { devMode: isDevMode } = useDevMode();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [showIcebreakers, setShowIcebreakers] = useState(false);
