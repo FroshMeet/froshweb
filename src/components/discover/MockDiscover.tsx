@@ -15,18 +15,18 @@ export default function MockDiscover({ schoolName, schoolSlug }: MockDiscoverPro
       </div>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {MOCK_PROFILES.map(p=>(
-          <article key={p.id} className="rounded-2xl border p-4 shadow-sm">
+          <article key={p.id} className="rounded-2xl border border-white/20 bg-card p-4 shadow-sm">
             <div className="flex items-center gap-3 mb-3">
-              <div className="h-10 w-10 rounded-full bg-gray-200" />
+              <div className="h-10 w-10 rounded-full bg-primary/20" />
               <div>
-                <div className="font-semibold">{p.name}</div>
-                <div className="text-xs text-gray-500">{p.school} • {p.major}</div>
+                <div className="font-semibold text-foreground">{p.name}</div>
+                <div className="text-xs text-muted-foreground">{p.school} • {p.major}</div>
               </div>
             </div>
-            <p className="text-sm">{p.bio}</p>
+            <p className="text-sm text-foreground">{p.bio}</p>
             <div className="mt-3 flex gap-2">
-              <button className="rounded-xl border px-3 py-1 text-sm">Message</button>
-              <button className="rounded-xl border px-3 py-1 text-sm">View Profile</button>
+              <button className="rounded-xl border border-primary bg-primary/10 px-3 py-1 text-sm text-primary hover:bg-primary/20">Message</button>
+              <button className="rounded-xl border border-white/20 px-3 py-1 text-sm text-foreground hover:bg-white/10">View Profile</button>
             </div>
           </article>
         ))}
