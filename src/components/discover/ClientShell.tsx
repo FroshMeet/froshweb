@@ -15,11 +15,9 @@ interface ClientShellProps {
   schoolSlug?: string;
 }
 
-export default function ClientShell({ schoolName, schoolSlug }: ClientShellProps) {
+export default function ClientShell({ schoolName, schoolSlug }: ClientShellProps){
   const { devMode, hydrated } = useDevMode();
-  if (!hydrated) return null; // prevent mismatch/flicker
-
-  // HARD mutual exclusion: only one mounts.
+  if(!hydrated) return null; // prevents SSR/CSR mismatch/flicker
   return devMode ? (
     <MockDiscover schoolName={schoolName} schoolSlug={schoolSlug} />
   ) : (
