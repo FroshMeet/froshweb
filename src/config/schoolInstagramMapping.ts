@@ -135,9 +135,9 @@ export const SCHOOL_INSTAGRAM_MAPPING: Record<string, string> = {
   'yuba-college': 'yuba2030class',
   'yuba': 'yuba2030class',
   
-  'uop': 'uop2030class',
-  'pacific': 'uop2030class',
-  'university-of-the-pacific': 'uop2030class',
+  'uop': 'uop2030meet',
+  'pacific': 'uop2030meet',
+  'university-of-the-pacific': 'uop2030meet',
   
   'sacramento-city-college': 'sacramento2030class',
   'scc': 'sacramento2030class',
