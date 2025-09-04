@@ -200,7 +200,7 @@ export const APPROVED_SCHOOLS: Record<string, ApprovedSchool> = {
   'pacific': {
     name: 'University of the Pacific',
     displayName: 'UOP / Pacific',
-    instagramUsername: 'uop2030class'
+    instagramUsername: 'uop2030meet'
   },
   'scc': {
     name: 'Sacramento City College',
