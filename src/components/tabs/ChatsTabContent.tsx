@@ -9,6 +9,7 @@ import { useDevMode } from "@/components/dev-mode/DevModeProvider";
 import { mockConversations, mockMessageRequests, mockMessages } from "@/data/mockConversations";
 import { Skeleton } from "@/components/ui/skeleton";
 import ModernChatInterface from "../ModernChatInterface";
+import { useStartDM } from "@/hooks/useStartDM";
 
 interface ChatsTabContentProps {
   schoolName?: string;
@@ -22,6 +23,7 @@ const ChatsTabContent = ({ schoolName, schoolSlug }: ChatsTabContentProps) => {
   const navigate = useNavigate();
   const { devMode: isDevMode } = useDevMode();
   const { currentUser } = useAppState();
+  const { startDM } = useStartDM(schoolSlug || '');
   
   // Use dev mode logic: mock data if dev mode is on, real data if off
   const effectiveConversations = isDevMode ? mockConversations : realConversations;
@@ -89,12 +91,30 @@ const ChatsTabContent = ({ schoolName, schoolSlug }: ChatsTabContentProps) => {
     );
   }
 
+  const handleStartDM = async (otherUserId: string) => {
+    if (!schoolSlug) return;
+    
+    const conversationId = await startDM(otherUserId);
+    if (conversationId) {
+      // Refresh conversations to show the new one
+      if (!isDevMode && currentUser) {
+        const { data } = await supabase.rpc('list_school_conversations', {
+          school_slug_param: schoolSlug,
+          user_id_param: currentUser.id,
+          limit_count: 20
+        });
+        if (data) setRealConversations(data);
+      }
+    }
+  };
+
   // Always show ModernChatInterface - it handles the pinned group chat + empty states
   return <ModernChatInterface 
     schoolName={schoolName}
     schoolSlug={schoolSlug}
     conversations={effectiveConversations}
     isDevMode={isDevMode}
+    onStartDM={handleStartDM}
   />;
 };
 

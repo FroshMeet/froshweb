@@ -144,6 +144,32 @@ export const validateContentFilter = (text: string): { isValid: boolean; message
   return { isValid: true };
 };
 
+// Message validation specifically for chat messages
+export const validateMessage = (message: string): { isValid: boolean; error?: string } => {
+  const trimmed = message.trim();
+  
+  if (trimmed.length === 0) {
+    return { isValid: false, error: 'Message cannot be empty' };
+  }
+  
+  if (trimmed.length > 1000) {
+    return { isValid: false, error: 'Message must be 1000 characters or less' };
+  }
+  
+  // Check for inappropriate content
+  const contentCheck = validateContentFilter(trimmed);
+  if (!contentCheck.isValid) {
+    return { isValid: false, error: contentCheck.message };
+  }
+  
+  // Check for potential spam (repeated characters)
+  if (/(.)\1{20,}/.test(trimmed)) {
+    return { isValid: false, error: 'Message contains too many repeated characters' };
+  }
+  
+  return { isValid: true };
+};
+
 // Comprehensive input validation function
 export const validateAndSanitizeInput = (
   input: string,

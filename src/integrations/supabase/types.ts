@@ -506,6 +506,7 @@ export type Database = {
           id: string
           last_message_at: string | null
           metadata: Json | null
+          pair_key: string | null
           school_slug: string
           title: string | null
           type: string
@@ -516,6 +517,7 @@ export type Database = {
           id?: string
           last_message_at?: string | null
           metadata?: Json | null
+          pair_key?: string | null
           school_slug: string
           title?: string | null
           type: string
@@ -526,6 +528,7 @@ export type Database = {
           id?: string
           last_message_at?: string | null
           metadata?: Json | null
+          pair_key?: string | null
           school_slug?: string
           title?: string | null
           type?: string
