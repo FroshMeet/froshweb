@@ -8,7 +8,7 @@ import { useAppState } from "@/hooks/useAppState";
 import { useDevMode } from "@/components/dev-mode/DevModeProvider";
 import { mockConversations, mockMessageRequests, mockMessages } from "@/data/mockConversations";
 import { Skeleton } from "@/components/ui/skeleton";
-import ModernChatInterface from "../ModernChatInterface";
+import ProductionChatInterface from "../chat/ProductionChatInterface";
 import { useStartDM } from "@/hooks/useStartDM";
 
 interface ChatsTabContentProps {
@@ -108,8 +108,8 @@ const ChatsTabContent = ({ schoolName, schoolSlug }: ChatsTabContentProps) => {
     }
   };
 
-  // Always show ModernChatInterface - it handles the pinned group chat + empty states
-  return <ModernChatInterface 
+  // Always show ProductionChatInterface - it handles the pinned group chat + empty states
+  return <ProductionChatInterface 
     schoolName={schoolName}
     schoolSlug={schoolSlug}
     conversations={effectiveConversations}
