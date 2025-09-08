@@ -543,6 +543,30 @@ export type Database = {
           },
         ]
       }
+      school_instagram_usernames: {
+        Row: {
+          created_at: string
+          id: string
+          instagram_username: string
+          school_slug: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          instagram_username: string
+          school_slug: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          instagram_username?: string
+          school_slug?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       school_messages: {
         Row: {
           content_text: string
