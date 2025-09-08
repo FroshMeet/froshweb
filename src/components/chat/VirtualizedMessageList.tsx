@@ -6,9 +6,7 @@
  * Optimized for both mobile and desktop layouts
  */
 
-import React, { useEffect, useRef, useCallback } from 'react';
-import { FixedSizeList as List } from 'react-window';
-import InfiniteLoader from 'react-window-infinite-loader';
+import React, { useEffect, useRef } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 
@@ -25,25 +23,16 @@ interface ChatMessage {
 }
 
 interface MessageItemProps {
-  index: number;
-  style: React.CSSProperties;
-  data: {
-    messages: ChatMessage[];
-    currentUserId: string;
-  };
+  message: ChatMessage;
+  currentUserId: string;
+  showAvatar: boolean;
 }
 
-const MessageItem = React.memo(({ index, style, data }: MessageItemProps) => {
-  const { messages, currentUserId } = data;
-  const message = messages[index];
-  
-  if (!message) return null;
-
+const MessageItem = React.memo(({ message, currentUserId, showAvatar }: MessageItemProps) => {
   const isOwn = message.is_own || message.sender_id === currentUserId;
-  const showAvatar = !isOwn && (index === 0 || messages[index - 1]?.sender_id !== message.sender_id);
   
   return (
-    <div style={style} className="px-4 py-1">
+    <div className="px-4 py-1">
       <div className={cn(
         "flex gap-3 max-w-4xl",
         isOwn ? "justify-end ml-auto" : "justify-start"
@@ -104,70 +93,34 @@ MessageItem.displayName = 'MessageItem';
 interface VirtualizedMessageListProps {
   messages: ChatMessage[];
   currentUserId: string;
-  onLoadMore?: () => Promise<void>;
-  hasNextPage?: boolean;
-  isLoading?: boolean;
 }
 
 export const VirtualizedMessageList: React.FC<VirtualizedMessageListProps> = ({
   messages,
-  currentUserId,
-  onLoadMore,
-  hasNextPage = false,
-  isLoading = false
+  currentUserId
 }) => {
-  const listRef = useRef<List>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll to bottom on new messages
   useEffect(() => {
-    if (listRef.current && messages.length > 0) {
-      listRef.current.scrollToItem(messages.length - 1, 'end');
+    if (containerRef.current) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
     }
   }, [messages.length]);
-
-  const itemData = {
-    messages,
-    currentUserId
-  };
-
-  const isItemLoaded = useCallback((index: number) => {
-    return !!messages[index];
-  }, [messages]);
-
-  const loadMoreItems = useCallback(async () => {
-    if (onLoadMore && hasNextPage && !isLoading) {
-      await onLoadMore();
-    }
-  }, [onLoadMore, hasNextPage, isLoading]);
-
-  // Calculate container height
-  const containerHeight = containerRef.current?.clientHeight || 400;
   
   return (
-    <div ref={containerRef} className="h-full w-full">
-      <InfiniteLoader
-        isItemLoaded={isItemLoaded}
-        itemCount={hasNextPage ? messages.length + 1 : messages.length}
-        loadMoreItems={loadMoreItems}
-      >
-        {({ onItemsRendered, ref }) => (
-          <List
-            ref={(list) => {
-              listRef.current = list;
-              ref(list);
-            }}
-            height={containerHeight}
-            itemCount={messages.length}
-            itemSize={80} // Approximate item height
-            itemData={itemData}
-            onItemsRendered={onItemsRendered}
-            className="scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent"
-          >
-            {MessageItem}
-          </List>
-        )}
-      </InfiniteLoader>
+    <div ref={containerRef} className="h-full w-full overflow-y-auto">
+      {messages.map((message, index) => {
+        const showAvatar = index === 0 || messages[index - 1]?.sender_id !== message.sender_id;
+        return (
+          <MessageItem
+            key={message.id}
+            message={message}
+            currentUserId={currentUserId}
+            showAvatar={showAvatar}
+          />
+        );
+      })}
     </div>
   );
 };
