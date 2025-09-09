@@ -252,91 +252,120 @@ export default function SchoolDashboard() {
     }
   };
 
+  // Tab context mapping
+  const getTabContextText = (tab: string) => {
+    switch (tab) {
+      case "discover": return `Browse profiles from ${schoolDisplayName} and beyond.`;
+      case "meet": return "Find classmates and roommates.";
+      case "chat": return `Join the ${schoolDisplayName} 2030 group chat.`;
+      case "instagram": return "See what your class is posting.";
+      default: return `Connect with ${schoolDisplayName} students.`;
+    }
+  };
+
+  // School accent colors (subtle school-specific theming)
+  const getSchoolAccentColor = (school: string) => {
+    const schoolColors: Record<string, string> = {
+      "upenn": "hsl(200, 100%, 50%)", // Penn Blue
+      "harvard": "hsl(0, 75%, 45%)", // Harvard Crimson
+      "stanford": "hsl(0, 75%, 45%)", // Stanford Cardinal
+      "mit": "hsl(0, 0%, 45%)", // MIT Gray
+      "ucla": "hsl(220, 100%, 50%)", // UCLA Blue
+      "berkeley": "hsl(220, 90%, 40%)", // Cal Blue
+      // Add more as needed, fallback to primary
+    };
+    return schoolColors[school?.toLowerCase()] || "hsl(var(--primary))";
+  };
+
   return (
     <div className="min-h-screen bg-background">
-      {/* Enhanced Header with Bold Animation */}
-      <div className="bg-gradient-to-br from-primary/20 via-primary/10 to-background py-12 relative overflow-hidden">
+      {/* Refined Header - Reduced Height */}
+      <div className="bg-gradient-to-br from-primary/20 via-primary/10 to-background py-6 relative overflow-hidden">
         {/* Animated background elements */}
         <div className="absolute inset-0">
-          <div className="absolute top-10 left-10 w-2 h-2 bg-primary rounded-full animate-pulse opacity-60"></div>
-          <div className="absolute top-20 right-16 w-1 h-1 bg-neon-cyan rounded-full animate-pulse opacity-40"></div>
-          <div className="absolute bottom-16 left-1/4 w-1.5 h-1.5 bg-primary rounded-full animate-pulse opacity-50"></div>
+          <div className="absolute top-4 left-10 w-2 h-2 bg-primary rounded-full animate-pulse opacity-60"></div>
+          <div className="absolute top-8 right-16 w-1 h-1 bg-neon-cyan rounded-full animate-pulse opacity-40"></div>
+          <div className="absolute bottom-4 left-1/4 w-1.5 h-1.5 bg-primary rounded-full animate-pulse opacity-50"></div>
         </div>
         
         <div className="max-w-6xl mx-auto px-4 relative">
-          <div className="flex justify-between items-center mb-8">
+          {/* Top Row - Back to Home + Dev Toggle */}
+          <div className="flex justify-between items-center mb-4">
             <Button 
               variant="ghost" 
               onClick={() => navigate('/')}
-              className="text-muted-foreground hover:text-foreground"
+              className="text-muted-foreground hover:text-foreground text-sm"
+              size="sm"
             >
-              <ArrowLeft className="h-4 w-4 mr-2" />
+              <ArrowLeft className="h-3 w-3 mr-1" />
               Back to Home
             </Button>
             
             <Button 
               variant={isDevMode ? "default" : "outline"}
               onClick={toggleDevMode}
-              className={`${isDevMode ? "bg-primary text-primary-foreground" : "border-primary/50 text-primary hover:bg-primary/10"} rounded-xl font-medium`}
+              className={`${isDevMode ? "bg-primary text-primary-foreground" : "border-primary/50 text-primary hover:bg-primary/10"} rounded-xl font-medium text-xs px-3 py-1`}
+              size="sm"
             >
               {isDevMode ? "DEV ON" : "DEV OFF"}
             </Button>
           </div>
           
           <div className="text-center">
-            {/* School name with enhanced animation and FroshMeet blue */}
-            <h1 className="text-5xl md:text-7xl font-black text-foreground mb-4 animate-fade-in-up tracking-tight">
-              <span className="bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent">
-                {schoolName}
-              </span>
+            {/* School name - FroshMeet Blue, Bold, Centered */}
+            <h1 className="text-3xl md:text-4xl font-black text-froshmeet-blue mb-2 animate-fade-in-up tracking-tight">
+              {schoolDisplayName}
             </h1>
             
-            {/* Animated subheader */}
-            <p className="text-xl md:text-2xl text-primary mb-6 animate-fade-in font-medium">
-              Connect with fellow students and build lasting friendships
+            {/* Dynamic Status Line */}
+            <p className="text-lg text-primary mb-4 font-medium">
+              {profiles.length >= 15 
+                ? `${profiles.length} students connected` 
+                : `${schoolDisplayName} 2030 class is live 🎉 · ${profiles.length} students connected`
+              }
             </p>
-            
-            {/* Student count with enhanced styling */}
-            <div className="flex items-center justify-center gap-3 text-lg text-muted-foreground mb-8">
-              <Users className="h-6 w-6 text-primary" />
-              <span className="font-semibold">{profiles.length} students connected</span>
-            </div>
 
-            {/* Enhanced CTAs */}
-            <div className="flex flex-col gap-4 justify-center items-center mb-6 max-w-md mx-auto">
-              <div className="flex flex-col sm:flex-row gap-4 w-full">
-                <Button 
-                  onClick={handleCreateAccount}
-                  size="lg"
-                  className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground font-bold px-8 py-4 rounded-2xl neon-glow transition-all duration-300 hover:scale-105"
-                >
-                  <UserPlus className="h-5 w-5 mr-2" />
-                  Sign Up Free
-                </Button>
-                <Button 
-                  onClick={() => {
-                    if (!currentUser && !isDevMode) {
-                      navigate('/signup');
-                    } else {
-                      setActiveTab("chat");
-                    }
-                  }}
-                  size="lg"
-                  className="flex-1 bg-gradient-to-r from-primary/80 to-primary text-primary-foreground font-bold px-8 py-4 rounded-2xl neon-glow transition-all duration-300 hover:scale-105"
-                >
-                  <Users className="h-5 w-5 mr-2" />
-                  Join {schoolDisplayName}'s GC
-                </Button>
-              </div>
+            {/* CTA Row - Horizontal Pills */}
+            <div className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-4 max-w-3xl mx-auto">
+              <Button 
+                onClick={handleCreateAccount}
+                className="flex-1 min-w-0 bg-primary hover:bg-primary/90 text-primary-foreground font-bold px-6 py-3 rounded-full neon-glow transition-all duration-300 hover:scale-105"
+              >
+                <UserPlus className="h-4 w-4 mr-2 flex-shrink-0" />
+                Sign Up Free
+              </Button>
+              <Button 
+                onClick={() => {
+                  if (!currentUser && !isDevMode) {
+                    navigate('/signup');
+                  } else {
+                    setActiveTab("chat");
+                  }
+                }}
+                className="flex-1 min-w-0 bg-gradient-to-r from-primary/80 to-primary text-primary-foreground font-bold px-6 py-3 rounded-full neon-glow transition-all duration-300 hover:scale-105"
+              >
+                <Users className="h-4 w-4 mr-2 flex-shrink-0" />
+                Join GC
+              </Button>
               <Button 
                 onClick={handleGuestInstagramPost}
-                size="lg"
-                className="w-full bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] text-white border-0 hover:opacity-90 font-bold px-8 py-4 rounded-2xl transition-all duration-300 hover:scale-105"
+                className="flex-1 min-w-0 bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] text-white border-0 hover:opacity-90 font-bold px-6 py-3 rounded-full transition-all duration-300 hover:scale-105"
               >
-                <Instagram className="h-5 w-5 mr-2" />
-                Post on {schoolDisplayName}'s Insta
+                <Instagram className="h-4 w-4 mr-2 flex-shrink-0" />
+                Post on Insta
               </Button>
             </div>
+
+            {/* School Accent Underline */}
+            <div 
+              className="h-0.5 w-16 mx-auto mb-3 rounded-full"
+              style={{ backgroundColor: getSchoolAccentColor(school) }}
+            ></div>
+
+            {/* Tab Context Line */}
+            <p className="text-sm text-muted-foreground font-medium">
+              {getTabContextText(activeTab)}
+            </p>
           </div>
         </div>
       </div>
