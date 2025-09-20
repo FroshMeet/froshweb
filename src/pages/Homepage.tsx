@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Search, Users, MessageSquare, Calendar, Shield, Instagram } from "lucide-react";
+import { Search, Users, MessageSquare, Calendar, Shield, Instagram, Menu, X } from "lucide-react";
 import heroImage from "@/assets/hero-college-students.jpg";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { GetFeaturedFlow } from "@/components/GetFeaturedFlow";
@@ -396,6 +396,7 @@ const Homepage = () => {
   const isMobile = useIsMobile();
   const [searchTerm, setSearchTerm] = useState("");
   const [showGetFeaturedModal, setShowGetFeaturedModal] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const handleSchoolSelect = (schoolName: string, schoolSlug?: string) => {
     const slug = schoolSlug || schoolName.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and');
     navigate(`/${slug}`);
@@ -412,10 +413,10 @@ const Homepage = () => {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate('/')}>
-              <img src={isMobile ? "/lovable-uploads/a880e910-33fe-4ce7-b556-01f73d623057.png" : "/lovable-uploads/e9020b20-5a8d-4a80-a4e0-9d917c7c5e5c.png"} alt="FroshMeet Logo" className={isMobile ? "h-10 w-auto" : "h-16 w-auto"} />
+              <img src={isMobile ? "/lovable-uploads/fresh_meat_app_icon.png" : "/lovable-uploads/e9020b20-5a8d-4a80-a4e0-9d917c7c5e5c.png"} alt="FroshMeet Logo" className={isMobile ? "h-10 w-auto" : "h-16 w-auto"} />
             </div>
             
-            {/* Centered Navigation */}
+            {/* Centered Navigation - Desktop Only */}
             <nav className="hidden md:flex items-center justify-center flex-1">
               <div className="flex items-center space-x-8">
                 <Button variant="ghost" onClick={() => navigate('/features')} className="text-muted-foreground hover:text-foreground">
@@ -433,8 +434,8 @@ const Homepage = () => {
               </div>
             </nav>
             
-            {/* Action Buttons */}
-            <div className="flex items-center space-x-4">
+            {/* Desktop Action Buttons */}
+            <div className="hidden md:flex items-center space-x-4">
               <Button variant="outline" onClick={() => navigate('/signin')}>
                 Sign In
               </Button>
@@ -442,8 +443,91 @@ const Homepage = () => {
                 Join FroshMeet Now
               </Button>
             </div>
+
+            {/* Mobile Hamburger Menu Button */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden text-foreground hover:text-primary hover:bg-primary/10 transition-colors"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </Button>
           </div>
         </div>
+
+        {/* Mobile Menu Dropdown */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-xl border-b border-border/40 shadow-2xl z-40 animate-fade-in">
+            <div className="container mx-auto px-4 py-6">
+              <nav className="flex flex-col space-y-4">
+                <Button 
+                  variant="ghost" 
+                  onClick={() => {
+                    navigate('/features');
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="w-full text-left justify-start text-lg py-4 text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-all duration-200"
+                >
+                  Features
+                </Button>
+                <Button 
+                  variant="ghost" 
+                  onClick={() => {
+                    navigate('/community');
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="w-full text-left justify-start text-lg py-4 text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-all duration-200"
+                >
+                  Community
+                </Button>
+                <Button 
+                  variant="ghost" 
+                  onClick={() => {
+                    navigate('/contact');
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="w-full text-left justify-start text-lg py-4 text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-all duration-200"
+                >
+                  Contact
+                </Button>
+                <Button 
+                  variant="ghost" 
+                  onClick={() => {
+                    navigate('/about');
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="w-full text-left justify-start text-lg py-4 text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-all duration-200"
+                >
+                  About
+                </Button>
+                
+                {/* Mobile Action Buttons */}
+                <div className="border-t border-border/40 pt-4 mt-4 flex flex-col space-y-3">
+                  <Button 
+                    variant="outline" 
+                    onClick={() => {
+                      navigate('/signin');
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="w-full py-3 text-base border-primary/30 text-primary hover:bg-primary/10"
+                  >
+                    Sign In
+                  </Button>
+                  <Button 
+                    onClick={() => {
+                      navigate('/signup');
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="w-full py-3 text-base bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg shadow-primary/25"
+                  >
+                    Join FroshMeet Now
+                  </Button>
+                </div>
+              </nav>
+            </div>
+          </div>
+        )}
       </header>
 
       {/* Hero Section */}
