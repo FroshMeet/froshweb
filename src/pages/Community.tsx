@@ -157,7 +157,7 @@ const Community = () => {
                   
                   {/* School Info */}
                   <div className="space-y-2">
-                    <h3 className="font-bold text-xl uppercase tracking-wide text-primary group-hover:neon-glow transition-all duration-300">
+                    <h3 className="font-bold text-xl uppercase tracking-wide text-primary transition-all duration-300">
                       {school.shortName || school.name}
                     </h3>
                     {school.shortName && (
