@@ -157,9 +157,14 @@ const Community = () => {
                   
                   {/* School Info */}
                   <div className="space-y-2">
-                    <h3 className="font-bold text-2xl uppercase tracking-wide text-muted-foreground group-hover:neon-glow transition-all duration-300">
-                      {school.name}
+                    <h3 className="font-bold text-xl uppercase tracking-wide text-primary transition-all duration-300">
+                      {school.shortName || school.name}
                     </h3>
+                    {school.shortName && (
+                      <p className="text-sm text-foreground leading-relaxed line-clamp-2">
+                        {school.name}
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
