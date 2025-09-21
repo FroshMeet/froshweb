@@ -313,7 +313,8 @@ export default function SchoolDashboard() {
           
           <div className="text-center">
             {/* School name - FroshMeet Blue, Bold, Centered */}
-            <h1 className="text-3xl md:text-4xl font-black text-froshmeet-blue mb-2 animate-fade-in-up tracking-tight">
+            <h1 className="text-5xl md:text-7xl font-black text-muted-foreground mb-6 animate-fade-in-up tracking-tight neon-glow-strong"
+                style={{ textShadow: '0 0 30px hsl(var(--primary)), 0 0 60px hsl(var(--primary))' }}>
               {schoolDisplayName}
             </h1>
             
