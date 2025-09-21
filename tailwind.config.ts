@@ -168,7 +168,8 @@ export default {
 				'scale-in': 'scale-in 0.4s ease-out',
 				'fade-scale-in': 'fade-scale-in 0.2s ease-out',
 				'float': 'float 3s ease-in-out infinite',
-				'scroll-carousel': 'scroll-carousel 60s linear infinite'
+				'scroll-carousel': 'scroll-carousel 60s linear infinite',
+				'scroll-carousel-fast': 'scroll-carousel 44.4s linear infinite'
 			}
 		}
 	},
