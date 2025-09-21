@@ -72,18 +72,18 @@ const Community = () => {
   const getSchoolLogo = (id: string) => {
     const logoMap: Record<string, string> = {
       'harvard': harvardLogo,
-      'stanford': stanfordLogo,
+      'stanford': '/lovable-uploads/Stanford_Logo.png',
       'mit': mitLogo,
-      'ucla': uclaLogo,
+      'ucla': '/lovable-uploads/UCLA_Logo.png',
       'yale': yaleLogo,
-      'usc': uscLogo,
+      'usc': '/lovable-uploads/USC_Logo.png',
       'uc-berkeley': ucBerkeleyLogo,
       'nyu': nyuLogo,
       'umich': umichLogo,
       'duke': dukeLogo,
-      'princeton': princetonLogo,
+      'princeton': '/lovable-uploads/Princeton_Logo.png',
       'northwestern': northwesternLogo,
-      'upenn': upennLogo,
+      'upenn': '/lovable-uploads/UPenn_Logo.png',
       'columbia': columbiaLogo,
     };
     return logoMap[id];
