@@ -51,7 +51,7 @@ const SharedNavigation = ({ currentPage }: SharedNavigationProps) => {
             onClick={() => navigate('/')}
           >
             <img 
-              src="/lovable-uploads/fresh_meat_app_icon-3.png"
+              src="/lovable-uploads/fresh_meat_app_icon-4.png"
               alt="FroshMeet Logo" 
               className={isMobile ? "h-10 w-auto" : "h-16 w-auto"}
             />

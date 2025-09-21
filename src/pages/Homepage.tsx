@@ -413,7 +413,7 @@ const Homepage = () => {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate('/')}>
-              <img src={isMobile ? "/lovable-uploads/fresh_meat_app_icon.png" : "/lovable-uploads/e9020b20-5a8d-4a80-a4e0-9d917c7c5e5c.png"} alt="FroshMeet Logo" className={isMobile ? "h-10 w-auto" : "h-16 w-auto"} />
+              <img src="/lovable-uploads/fresh_meat_app_icon-4.png" alt="FroshMeet Logo" className={isMobile ? "h-10 w-auto" : "h-16 w-auto"} />
             </div>
             
             {/* Centered Navigation - Desktop Only */}
