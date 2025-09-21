@@ -81,7 +81,7 @@ export default function SignUp() {
           </Button>
           <div className="flex items-center space-x-3">
             <img 
-              src="/lovable-uploads/aae3dcfc-f3d8-4318-9704-4e40ab0380fd.png"
+              src="/lovable-uploads/fresh_meat_app_icon-4.png"
               alt="FroshMeet Logo" 
               className="h-12 w-auto"
             />
