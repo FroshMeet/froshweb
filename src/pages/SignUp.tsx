@@ -95,8 +95,8 @@ export default function SignUp() {
         <Card className="w-full max-w-md bg-card/80 backdrop-blur-xl border-border/40 shadow-2xl">
           <CardHeader className="text-center pb-8">
             <div className="space-y-4">
-              <h1 className="text-3xl font-bold text-primary animate-pulse">
-                Join FroshMeet
+              <h1 className="text-3xl font-bold text-primary">
+                Join FroshMeet Today
               </h1>
               <p className="text-muted-foreground">
                 Create your account and start connecting with your college community
