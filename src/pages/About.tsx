@@ -5,49 +5,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { GraduationCap, Shield, Heart, Target, Users } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import SharedNavigation from "@/components/layout/SharedNavigation";
 const About = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   return <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="sticky top-0 border-b border-border/40 bg-background/80 backdrop-blur-xl z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            {/* Logo */}
-            <div className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate('/')}>
-              <img src={isMobile ? "/lovable-uploads/a880e910-33fe-4ce7-b556-01f73d623057.png" : "/lovable-uploads/e9020b20-5a8d-4a80-a4e0-9d917c7c5e5c.png"} alt="FroshMeet Logo" className={isMobile ? "h-10 w-auto" : "h-16 w-auto"} />
-            </div>
-            
-            {/* Centered Navigation */}
-            <nav className="hidden md:flex items-center justify-center flex-1">
-              <div className="flex items-center space-x-8">
-                <Button variant="ghost" onClick={() => navigate('/features')} className="text-muted-foreground hover:text-foreground">
-                  Features
-                </Button>
-                <Button variant="ghost" onClick={() => navigate('/community')} className="text-muted-foreground hover:text-foreground">
-                  Community
-                </Button>
-                <Button variant="ghost" onClick={() => navigate('/contact')} className="text-muted-foreground hover:text-foreground">
-                  Contact
-                </Button>
-                <Button variant="ghost" onClick={() => navigate('/about')} className="text-foreground">
-                  About
-                </Button>
-              </div>
-            </nav>
-            
-            {/* Action Buttons */}
-            <div className="flex items-center space-x-4">
-              <Button variant="outline" onClick={() => navigate('/signin')}>
-                Sign In
-              </Button>
-              <Button onClick={() => navigate('/community')} className="bg-primary hover:bg-primary/90">
-                Join FroshMeet Now
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
+      <SharedNavigation currentPage="about" />
 
       {/* Hero Section */}
       <section className="py-20 md:py-32">
