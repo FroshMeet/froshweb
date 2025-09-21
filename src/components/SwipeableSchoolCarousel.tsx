@@ -130,3 +130,5 @@ export const SwipeableSchoolCarousel: React.FC<SwipeableSchoolCarouselProps> = (
     </div>
   );
 };
+
+export default SwipeableSchoolCarousel;
