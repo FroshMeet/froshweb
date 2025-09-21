@@ -2,16 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
 
-interface SwipeableSchoolCarouselProps {
+interface SchoolCarouselProps {
   schools: Array<{ name: string; slug: string; acronym: string; }>;
   onSchoolSelect: (name: string, slug: string) => void;
-  isTopRow?: boolean;
 }
 
-export const SwipeableSchoolCarousel: React.FC<SwipeableSchoolCarouselProps> = ({
+export const SwipeableSchoolCarousel: React.FC<SchoolCarouselProps> = ({
   schools,
   onSchoolSelect,
-  isTopRow = true
 }) => {
   const isMobile = useIsMobile();
   const [isPaused, setIsPaused] = useState(false);
@@ -54,15 +52,11 @@ export const SwipeableSchoolCarousel: React.FC<SwipeableSchoolCarouselProps> = (
     const isRightSwipe = distance < -50;
 
     if (isLeftSwipe || isRightSwipe) {
-      // Handle swipe - adjust scroll position
-      const container = containerRef.current;
-      if (container) {
-        const scrollAmount = 200; // Adjust as needed
-        if (isLeftSwipe) {
-          setScrollPosition(prev => prev + scrollAmount);
-        } else {
-          setScrollPosition(prev => Math.max(0, prev - scrollAmount));
-        }
+      const scrollAmount = 300;
+      if (isLeftSwipe) {
+        setScrollPosition(prev => prev + scrollAmount);
+      } else {
+        setScrollPosition(prev => Math.max(0, prev - scrollAmount));
       }
     }
     
@@ -85,47 +79,76 @@ export const SwipeableSchoolCarousel: React.FC<SwipeableSchoolCarouselProps> = (
     }
   }, [scrollPosition, isMobile]);
 
-  const carouselClasses = `flex space-x-6 ${
+  // Double schools for seamless loop
+  const topRowSchools = [...schools, ...schools];
+  const bottomRowSchools = [...schools.slice(10), ...schools, ...schools.slice(0, 10)];
+
+  const carouselClasses = `${
     isMobile 
       ? (isPaused ? '' : 'animate-scroll-carousel-fast')
       : 'animate-scroll-carousel-fast'
   }`;
 
-  const containerStyle = isTopRow ? {} : { marginLeft: '5rem' };
-
-  // Double the schools array for seamless loop
-  const displaySchools = isTopRow 
-    ? [...schools, ...schools]
-    : [...schools.slice(10), ...schools, ...schools.slice(0, 10)];
-
   return (
-    <div className="overflow-hidden">
+    <div className="relative space-y-6 overflow-hidden">
       <div
         ref={containerRef}
         className={carouselClasses}
-        style={containerStyle}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        {displaySchools.map((school, index) => (
-          <Button
-            key={`${isTopRow ? 'top' : 'bottom'}-${school.name}-${index}`}
-            variant="outline"
-            onClick={() => onSchoolSelect(school.name, school.slug)}
-            className="flex-shrink-0 w-40 md:w-48 h-28 md:h-32 flex flex-col items-center justify-center text-sm md:text-base hover:shadow-[0_0_30px_rgba(59,130,246,0.4)] hover:border-primary/60 transition-all duration-500 hover:scale-105 bg-card/40 border-border/40 group relative overflow-hidden"
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            <div className="relative z-10 w-10 md:w-12 h-10 md:h-12 bg-gradient-to-r from-primary/40 to-primary/70 rounded-2xl flex items-center justify-center mb-2 md:mb-3 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-500">
-              <span className="text-primary-foreground font-bold text-base md:text-lg">
-                {school.name.charAt(0)}
+        {/* Top Row */}
+        <div className="flex space-x-6 mb-6">
+          {topRowSchools.map((school, index) => (
+            <Button
+              key={`top-${school.name}-${index}`}
+              variant="outline"
+              onClick={() => onSchoolSelect(school.name, school.slug)}
+              className={`flex-shrink-0 w-40 md:w-48 h-28 md:h-32 flex flex-col items-center justify-center text-sm md:text-base transition-all duration-500 bg-card/40 border-border/40 group relative overflow-hidden ${
+                isMobile 
+                  ? 'hover:scale-105' 
+                  : 'hover:shadow-[0_0_30px_rgba(59,130,246,0.4)] hover:border-primary/60 hover:scale-105'
+              }`}
+            >
+              <div className={`absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 opacity-0 transition-opacity duration-500 ${!isMobile ? 'group-hover:opacity-100' : ''}`}></div>
+              <div className={`relative z-10 w-10 md:w-12 h-10 md:h-12 bg-gradient-to-r from-primary/40 to-primary/70 rounded-2xl flex items-center justify-center mb-2 md:mb-3 transition-all duration-500 ${!isMobile ? 'group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]' : ''}`}>
+                <span className="text-primary-foreground font-bold text-base md:text-lg">
+                  {school.name.charAt(0)}
+                </span>
+              </div>
+              <span className="relative z-10 text-center leading-tight font-semibold px-2">
+                {school.acronym}
               </span>
-            </div>
-            <span className="relative z-10 text-center leading-tight font-semibold px-2">
-              {school.acronym}
-            </span>
-          </Button>
-        ))}
+            </Button>
+          ))}
+        </div>
+        
+        {/* Bottom Row - Offset */}
+        <div className="flex space-x-6" style={{ marginLeft: '5rem' }}>
+          {bottomRowSchools.map((school, index) => (
+            <Button
+              key={`bottom-${school.name}-${index}`}
+              variant="outline"
+              onClick={() => onSchoolSelect(school.name, school.slug)}
+              className={`flex-shrink-0 w-40 md:w-48 h-28 md:h-32 flex flex-col items-center justify-center text-sm md:text-base transition-all duration-500 bg-card/40 border-border/40 group relative overflow-hidden ${
+                isMobile 
+                  ? 'hover:scale-105' 
+                  : 'hover:shadow-[0_0_30px_rgba(59,130,246,0.4)] hover:border-primary/60 hover:scale-105'
+              }`}
+            >
+              <div className={`absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 opacity-0 transition-opacity duration-500 ${!isMobile ? 'group-hover:opacity-100' : ''}`}></div>
+              <div className={`relative z-10 w-10 md:w-12 h-10 md:h-12 bg-gradient-to-r from-primary/40 to-primary/70 rounded-2xl flex items-center justify-center mb-2 md:mb-3 transition-all duration-500 ${!isMobile ? 'group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]' : ''}`}>
+                <span className="text-primary-foreground font-bold text-base md:text-lg">
+                  {school.name.charAt(0)}
+                </span>
+              </div>
+              <span className="relative z-10 text-center leading-tight font-semibold px-2">
+                {school.acronym}
+              </span>
+            </Button>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -549,19 +549,10 @@ const Homepage = () => {
             </p>
           </div>
           
-          <div className="relative space-y-6">
-            {/* Top Row */}
+          <div className="relative">
             <SwipeableSchoolCarousel 
               schools={SCHOOL_DATABASE}
               onSchoolSelect={handleSchoolSelect}
-              isTopRow={true}
-            />
-            
-            {/* Bottom Row - Offset */}
-            <SwipeableSchoolCarousel 
-              schools={SCHOOL_DATABASE}
-              onSchoolSelect={handleSchoolSelect}
-              isTopRow={false}
             />
           </div>
         </div>
