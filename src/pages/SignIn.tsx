@@ -169,7 +169,7 @@ const SignIn = () => {
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg hover:shadow-[0_0_20px_rgba(59,130,246,0.5)] hover:scale-[1.02] transition-all duration-300 disabled:opacity-50"
+                className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg hover:scale-[1.02] transition-all duration-300 disabled:opacity-50"
               >
                 {isLoading ? (
                   <div className="flex items-center space-x-2">

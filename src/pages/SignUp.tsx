@@ -163,10 +163,10 @@ export default function SignUp() {
                 />
               </div>
               
-              <Button 
+               <Button 
                 type="submit" 
                 disabled={isLoading}
-                className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg hover:shadow-[0_0_20px_rgba(59,130,246,0.5)] hover:scale-[1.02] transition-all duration-300 disabled:opacity-50"
+                className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg hover:scale-[1.02] transition-all duration-300 disabled:opacity-50"
                 size="lg"
               >
                 {isLoading ? (
@@ -174,9 +174,9 @@ export default function SignUp() {
                     <div className="w-4 h-4 border-2 border-primary-foreground/20 border-t-primary-foreground rounded-full animate-spin"></div>
                     <span>Creating Account...</span>
                   </div>
-                ) : (
-                  "Create Account"
-                )}
+                 ) : (
+                   "Join FroshMeet Today"
+                 )}
               </Button>
 
               {/* Divider */}
