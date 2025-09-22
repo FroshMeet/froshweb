@@ -2,6 +2,22 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
 
+// Import logos (same as Community.tsx)
+import harvardLogo from "@/assets/logos/harvard.png";
+import stanfordLogo from "@/assets/logos/stanford.png";
+import mitLogo from "@/assets/logos/mit.png";
+import uclaLogo from "@/assets/logos/ucla.png";
+import yaleLogo from "@/assets/logos/yale.png";
+import uscLogo from "@/assets/logos/usc.png";
+import ucBerkeleyLogo from "@/assets/logos/uc-berkeley.png";
+import nyuLogo from "@/assets/logos/nyu.png";
+import umichLogo from "@/assets/logos/umich.png";
+import dukeLogo from "@/assets/logos/duke.png";
+import princetonLogo from "@/assets/logos/princeton.png";
+import northwesternLogo from "@/assets/logos/northwestern.png";
+import upennLogo from "@/assets/logos/upenn.png";
+import columbiaLogo from "@/assets/logos/columbia.png";
+
 interface SchoolCarouselProps {
   schools: Array<{ name: string; slug: string; acronym: string; }>;
   onSchoolSelect: (name: string, slug: string) => void;
@@ -18,6 +34,54 @@ export const SwipeableSchoolCarousel: React.FC<SchoolCarouselProps> = ({
   const [scrollPosition, setScrollPosition] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Map school slug to school ID for logo lookup (same as Community.tsx)
+  const getSchoolId = (slug: string): string => {
+    const slugToIdMap: Record<string, string> = {
+      'harvard': 'harvard',
+      'stanford': 'stanford',
+      'mit': 'mit',
+      'ucla': 'ucla',
+      'yale': 'yale',
+      'usc': 'usc',
+      'uc-berkeley': 'uc-berkeley',
+      'nyu': 'nyu',
+      'umich': 'umich',
+      'duke': 'duke',
+      'princeton': 'princeton',
+      'northwestern': 'northwestern',
+      'upenn': 'upenn',
+      'columbia': 'columbia',
+    };
+    return slugToIdMap[slug] || slug;
+  };
+
+  // Get school logo (same logic as Community.tsx)
+  const getSchoolLogo = (slug: string) => {
+    const schoolId = getSchoolId(slug);
+    const logoMap: Record<string, string> = {
+      'harvard': harvardLogo,
+      'stanford': '/lovable-uploads/Stanford_Logo.png',
+      'mit': mitLogo,
+      'ucla': '/lovable-uploads/UCLA_Logo.png',
+      'yale': yaleLogo,
+      'usc': '/lovable-uploads/USC_Logo.png',
+      'uc-berkeley': ucBerkeleyLogo,
+      'nyu': nyuLogo,
+      'umich': umichLogo,
+      'duke': dukeLogo,
+      'princeton': '/lovable-uploads/Princeton_Logo.png',
+      'northwestern': northwesternLogo,
+      'upenn': '/lovable-uploads/UPenn_Logo.png',
+      'columbia': columbiaLogo,
+    };
+    return logoMap[schoolId];
+  };
+
+  // Get school initials fallback
+  const getSchoolInitials = (name: string) => {
+    return name.split(' ').map(word => word[0]).join('').slice(0, 3);
+  };
 
   // Resume animation after 1.5 seconds of no interaction
   const scheduleResume = () => {
@@ -112,10 +176,20 @@ export const SwipeableSchoolCarousel: React.FC<SchoolCarouselProps> = ({
               }`}
             >
               <div className={`absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 opacity-0 transition-opacity duration-500 ${!isMobile ? 'group-hover:opacity-100' : ''}`}></div>
-              <div className={`relative z-10 w-10 md:w-12 h-10 md:h-12 bg-gradient-to-r from-primary/40 to-primary/70 rounded-2xl flex items-center justify-center mb-2 md:mb-3 transition-all duration-500 ${!isMobile ? 'group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]' : ''}`}>
-                <span className="text-primary-foreground font-bold text-base md:text-lg">
-                  {school.name.charAt(0)}
-                </span>
+              <div className={`relative z-10 w-10 md:w-12 h-10 md:h-12 rounded-2xl flex items-center justify-center mb-2 md:mb-3 transition-all duration-500 overflow-hidden border-2 border-primary/30 ${!isMobile ? 'group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] group-hover:border-primary/60' : ''}`}>
+                {getSchoolLogo(school.slug) ? (
+                  <img 
+                    src={getSchoolLogo(school.slug)} 
+                    alt={`${school.name} logo`}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-r from-primary/40 to-primary/70 flex items-center justify-center">
+                    <span className="text-primary-foreground font-bold text-base md:text-lg">
+                      {getSchoolInitials(school.name)}
+                    </span>
+                  </div>
+                )}
               </div>
               <span className="relative z-10 text-center leading-tight font-semibold px-2">
                 {school.acronym}
@@ -138,10 +212,20 @@ export const SwipeableSchoolCarousel: React.FC<SchoolCarouselProps> = ({
               }`}
             >
               <div className={`absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 opacity-0 transition-opacity duration-500 ${!isMobile ? 'group-hover:opacity-100' : ''}`}></div>
-              <div className={`relative z-10 w-10 md:w-12 h-10 md:h-12 bg-gradient-to-r from-primary/40 to-primary/70 rounded-2xl flex items-center justify-center mb-2 md:mb-3 transition-all duration-500 ${!isMobile ? 'group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]' : ''}`}>
-                <span className="text-primary-foreground font-bold text-base md:text-lg">
-                  {school.name.charAt(0)}
-                </span>
+              <div className={`relative z-10 w-10 md:w-12 h-10 md:h-12 rounded-2xl flex items-center justify-center mb-2 md:mb-3 transition-all duration-500 overflow-hidden border-2 border-primary/30 ${!isMobile ? 'group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] group-hover:border-primary/60' : ''}`}>
+                {getSchoolLogo(school.slug) ? (
+                  <img 
+                    src={getSchoolLogo(school.slug)} 
+                    alt={`${school.name} logo`}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-r from-primary/40 to-primary/70 flex items-center justify-center">
+                    <span className="text-primary-foreground font-bold text-base md:text-lg">
+                      {getSchoolInitials(school.name)}
+                    </span>
+                  </div>
+                )}
               </div>
               <span className="relative z-10 text-center leading-tight font-semibold px-2">
                 {school.acronym}
