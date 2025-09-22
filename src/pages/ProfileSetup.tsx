@@ -138,7 +138,7 @@ const ProfileSetup = () => {
 
       {/* Main Content */}
       <div className="relative z-10 flex items-center justify-center px-4 py-12">
-        <Card className="w-full max-w-2xl bg-card/80 backdrop-blur-xl border-border/40 shadow-2xl">
+        <Card className="w-full max-w-2xl bg-card/80 backdrop-blur-xl border-border/40 shadow-2xl frosted-card">
           <CardHeader className="text-center pb-8">
             <CardTitle className="text-3xl font-bold text-primary animate-pulse">
               Complete Your Profile

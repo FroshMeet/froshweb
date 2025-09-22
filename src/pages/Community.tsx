@@ -137,7 +137,7 @@ const Community = () => {
                 onClick={() => handleSchoolClick(school)}
                 className="group cursor-pointer"
               >
-                <div className="bg-card/50 backdrop-blur-sm rounded-3xl p-8 text-center transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-primary/30 border-2 border-primary/20 hover:border-primary/50 card-shadow group-hover:bg-card/80">
+                <div className="bg-card/50 backdrop-blur-sm rounded-3xl p-8 text-center transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-primary/30 border-2 border-primary/20 hover:border-primary/50 card-shadow group-hover:bg-card/80 frosted-card">
                   {/* School Circle */}
                   <div className="w-24 h-24 mx-auto mb-6 rounded-full overflow-hidden group-hover:neon-glow-strong transition-all duration-300 border-2 border-primary/30 group-hover:border-primary/60">
                     {getSchoolLogo(school.id) ? (
@@ -191,7 +191,7 @@ const Community = () => {
 
           {/* Bottom CTA */}
           <div className="text-center mt-16">
-            <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 border border-primary/30 rounded-3xl p-12 backdrop-blur-sm">
+            <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 border border-primary/30 rounded-3xl p-12 backdrop-blur-sm frosted-card">
               <h2 className="text-2xl font-bold text-foreground mb-4">
                 Don't see your school?
               </h2>

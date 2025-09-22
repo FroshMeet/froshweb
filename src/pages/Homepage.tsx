@@ -633,7 +633,7 @@ const Homepage = () => {
               <p className="text-muted-foreground mb-6">
                 Connect with us on Instagram to see real student stories and stay updated with the latest from the FroshMeet community
               </p>
-              <Button variant="outline" className="bg-gradient-to-r from-pink-500 to-purple-500 border-0 text-white hover:from-pink-600 hover:to-purple-600" onClick={() => window.open('https://instagram.com/froshmeet', '_blank')}>
+              <Button variant="outline" className="bg-gradient-to-r from-pink-500 to-purple-500 border-0 text-white hover:from-pink-600 hover:to-purple-600 select-none" onClick={() => window.open('https://instagram.com/froshmeet', '_blank')}>
                 <Instagram className="h-5 w-5 mr-2" />
                 Follow @FroshMeet
               </Button>

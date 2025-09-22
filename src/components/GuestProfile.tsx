@@ -10,7 +10,7 @@ interface GuestProfileProps {
 const GuestProfile = ({ onCreateAccount }: GuestProfileProps) => {
   return (
     <div className="max-w-lg mx-auto pb-32">
-      <Card className="overflow-hidden bg-card/90 backdrop-blur-sm neon-glow border-border">
+      <Card className="overflow-hidden bg-card/90 backdrop-blur-sm neon-glow border-border frosted-card">
         <CardHeader className="text-center">
           <div className="w-16 h-16 bg-gradient-to-r from-primary/30 to-primary/50 rounded-full mx-auto mb-4 flex items-center justify-center neon-glow">
             <User className="h-8 w-8 text-primary" />
