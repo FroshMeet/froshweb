@@ -1,10 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { supabase } from '@/integrations/supabase/client';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 
 interface SchoolCarouselProps {
   schools: Array<{ name: string; slug: string; acronym: string; }>;
   onSchoolSelect: (name: string, slug: string) => void;
+}
+
+interface SchoolWithProfiles {
+  name: string;
+  slug: string;
+  acronym: string;
+  profilePictures: string[];
 }
 
 export const SwipeableSchoolCarousel: React.FC<SchoolCarouselProps> = ({
@@ -16,8 +25,42 @@ export const SwipeableSchoolCarousel: React.FC<SchoolCarouselProps> = ({
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const [scrollPosition, setScrollPosition] = useState(0);
+  const [schoolsWithProfiles, setSchoolsWithProfiles] = useState<SchoolWithProfiles[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Fetch profile pictures for each school
+  useEffect(() => {
+    const fetchSchoolProfiles = async () => {
+      try {
+        const schoolProfilePromises = schools.map(async (school) => {
+          const { data: profiles } = await supabase
+            .from('profiles')
+            .select('pfp_url')
+            .eq('school_slug', school.slug)
+            .eq('is_visible', true)
+            .not('pfp_url', 'is', null)
+            .limit(4);
+          
+          const profilePictures = profiles?.map(p => p.pfp_url).filter(Boolean) || [];
+          
+          return {
+            ...school,
+            profilePictures
+          };
+        });
+        
+        const results = await Promise.all(schoolProfilePromises);
+        setSchoolsWithProfiles(results);
+      } catch (error) {
+        console.error('Error fetching school profiles:', error);
+        // Fallback to schools without profile pictures
+        setSchoolsWithProfiles(schools.map(school => ({ ...school, profilePictures: [] })));
+      }
+    };
+
+    fetchSchoolProfiles();
+  }, [schools]);
 
   // Resume animation after 1.5 seconds of no interaction
   const scheduleResume = () => {
@@ -79,9 +122,62 @@ export const SwipeableSchoolCarousel: React.FC<SchoolCarouselProps> = ({
     }
   }, [scrollPosition, isMobile]);
 
-  // Double schools for seamless loop
-  const topRowSchools = [...schools, ...schools];
-  const bottomRowSchools = [...schools.slice(10), ...schools, ...schools.slice(0, 10)];
+  // Double schools for seamless loop - use schools with profiles when available
+  const dataToUse = schoolsWithProfiles.length > 0 ? schoolsWithProfiles : schools.map(school => ({ ...school, profilePictures: [] }));
+  const topRowSchools = [...dataToUse, ...dataToUse];
+  const bottomRowSchools = [...dataToUse.slice(10), ...dataToUse, ...dataToUse.slice(0, 10)];
+
+  // Component to render school icon with profiles or fallback
+  const SchoolIcon = ({ school }: { school: SchoolWithProfiles }) => {
+    if (school.profilePictures && school.profilePictures.length > 0) {
+      // Show 1-4 profile pictures in a grid
+      const pictures = school.profilePictures.slice(0, 4);
+      
+      if (pictures.length === 1) {
+        return (
+          <div className="relative z-10 w-10 md:w-12 h-10 md:h-12 mb-2 md:mb-3">
+            <Avatar className="w-full h-full">
+              <AvatarImage 
+                src={pictures[0]} 
+                alt={`Student from ${school.acronym}`}
+                className="object-cover"
+              />
+              <AvatarFallback className="bg-gradient-to-r from-primary/40 to-primary/70 text-primary-foreground font-bold">
+                {school.name.charAt(0)}
+              </AvatarFallback>
+            </Avatar>
+          </div>
+        );
+      } else {
+        // Multiple pictures in a small grid
+        return (
+          <div className="relative z-10 w-10 md:w-12 h-10 md:h-12 mb-2 md:mb-3 grid grid-cols-2 gap-0.5">
+            {pictures.map((pic, idx) => (
+              <Avatar key={idx} className="w-full h-full">
+                <AvatarImage 
+                  src={pic} 
+                  alt={`Student from ${school.acronym}`}
+                  className="object-cover"
+                />
+                <AvatarFallback className="bg-gradient-to-r from-primary/40 to-primary/70 text-primary-foreground text-xs font-bold">
+                  {school.name.charAt(0)}
+                </AvatarFallback>
+              </Avatar>
+            ))}
+          </div>
+        );
+      }
+    }
+    
+    // Fallback to original letter circle
+    return (
+      <div className={`relative z-10 w-10 md:w-12 h-10 md:h-12 bg-gradient-to-r from-primary/40 to-primary/70 rounded-2xl flex items-center justify-center mb-2 md:mb-3 transition-all duration-500 ${!isMobile ? 'group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]' : ''}`}>
+        <span className="text-primary-foreground font-bold text-base md:text-lg">
+          {school.name.charAt(0)}
+        </span>
+      </div>
+    );
+  };
 
   const carouselClasses = `${
     isMobile 
@@ -112,11 +208,7 @@ export const SwipeableSchoolCarousel: React.FC<SchoolCarouselProps> = ({
               }`}
             >
               <div className={`absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 opacity-0 transition-opacity duration-500 ${!isMobile ? 'group-hover:opacity-100' : ''}`}></div>
-              <div className={`relative z-10 w-10 md:w-12 h-10 md:h-12 bg-gradient-to-r from-primary/40 to-primary/70 rounded-2xl flex items-center justify-center mb-2 md:mb-3 transition-all duration-500 ${!isMobile ? 'group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]' : ''}`}>
-                <span className="text-primary-foreground font-bold text-base md:text-lg">
-                  {school.name.charAt(0)}
-                </span>
-              </div>
+              <SchoolIcon school={school} />
               <span className="relative z-10 text-center leading-tight font-semibold px-2">
                 {school.acronym}
               </span>
@@ -138,11 +230,7 @@ export const SwipeableSchoolCarousel: React.FC<SchoolCarouselProps> = ({
               }`}
             >
               <div className={`absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 opacity-0 transition-opacity duration-500 ${!isMobile ? 'group-hover:opacity-100' : ''}`}></div>
-              <div className={`relative z-10 w-10 md:w-12 h-10 md:h-12 bg-gradient-to-r from-primary/40 to-primary/70 rounded-2xl flex items-center justify-center mb-2 md:mb-3 transition-all duration-500 ${!isMobile ? 'group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]' : ''}`}>
-                <span className="text-primary-foreground font-bold text-base md:text-lg">
-                  {school.name.charAt(0)}
-                </span>
-              </div>
+              <SchoolIcon school={school} />
               <span className="relative z-10 text-center leading-tight font-semibold px-2">
                 {school.acronym}
               </span>
