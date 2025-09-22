@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Instagram, ExternalLink, Users } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { getSchoolName } from '@/config/schoolNameMapping';
 
 interface InstagramProfile {
   id: string;
@@ -23,7 +24,7 @@ export default function SchoolInstagramPosts() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const schoolName = school?.toUpperCase() || '';
+  const schoolName = school ? getSchoolName(school) : '';
 
   useEffect(() => {
     const fetchProfiles = async () => {

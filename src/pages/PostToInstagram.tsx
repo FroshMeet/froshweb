@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Instagram, ExternalLink, Heart, MessageCircle, Share, ArrowLeft } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { getSchoolName } from '@/config/schoolNameMapping';
 
 interface Profile {
   id: string;
@@ -133,7 +134,7 @@ export default function PostToInstagram() {
             className="mb-4"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to {school?.toUpperCase()} Page
+            Back to {school ? getSchoolName(school) : ''} Page
           </Button>
           
           <div className="text-center">

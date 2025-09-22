@@ -24,8 +24,8 @@ export default function GuestInstagramPost() {
     photos: [] as string[]
   });
 
-  const schoolName = school ? getSchoolName(school) : school?.toUpperCase();
-  const schoolDisplayName = schoolName || school?.toUpperCase() || '';
+  const schoolName = school ? getSchoolName(school) : '';
+  const schoolDisplayName = schoolName || '';
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -92,7 +92,7 @@ export default function GuestInstagramPost() {
         bio: formData.bio || null,
         class_year: formData.class_year,
         instagram_handle: formData.instagram_handle,
-        school: school?.toUpperCase() || '',
+        school: schoolDisplayName || '',
         photos: formData.photos,
         user_id: null, // Guest user
         paid_for_instagram: false, // Will be updated after payment
@@ -112,7 +112,7 @@ export default function GuestInstagramPost() {
         'create-guest-payment',
         {
           body: {
-            school: school?.toUpperCase() || ''
+            school: schoolDisplayName || ''
           }
         }
       );

@@ -128,8 +128,8 @@ export default function SchoolDashboard() {
     );
   }
   
-  const schoolName = approvedSchool?.name || school?.toUpperCase();
-  const schoolDisplayName = approvedSchool?.displayName || school?.toUpperCase() || '';
+  const schoolName = approvedSchool?.name || (school ? getSchoolName(school) : '');
+  const schoolDisplayName = schoolName || '';
   const instagramUsername = approvedSchool?.instagramUsername || null;
 
   useEffect(() => {
@@ -313,7 +313,7 @@ export default function SchoolDashboard() {
           
           <div className="text-center">
             {/* School name - FroshMeet Blue, Bold, Centered */}
-            <h1 className="text-3xl md:text-4xl font-black text-froshmeet-blue mb-2 animate-fade-in-up tracking-tight">
+            <h1 className="text-3xl md:text-4xl font-black text-primary mb-2 animate-fade-in-up tracking-tight">
               {schoolDisplayName}
             </h1>
             

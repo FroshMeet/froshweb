@@ -25,8 +25,8 @@ export default function SchoolPage() {
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [loading, setLoading] = useState(true);
   
-  const schoolName = school ? getSchoolName(school) : school?.toUpperCase();
-  const schoolDisplayName = schoolName || school?.toUpperCase() || '';
+  const schoolName = school ? getSchoolName(school) : '';
+  const schoolDisplayName = schoolName || '';
 
   useEffect(() => {
     const fetchProfiles = async () => {
@@ -205,7 +205,7 @@ export default function SchoolPage() {
                         <CardDescription>Class of {profile.class_year}</CardDescription>
                       </div>
                       <Badge variant="outline" className="text-xs">
-                        {school?.toUpperCase()}
+                        {schoolDisplayName}
                       </Badge>
                     </div>
                   </CardHeader>
