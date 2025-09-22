@@ -85,7 +85,8 @@ const SignIn = () => {
 
       {/* Main Content */}
       <div className="relative z-10 flex items-center justify-center px-4 py-12">
-        <Card className="w-full max-w-md bg-card/80 backdrop-blur-xl border-border/40 shadow-2xl frosted-card">
+        <div className="glass-card w-full max-w-md bg-border/40 shadow-2xl">
+          <Card className="glass-content bg-card/80 border-none">
           <CardHeader className="text-center pb-8">
             <div className="space-y-4">
               <h1 className="text-3xl font-bold text-primary">
@@ -216,6 +217,7 @@ const SignIn = () => {
             </form>
           </CardContent>
         </Card>
+        </div>
       </div>
 
       {/* Footer */}

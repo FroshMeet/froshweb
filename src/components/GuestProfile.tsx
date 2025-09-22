@@ -10,8 +10,9 @@ interface GuestProfileProps {
 const GuestProfile = ({ onCreateAccount }: GuestProfileProps) => {
   return (
     <div className="max-w-lg mx-auto pb-32">
-      <Card className="overflow-hidden bg-card/90 backdrop-blur-sm neon-glow border-border frosted-card">
-        <CardHeader className="text-center">
+      <div className="glass-card neon-glow border border-border">
+        <Card className="glass-content bg-card/90 border-none">
+          <CardHeader className="text-center">
           <div className="w-16 h-16 bg-gradient-to-r from-primary/30 to-primary/50 rounded-full mx-auto mb-4 flex items-center justify-center neon-glow">
             <User className="h-8 w-8 text-primary" />
           </div>
@@ -48,12 +49,13 @@ const GuestProfile = ({ onCreateAccount }: GuestProfileProps) => {
           
           <Button 
             onClick={onCreateAccount}
-            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-3 neon-glow-strong"
+            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-3 neon-glow-strong select-none"
           >
             Create Account
           </Button>
         </CardContent>
-      </Card>
+        </Card>
+      </div>
     </div>
   );
 };

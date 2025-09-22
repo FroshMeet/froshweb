@@ -32,7 +32,8 @@ const ProfileCard = ({ profile, isOwnProfile = false, isMobile = false, onUpdate
 
   return (
     <>
-      <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-card/80 backdrop-blur-sm neon-glow frosted-card">
+      <div className="glass-card overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1 neon-glow">
+        <Card className="glass-content bg-card/80 border-none">
         <div className="relative">
           {hasProfilePhoto ? (
             <img
@@ -172,7 +173,8 @@ const ProfileCard = ({ profile, isOwnProfile = false, isMobile = false, onUpdate
             )}
           </div>
         </CardContent>
-      </Card>
+        </Card>
+      </div>
 
       {/* Edit Profile Dialog */}
       {showEditDialog && (

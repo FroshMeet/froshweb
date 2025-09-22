@@ -409,7 +409,8 @@ const Homepage = () => {
   const filteredSchools = searchSchools(searchTerm);
   return <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="sticky top-0 border-b border-border/40 bg-background/80 backdrop-blur-xl z-50">
+      <div className="glass-card sticky top-0 border-b border-border/40 z-50">
+        <header className="glass-content bg-background/80">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
@@ -456,11 +457,14 @@ const Homepage = () => {
             </Button>
           </div>
         </div>
+        </header>
+      </div>
 
         {/* Mobile Menu Dropdown */}
         {isMobileMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-xl border-b border-border/40 shadow-2xl z-40 animate-fade-in">
-            <div className="container mx-auto px-4 py-6">
+          <div className="glass-card md:hidden absolute top-full left-0 right-0 border-b border-border/40 shadow-2xl z-40 animate-fade-in">
+            <div className="glass-content">
+              <div className="container mx-auto px-4 py-6">
               <nav className="flex flex-col space-y-4">
                 <Button 
                   variant="ghost" 
@@ -526,10 +530,10 @@ const Homepage = () => {
                   </Button>
                 </div>
               </nav>
+              </div>
             </div>
           </div>
         )}
-      </header>
 
       {/* Hero Section */}
       <Hero />
@@ -651,6 +655,6 @@ const Homepage = () => {
 
       {/* Get Featured Flow */}
       <GetFeaturedFlow open={showGetFeaturedModal} onOpenChange={setShowGetFeaturedModal} />
-    </div>;
+    </div>
 };
 export default Homepage;

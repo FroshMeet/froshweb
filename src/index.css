@@ -204,4 +204,33 @@
     -moz-user-select: none !important;
     -ms-user-select: none !important;
   }
+
+  /* Glass card structure for proper selection containment */
+  .glass-card {
+    position: relative;
+    border-radius: 1.25rem; /* rounded-2xl */
+    overflow: hidden;
+    isolation: isolate;
+    contain: paint;
+  }
+
+  .glass-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.04);
+    -webkit-backdrop-filter: blur(12px) saturate(160%);
+    backdrop-filter: blur(12px) saturate(160%);
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+  }
+
+  .glass-content {
+    position: relative;
+    z-index: 1;
+    -webkit-font-smoothing: antialiased;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+  }
 }

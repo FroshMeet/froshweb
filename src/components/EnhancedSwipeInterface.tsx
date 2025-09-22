@@ -438,7 +438,8 @@ const EnhancedSwipeInterface = ({
           </div>
 
           {/* Action Buttons */}
-          <div className="flex-shrink-0 px-6 py-4 bg-card/95 backdrop-blur border-t">
+          <div className="glass-card flex-shrink-0 border-t">
+            <div className="glass-content px-6 py-4">
             <div className="flex items-center justify-between">
               <Button 
                 variant="outline" 
@@ -485,6 +486,7 @@ const EnhancedSwipeInterface = ({
                 <span className="text-sm">Next</span>
                 <ArrowRight className="h-4 w-4" />
               </Button>
+            </div>
             </div>
           </div>
         </div>

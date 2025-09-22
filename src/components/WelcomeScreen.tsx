@@ -187,7 +187,8 @@ const WelcomeScreen = ({ onUserCreate, onGuestContinue }) => {
           <div className="absolute w-96 h-96 bg-neon-violet/10 rounded-full blur-3xl -bottom-48 -right-48 animate-float" style={{animationDelay: '2s'}}></div>
         </div>
         
-        <Card className="w-full max-w-md mx-auto shadow-2xl border border-border/50 bg-card/90 backdrop-blur-xl neon-glow relative z-10 frosted-card">
+        <div className="glass-card w-full max-w-md mx-auto shadow-2xl border border-border/50 neon-glow relative z-10">
+          <Card className="glass-content bg-card/90 border-none">
           <CardHeader className="text-center pb-6">
             <div className="w-20 h-20 bg-gradient-to-r from-neon-cyan/30 to-neon-violet/30 rounded-3xl mx-auto mb-6 flex items-center justify-center neon-glow-strong">
               <GraduationCap className="h-10 w-10 text-primary" />
@@ -252,6 +253,7 @@ const WelcomeScreen = ({ onUserCreate, onGuestContinue }) => {
             </div>
           </CardContent>
         </Card>
+        </div>
       </div>
     );
   }
@@ -267,7 +269,8 @@ const WelcomeScreen = ({ onUserCreate, onGuestContinue }) => {
           <div className="absolute w-64 h-64 bg-primary/10 rounded-full blur-2xl top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-float" style={{animationDelay: '1s'}}></div>
         </div>
         
-        <Card className="w-full max-w-md mx-auto shadow-2xl border border-border/50 bg-card/90 backdrop-blur-xl neon-glow relative z-10 frosted-card">
+        <div className="glass-card w-full max-w-md mx-auto shadow-2xl border border-border/50 neon-glow relative z-10">
+          <Card className="glass-content bg-card/90 border-none">
           <CardHeader className="text-center pb-8">
             <div className="w-20 h-20 bg-gradient-to-r from-neon-cyan/30 to-neon-violet/30 rounded-3xl mx-auto mb-6 flex items-center justify-center neon-glow-strong">
               <Zap className="h-10 w-10 text-primary" />
@@ -316,6 +319,7 @@ const WelcomeScreen = ({ onUserCreate, onGuestContinue }) => {
             </p>
           </CardContent>
         </Card>
+        </div>
       </div>
     );
   }
@@ -329,7 +333,8 @@ const WelcomeScreen = ({ onUserCreate, onGuestContinue }) => {
         <div className="absolute w-96 h-96 bg-neon-violet/10 rounded-full blur-3xl -bottom-48 -right-48 animate-float" style={{animationDelay: '2s'}}></div>
       </div>
       
-      <Card className="w-full max-w-md mx-auto shadow-2xl border border-border/50 bg-card/90 backdrop-blur-xl neon-glow relative z-10 frosted-card">
+      <div className="glass-card w-full max-w-md mx-auto shadow-2xl border border-border/50 neon-glow relative z-10">
+        <Card className="glass-content bg-card/90 border-none">
         <CardHeader className="text-center pb-6">
           <div className="w-16 h-16 bg-gradient-to-r from-neon-cyan/30 to-neon-violet/30 rounded-2xl mx-auto mb-4 flex items-center justify-center neon-glow">
             <Zap className="h-8 w-8 text-primary" />
@@ -529,6 +534,7 @@ const WelcomeScreen = ({ onUserCreate, onGuestContinue }) => {
           </div>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 };
