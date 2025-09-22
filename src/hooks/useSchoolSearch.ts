@@ -19,13 +19,11 @@ const preprocessedSchools = schools.map(school => ({
   normalizedName: normalizeString(school.name),
   normalizedShortName: school.shortName ? normalizeString(school.shortName) : '',
   normalizedAliases: school.aliases.map(normalizeString),
-  normalizedCategories: school.categories ? school.categories.map(normalizeString) : [],
   // Flatten all searchable text for Fuse
   searchableText: [
     school.name,
     school.shortName || '',
-    ...school.aliases,
-    ...(school.categories || [])
+    ...school.aliases
   ].filter(Boolean).join(' ')
 }));
 
@@ -34,11 +32,10 @@ const fuseOptions = {
     { name: 'name', weight: 0.6 },
     { name: 'shortName', weight: 0.6 },
     { name: 'aliases', weight: 1.0 },
-    { name: 'categories', weight: 1.2 },
     { name: 'searchableText', weight: 0.8 }
   ],
   includeScore: true,
-  threshold: 0.4,
+  threshold: 0.35,
   ignoreLocation: true,
   minMatchCharLength: 2,
   findAllMatches: true
@@ -62,33 +59,18 @@ export const useSchoolSearch = () => {
 
     const normalizedQuery = normalizeString(query);
     
-    // Special category searches
-    const categoryMatches: { [key: string]: string[] } = {
-      'ivy': ['harvard', 'yale', 'princeton', 'columbia', 'upenn', 'dartmouth', 'brown', 'cornell'],
-      'ivy league': ['harvard', 'yale', 'princeton', 'columbia', 'upenn', 'dartmouth', 'brown', 'cornell'],
-      'uc': UC_CAMPUSES,
-      'university of california': UC_CAMPUSES,
-      'uc system': UC_CAMPUSES,
-      'california': ['uc-berkeley', 'ucla', 'ucsd', 'ucsb', 'uci', 'uc-davis', 'uc-santa-cruz', 'uc-riverside', 'uc-merced', 'stanford', 'caltech', 'usc'],
-      'big ten': ['umich', 'osu', 'msu', 'psu', 'uw-madison', 'uiuc', 'purdue', 'umn', 'uiowa', 'iu', 'unl', 'rutgers'],
-      'elite': ['harvard', 'yale', 'princeton', 'stanford', 'mit', 'columbia', 'upenn', 'dartmouth', 'brown', 'cornell', 'uc-berkeley', 'ucla', 'duke', 'northwestern', 'jhu'],
-      'private': ['harvard', 'yale', 'princeton', 'stanford', 'mit', 'columbia', 'upenn', 'dartmouth', 'brown', 'cornell', 'duke', 'northwestern', 'jhu', 'cmu', 'rice', 'vanderbilt', 'georgetown', 'bu', 'northeastern', 'nyu', 'tufts', 'emory', 'wake-forest']
-    };
-    
-    // Check for exact category matches first
-    for (const [category, schoolIds] of Object.entries(categoryMatches)) {
-      if (normalizedQuery === category || normalizedQuery.includes(category)) {
-        return schoolIds.map(id => schools.find(s => s.id === id)!).filter(Boolean);
-      }
+    // Special case: UC system search
+    if (normalizedQuery === 'uc' || normalizedQuery.startsWith('university of california')) {
+      return UC_CAMPUSES.map(id => schools.find(s => s.id === id)!);
     }
 
     // Use Fuse.js for fuzzy search
     const fuse = getFuseInstance();
     const fuseResults = fuse.search(normalizedQuery);
     
-    // Extract schools and limit to 12 results for better UX
+    // Extract schools and limit to 8 results
     return fuseResults
-      .slice(0, 12)
+      .slice(0, 8)
       .map(result => result.item as School);
   }, [query]);
 

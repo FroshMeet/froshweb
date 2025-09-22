@@ -3,7 +3,6 @@ export interface School {
   name: string;            // official display name
   shortName?: string;      // e.g., "UC Berkeley"
   aliases: string[];       // acronyms, nicknames, common misspellings
-  categories?: string[];    // groups like "Ivy League", "UC System", etc.
 }
 
 export const schools: School[] = [
@@ -12,57 +11,49 @@ export const schools: School[] = [
     id: "harvard",
     name: "Harvard University",
     shortName: "Harvard",
-    aliases: ["harvard", "hu"],
-    categories: ["Ivy League", "Private", "Elite", "East Coast"]
+    aliases: ["harvard", "hu"]
   },
   {
     id: "upenn", 
     name: "University of Pennsylvania",
     shortName: "UPenn",
-    aliases: ["upenn", "u penn", "penn"],
-    categories: ["Ivy League", "Private", "Elite", "East Coast"]
+    aliases: ["upenn", "u penn", "penn"]
   },
   {
     id: "princeton",
     name: "Princeton University", 
     shortName: "Princeton",
-    aliases: ["princeton", "pu"],
-    categories: ["Ivy League", "Private", "Elite", "East Coast"]
+    aliases: ["princeton", "pu"]
   },
   {
     id: "columbia",
     name: "Columbia University",
     shortName: "Columbia",
-    aliases: ["columbia", "cu", "columbia u"],
-    categories: ["Ivy League", "Private", "Elite", "East Coast", "New York"]
+    aliases: ["columbia", "cu", "columbia u"]
   },
   {
     id: "yale",
     name: "Yale University",
     shortName: "Yale",
-    aliases: ["yale", "yu"],
-    categories: ["Ivy League", "Private", "Elite", "East Coast"]
+    aliases: ["yale", "yu"]
   },
   {
     id: "cornell",
     name: "Cornell University",
     shortName: "Cornell",
-    aliases: ["cornell", "cu"],
-    categories: ["Ivy League", "Private", "Elite", "East Coast"]
+    aliases: ["cornell", "cu"]
   },
   {
     id: "dartmouth",
     name: "Dartmouth College",
     shortName: "Dartmouth",
-    aliases: ["dartmouth"],
-    categories: ["Ivy League", "Private", "Elite", "East Coast"]
+    aliases: ["dartmouth"]
   },
   {
     id: "brown",
     name: "Brown University",
     shortName: "Brown",
-    aliases: ["brown"],
-    categories: ["Ivy League", "Private", "Elite", "East Coast"]
+    aliases: ["brown"]
   },
 
   // University of California
@@ -70,64 +61,55 @@ export const schools: School[] = [
     id: "uc-santa-cruz",
     name: "University of California, Santa Cruz",
     shortName: "UCSC",
-    aliases: ["ucsc", "uc santa cruz", "santa cruz"],
-    categories: ["UC System", "Public", "California"]
+    aliases: ["ucsc", "uc santa cruz", "santa cruz"]
   },
   {
     id: "uc-berkeley",
     name: "University of California, Berkeley",
     shortName: "UC Berkeley / Cal",
-    aliases: ["ucb", "berkeley", "cal", "uc berkeley"],
-    categories: ["UC System", "Public", "California", "Elite"]
+    aliases: ["ucb", "berkeley", "cal", "uc berkeley"]
   },
   {
     id: "ucsd",
     name: "University of California, San Diego", 
     shortName: "UCSD",
-    aliases: ["ucsd", "uc san diego", "san diego"],
-    categories: ["UC System", "Public", "California"]
+    aliases: ["ucsd", "uc san diego", "san diego"]
   },
   {
     id: "uci",
     name: "University of California, Irvine",
     shortName: "UCI", 
-    aliases: ["uci", "uc irvine", "irvine"],
-    categories: ["UC System", "Public", "California"]
+    aliases: ["uci", "uc irvine", "irvine"]
   },
   {
     id: "uc-davis",
     name: "University of California, Davis",
     shortName: "UCD",
-    aliases: ["ucd", "uc davis", "davis"],
-    categories: ["UC System", "Public", "California"]
+    aliases: ["ucd", "uc davis", "davis"]
   },
   {
     id: "ucsb",
     name: "University of California, Santa Barbara",
     shortName: "UCSB",
-    aliases: ["ucsb", "uc santa barbara", "santa barbara"],
-    categories: ["UC System", "Public", "California"]
+    aliases: ["ucsb", "uc santa barbara", "santa barbara"]
   },
   {
     id: "uc-merced",
     name: "University of California, Merced",
     shortName: "UCM",
-    aliases: ["ucm", "uc merced", "merced"],
-    categories: ["UC System", "Public", "California"]
+    aliases: ["ucm", "uc merced", "merced"]
   },
   {
     id: "uc-riverside",
     name: "University of California, Riverside",
     shortName: "UCR",
-    aliases: ["ucr", "uc riverside", "riverside"],
-    categories: ["UC System", "Public", "California"]
+    aliases: ["ucr", "uc riverside", "riverside"]
   },
   {
     id: "ucla",
     name: "University of California, Los Angeles",
     shortName: "UCLA",
-    aliases: ["ucla", "uc los angeles", "los angeles"],
-    categories: ["UC System", "Public", "California", "Elite"]
+    aliases: ["ucla", "uc los angeles", "los angeles"]
   },
 
   // California Privates & CSU
@@ -135,85 +117,73 @@ export const schools: School[] = [
     id: "stanford",
     name: "Stanford University",
     shortName: "Stanford",
-    aliases: ["stanford", "su"],
-    categories: ["Private", "Elite", "California"]
+    aliases: ["stanford", "su"]
   },
   {
     id: "caltech",
     name: "California Institute of Technology",
     shortName: "Caltech",
-    aliases: ["caltech"],
-    categories: ["Private", "Elite", "California", "STEM"]
+    aliases: ["caltech"]
   },
   {
     id: "usc",
     name: "University of Southern California",
     shortName: "USC",
-    aliases: ["usc"],
-    categories: ["Private", "California"]
+    aliases: ["usc"]
   },
   {
     id: "sfsu",
     name: "San Francisco State University",
     shortName: "SFSU",
-    aliases: ["sfsu", "san francisco state"],
-    categories: ["CSU System", "Public", "California"]
+    aliases: ["sfsu", "san francisco state"]
   },
   {
     id: "csulb",
     name: "California State University, Long Beach",
     shortName: "CSULB / Long Beach State",
-    aliases: ["csulb", "long beach state", "long beach"],
-    categories: ["CSU System", "Public", "California"]
+    aliases: ["csulb", "long beach state", "long beach"]
   },
   {
     id: "cal-poly-pomona",
     name: "California State Polytechnic University, Pomona",
     shortName: "Cal Poly Pomona",
-    aliases: ["cal poly pomona", "cpp", "pomona"],
-    categories: ["CSU System", "Public", "California", "STEM"]
+    aliases: ["cal poly pomona", "cpp", "pomona"]
   },
   {
     id: "sdsu",
     name: "San Diego State University",
     shortName: "SDSU",
-    aliases: ["sdsu", "san diego state"],
-    categories: ["CSU System", "Public", "California"]
+    aliases: ["sdsu", "san diego state"]
   },
   {
     id: "sjsu",
     name: "San José State University",
     shortName: "SJSU",
-    aliases: ["sjsu", "san jose state", "san josé state"],
-    categories: ["CSU System", "Public", "California", "STEM"]
+    aliases: ["sjsu", "san jose state", "san josé state"]
   },
   {
     id: "chico-state",
     name: "California State University, Chico",
     shortName: "Chico State",
-    aliases: ["csu chico", "chico state", "chico"],
-    categories: ["CSU System", "Public", "California"]
+    aliases: ["csu chico", "chico state", "chico"]
   },
   {
     id: "cal-poly-slo",
     name: "California Polytechnic State University, San Luis Obispo",
     shortName: "Cal Poly SLO",
-    aliases: ["cal poly", "cal poly slo", "slo", "cpp-slo", "cpslo"],
-    categories: ["CSU System", "Public", "California", "STEM"]
+    aliases: ["cal poly", "cal poly slo", "slo", "cpp-slo", "cpslo"]
   },
   {
     id: "csuf",
     name: "California State University, Fullerton",
     shortName: "CSUF / Fullerton",
-    aliases: ["csuf", "fullerton"],
-    categories: ["CSU System", "Public", "California"]
+    aliases: ["csuf", "fullerton"]
   },
   {
     id: "lmu",
     name: "Loyola Marymount University",
     shortName: "LMU",
-    aliases: ["lmu"],
-    categories: ["Private", "California"]
+    aliases: ["lmu"]
   },
 
   // NorCal Colleges

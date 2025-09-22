@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { Search, ArrowLeft } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { schools, School } from "@/data/schools";
+import { useSchoolSearch } from "@/hooks/useSchoolSearch";
 import { APPROVED_SCHOOLS } from "@/config/approvedSchools";
 import SharedNavigation from "@/components/layout/SharedNavigation";
-import PredictiveSchoolSearch from "@/components/PredictiveSchoolSearch";
 
 // Import logos
 import harvardLogo from "@/assets/logos/harvard.png";
@@ -28,20 +30,17 @@ const Community = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredSchools, setFilteredSchools] = useState<School[]>(schools);
+  // Use search results when there's a query, otherwise show all schools
+  const { searchResults, search } = useSchoolSearch();
+  
+  const filteredSchools = searchQuery.trim() 
+    ? searchResults 
+    : schools;
 
-  // Handle search results from PredictiveSchoolSearch
-  const handleSearchResults = (results: School[]) => {
-    setFilteredSchools(results.length > 0 ? results : schools);
-  };
-
-  // Handle search query changes
-  const handleQueryChange = (query: string) => {
-    setSearchQuery(query);
-    if (!query.trim()) {
-      setFilteredSchools(schools);
-    }
-  };
+  // Trigger search when query changes
+  React.useEffect(() => {
+    search(searchQuery);
+  }, [searchQuery, search]);
 
   const handleSchoolClick = (school: School) => {
     // Create a slug mapping from school data to approved school slugs
@@ -112,13 +111,22 @@ const Community = () => {
               Find your school and connect with thousands of students in your community.
             </p>
             
-            {/* Predictive Search */}
-            <PredictiveSchoolSearch
-              onResultsChange={handleSearchResults}
-              onQueryChange={handleQueryChange}
-              placeholder="Search schools... Try 'ivy', 'uc', or school names"
-              className="animate-fade-in-up"
-            />
+            {/* Search Bar with live search */}
+            <div className="relative max-w-md mx-auto">
+              <Search className="absolute left-3 top-3 h-5 w-5 text-primary" />
+              <Input
+                placeholder="Search schools..."
+                value={searchQuery}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  // Trigger search hook with new query
+                  if (e.target.value.trim()) {
+                    // The hook will handle the search automatically
+                  }
+                }}
+                className="pl-10 h-12 text-lg rounded-2xl border-primary/20 focus:border-primary/50 bg-card/50 backdrop-blur-sm"
+              />
+            </div>
           </div>
 
           {/* Schools Grid */}
