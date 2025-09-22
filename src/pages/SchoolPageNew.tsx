@@ -75,40 +75,53 @@ export default function SchoolPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <div className="bg-gradient-to-r from-primary/10 to-accent/10 py-12">
-        <div className="max-w-6xl mx-auto px-4">
+      <div className="bg-background py-16">
+        <div className="max-w-6xl mx-auto px-6">
           <Button 
             variant="ghost" 
             onClick={() => navigate('/')}
-            className="mb-6"
+            className="mb-8 text-muted-foreground hover:text-foreground"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Home
           </Button>
           
-          <div className="text-center">
-            <div className="w-20 h-20 bg-gradient-to-r from-primary to-primary/80 rounded-2xl flex items-center justify-center mx-auto mb-6">
-              <span className="text-primary-foreground font-bold text-2xl">
+          <div className="text-center space-y-8">
+            {/* School Icon */}
+            <div className="w-24 h-24 bg-primary/10 border-2 border-primary/20 rounded-3xl flex items-center justify-center mx-auto">
+              <span className="text-primary font-bold text-3xl">
                 {schoolDisplayName.charAt(0)}
               </span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-              {schoolDisplayName}
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-6">
+            
+            {/* Title Section */}
+            <div className="space-y-3">
+              <h1 className="text-5xl md:text-6xl font-bold text-white tracking-tight leading-tight">
+                {schoolDisplayName}
+              </h1>
+              <div className="w-16 h-0.5 bg-primary mx-auto"></div>
+              <p className="text-lg text-primary font-medium tracking-wide uppercase">
+                {school?.toUpperCase()}
+              </p>
+            </div>
+            
+            {/* Description */}
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               Connect with fellow students and build lasting friendships in your {schoolDisplayName} community.
             </p>
             
-            <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-6">
-              <Users className="h-4 w-4" />
-              <span>{profiles.length} students connected</span>
+            {/* Stats */}
+            <div className="flex items-center justify-center gap-3 text-muted-foreground">
+              <Users className="h-5 w-5 text-primary" />
+              <span className="text-lg font-medium">{profiles.length} students connected</span>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
               <Button 
                 onClick={() => navigate('/create-profile')}
                 size="lg"
-                className="bg-primary hover:bg-primary/90"
+                className="bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-3"
               >
                 <Plus className="h-5 w-5 mr-2" />
                 Create Your Profile
@@ -118,9 +131,9 @@ export default function SchoolPage() {
                 variant="outline"
                 onClick={() => navigate(`/${school}/insta/posts`)}
                 size="lg"
-                className="flex items-center gap-2"
+                className="border-primary/30 text-primary hover:bg-primary/10 font-semibold px-8 py-3"
               >
-                <Instagram className="h-5 w-5" />
+                <Instagram className="h-5 w-5 mr-2" />
                 View Instagram Features
               </Button>
             </div>
