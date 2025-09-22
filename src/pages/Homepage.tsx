@@ -631,17 +631,21 @@ const Homepage = () => {
           </div>
           
           <div className="max-w-4xl mx-auto">
-            <Card className="bg-card/50 border-border/40 p-8 text-center">
-              <Instagram className="h-16 w-16 text-primary mx-auto mb-6" />
-              <h3 className="text-2xl font-bold text-foreground mb-4">@FroshMeet Instagram Feed</h3>
-              <p className="text-muted-foreground mb-6">
-                Connect with us on Instagram to see real student stories and stay updated with the latest from the FroshMeet community
-              </p>
-              <Button variant="outline" className="bg-gradient-to-r from-pink-500 to-purple-500 border-0 text-white hover:from-pink-600 hover:to-purple-600 select-none" onClick={() => window.open('https://instagram.com/froshmeet', '_blank')}>
-                <Instagram className="h-5 w-5 mr-2" />
-                Follow @FroshMeet
-              </Button>
-            </Card>
+            <div className="glass-card">
+              <Card className="glass-content bg-card/50 border-border/40 p-8 text-center">
+                <Instagram className="h-16 w-16 text-primary mx-auto mb-6 select-none" />
+                <h3 className="inline-block text-2xl font-bold text-foreground leading-tight">@FroshMeet Instagram Feed</h3>
+                <div className="mt-4 mb-6">
+                  <p className="text-muted-foreground leading-tight">
+                    Connect with us on Instagram to see real student stories and stay updated with the latest from the FroshMeet community
+                  </p>
+                </div>
+                <Button variant="outline" className="bg-gradient-to-r from-pink-500 to-purple-500 border-0 text-white hover:from-pink-600 hover:to-purple-600 select-none" onClick={() => window.open('https://instagram.com/froshmeet', '_blank')}>
+                  <Instagram className="h-5 w-5 mr-2" />
+                  Follow @FroshMeet
+                </Button>
+              </Card>
+            </div>
           </div>
         </div>
       </section>
