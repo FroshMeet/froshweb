@@ -468,6 +468,17 @@ const Homepage = () => {
             <div className="glass-content">
               <div className="container mx-auto px-4 py-6">
               <nav className="flex flex-col space-y-4">
+                {/* App CTA - Top Option */}
+                <Button 
+                  onClick={() => {
+                    navigate('/app');
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="w-full text-left justify-start text-lg py-4 bg-primary text-primary-foreground hover:bg-primary/90 font-semibold shadow-lg shadow-primary/25"
+                >
+                  FreshMeat App 📱
+                </Button>
+                
                 <Button 
                   variant="ghost" 
                   onClick={() => {
