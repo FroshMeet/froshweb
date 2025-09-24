@@ -118,6 +118,17 @@ const SharedNavigation = ({ currentPage }: SharedNavigationProps) => {
         <div className="md:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-xl border-b border-border/40 shadow-2xl z-40 animate-fade-in">
           <div className="container mx-auto px-4 py-6">
             <nav className="flex flex-col space-y-4">
+              {/* App CTA - Pinned */}
+              <Button 
+                onClick={() => {
+                  navigate('/app');
+                  setIsMobileMenuOpen(false);
+                }}
+                className="w-full text-left justify-start text-lg py-4 bg-primary text-primary-foreground hover:bg-primary/90 font-semibold shadow-lg shadow-primary/25 mb-2"
+              >
+                📱 Fresh Meat App - Coming Feb 15
+              </Button>
+              
               <Button 
                 variant="ghost" 
                 onClick={() => {
