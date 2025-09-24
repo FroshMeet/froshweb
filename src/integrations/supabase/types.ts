@@ -765,6 +765,36 @@ export type Database = {
         }
         Relationships: []
       }
+      waitlist_signups: {
+        Row: {
+          created_at: string
+          email: string | null
+          id: string
+          name: string
+          phone: string | null
+          school: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          name: string
+          phone?: string | null
+          school: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string
+          phone?: string | null
+          school?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -817,6 +847,10 @@ export type Database = {
           member_count: number
           title: string
         }[]
+      }
+      get_school_signup_count: {
+        Args: { school_name: string }
+        Returns: number
       }
       handle_swipe: {
         Args: { swipe_direction: string; swiper_id: string; target_id: string }

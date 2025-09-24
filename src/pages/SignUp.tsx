@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { ArrowLeft, UserPlus } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
+import { TopNavCTA } from "@/components/layout/TopNavCTA";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -79,13 +80,16 @@ export default function SignUp() {
             <ArrowLeft className="h-5 w-5 mr-2" />
             Back to Home
           </Button>
-          <div className="flex items-center space-x-3">
-            <img 
-              src="/lovable-uploads/fresh_meat_app_icon-4.png"
-              alt="FroshMeet Logo" 
-              className="h-12 w-auto"
-            />
-            <span className="text-xl font-bold text-foreground">FroshMeet</span>
+          <div className="flex items-center space-x-4">
+            <TopNavCTA />
+            <div className="flex items-center space-x-3">
+              <img 
+                src="/lovable-uploads/fresh_meat_app_icon-4.png"
+                alt="FroshMeet Logo" 
+                className="h-12 w-auto"
+              />
+              <span className="text-xl font-bold text-foreground">FroshMeet</span>
+            </div>
           </div>
         </div>
       </header>

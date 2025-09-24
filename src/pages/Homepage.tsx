@@ -11,6 +11,7 @@ import { GetFeaturedFlow } from "@/components/GetFeaturedFlow";
 import Hero from "@/components/landing/Hero";
 import GetFeaturedPromo from "@/components/marketing/GetFeaturedPromo";
 import { SwipeableSchoolCarousel } from "@/components/SwipeableSchoolCarousel";
+import { TopNavCTA } from "@/components/layout/TopNavCTA";
 const SCHOOL_DATABASE = [{
   name: "University of California, Los Angeles",
   acronym: "UCLA",
@@ -438,6 +439,7 @@ const Homepage = () => {
             
             {/* Desktop Action Buttons */}
             <div className="hidden md:flex items-center space-x-4">
+              <TopNavCTA />
               <Button variant="outline" onClick={() => navigate('/signin')}>
                 Sign In
               </Button>
