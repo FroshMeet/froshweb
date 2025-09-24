@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -7,10 +8,13 @@ import { SmartSchoolSearch } from "@/components/SmartSchoolSearch";
 import { School, schools } from "@/data/schools";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/use-toast";
-import { Instagram } from "lucide-react";
+import { Instagram, ArrowLeft } from "lucide-react";
 import freshMeatIcon from "@/assets/fresh-meat-app-icon.png";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function AppLanding() {
+  const navigate = useNavigate();
+  const isMobile = useIsMobile();
   const [formData, setFormData] = useState({
     name: "",
     school: "",
@@ -125,6 +129,31 @@ export default function AppLanding() {
   if (isSubmitted) {
     return (
       <div className="min-h-screen bg-background text-foreground">
+        {/* Header */}
+        <div className="glass-card sticky top-0 border-b border-border/40 z-50">
+          <header className="glass-content bg-background/80">
+            <div className="container mx-auto px-4 py-4">
+              <div className="flex items-center justify-between">
+                <Button 
+                  variant="ghost" 
+                  onClick={() => navigate('/')}
+                  className="text-muted-foreground hover:text-foreground"
+                >
+                  <ArrowLeft className="h-5 w-5 mr-2" />
+                  Back to Home
+                </Button>
+                <div className="flex items-center space-x-3">
+                  <img 
+                    src="/lovable-uploads/fresh_meat_app_icon-4.png"
+                    alt="FroshMeet Logo" 
+                    className={isMobile ? "h-10 w-auto" : "h-16 w-auto"}
+                  />
+                  <span className="text-xl font-bold text-foreground">FroshMeet</span>
+                </div>
+              </div>
+            </div>
+          </header>
+        </div>
         <div className="container mx-auto px-4 py-20">
           <div className="max-w-2xl mx-auto text-center">
             <div className="glass-card">
@@ -160,6 +189,32 @@ export default function AppLanding() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {/* Header */}
+      <div className="glass-card sticky top-0 border-b border-border/40 z-50">
+        <header className="glass-content bg-background/80">
+          <div className="container mx-auto px-4 py-4">
+            <div className="flex items-center justify-between">
+              <Button 
+                variant="ghost" 
+                onClick={() => navigate('/')}
+                className="text-muted-foreground hover:text-foreground"
+              >
+                <ArrowLeft className="h-5 w-5 mr-2" />
+                Back to Home
+              </Button>
+              <div className="flex items-center space-x-3">
+                <img 
+                  src="/lovable-uploads/fresh_meat_app_icon-4.png"
+                  alt="FroshMeet Logo" 
+                  className={isMobile ? "h-10 w-auto" : "h-16 w-auto"}
+                />
+                <span className="text-xl font-bold text-foreground">FroshMeet</span>
+              </div>
+            </div>
+          </div>
+        </header>
+      </div>
+      
       <div className="container mx-auto px-4 py-20">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
