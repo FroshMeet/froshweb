@@ -481,7 +481,5 @@ export default function SchoolCampusHub() {
             </CardContent>
           </Card>
         </div>}
-      {/* Footer */}
-      <Footer />
     </div>;
 }
