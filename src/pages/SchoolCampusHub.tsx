@@ -238,7 +238,7 @@ export default function SchoolCampusHub() {
       <section className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-foreground mb-4">Featured Students on Harvard's Instagram Meet</h2>
+            <h2 className="text-3xl font-bold text-foreground mb-4">Featured Students on {schoolName}'s Class Instagram</h2>
             <p className="text-muted-foreground text-lg">
               See what your classmates are sharing
             </p>
