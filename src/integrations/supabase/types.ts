@@ -650,6 +650,7 @@ export type Database = {
           stripe_session_id: string | null
           timestamp: string
           updated_at: string
+          user_id: string | null
         }
         Insert: {
           bio: string
@@ -664,6 +665,7 @@ export type Database = {
           stripe_session_id?: string | null
           timestamp?: string
           updated_at?: string
+          user_id?: string | null
         }
         Update: {
           bio?: string
@@ -678,6 +680,7 @@ export type Database = {
           stripe_session_id?: string | null
           timestamp?: string
           updated_at?: string
+          user_id?: string | null
         }
         Relationships: []
       }
