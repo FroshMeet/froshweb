@@ -241,9 +241,7 @@ export default function SchoolCampusHub() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">Featured Students on {schoolName}'s Class Instagram</h2>
-            <p className="text-muted-foreground text-lg">
-              See what your classmates are sharing
-            </p>
+            <p className="text-muted-foreground text-lg">Class of 2030 🎓</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -429,26 +427,22 @@ export default function SchoolCampusHub() {
               <h3 className="font-bold text-foreground text-lg">Switch Schools</h3>
             </div>
             <Select value={school || ""} onValueChange={schoolSlug => {
-              if (schoolSlug && schoolSlug !== school) {
-                navigate(`/${schoolSlug}`);
-              }
-            }}>
+            if (schoolSlug && schoolSlug !== school) {
+              navigate(`/${schoolSlug}`);
+            }
+          }}>
               <SelectTrigger className="bg-muted/30 border-border/40 max-w-xs mx-auto">
                 <SelectValue placeholder="Choose your school..." />
               </SelectTrigger>
               <SelectContent className="bg-card border-border/40">
-                {Object.entries(APPROVED_SCHOOLS).map(([slug, schoolData]) => (
-                  <SelectItem key={slug} value={slug}>
+                {Object.entries(APPROVED_SCHOOLS).map(([slug, schoolData]) => <SelectItem key={slug} value={slug}>
                     <div className="flex items-center justify-between w-full">
                       <span>{schoolData.displayName}</span>
-                      {schoolData.instagramUsername && (
-                        <Badge variant="outline" className="ml-2 text-xs">
+                      {schoolData.instagramUsername && <Badge variant="outline" className="ml-2 text-xs">
                           @{schoolData.instagramUsername}
-                        </Badge>
-                      )}
+                        </Badge>}
                     </div>
-                  </SelectItem>
-                ))}
+                  </SelectItem>)}
               </SelectContent>
             </Select>
           </div>
