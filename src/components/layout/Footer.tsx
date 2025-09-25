@@ -8,7 +8,7 @@ const Footer = () => {
   return (
     <footer className="border-t border-border/40 bg-card/20 py-16">
       <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-4 gap-8 mb-12">
+        <div className="grid md:grid-cols-4 gap-8 mb-8">
           <div className="md:col-span-2">
             <div className="flex items-center space-x-3 mb-6">
               <img src="/lovable-uploads/a880e910-33fe-4ce7-b556-01f73d623057.png" alt="FroshMeet Logo" className="h-10 w-auto" />
@@ -79,20 +79,18 @@ const Footer = () => {
           </div>
         </div>
         
-        <div className="border-t border-border/40 pt-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="text-center md:text-left">
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                © 2025 FroshMeet. All rights reserved. FroshMeet is a registered trademark of FroshMeet LLC. 
-                <br className="md:hidden" />
-                FroshMeet is student-run and not affiliated with any college or university. 
-                <br className="md:hidden" />
-                Use of this website constitutes acceptance of our Privacy Policy and Terms of Service.
-              </p>
-            </div>
-            <div className="text-sm text-muted-foreground">
-              Built for the Class of 2030 🎓
-            </div>
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="text-center md:text-left">
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              © 2025 FroshMeet. All rights reserved. FroshMeet is a registered trademark of FroshMeet LLC. 
+              <br className="md:hidden" />
+              FroshMeet is student-run and not affiliated with any college or university. 
+              <br className="md:hidden" />
+              Use of this website constitutes acceptance of our Privacy Policy and Terms of Service.
+            </p>
+          </div>
+          <div className="text-sm text-muted-foreground">
+            Built for the Class of 2030 🎓
           </div>
         </div>
       </div>

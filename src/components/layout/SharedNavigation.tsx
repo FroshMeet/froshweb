@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { TopNavCTA } from "@/components/layout/TopNavCTA";
 
 interface SharedNavigationProps {
   currentPage?: string;
@@ -93,6 +94,7 @@ const SharedNavigation = ({ currentPage }: SharedNavigationProps) => {
           
           {/* Desktop Action Buttons */}
           <div className="hidden md:flex items-center space-x-4">
+            <TopNavCTA />
             <Button variant="outline" onClick={() => navigate('/signin')}>
               Sign In
             </Button>
