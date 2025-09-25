@@ -82,11 +82,7 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="text-center md:text-left">
             <p className="text-sm text-muted-foreground leading-relaxed">
-              © 2025 FroshMeet. All rights reserved. FroshMeet is a registered trademark of FroshMeet LLC. 
-              <br className="md:hidden" />
-              FroshMeet is student-run and not affiliated with any college or university. 
-              <br className="md:hidden" />
-              Use of this website constitutes acceptance of our Privacy Policy and Terms of Service.
+              FroshMeet is student-run and not affiliated with any college or university. Use of this website constitutes acceptance of our Privacy Policy and Terms of Service.
             </p>
           </div>
           <div className="text-sm text-muted-foreground">
