@@ -24,7 +24,7 @@ import PaymentSuccess from "./pages/PaymentSuccess";
 import ProfileSuccess from "./pages/ProfileSuccess";
 import PostToInstagram from "./pages/PostToInstagram";
 import SchoolInstagramPosts from "./pages/SchoolInstagramPosts";
-import SchoolPageNew from "./pages/SchoolPageNew";
+import SchoolCampusHub from "./pages/SchoolCampusHub";
 import SchoolDashboard from "./pages/SchoolDashboard";
 import GuestInstagramPost from "./pages/GuestInstagramPost";
 import InstagramSubmission from "./pages/InstagramSubmission";
@@ -64,7 +64,7 @@ const AppRouter = () => (
                 <Route path="/profile-setup" element={<ProfileSetup />} />
                 <Route path="/payment-success" element={<PaymentSuccess />} />
                 <Route path="/profile-success" element={<ProfileSuccess />} />
-                <Route path="/:school" element={<SchoolDashboard />} />
+                <Route path="/:school" element={<SchoolCampusHub />} />
                 <Route path="/:school/insta" element={<SchoolInstagramPage />} />
                 <Route path="/:school/insta/posts" element={<SchoolInstagramPosts />} />
                 <Route path="/post-to-insta" element={<PostToInstagram />} />
