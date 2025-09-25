@@ -11,7 +11,15 @@ import { getApprovedSchool } from "@/config/approvedSchools";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { getSchoolLogo } from "@/utils/schoolLogos";
 import { useToast } from "@/hooks/use-toast";
-import SchoolFooter from "@/components/layout/SchoolFooter";
+import Footer from "@/components/layout/Footer";
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { APPROVED_SCHOOLS } from "@/config/approvedSchools";
 interface InstagramPost {
   id: string;
   caption: string;
@@ -454,7 +462,65 @@ export default function SchoolCampusHub() {
             </CardContent>
           </Card>
         </div>}
+      {/* School Features Section */}
+      <section className="py-12 px-4 bg-card/20 border-t border-border/40">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            {/* Left side - Switch Schools */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 mb-4">
+                <Globe className="h-5 w-5 text-primary" />
+                <h3 className="font-bold text-foreground text-lg">Switch Schools</h3>
+              </div>
+              <Select value={school || ""} onValueChange={(schoolSlug) => {
+                if (schoolSlug && schoolSlug !== school) {
+                  navigate(`/${schoolSlug}`);
+                }
+              }}>
+                <SelectTrigger className="bg-muted/30 border-border/40 max-w-xs">
+                  <SelectValue placeholder="Choose your school..." />
+                </SelectTrigger>
+                <SelectContent className="bg-card border-border/40">
+                  {Object.entries(APPROVED_SCHOOLS).map(([slug, schoolData]) => (
+                    <SelectItem key={slug} value={slug}>
+                      <div className="flex items-center justify-between w-full">
+                        <span>{schoolData.displayName}</span>
+                        {schoolData.instagramUsername && (
+                          <Badge variant="outline" className="ml-2 text-xs">
+                            @{schoolData.instagramUsername}
+                          </Badge>
+                        )}
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Right side - FroshMeet Branding */}
+            <div className="space-y-4 text-center md:text-right">
+              <div>
+                <h3 className="font-bold text-foreground text-lg mb-2">FroshMeet</h3>
+                <p className="text-muted-foreground">
+                  Connecting college freshmen nationwide. Find your people before day one.
+                </p>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-end">
+                <Button
+                  variant="outline"
+                  onClick={() => navigate('/app')}
+                  className="border-primary/30 text-primary hover:bg-primary/10"
+                >
+                  Download App
+                  <ExternalLink className="h-4 w-4 ml-2" />
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
-      <SchoolFooter currentSchool={school} />
+      <Footer />
     </div>;
 }
