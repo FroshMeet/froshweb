@@ -405,7 +405,7 @@ export default function SchoolCampusHub() {
           </div>
 
           {/* App Store Badges & QR Code */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-8">
             <div className="flex gap-4">
               <Button onClick={handleOpenApp} variant="outline" className="border-border/40 bg-card/50 hover:bg-card/70 px-6 py-3 rounded-xl">
                 <Play className="h-5 w-5 mr-2" />
@@ -420,6 +420,37 @@ export default function SchoolCampusHub() {
               <QrCode className="h-5 w-5" />
               <span className="text-sm">or scan QR code</span>
             </div>
+          </div>
+
+          {/* Switch Schools */}
+          <div className="text-center">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <Globe className="h-5 w-5 text-primary" />
+              <h3 className="font-bold text-foreground text-lg">Switch Schools</h3>
+            </div>
+            <Select value={school || ""} onValueChange={schoolSlug => {
+              if (schoolSlug && schoolSlug !== school) {
+                navigate(`/${schoolSlug}`);
+              }
+            }}>
+              <SelectTrigger className="bg-muted/30 border-border/40 max-w-xs mx-auto">
+                <SelectValue placeholder="Choose your school..." />
+              </SelectTrigger>
+              <SelectContent className="bg-card border-border/40">
+                {Object.entries(APPROVED_SCHOOLS).map(([slug, schoolData]) => (
+                  <SelectItem key={slug} value={slug}>
+                    <div className="flex items-center justify-between w-full">
+                      <span>{schoolData.displayName}</span>
+                      {schoolData.instagramUsername && (
+                        <Badge variant="outline" className="ml-2 text-xs">
+                          @{schoolData.instagramUsername}
+                        </Badge>
+                      )}
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
       </section>
@@ -456,51 +487,6 @@ export default function SchoolCampusHub() {
             </CardContent>
           </Card>
         </div>}
-      {/* School Features Section */}
-      <section className="py-12 px-4 bg-card/20 border-t border-border/40">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            {/* Left side - Switch Schools */}
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 mb-4">
-                <Globe className="h-5 w-5 text-primary" />
-                <h3 className="font-bold text-foreground text-lg">Switch Schools</h3>
-              </div>
-              <Select value={school || ""} onValueChange={schoolSlug => {
-              if (schoolSlug && schoolSlug !== school) {
-                navigate(`/${schoolSlug}`);
-              }
-            }}>
-                <SelectTrigger className="bg-muted/30 border-border/40 max-w-xs">
-                  <SelectValue placeholder="Choose your school..." />
-                </SelectTrigger>
-                <SelectContent className="bg-card border-border/40">
-                  {Object.entries(APPROVED_SCHOOLS).map(([slug, schoolData]) => <SelectItem key={slug} value={slug}>
-                      <div className="flex items-center justify-between w-full">
-                        <span>{schoolData.displayName}</span>
-                        {schoolData.instagramUsername && <Badge variant="outline" className="ml-2 text-xs">
-                            @{schoolData.instagramUsername}
-                          </Badge>}
-                      </div>
-                    </SelectItem>)}
-                </SelectContent>
-              </Select>
-            </div>
-
-            {/* Right side - FroshMeet Branding */}
-            <div className="space-y-4 text-center md:text-right">
-              <div>
-                
-                
-              </div>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-end">
-                
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Footer */}
       <Footer />
     </div>;
