@@ -204,7 +204,7 @@ export default function SchoolCampusHub() {
           </div>
 
           {/* School Name & Class */}
-          <h1 className="text-5xl md:text-6xl font-black text-foreground mb-4 tracking-tight">
+          <h1 className="text-6xl md:text-7xl font-black text-foreground mb-4 tracking-tight">
             {schoolName}
           </h1>
           <div className="flex items-center justify-center gap-2 mb-6">
