@@ -258,9 +258,6 @@ export default function SchoolCampusHub() {
               >
                 <Instagram className="h-5 w-5 mr-2" />
                 @{instagramHandle}
-                <Badge variant="secondary" className="ml-2 bg-primary/10">
-                  {followerCount.toLocaleString()} followers
-                </Badge>
                 <ExternalLink className="h-4 w-4 ml-2 opacity-0 group-hover:opacity-100 transition-opacity" />
               </Button>
             </div>
