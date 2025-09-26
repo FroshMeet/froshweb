@@ -58,13 +58,13 @@ export const schools: School[] = [
 
   // University of California
   {
-    id: "uc-santa-cruz",
+    id: "ucsc",
     name: "University of California, Santa Cruz",
     shortName: "UCSC",
     aliases: ["ucsc", "uc santa cruz", "santa cruz"]
   },
   {
-    id: "uc-berkeley",
+    id: "ucberkeley",
     name: "University of California, Berkeley",
     shortName: "UC Berkeley",
     aliases: ["ucb", "berkeley", "cal", "uc berkeley"]
@@ -82,7 +82,7 @@ export const schools: School[] = [
     aliases: ["uci", "uc irvine", "irvine"]
   },
   {
-    id: "uc-davis",
+    id: "ucdavis",
     name: "University of California, Davis",
     shortName: "UCD",
     aliases: ["ucd", "uc davis", "davis"]
@@ -94,13 +94,13 @@ export const schools: School[] = [
     aliases: ["ucsb", "uc santa barbara", "santa barbara"]
   },
   {
-    id: "uc-merced",
+    id: "ucmerced",
     name: "University of California, Merced",
     shortName: "UCM",
     aliases: ["ucm", "uc merced", "merced"]
   },
   {
-    id: "uc-riverside",
+    id: "ucr",
     name: "University of California, Riverside",
     shortName: "UCR",
     aliases: ["ucr", "uc riverside", "riverside"]
@@ -623,13 +623,13 @@ export const schools: School[] = [
 
 // UC campuses in priority order for "uc" search
 export const UC_CAMPUSES = [
-  "uc-berkeley",
+  "ucberkeley",
   "ucla", 
   "ucsd",
   "ucsb",
   "uci",
-  "uc-davis",
-  "uc-santa-cruz",
-  "uc-riverside", 
-  "uc-merced"
+  "ucdavis",
+  "ucsc",
+  "ucr", 
+  "ucmerced"
 ];
