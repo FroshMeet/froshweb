@@ -221,7 +221,7 @@ export default function AppLanding() {
             {/* Left Side - Hero Content */}
             <div className="space-y-6">
               <h1 className="text-5xl font-bold text-foreground leading-tight">
-                📱 FreshMeat App launching <span className="text-[#015cd2]">February 15th.</span>
+                📱 FreshMeat App<br />launching <span className="text-[#015cd2]">February 15th.</span>
               </h1>
               <p className="text-xl text-muted-foreground leading-relaxed">
                 {getSubtext()}
