@@ -580,7 +580,7 @@ export const schools: School[] = [
   {
     id: "unl",
     name: "University of Nebraska–Lincoln",
-    shortName: "UNL / Nebraska",
+    shortName: "Nebraska",
     aliases: ["unl", "nebraska"]
   },
   {
