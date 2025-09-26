@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <footer className="bg-[#0c1008] text-[#e5e7eb]/90 border-t border-white/10">
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-5">
-        <div className="grid gap-4 md:gap-3 md:grid-cols-[1fr_auto_1fr] items-center">
+        <div className="grid gap-4 md:gap-3 md:grid-cols-[1fr_2fr] items-center">
           
           {/* Brand + Social */}
           <div className="space-y-2">
@@ -54,64 +54,69 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Navigation Links */}
           <nav className="md:self-center">
-            <ul className="flex flex-wrap justify-center md:justify-center gap-x-4 gap-y-1 text-[13px] md:text-[14px] tracking-tight">
-              <li>
-                <button 
-                  onClick={() => navigate('/about')} 
-                  className="hover:text-[#015cd2] underline-offset-4 hover:underline transition-all duration-200"
-                >
-                  About
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => navigate('/features')} 
-                  className="hover:text-[#015cd2] underline-offset-4 hover:underline transition-all duration-200"
-                >
-                  Features
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => navigate('/contact')} 
-                  className="hover:text-[#015cd2] underline-offset-4 hover:underline transition-all duration-200"
-                >
-                  Contact
-                </button>
-              </li>
-            </ul>
-          </nav>
-
-          {/* Legal */}
-          <nav className="md:justify-self-end">
-            <ul className="flex flex-wrap md:justify-end gap-x-4 gap-y-1 text-[13px] md:text-[14px] tracking-tight">
-              <li>
-                <button 
-                  onClick={() => navigate('/privacy-policy')} 
-                  className="hover:text-[#015cd2] underline-offset-4 hover:underline transition-all duration-200"
-                >
-                  Privacy Policy
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => navigate('/terms-of-service')} 
-                  className="hover:text-[#015cd2] underline-offset-4 hover:underline transition-all duration-200"
-                >
-                  Terms
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => navigate('/cookie-policy')} 
-                  className="hover:text-[#015cd2] underline-offset-4 hover:underline transition-all duration-200"
-                >
-                  Cookies
-                </button>
-              </li>
-            </ul>
+            <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8">
+              {/* Company Links */}
+              <div>
+                <ul className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-[13px] md:text-[14px] tracking-tight">
+                  <li>
+                    <button 
+                      onClick={() => navigate('/about')} 
+                      className="hover:text-[#015cd2] underline-offset-4 hover:underline transition-all duration-200"
+                    >
+                      About
+                    </button>
+                  </li>
+                  <li>
+                    <button 
+                      onClick={() => navigate('/features')} 
+                      className="hover:text-[#015cd2] underline-offset-4 hover:underline transition-all duration-200"
+                    >
+                      Features
+                    </button>
+                  </li>
+                  <li>
+                    <button 
+                      onClick={() => navigate('/contact')} 
+                      className="hover:text-[#015cd2] underline-offset-4 hover:underline transition-all duration-200"
+                    >
+                      Contact
+                    </button>
+                  </li>
+                </ul>
+              </div>
+              
+              {/* Legal Links */}
+              <div>
+                <ul className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-[13px] md:text-[14px] tracking-tight">
+                  <li>
+                    <button 
+                      onClick={() => navigate('/privacy-policy')} 
+                      className="hover:text-[#015cd2] underline-offset-4 hover:underline transition-all duration-200"
+                    >
+                      Privacy Policy
+                    </button>
+                  </li>
+                  <li>
+                    <button 
+                      onClick={() => navigate('/terms-of-service')} 
+                      className="hover:text-[#015cd2] underline-offset-4 hover:underline transition-all duration-200"
+                    >
+                      Terms
+                    </button>
+                  </li>
+                  <li>
+                    <button 
+                      onClick={() => navigate('/cookie-policy')} 
+                      className="hover:text-[#015cd2] underline-offset-4 hover:underline transition-all duration-200"
+                    >
+                      Cookies
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </nav>
         </div>
       </div>
