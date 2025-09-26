@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_roles: {
+        Row: {
+          granted_at: string
+          granted_by: string | null
+          id: string
+          is_active: boolean
+          role: string
+          user_id: string
+        }
+        Insert: {
+          granted_at?: string
+          granted_by?: string | null
+          id?: string
+          is_active?: boolean
+          role?: string
+          user_id: string
+        }
+        Update: {
+          granted_at?: string
+          granted_by?: string | null
+          id?: string
+          is_active?: boolean
+          role?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       conversations: {
         Row: {
           created_at: string
@@ -800,7 +827,120 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      instagram_profiles_safe: {
+        Row: {
+          bio: string | null
+          class_year: string | null
+          created_at: string | null
+          id: string | null
+          instagram_handle: string | null
+          instagram_payment_date: string | null
+          name: string | null
+          paid_for_instagram: boolean | null
+          photos: string[] | null
+          posted_to_instagram: boolean | null
+          school: string | null
+          social_links: Json | null
+          stripe_session_id: string | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          bio?: string | null
+          class_year?: string | null
+          created_at?: string | null
+          id?: string | null
+          instagram_handle?: string | null
+          instagram_payment_date?: never
+          name?: string | null
+          paid_for_instagram?: boolean | null
+          photos?: string[] | null
+          posted_to_instagram?: boolean | null
+          school?: string | null
+          social_links?: Json | null
+          stripe_session_id?: never
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          bio?: string | null
+          class_year?: string | null
+          created_at?: string | null
+          id?: string | null
+          instagram_handle?: string | null
+          instagram_payment_date?: never
+          name?: string | null
+          paid_for_instagram?: boolean | null
+          photos?: string[] | null
+          posted_to_instagram?: boolean | null
+          school?: string | null
+          social_links?: Json | null
+          stripe_session_id?: never
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      profiles_safe: {
+        Row: {
+          auth_provider: string | null
+          avatar_url: string | null
+          bio: string | null
+          class_year: string | null
+          college_email: string | null
+          created_at: string | null
+          id: string | null
+          interests: string[] | null
+          looking_for_roommate: boolean | null
+          major: string | null
+          name: string | null
+          phone_number: string | null
+          school: string | null
+          updated_at: string | null
+          user_id: string | null
+          verification_status: string | null
+          verified: boolean | null
+        }
+        Insert: {
+          auth_provider?: never
+          avatar_url?: string | null
+          bio?: string | null
+          class_year?: string | null
+          college_email?: never
+          created_at?: string | null
+          id?: string | null
+          interests?: string[] | null
+          looking_for_roommate?: never
+          major?: string | null
+          name?: string | null
+          phone_number?: never
+          school?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+          verification_status?: never
+          verified?: never
+        }
+        Update: {
+          auth_provider?: never
+          avatar_url?: string | null
+          bio?: string | null
+          class_year?: string | null
+          college_email?: never
+          created_at?: string | null
+          id?: string | null
+          interests?: string[] | null
+          looking_for_roommate?: never
+          major?: string | null
+          name?: string | null
+          phone_number?: never
+          school?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+          verification_status?: never
+          verified?: never
+        }
+        Relationships: []
+      }
     }
     Functions: {
       can_view_profile: {
@@ -808,6 +948,10 @@ export type Database = {
         Returns: boolean
       }
       can_view_profile_basic: {
+        Args: { profile_user_id: string; viewer_id: string }
+        Returns: boolean
+      }
+      can_view_profile_basic_safe: {
         Args: { profile_user_id: string; viewer_id: string }
         Returns: boolean
       }
@@ -855,9 +999,24 @@ export type Database = {
         Args: { school_name: string }
         Returns: number
       }
+      get_waitlist_signups_admin: {
+        Args: { limit_count?: number; offset_count?: number }
+        Returns: {
+          created_at: string
+          email: string
+          id: string
+          name: string
+          phone: string
+          school: string
+        }[]
+      }
       handle_swipe: {
         Args: { swipe_direction: string; swiper_id: string; target_id: string }
         Returns: Json
+      }
+      is_admin: {
+        Args: { user_id_param?: string }
+        Returns: boolean
       }
       join_school_group_chat: {
         Args: { conversation_id_param: string; user_id_param: string }
