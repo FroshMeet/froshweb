@@ -404,7 +404,7 @@ export const schools: School[] = [
   {
     id: "uiuc",
     name: "University of Illinois Urbana-Champaign",
-    shortName: "UIUC / Illinois",
+    shortName: "UIUC",
     aliases: ["uiuc", "illinois", "u of i", "urbana-champaign"]
   },
   {
