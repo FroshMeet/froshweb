@@ -244,7 +244,7 @@ export const schools: School[] = [
   {
     id: "lake-tahoe-cc",
     name: "Lake Tahoe Community College",
-    shortName: "LTCC",
+    shortName: "Tahoe",
     aliases: ["ltcc", "lake tahoe cc"]
   },
 
