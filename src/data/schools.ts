@@ -514,7 +514,7 @@ export const schools: School[] = [
   {
     id: "utk",
     name: "University of Tennessee, Knoxville",
-    shortName: "UTK / Tennessee",
+    shortName: "UTK",
     aliases: ["utk", "tennessee", "ut knoxville"]
   },
   {
