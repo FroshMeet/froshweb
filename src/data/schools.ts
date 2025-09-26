@@ -282,7 +282,7 @@ export const schools: School[] = [
   {
     id: "unc",
     name: "University of North Carolina at Chapel Hill",
-    shortName: "UNC / UNC-Chapel Hill",
+    shortName: "UNC",
     aliases: ["unc", "unc-ch", "chapel hill", "unc chapel hill"]
   },
   {
