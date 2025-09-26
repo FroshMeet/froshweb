@@ -5,12 +5,12 @@ const Footer = () => {
   const navigate = useNavigate();
 
   return (
-    <footer className="bg-[#0c1008] text-zinc-300/90 border-t border-white/10">
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8">
-        <div className="grid gap-6 md:gap-4 md:grid-cols-[1fr_auto_1fr] items-start">
+    <footer className="bg-[#0c1008] text-[#e5e7eb]/90 border-t border-white/10">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-5">
+        <div className="grid gap-4 md:gap-3 md:grid-cols-[1fr_auto_1fr] items-center">
           
           {/* Brand + Social */}
-          <div className="space-y-3">
+          <div className="space-y-2">
             <div className="flex items-center gap-2">
               <img 
                 src="/lovable-uploads/a880e910-33fe-4ce7-b556-01f73d623057.png" 
@@ -18,7 +18,7 @@ const Footer = () => {
                 className="h-6 md:h-7" 
               />
             </div>
-            <p className="text-[13px] md:text-sm text-zinc-400/80 max-w-md leading-6">
+            <p className="text-[13px] md:text-sm text-zinc-400/75 max-w-md leading-5">
               The trusted platform for college freshmen to connect, network, and build lasting friendships 
               before stepping foot on campus.
             </p>
@@ -56,7 +56,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <nav className="md:self-center">
-            <ul className="flex flex-wrap justify-center md:justify-center gap-x-5 gap-y-2 text-sm md:text-[15px] tracking-tight">
+            <ul className="flex flex-wrap justify-center md:justify-center gap-x-4 gap-y-1 text-[13px] md:text-[14px] tracking-tight">
               <li>
                 <button 
                   onClick={() => navigate('/about')} 
@@ -86,7 +86,7 @@ const Footer = () => {
 
           {/* Legal */}
           <nav className="md:justify-self-end">
-            <ul className="flex flex-wrap md:justify-end gap-x-5 gap-y-2 text-sm md:text-[15px] tracking-tight">
+            <ul className="flex flex-wrap md:justify-end gap-x-4 gap-y-1 text-[13px] md:text-[14px] tracking-tight">
               <li>
                 <button 
                   onClick={() => navigate('/privacy-policy')} 
@@ -100,7 +100,7 @@ const Footer = () => {
                   onClick={() => navigate('/terms-of-service')} 
                   className="hover:text-[#015cd2] underline-offset-4 hover:underline transition-all duration-200"
                 >
-                  Terms of Service
+                  Terms
                 </button>
               </li>
               <li>
@@ -108,7 +108,7 @@ const Footer = () => {
                   onClick={() => navigate('/cookie-policy')} 
                   className="hover:text-[#015cd2] underline-offset-4 hover:underline transition-all duration-200"
                 >
-                  Cookie Policy
+                  Cookies
                 </button>
               </li>
             </ul>
