@@ -129,7 +129,7 @@ const Footer = () => {
               FroshMeet is student-run and not affiliated with any college or university. Use of this website constitutes acceptance of our Privacy Policy and Terms of Service.
             </p>
         <p className="text-center md:text-right text-xs md:text-[13px] text-zinc-400/75">
-          © 2025 FroshMeet · Built for the Class of 2030 🎓
+          Built for the class of 2030 🎓
         </p>
           </div>
         </div>
