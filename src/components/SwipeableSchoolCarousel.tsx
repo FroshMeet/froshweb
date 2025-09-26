@@ -26,7 +26,7 @@ export const SwipeableSchoolCarousel: React.FC<SchoolCarouselProps> = ({
   schools,
   onSchoolSelect,
 }) => {
-  // Map school slug to school ID for logo lookup (same as Community.tsx)
+  // Map school slug to school ID for logo lookup - using approved school slugs
   const getSchoolId = (slug: string): string => {
     const slugToIdMap: Record<string, string> = {
       'harvard': 'harvard',
@@ -35,7 +35,7 @@ export const SwipeableSchoolCarousel: React.FC<SchoolCarouselProps> = ({
       'ucla': 'ucla',
       'yale': 'yale',
       'usc': 'usc',
-      'uc-berkeley': 'uc-berkeley',
+      'ucberkeley': 'uc-berkeley', // Map approved slug to logo ID
       'nyu': 'nyu',
       'umich': 'umich',
       'duke': 'duke',
