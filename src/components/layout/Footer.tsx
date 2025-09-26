@@ -56,14 +56,18 @@ const Footer = () => {
 
           {/* Navigation Links */}
           <nav className="md:self-center">
-            <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8">
-              {/* Company Links */}
-              <div>
-                <ul className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-[13px] md:text-[14px] tracking-tight">
+            <div className="flex flex-col md:flex-row items-start justify-center gap-6 md:gap-12">
+              
+              {/* Company Links Column */}
+              <div className="text-center md:text-left">
+                <h3 className="text-xs uppercase tracking-wide text-zinc-400/75 font-medium mb-3">
+                  Company
+                </h3>
+                <ul className="space-y-2">
                   <li>
                     <button 
                       onClick={() => navigate('/about')} 
-                      className="hover:text-[#015cd2] underline-offset-4 hover:underline transition-all duration-200"
+                      className="text-[13px] md:text-[14px] hover:text-[#015cd2] underline-offset-4 hover:underline transition-all duration-200 block"
                     >
                       About
                     </button>
@@ -71,7 +75,7 @@ const Footer = () => {
                   <li>
                     <button 
                       onClick={() => navigate('/features')} 
-                      className="hover:text-[#015cd2] underline-offset-4 hover:underline transition-all duration-200"
+                      className="text-[13px] md:text-[14px] hover:text-[#015cd2] underline-offset-4 hover:underline transition-all duration-200 block"
                     >
                       Features
                     </button>
@@ -79,7 +83,7 @@ const Footer = () => {
                   <li>
                     <button 
                       onClick={() => navigate('/contact')} 
-                      className="hover:text-[#015cd2] underline-offset-4 hover:underline transition-all duration-200"
+                      className="text-[13px] md:text-[14px] hover:text-[#015cd2] underline-offset-4 hover:underline transition-all duration-200 block"
                     >
                       Contact
                     </button>
@@ -87,13 +91,16 @@ const Footer = () => {
                 </ul>
               </div>
               
-              {/* Legal Links */}
-              <div>
-                <ul className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-[13px] md:text-[14px] tracking-tight">
+              {/* Legal Links Column */}
+              <div className="text-center md:text-left">
+                <h3 className="text-xs uppercase tracking-wide text-zinc-400/75 font-medium mb-3">
+                  Legal
+                </h3>
+                <ul className="space-y-2">
                   <li>
                     <button 
                       onClick={() => navigate('/privacy-policy')} 
-                      className="hover:text-[#015cd2] underline-offset-4 hover:underline transition-all duration-200"
+                      className="text-[13px] md:text-[14px] hover:text-[#015cd2] underline-offset-4 hover:underline transition-all duration-200 block"
                     >
                       Privacy Policy
                     </button>
@@ -101,7 +108,7 @@ const Footer = () => {
                   <li>
                     <button 
                       onClick={() => navigate('/terms-of-service')} 
-                      className="hover:text-[#015cd2] underline-offset-4 hover:underline transition-all duration-200"
+                      className="text-[13px] md:text-[14px] hover:text-[#015cd2] underline-offset-4 hover:underline transition-all duration-200 block"
                     >
                       Terms
                     </button>
@@ -109,13 +116,14 @@ const Footer = () => {
                   <li>
                     <button 
                       onClick={() => navigate('/cookie-policy')} 
-                      className="hover:text-[#015cd2] underline-offset-4 hover:underline transition-all duration-200"
+                      className="text-[13px] md:text-[14px] hover:text-[#015cd2] underline-offset-4 hover:underline transition-all duration-200 block"
                     >
                       Cookies
                     </button>
                   </li>
                 </ul>
               </div>
+              
             </div>
           </nav>
         </div>
