@@ -176,7 +176,7 @@ export const schools: School[] = [
   {
     id: "csuf",
     name: "California State University, Fullerton",
-    shortName: "CSUF / Fullerton",
+    shortName: "Fullerton",
     aliases: ["csuf", "fullerton"]
   },
   {
