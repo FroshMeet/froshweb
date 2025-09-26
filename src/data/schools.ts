@@ -66,7 +66,7 @@ export const schools: School[] = [
   {
     id: "uc-berkeley",
     name: "University of California, Berkeley",
-    shortName: "UC Berkeley / Cal",
+    shortName: "UC Berkeley",
     aliases: ["ucb", "berkeley", "cal", "uc berkeley"]
   },
   {
