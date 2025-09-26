@@ -232,7 +232,7 @@ export const schools: School[] = [
   {
     id: "uop",
     name: "University of the Pacific",
-    shortName: "UOP / Pacific",
+    shortName: "UOP",
     aliases: ["uop", "pacific"]
   },
   {
