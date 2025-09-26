@@ -374,19 +374,19 @@ export const schools: School[] = [
   {
     id: "umn",
     name: "University of Minnesota, Twin Cities",
-    shortName: "UMN / Minnesota",
+    shortName: "UMN",
     aliases: ["umn", "umn twin cities", "minnesota", "u of m"]
   },
   {
     id: "ucincinnati",
     name: "University of Cincinnati",
-    shortName: "UC / Cincinnati",
+    shortName: "Cincinnati",
     aliases: ["ucincinnati", "cincinnati", "uc"]
   },
   {
     id: "uiowa",
     name: "University of Iowa",
-    shortName: "UIowa / Iowa",
+    shortName: "Iowa",
     aliases: ["uiowa", "u of iowa", "iowa"]
   },
   {
@@ -398,7 +398,7 @@ export const schools: School[] = [
   {
     id: "uw-madison",
     name: "University of Wisconsin–Madison",
-    shortName: "UW–Madison / Wisconsin",
+    shortName: "Wisconsin",
     aliases: ["uw-madison", "uw madison", "wisconsin", "madison"]
   },
   {
@@ -422,7 +422,7 @@ export const schools: School[] = [
   {
     id: "osu",
     name: "Ohio State University",
-    shortName: "OSU / Ohio State",
+    shortName: "OSU",
     aliases: ["osu", "ohio state"]
   },
   {
@@ -440,7 +440,7 @@ export const schools: School[] = [
   {
     id: "iu",
     name: "Indiana University Bloomington",
-    shortName: "IU / Indiana",
+    shortName: "IU",
     aliases: ["iu", "iub", "indiana university", "indiana bloomington"]
   },
 
@@ -454,7 +454,7 @@ export const schools: School[] = [
   {
     id: "ut-austin",
     name: "University of Texas at Austin",
-    shortName: "UT Austin / Texas",
+    shortName: "UT Austin",
     aliases: ["ut austin", "utexas", "ut", "texas"]
   },
   {
@@ -472,19 +472,19 @@ export const schools: School[] = [
   {
     id: "uarizona",
     name: "University of Arizona",
-    shortName: "UArizona / Arizona",
+    shortName: "Arizona",
     aliases: ["ua", "u arizona", "arizona"]
   },
   {
     id: "tamu",
     name: "Texas A&M University",
-    shortName: "Texas A&M / A&M",
+    shortName: "Texas A&M",
     aliases: ["tamu", "texas a&m", "a&m", "aggies"]
   },
   {
     id: "uoregon",
     name: "University of Oregon",
-    shortName: "UO / Oregon",
+    shortName: "Oregon",
     aliases: ["uoregon", "oregon", "uo"]
   },
   {
