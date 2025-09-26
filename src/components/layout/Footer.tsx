@@ -56,7 +56,7 @@ const Footer = () => {
 
           {/* Navigation Links */}
           <nav className="md:self-center">
-            <div className="flex flex-col md:flex-row items-start justify-center md:justify-end gap-6 md:gap-8 md:pr-4">
+            <div className="flex flex-row items-start justify-center md:justify-end gap-6 md:gap-8 md:pr-4">
               
               {/* Company Links Column */}
               <div className="text-center md:text-left">
