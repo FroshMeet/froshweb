@@ -463,8 +463,14 @@ const Homepage = () => {
   const [showGetFeaturedModal, setShowGetFeaturedModal] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const handleSchoolSelect = (schoolName: string, schoolSlug?: string) => {
-    const slug = schoolSlug || schoolName.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and');
-    navigate(`/${slug}`);
+    // Always use the provided slug if available, otherwise fallback to approved school lookup
+    if (schoolSlug) {
+      navigate(`/${schoolSlug}`);
+    } else {
+      // Fallback for cases where slug isn't provided
+      const slug = schoolName.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and');
+      navigate(`/${slug}`);
+    }
   };
   const handleGetFeaturedClick = () => {
     console.log("Get Featured button clicked!");
