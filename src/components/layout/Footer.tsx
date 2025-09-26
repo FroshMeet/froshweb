@@ -128,7 +128,7 @@ const Footer = () => {
             <p className="text-center md:text-left">
               FroshMeet is student-run and not affiliated with any college or university. Use of this website constitutes acceptance of our Privacy Policy and Terms of Service.
             </p>
-        <p className="text-center md:text-right text-xs md:text-[13px] text-zinc-400/75">
+        <p className="text-center md:text-center text-xs md:text-[13px] text-zinc-400/75">
           Built for the class of 2030 🎓
         </p>
           </div>
