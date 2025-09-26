@@ -39,9 +39,16 @@ const SchoolInstagramPage = () => {
           <div className="container mx-auto px-4 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
-                <Button variant="ghost" onClick={() => navigate(`/${school}`)}>
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Back
+                <Button 
+                  variant="ghost" 
+                  onClick={() => {
+                    navigate('/community');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="text-muted-foreground hover:text-foreground"
+                >
+                  <ArrowLeft className="h-5 w-5 mr-2" />
+                  Back to Home
                 </Button>
                 <div 
                   className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity"
@@ -87,44 +94,51 @@ const SchoolInstagramPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-muted/50">
-      {/* Header */}
-      <header className="sticky top-0 border-b bg-background/80 backdrop-blur-xl z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <Button variant="ghost" onClick={() => navigate(`/${school}`)}>
-                ← Back to {schoolName}
-              </Button>
-              <div 
-                className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity"
-                onClick={() => navigate('/')}
-              >
-                <img 
-                  src={isMobile ? "/lovable-uploads/a880e910-33fe-4ce7-b556-01f73d623057.png" : "/lovable-uploads/e9020b20-5a8d-4a80-a4e0-9d917c7c5e5c.png"}
-                  alt="FroshMeet Logo" 
-                  className={isMobile ? "h-8 w-auto" : "h-12 w-auto"}
-                />
+        <header className="sticky top-0 border-b bg-background/80 backdrop-blur-xl z-50">
+          <div className="container mx-auto px-4 py-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <Button 
+                  variant="ghost" 
+                  onClick={() => {
+                    navigate('/community');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="text-muted-foreground hover:text-foreground"
+                >
+                  <ArrowLeft className="h-5 w-5 mr-2" />
+                  Back to Home
+                </Button>
+                <div 
+                  className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity"
+                  onClick={() => navigate('/')}
+                >
+                  <img 
+                    src={isMobile ? "/lovable-uploads/a880e910-33fe-4ce7-b556-01f73d623057.png" : "/lovable-uploads/e9020b20-5a8d-4a80-a4e0-9d917c7c5e5c.png"}
+                    alt="FroshMeet Logo" 
+                    className={isMobile ? "h-8 w-auto" : "h-12 w-auto"}
+                  />
+                </div>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Button variant="outline" asChild>
+                  <a 
+                    href={`https://instagram.com/${instagramUsername}`} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-2"
+                  >
+                    <ExternalLink className="h-4 w-4" />
+                    <span>View on Instagram</span>
+                  </a>
+                </Button>
+                <Button onClick={() => navigate('/community')}>
+                  Join Community
+                </Button>
               </div>
             </div>
-            <div className="flex items-center space-x-2">
-              <Button variant="outline" asChild>
-                <a 
-                  href={`https://instagram.com/${instagramUsername}`} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="flex items-center space-x-2"
-                >
-                  <ExternalLink className="h-4 w-4" />
-                  <span>View on Instagram</span>
-                </a>
-              </Button>
-              <Button onClick={() => navigate('/community')}>
-                Join Community
-              </Button>
-            </div>
           </div>
-        </div>
-      </header>
+        </header>
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">

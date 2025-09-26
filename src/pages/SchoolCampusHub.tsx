@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Instagram, Search, ExternalLink, Smartphone, Users, MessageSquare, Star, Heart, Globe, Zap, QrCode, ArrowRight, Play, Home } from "lucide-react";
+import { Instagram, Search, ExternalLink, Smartphone, Users, MessageSquare, Star, Heart, Globe, Zap, QrCode, ArrowRight, Play, Home, ArrowLeft } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { getSchoolName } from "@/config/schoolNameMapping";
 import { getApprovedSchool } from "@/config/approvedSchools";
@@ -184,16 +184,15 @@ export default function SchoolCampusHub() {
       </div>;
   }
   return <div className="min-h-screen bg-background">
-      {/* Home Button */}
+      {/* Back to Home Button */}
       <div className="fixed top-6 left-6 z-50">
         <Button 
-          variant="outline" 
-          size="sm" 
-          onClick={() => navigate('/')}
-          className="bg-background/80 backdrop-blur-sm border-border/40 hover:bg-background"
+          variant="ghost" 
+          onClick={() => navigate('/community')}
+          className="text-muted-foreground hover:text-foreground"
         >
-          <Home className="h-4 w-4 mr-2" />
-          Home
+          <ArrowLeft className="h-5 w-5 mr-2" />
+          Back to Home
         </Button>
       </div>
 

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Instagram, ExternalLink, Users } from 'lucide-react';
+import { Instagram, ExternalLink, Users, ArrowLeft } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { getSchoolName } from '@/config/schoolNameMapping';
 
@@ -20,6 +20,7 @@ interface InstagramProfile {
 
 export default function SchoolInstagramPosts() {
   const { school } = useParams<{ school: string }>();
+  const navigate = useNavigate();
   const [profiles, setProfiles] = useState<InstagramProfile[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -52,6 +53,21 @@ export default function SchoolInstagramPosts() {
   if (loading) {
     return (
       <div className="min-h-screen bg-background p-4">
+        {/* Header */}
+        <div className="max-w-6xl mx-auto mb-6">
+          <Button 
+            variant="ghost" 
+            onClick={() => {
+              navigate('/community');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            className="text-muted-foreground hover:text-foreground"
+          >
+            <ArrowLeft className="h-5 w-5 mr-2" />
+            Back to Home
+          </Button>
+        </div>
+        
         <div className="max-w-6xl mx-auto">
           <div className="text-center py-12">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
@@ -65,6 +81,21 @@ export default function SchoolInstagramPosts() {
   if (error) {
     return (
       <div className="min-h-screen bg-background p-4">
+        {/* Header */}
+        <div className="max-w-6xl mx-auto mb-6">
+          <Button 
+            variant="ghost" 
+            onClick={() => {
+              navigate('/community');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            className="text-muted-foreground hover:text-foreground"
+          >
+            <ArrowLeft className="h-5 w-5 mr-2" />
+            Back to Home
+          </Button>
+        </div>
+        
         <div className="max-w-6xl mx-auto">
           <div className="text-center py-12">
             <p className="text-destructive">{error}</p>
@@ -76,6 +107,21 @@ export default function SchoolInstagramPosts() {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Header */}
+      <div className="max-w-6xl mx-auto px-4 pt-6">
+        <Button 
+          variant="ghost" 
+          onClick={() => {
+            navigate('/community');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          className="text-muted-foreground hover:text-foreground mb-6"
+        >
+          <ArrowLeft className="h-5 w-5 mr-2" />
+          Back to Home
+        </Button>
+      </div>
+      
       <div className="bg-gradient-to-r from-primary/10 to-accent/10 py-12">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <div className="flex items-center justify-center gap-3 mb-4">
