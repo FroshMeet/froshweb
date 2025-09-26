@@ -249,13 +249,13 @@ const SCHOOL_DATABASE = [
     name: "University of Michigan",
     acronym: "UMich",
     searchTerms: ["michigan", "ann arbor", "wolverines", "umich"],
-    slug: "umich"
+    slug: "university-of-michigan"
   },
   {
     name: "University of Texas at Austin",
     acronym: "UT Austin",
     searchTerms: ["ut", "texas", "austin", "longhorns"],
-    slug: "utaustin"
+    slug: "ut"
   },
   {
     name: "University of Florida",

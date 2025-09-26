@@ -37,14 +37,22 @@ export const SCHOOL_NAME_MAPPING: Record<string, string> = {
   'university-of-alabama': 'University of Alabama',
   'university-of-arizona': 'University of Arizona',
   'uc-berkeley': 'University of California, Berkeley',
+  'ucberkeley': 'University of California, Berkeley', // Alternative slug
   'uc-davis': 'University of California, Davis',
+  'ucdavis': 'University of California, Davis', // Alternative slug
   'uc-irvine': 'University of California, Irvine',
+  'uci': 'University of California, Irvine', // Alternative slug
   'ucla': 'University of California, Los Angeles',
   'uc-merced': 'University of California, Merced',
+  'ucmerced': 'University of California, Merced', // Alternative slug
   'uc-riverside': 'University of California, Riverside',
+  'ucr': 'University of California, Riverside', // Alternative slug
   'uc-san-diego': 'University of California, San Diego',
+  'ucsd': 'University of California, San Diego', // Alternative slug
   'uc-santa-barbara': 'University of California, Santa Barbara',
+  'ucsb': 'University of California, Santa Barbara', // Alternative slug
   'uc-santa-cruz': 'University of California, Santa Cruz',
+  'ucsc': 'University of California, Santa Cruz', // Alternative slug
   'ucf': 'University of Central Florida',
   'uchicago': 'University of Chicago',
   'cu-boulder': 'University of Colorado Boulder',
