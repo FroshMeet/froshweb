@@ -15,7 +15,7 @@ export const TopNavCTA = () => {
           alt="Fresh Meat" 
           className="w-5 h-5 select-none"
         />
-        <span className="font-medium">Fresh Meat 📱 App Coming Feb 15</span>
+        <span className="font-medium">Fresh Meat 📱 App Coming <span className="text-[#015cd2]">Feb 15</span></span>
       </Button>
     </Link>
   );
