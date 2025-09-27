@@ -8,13 +8,56 @@ import { Search, Check } from 'lucide-react';
 
 import { SmartSchoolSearch } from '@/components/SmartSchoolSearch';
 import { School } from '@/data/schools';
+import { APPROVED_SCHOOLS } from '@/config/approvedSchools';
 export default function Hero() {
   const navigate = useNavigate();
   const [selectedSchool, setSelectedSchool] = useState<School | null>(null);
 
   const handleSchoolSelect = (school: School) => {
     setSelectedSchool(school);
-    navigate(`/${school.id}`);
+    
+    // Function to find the correct approved school slug
+    const findApprovedSlug = (school: School) => {
+      // First try to find by the school's id
+      if (APPROVED_SCHOOLS[school.id]) {
+        return school.id;
+      }
+      
+      // Then search through approved schools by name match
+      for (const [slug, schoolData] of Object.entries(APPROVED_SCHOOLS)) {
+        if (schoolData.name.toLowerCase() === school.name.toLowerCase() || 
+            schoolData.displayName.toLowerCase() === school.name.toLowerCase() ||
+            schoolData.displayName.toLowerCase() === (school.shortName || '').toLowerCase()) {
+          return slug;
+        }
+      }
+      
+      // Try to find by aliases and common terms
+      const searchTerms = [
+        school.name.toLowerCase(),
+        (school.shortName || '').toLowerCase(),
+        ...school.aliases.map(alias => alias.toLowerCase()),
+        school.name.toLowerCase().replace(/\s+/g, ''),
+        school.name.split(' ').map(w => w[0]).join('').toLowerCase(), // acronym
+        school.name.toLowerCase().replace(/university|college/g, '').trim(),
+      ];
+      
+      for (const [slug, schoolData] of Object.entries(APPROVED_SCHOOLS)) {
+        for (const term of searchTerms) {
+          if (slug === term || 
+              schoolData.displayName.toLowerCase() === term ||
+              schoolData.name.toLowerCase().includes(term)) {
+            return slug;
+          }
+        }
+      }
+      
+      // Final fallback - use the school id but likely won't work
+      return school.id;
+    };
+
+    const correctSlug = findApprovedSlug(school);
+    navigate(`/${correctSlug}`);
   };
   return <section className="relative overflow-hidden">
       {/* subtle blue glow */}

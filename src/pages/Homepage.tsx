@@ -12,6 +12,7 @@ import Hero from "@/components/landing/Hero";
 import GetFeaturedPromo from "@/components/marketing/GetFeaturedPromo";
 import { SwipeableSchoolCarousel } from "@/components/SwipeableSchoolCarousel";
 import { TopNavCTA } from "@/components/layout/TopNavCTA";
+import { APPROVED_SCHOOLS } from "@/config/approvedSchools";
 // Use only approved schools to ensure all links work
 const SCHOOL_DATABASE = [
   // Ivy League
@@ -463,14 +464,46 @@ const Homepage = () => {
   const [showGetFeaturedModal, setShowGetFeaturedModal] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const handleSchoolSelect = (schoolName: string, schoolSlug?: string) => {
-    // Always use the provided slug if available, otherwise fallback to approved school lookup
-    if (schoolSlug) {
-      navigate(`/${schoolSlug}`);
-    } else {
-      // Fallback for cases where slug isn't provided
-      const slug = schoolName.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and');
-      navigate(`/${slug}`);
-    }
+    // Function to find the correct approved school slug
+    const findApprovedSlug = (name: string, providedSlug?: string) => {
+      // First try to find by the provided slug
+      if (providedSlug && APPROVED_SCHOOLS[providedSlug]) {
+        return providedSlug;
+      }
+      
+      // Then search through approved schools by name match
+      for (const [slug, schoolData] of Object.entries(APPROVED_SCHOOLS)) {
+        if (schoolData.name.toLowerCase() === name.toLowerCase() || 
+            schoolData.displayName.toLowerCase() === name.toLowerCase()) {
+          return slug;
+        }
+      }
+      
+      // Try to find by common acronyms/aliases
+      const normalizedName = name.toLowerCase();
+      const searchTerms = [
+        normalizedName,
+        normalizedName.replace(/\s+/g, ''),
+        normalizedName.split(' ').map(w => w[0]).join(''), // acronym
+        normalizedName.replace(/university|college/g, '').trim(),
+      ];
+      
+      for (const [slug, schoolData] of Object.entries(APPROVED_SCHOOLS)) {
+        for (const term of searchTerms) {
+          if (slug === term || 
+              schoolData.displayName.toLowerCase() === term ||
+              schoolData.name.toLowerCase().includes(term)) {
+            return slug;
+          }
+        }
+      }
+      
+      // Final fallback - generate slug but likely won't work
+      return providedSlug || name.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and');
+    };
+
+    const correctSlug = findApprovedSlug(schoolName, schoolSlug);
+    navigate(`/${correctSlug}`);
   };
   const handleGetFeaturedClick = () => {
     console.log("Get Featured button clicked!");
