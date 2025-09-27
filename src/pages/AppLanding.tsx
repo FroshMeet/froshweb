@@ -9,7 +9,7 @@ import { School, schools } from "@/data/schools";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/use-toast";
 import { Instagram, ArrowLeft } from "lucide-react";
-import freshMeatIcon from "@/assets/fresh-meat-app-icon.png";
+import freshMeatIcon from "@/assets/FreshMeat_Transparent.png";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function AppLanding() {
@@ -162,7 +162,7 @@ export default function AppLanding() {
                   <img 
                     src={freshMeatIcon} 
                     alt="Fresh Meat App" 
-                    className="w-24 h-24 mx-auto mb-6 select-none"
+                    className="w-[7.2rem] h-[7.2rem] mx-auto mb-6 select-none"
                   />
                 </div>
                 <h1 className="text-4xl font-bold text-foreground mb-6">
@@ -316,7 +316,7 @@ export default function AppLanding() {
                   <img 
                     src={freshMeatIcon} 
                     alt="Fresh Meat App" 
-                    className="w-32 h-32 mx-auto mb-6 select-none"
+                    className="w-[9.6rem] h-[9.6rem] mx-auto mb-6 select-none"
                   />
                   <h3 className="text-2xl font-bold text-foreground mb-4">
                     Coming Soon
