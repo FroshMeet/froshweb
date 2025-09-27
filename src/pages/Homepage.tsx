@@ -1,18 +1,14 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Search, Users, MessageSquare, Calendar, Shield, Instagram, Menu, X } from "lucide-react";
-import heroImage from "@/assets/hero-college-students.jpg";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { GetFeaturedFlow } from "@/components/GetFeaturedFlow";
-import Hero from "@/components/landing/Hero";
-import GetFeaturedPromo from "@/components/marketing/GetFeaturedPromo";
-import { SwipeableSchoolCarousel } from "@/components/SwipeableSchoolCarousel";
-import { TopNavCTA } from "@/components/layout/TopNavCTA";
-import { APPROVED_SCHOOLS } from "@/config/approvedSchools";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { MapPin, Users, MessageCircle, Instagram, Menu, X, ChevronRight } from 'lucide-react';
+import { SwipeableSchoolCarousel } from '@/components/SwipeableSchoolCarousel';
+import { GetFeaturedFlow } from '@/components/GetFeaturedFlow';
+import { GetFeaturedPromo } from '@/components/marketing/GetFeaturedPromo';
+import { getCorrectSchoolSlug } from '@/utils/schoolNavigation';
+import { schools } from '@/data/schools';
 // Use only approved schools to ensure all links work
 const SCHOOL_DATABASE = [
   // Ivy League
@@ -464,19 +460,16 @@ const Homepage = () => {
   const [showGetFeaturedModal, setShowGetFeaturedModal] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const handleSchoolSelect = (schoolName: string, schoolSlug?: string) => {
-    // Function to find the correct approved school slug
-    const findApprovedSlug = (name: string, providedSlug?: string) => {
-      // First try to find by the provided slug
-      if (providedSlug && APPROVED_SCHOOLS[providedSlug]) {
-        return providedSlug;
-      }
-      
-      // Then search through approved schools by name match
-      for (const [slug, schoolData] of Object.entries(APPROVED_SCHOOLS)) {
-        if (schoolData.name.toLowerCase() === name.toLowerCase() || 
-            schoolData.displayName.toLowerCase() === name.toLowerCase()) {
-          return slug;
-        }
+    // Find the school object from our schools data
+    const schoolObj = schools.find(s => s.name === schoolName);
+    if (schoolObj) {
+      const correctSlug = getCorrectSchoolSlug(schoolObj);
+      navigate(`/school/${correctSlug}`);
+    } else {
+      // Fallback for schools not in our main data
+      navigate(`/school/${schoolSlug || schoolName.toLowerCase().replace(/\s+/g, '-')}`);
+    }
+  };
       }
       
       // Try to find by common acronyms/aliases

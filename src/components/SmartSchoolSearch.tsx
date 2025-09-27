@@ -42,6 +42,7 @@ export const SmartSchoolSearch: React.FC<SmartSchoolSearchProps> = ({
 
   // Handle school selection
   const handleSchoolSelect = (school: School) => {
+    // Use the school object directly - the parent component will handle slug mapping
     onSelect(school);
     setSearchTerm('');
     setIsOpen(false);

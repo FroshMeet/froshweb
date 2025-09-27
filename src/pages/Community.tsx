@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Search, ArrowLeft } from "lucide-react";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { schools, School } from "@/data/schools";
-import { useSchoolSearch } from "@/hooks/useSchoolSearch";
-import { APPROVED_SCHOOLS } from "@/config/approvedSchools";
-import SharedNavigation from "@/components/layout/SharedNavigation";
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Search, ChevronRight } from 'lucide-react';
+import { SharedNavigation } from '@/components/layout/SharedNavigation';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { useSchoolSearch } from '@/hooks/useSchoolSearch';
+import { schools, School } from '@/data/schools';
+import { getCorrectSchoolSlug } from '@/utils/schoolNavigation';
 
 // Import logos
 import harvardLogo from "@/assets/logos/harvard.png";
@@ -43,28 +43,16 @@ const Community = () => {
   }, [searchQuery, search]);
 
   const handleSchoolClick = (school: School) => {
-    // Create a slug mapping from school data to approved school slugs
-    const getSchoolSlug = (schoolData: School): string => {
-      // First try to find by exact name match in approved schools
-      const approvedSchool = Object.entries(APPROVED_SCHOOLS).find(([slug, data]) => 
-        data.name === schoolData.name
-      );
-      
-      if (approvedSchool) {
-        return approvedSchool[0];
-      }
-      
-      // Fallback to school.id if no approved school found
-      return schoolData.id;
-    };
-    
-    const slug = getSchoolSlug(school);
-    navigate(`/${slug}`);
+    const correctSlug = getCorrectSchoolSlug(school);
+    navigate(`/school/${correctSlug}`);
   };
 
   const getSchoolInitials = (name: string) => {
     // Use shortName if available, otherwise use name
     const displayName = schools.find(s => s.name === name)?.shortName || name;
+    if (displayName.length <= 3) return displayName;
+    return displayName.split(' ').map(word => word[0]).join('').slice(0, 3);
+  };
     if (displayName.length <= 3) return displayName;
     return displayName.split(' ').map(word => word[0]).join('').slice(0, 3);
   };
