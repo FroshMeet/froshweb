@@ -7,6 +7,7 @@ import { Users, Plus, Instagram, ExternalLink, ArrowLeft, Heart } from "lucide-r
 import { supabase } from "@/integrations/supabase/client";
 import { getSchoolName } from "@/config/schoolNameMapping";
 import { schools } from "@/data/schools";
+import { APPROVED_SCHOOLS } from "@/config/approvedSchools";
 
 
 interface Profile {
@@ -26,9 +27,14 @@ export default function SchoolPage() {
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [loading, setLoading] = useState(true);
   
+  // First try to get from approved schools (which has correct display names)
+  const approvedSchoolData = APPROVED_SCHOOLS[school as string];
+  const schoolDisplayName = approvedSchoolData?.displayName || '';
+  
+  // Fallback to schools data if not in approved schools
   const schoolData = schools.find(s => s.id === school);
-  const schoolName = schoolData ? (schoolData.shortName || schoolData.name) : '';
-  const schoolDisplayName = schoolName || '';
+  const fallbackName = schoolData ? (schoolData.shortName || schoolData.name) : '';
+  const finalDisplayName = schoolDisplayName || fallbackName;
 
   useEffect(() => {
     const fetchProfiles = async () => {
@@ -98,18 +104,18 @@ export default function SchoolPage() {
             
             {/* Title Section */}
             <div className="space-y-3">
-              <h1 className="text-5xl md:text-6xl font-bold text-white tracking-tight leading-tight">
-                {schoolDisplayName}
-              </h1>
-              <div className="w-16 h-0.5 bg-primary mx-auto"></div>
-              <p className="text-lg text-primary font-medium tracking-wide uppercase">
-                {schoolName}
-              </p>
+            <h1 className="text-5xl md:text-6xl font-bold text-white tracking-tight leading-tight">
+              {finalDisplayName}
+            </h1>
+            <div className="w-16 h-0.5 bg-primary mx-auto"></div>
+            <p className="text-lg text-primary font-medium tracking-wide uppercase">
+              {finalDisplayName}
+            </p>
             </div>
             
             {/* Description */}
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Connect with fellow students and build lasting friendships in your {schoolDisplayName} community.
+              Connect with fellow students and build lasting friendships in your {finalDisplayName} community.
             </p>
             
             {/* Stats */}
@@ -165,7 +171,7 @@ export default function SchoolPage() {
             <Users className="h-16 w-16 text-muted-foreground mx-auto mb-4 opacity-50" />
             <h3 className="text-xl font-semibold mb-2">No students yet!</h3>
             <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-              Be the first student from {schoolDisplayName} to join the community and connect with your peers.
+              Be the first student from {finalDisplayName} to join the community and connect with your peers.
             </p>
             <Button 
               onClick={() => navigate('/create-profile')}
@@ -180,7 +186,7 @@ export default function SchoolPage() {
             <div className="text-center mb-8">
               <h2 className="text-2xl font-bold mb-2">Meet Your Fellow Students</h2>
               <p className="text-muted-foreground">
-                Connect with {profiles.length} students from {schoolDisplayName}
+                Connect with {profiles.length} students from {finalDisplayName}
               </p>
             </div>
             
@@ -220,7 +226,7 @@ export default function SchoolPage() {
                         <CardDescription>Class of {profile.class_year}</CardDescription>
                       </div>
                       <Badge variant="outline" className="text-xs">
-                        {schoolDisplayName}
+                        {finalDisplayName}
                       </Badge>
                     </div>
                   </CardHeader>
@@ -266,7 +272,7 @@ export default function SchoolPage() {
             
             <div className="text-center mt-12 pt-8 border-t">
               <p className="text-muted-foreground mb-4">
-                Ready to join the {schoolDisplayName} community?
+                Ready to join the {finalDisplayName} community?
               </p>
               <Button 
                 onClick={() => navigate('/create-profile')}
