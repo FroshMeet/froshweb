@@ -14,6 +14,30 @@ export type Database = {
   }
   public: {
     Tables: {
+      access_revocations: {
+        Row: {
+          id: string
+          reason: string | null
+          revoked_at: string | null
+          revoked_by: string | null
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          reason?: string | null
+          revoked_at?: string | null
+          revoked_by?: string | null
+          user_id: string
+        }
+        Update: {
+          id?: string
+          reason?: string | null
+          revoked_at?: string | null
+          revoked_by?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       admin_roles: {
         Row: {
           granted_at: string
@@ -958,6 +982,14 @@ export type Database = {
       get_user_school_slug: {
         Args: { user_id_param: string }
         Returns: string
+      }
+      get_waitlist_admin_summary: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          recent_signups: number
+          schools_count: number
+          total_signups: number
+        }[]
       }
       get_waitlist_signups_admin: {
         Args: { limit_count?: number; offset_count?: number }
