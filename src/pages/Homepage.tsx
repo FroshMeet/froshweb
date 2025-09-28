@@ -741,4 +741,6 @@ const Homepage = () => {
       <GetFeaturedFlow open={showGetFeaturedModal} onOpenChange={setShowGetFeaturedModal} />
     </div>
   );
+};
+
 export default Homepage;
