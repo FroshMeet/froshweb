@@ -45,7 +45,7 @@ const Community = () => {
 
   const handleSchoolClick = (school: School) => {
     const correctSlug = getCorrectSchoolSlug(school);
-    navigate(`/school/${correctSlug}`);
+    navigate(`/${correctSlug}`);
   };
 
   const getSchoolInitials = (name: string) => {
