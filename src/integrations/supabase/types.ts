@@ -970,6 +970,17 @@ export type Database = {
           school: string
         }[]
       }
+      get_waitlist_signups_secure: {
+        Args: { limit_count?: number; offset_count?: number }
+        Returns: {
+          created_at: string
+          email: string
+          id: string
+          name: string
+          phone: string
+          school: string
+        }[]
+      }
       handle_swipe: {
         Args: { swipe_direction: string; swiper_id: string; target_id: string }
         Returns: Json
@@ -1044,6 +1055,10 @@ export type Database = {
         }
         Returns: undefined
       }
+      log_waitlist_access_attempt: {
+        Args: { access_type_param?: string; additional_info?: string }
+        Returns: undefined
+      }
       mark_school_read: {
         Args: {
           conversation_id_param: string
@@ -1078,6 +1093,10 @@ export type Database = {
       }
       verify_college_email: {
         Args: { college_email_param: string; user_id_param: string }
+        Returns: boolean
+      }
+      verify_waitlist_access_multi_layer: {
+        Args: { user_id_param: string }
         Returns: boolean
       }
     }
