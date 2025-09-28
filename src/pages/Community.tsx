@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Search, ChevronRight } from 'lucide-react';
-import { SharedNavigation } from '@/components/layout/SharedNavigation';
+import SharedNavigation from '@/components/layout/SharedNavigation';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useSchoolSearch } from '@/hooks/useSchoolSearch';
 import { schools, School } from '@/data/schools';
@@ -50,9 +51,6 @@ const Community = () => {
   const getSchoolInitials = (name: string) => {
     // Use shortName if available, otherwise use name
     const displayName = schools.find(s => s.name === name)?.shortName || name;
-    if (displayName.length <= 3) return displayName;
-    return displayName.split(' ').map(word => word[0]).join('').slice(0, 3);
-  };
     if (displayName.length <= 3) return displayName;
     return displayName.split(' ').map(word => word[0]).join('').slice(0, 3);
   };

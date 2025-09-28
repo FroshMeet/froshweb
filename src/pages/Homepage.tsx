@@ -3,12 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { MapPin, Users, MessageCircle, Instagram, Menu, X, ChevronRight } from 'lucide-react';
+import { MapPin, Users, MessageCircle, Instagram, Menu, X, ChevronRight, MessageSquare, Calendar } from 'lucide-react';
 import { SwipeableSchoolCarousel } from '@/components/SwipeableSchoolCarousel';
 import { GetFeaturedFlow } from '@/components/GetFeaturedFlow';
-import { GetFeaturedPromo } from '@/components/marketing/GetFeaturedPromo';
+import GetFeaturedPromo from '@/components/marketing/GetFeaturedPromo';
+import { TopNavCTA } from '@/components/layout/TopNavCTA';
+import Hero from '@/components/landing/Hero';
 import { getCorrectSchoolSlug } from '@/utils/schoolNavigation';
 import { schools } from '@/data/schools';
+import { useIsMobile } from '@/hooks/use-mobile';
 // Use only approved schools to ensure all links work
 const SCHOOL_DATABASE = [
   // Ivy League
@@ -475,7 +478,9 @@ const Homepage = () => {
     setShowGetFeaturedModal(true);
   };
   const filteredSchools = searchSchools(searchTerm);
-  return <div className="min-h-screen bg-background">
+  
+  return (
+    <div className="min-h-screen bg-background">
       {/* Header */}
       <div className="glass-card sticky top-0 border-b border-border/40 z-50">
         <header className="glass-content bg-background/80">
