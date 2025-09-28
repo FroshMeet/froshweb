@@ -11,6 +11,7 @@ import SchoolChatInterface from "@/components/SchoolChatInterface";
 import { getSchoolName } from "@/config/schoolNameMapping";
 import { schools } from "@/data/schools";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { getCorrectSchoolSlug, getApprovedSchoolData } from "@/utils/schoolNavigation";
 
 const EnhancedSchoolPage = () => {
   const { school } = useParams<{ school: string }>();
@@ -20,8 +21,13 @@ const EnhancedSchoolPage = () => {
   const [activeInterface, setActiveInterface] = useState<null | "swipe-meet" | "swipe-roommate" | "chat">(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false); // This would come from auth context
   
+  // Get school data using navigation utility for proper mapping
   const schoolData = schools.find(s => s.id === school);
-  const schoolName = schoolData ? (schoolData.shortName || schoolData.name) : '';
+  const correctSlug = schoolData ? getCorrectSchoolSlug(schoolData) : school as string;
+  const approvedSchoolData = schoolData ? getApprovedSchoolData(schoolData) : null;
+  const schoolName = approvedSchoolData?.displayName || 
+                    (schoolData ? (schoolData.shortName || schoolData.name) : '') ||
+                    school || '';
 
   // Mock student profiles for the school
   const mockProfiles = [{

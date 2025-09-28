@@ -8,6 +8,7 @@ import { Instagram, Search, ExternalLink, Smartphone, Users, MessageSquare, Star
 import { supabase } from "@/integrations/supabase/client";
 import { schools } from "@/data/schools";
 import { getApprovedSchool } from "@/config/approvedSchools";
+import { getCorrectSchoolSlug, getApprovedSchoolData } from "@/utils/schoolNavigation";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { getSchoolLogo } from "@/utils/schoolLogos";
 import { useToast } from "@/hooks/use-toast";
@@ -53,10 +54,13 @@ export default function SchoolCampusHub() {
   const [showPhoneModal, setShowPhoneModal] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
 
-  // Get school data
-  const approvedSchool = school ? getApprovedSchool(school) : null;
+  // Get school data using navigation utility for proper mapping
   const schoolData = schools.find(s => s.id === school);
-  const schoolName = schoolData ? (schoolData.shortName || schoolData.name) : '';
+  const correctSlug = schoolData ? getCorrectSchoolSlug(schoolData) : school as string;
+  const approvedSchool = schoolData ? getApprovedSchoolData(schoolData) : null;
+  const schoolName = approvedSchool?.displayName || 
+                    (schoolData ? (schoolData.shortName || schoolData.name) : '') ||
+                    school || '';
   const instagramHandle = approvedSchool?.instagramUsername;
   const schoolLogo = getSchoolLogo(schoolName || school || '');
 

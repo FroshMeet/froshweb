@@ -28,6 +28,7 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { getSchoolName } from "@/config/schoolNameMapping";
 import { schools } from "@/data/schools";
+import { getCorrectSchoolSlug, getApprovedSchoolData } from "@/utils/schoolNavigation";
 import { getInstagramUsername } from "@/config/schoolInstagramMapping";
 import { getSchoolDisplayName } from "@/config/schoolDisplayMapping";
 import { isApprovedSchool, getApprovedSchool } from "@/config/approvedSchools";
@@ -129,9 +130,14 @@ export default function SchoolDashboard() {
     );
   }
   
+  // Get school data using navigation utility for proper mapping
   const schoolData = schools.find(s => s.id === school);
-  const schoolName = schoolData ? (schoolData.shortName || schoolData.name) : '';
-  const schoolDisplayName = schoolName || '';
+  const correctSlug = schoolData ? getCorrectSchoolSlug(schoolData) : school as string;
+  const approvedSchoolData = schoolData ? getApprovedSchoolData(schoolData) : null;
+  const schoolName = approvedSchoolData?.displayName || 
+                    (schoolData ? (schoolData.shortName || schoolData.name) : '') ||
+                    school || '';
+  const schoolDisplayName = schoolName;
   const instagramUsername = approvedSchool?.instagramUsername || null;
 
   useEffect(() => {

@@ -8,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { getSchoolName } from "@/config/schoolNameMapping";
 import { schools } from "@/data/schools";
 import { APPROVED_SCHOOLS } from "@/config/approvedSchools";
+import { getCorrectSchoolSlug, getApprovedSchoolData } from "@/utils/schoolNavigation";
 
 
 interface Profile {
@@ -27,14 +28,15 @@ export default function SchoolPage() {
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [loading, setLoading] = useState(true);
   
-  // First try to get from approved schools (which has correct display names)
-  const approvedSchoolData = APPROVED_SCHOOLS[school as string];
-  const schoolDisplayName = approvedSchoolData?.displayName || '';
-  
-  // Fallback to schools data if not in approved schools
+  // Use navigation utility to get correct school slug and data
   const schoolData = schools.find(s => s.id === school);
-  const fallbackName = schoolData ? (schoolData.shortName || schoolData.name) : '';
-  const finalDisplayName = schoolDisplayName || fallbackName;
+  const correctSlug = schoolData ? getCorrectSchoolSlug(schoolData) : school as string;
+  const approvedSchoolData = getApprovedSchoolData(schoolData || { id: school as string, name: '', aliases: [] });
+  
+  // Get display name with proper fallbacks
+  const finalDisplayName = approvedSchoolData?.displayName || 
+                          (schoolData ? (schoolData.shortName || schoolData.name) : '') ||
+                          getSchoolName(school as string);
 
   useEffect(() => {
     const fetchProfiles = async () => {
@@ -98,7 +100,7 @@ export default function SchoolPage() {
             {/* School Icon */}
             <div className="w-24 h-24 bg-primary/10 border-2 border-primary/20 rounded-3xl flex items-center justify-center mx-auto">
               <span className="text-primary font-bold text-3xl">
-                {schoolDisplayName.charAt(0)}
+                {finalDisplayName.charAt(0)}
               </span>
             </div>
             

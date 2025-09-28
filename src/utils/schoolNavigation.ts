@@ -43,6 +43,7 @@ export const getCorrectSchoolSlug = (school: School): string => {
     
     // Additional mappings found during audit
     'uf': 'ufl',               // University of Florida
+    'wake-forest': 'wakeforest', // Wake Forest University
     
     // Add other mappings as needed
   };
