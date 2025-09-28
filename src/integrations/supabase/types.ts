@@ -955,6 +955,10 @@ export type Database = {
           verified: boolean
         }[]
       }
+      get_user_school_slug: {
+        Args: { user_id_param: string }
+        Returns: string
+      }
       get_waitlist_signups_admin: {
         Args: { limit_count?: number; offset_count?: number }
         Returns: {
@@ -1063,6 +1067,10 @@ export type Database = {
           user_b_param: string
         }
         Returns: string
+      }
+      users_same_school: {
+        Args: { profile_user_id: string; viewer_id: string }
+        Returns: boolean
       }
       verify_admin_access: {
         Args: { user_id_param: string }
