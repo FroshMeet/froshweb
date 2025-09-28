@@ -27,6 +27,7 @@ import {
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { getSchoolName } from "@/config/schoolNameMapping";
+import { schools } from "@/data/schools";
 import { getInstagramUsername } from "@/config/schoolInstagramMapping";
 import { getSchoolDisplayName } from "@/config/schoolDisplayMapping";
 import { isApprovedSchool, getApprovedSchool } from "@/config/approvedSchools";
@@ -128,7 +129,8 @@ export default function SchoolDashboard() {
     );
   }
   
-  const schoolName = approvedSchool?.name || (school ? getSchoolName(school) : '');
+  const schoolData = schools.find(s => s.id === school);
+  const schoolName = schoolData ? (schoolData.shortName || schoolData.name) : '';
   const schoolDisplayName = schoolName || '';
   const instagramUsername = approvedSchool?.instagramUsername || null;
 

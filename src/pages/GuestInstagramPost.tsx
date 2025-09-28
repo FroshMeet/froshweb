@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Instagram, Upload, DollarSign, ArrowLeft, UserPlus } from "lucide-react";
 import { getSchoolName } from "@/config/schoolNameMapping";
+import { schools } from "@/data/schools";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
@@ -24,7 +25,8 @@ export default function GuestInstagramPost() {
     photos: [] as string[]
   });
 
-  const schoolName = school ? getSchoolName(school) : '';
+  const schoolData = schools.find(s => s.id === school);
+  const schoolName = schoolData ? (schoolData.shortName || schoolData.name) : '';
   const schoolDisplayName = schoolName || '';
 
   const handleInputChange = (field: string, value: string) => {

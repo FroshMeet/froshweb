@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Users, Plus, Instagram, ExternalLink, ArrowLeft, Heart } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { getSchoolName } from "@/config/schoolNameMapping";
+import { schools } from "@/data/schools";
 
 
 interface Profile {
@@ -25,7 +26,8 @@ export default function SchoolPage() {
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [loading, setLoading] = useState(true);
   
-  const schoolName = school ? getSchoolName(school) : '';
+  const schoolData = schools.find(s => s.id === school);
+  const schoolName = schoolData ? (schoolData.shortName || schoolData.name) : '';
   const schoolDisplayName = schoolName || '';
 
   useEffect(() => {

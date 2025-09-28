@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Instagram, Search, ExternalLink, Smartphone, Users, MessageSquare, Star, Heart, Globe, Zap, QrCode, ArrowRight, Play, Home, ArrowLeft } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { getSchoolName } from "@/config/schoolNameMapping";
+import { schools } from "@/data/schools";
 import { getApprovedSchool } from "@/config/approvedSchools";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { getSchoolLogo } from "@/utils/schoolLogos";
@@ -55,7 +55,8 @@ export default function SchoolCampusHub() {
 
   // Get school data
   const approvedSchool = school ? getApprovedSchool(school) : null;
-  const schoolName = approvedSchool?.displayName || (school ? getSchoolName(school) : '');
+  const schoolData = schools.find(s => s.id === school);
+  const schoolName = schoolData ? (schoolData.shortName || schoolData.name) : '';
   const instagramHandle = approvedSchool?.instagramUsername;
   const schoolLogo = getSchoolLogo(schoolName || school || '');
 
@@ -447,14 +448,21 @@ export default function SchoolCampusHub() {
                 <SelectValue placeholder="Choose your school..." />
               </SelectTrigger>
               <SelectContent className="bg-card border-border/40">
-                {Object.entries(APPROVED_SCHOOLS).map(([slug, schoolData]) => <SelectItem key={slug} value={slug}>
-                    <div className="flex items-center justify-between w-full">
-                      <span>{schoolData.displayName}</span>
-                      {schoolData.instagramUsername && <Badge variant="outline" className="ml-2 text-xs">
-                          @{schoolData.instagramUsername}
-                        </Badge>}
-                    </div>
-                  </SelectItem>)}
+                {schools.map((schoolOption) => {
+                  const approvedSchoolData = APPROVED_SCHOOLS[schoolOption.id];
+                  if (!approvedSchoolData) return null;
+                  
+                  return (
+                    <SelectItem key={schoolOption.id} value={schoolOption.id}>
+                      <div className="flex items-center justify-between w-full">
+                        <span>{schoolOption.shortName || schoolOption.name}</span>
+                        {approvedSchoolData.instagramUsername && <Badge variant="outline" className="ml-2 text-xs">
+                            @{approvedSchoolData.instagramUsername}
+                          </Badge>}
+                      </div>
+                    </SelectItem>
+                  );
+                })}
               </SelectContent>
             </Select>
           </div>

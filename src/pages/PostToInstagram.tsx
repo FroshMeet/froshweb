@@ -7,6 +7,7 @@ import { Instagram, ExternalLink, Heart, MessageCircle, Share, ArrowLeft } from 
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { getSchoolName } from '@/config/schoolNameMapping';
+import { schools } from '@/data/schools';
 
 interface Profile {
   id: string;
@@ -134,7 +135,7 @@ export default function PostToInstagram() {
             className="mb-4"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to {school ? getSchoolName(school) : ''} Page
+            Back to {school ? (schools.find(s => s.id === school)?.shortName || schools.find(s => s.id === school)?.name || '') : ''} Page
           </Button>
           
           <div className="text-center">

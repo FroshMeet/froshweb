@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Instagram, ExternalLink, ArrowLeft, AlertCircle } from "lucide-react";
 import { getInstagramUsername, isSchoolSupported } from "@/config/schoolInstagramMapping";
-import { getSchoolName } from "@/config/schoolNameMapping";
+import { schools } from "@/data/schools";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const SchoolInstagramPage = () => {
@@ -11,7 +11,8 @@ const SchoolInstagramPage = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   
-  const schoolName = school ? getSchoolName(school) : '';
+  const schoolData = schools.find(s => s.id === school);
+  const schoolName = schoolData ? (schoolData.shortName || schoolData.name) : '';
   const instagramUsername = school ? getInstagramUsername(school) : null;
   const isSupported = school ? isSchoolSupported(school) : false;
   

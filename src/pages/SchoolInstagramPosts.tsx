@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Instagram, ExternalLink, Users, ArrowLeft } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { getSchoolName } from '@/config/schoolNameMapping';
+import { schools } from '@/data/schools';
 
 interface InstagramProfile {
   id: string;
@@ -25,7 +26,8 @@ export default function SchoolInstagramPosts() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const schoolName = school ? getSchoolName(school) : '';
+  const schoolData = schools.find(s => s.id === school);
+  const schoolName = schoolData ? (schoolData.shortName || schoolData.name) : '';
 
   useEffect(() => {
     const fetchProfiles = async () => {
