@@ -470,34 +470,6 @@ const Homepage = () => {
       navigate(`/school/${schoolSlug || schoolName.toLowerCase().replace(/\s+/g, '-')}`);
     }
   };
-      }
-      
-      // Try to find by common acronyms/aliases
-      const normalizedName = name.toLowerCase();
-      const searchTerms = [
-        normalizedName,
-        normalizedName.replace(/\s+/g, ''),
-        normalizedName.split(' ').map(w => w[0]).join(''), // acronym
-        normalizedName.replace(/university|college/g, '').trim(),
-      ];
-      
-      for (const [slug, schoolData] of Object.entries(APPROVED_SCHOOLS)) {
-        for (const term of searchTerms) {
-          if (slug === term || 
-              schoolData.displayName.toLowerCase() === term ||
-              schoolData.name.toLowerCase().includes(term)) {
-            return slug;
-          }
-        }
-      }
-      
-      // Final fallback - generate slug but likely won't work
-      return providedSlug || name.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and');
-    };
-
-    const correctSlug = findApprovedSlug(schoolName, schoolSlug);
-    navigate(`/${correctSlug}`);
-  };
   const handleGetFeaturedClick = () => {
     console.log("Get Featured button clicked!");
     setShowGetFeaturedModal(true);
@@ -768,5 +740,5 @@ const Homepage = () => {
       {/* Get Featured Flow */}
       <GetFeaturedFlow open={showGetFeaturedModal} onOpenChange={setShowGetFeaturedModal} />
     </div>
-};
+  );
 export default Homepage;
