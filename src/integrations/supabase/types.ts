@@ -795,6 +795,33 @@ export type Database = {
         }
         Relationships: []
       }
+      waitlist_access_log: {
+        Row: {
+          access_time: string | null
+          access_type: string
+          id: string
+          ip_address: unknown | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          access_time?: string | null
+          access_type: string
+          id?: string
+          ip_address?: unknown | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          access_time?: string | null
+          access_type?: string
+          id?: string
+          ip_address?: unknown | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       waitlist_signups: {
         Row: {
           created_at: string
@@ -1005,6 +1032,14 @@ export type Database = {
           sender_name: string
         }[]
       }
+      log_waitlist_access: {
+        Args: {
+          access_type_param: string
+          ip_address_param?: unknown
+          user_agent_param?: string
+        }
+        Returns: undefined
+      }
       mark_school_read: {
         Args: {
           conversation_id_param: string
@@ -1028,6 +1063,10 @@ export type Database = {
           user_b_param: string
         }
         Returns: string
+      }
+      verify_admin_access: {
+        Args: { user_id_param: string }
+        Returns: boolean
       }
       verify_college_email: {
         Args: { college_email_param: string; user_id_param: string }
