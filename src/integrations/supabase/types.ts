@@ -65,6 +65,36 @@ export type Database = {
         }
         Relationships: []
       }
+      admin_verification_log: {
+        Row: {
+          failure_reason: string | null
+          id: string
+          ip_address: unknown | null
+          user_agent: string | null
+          user_id: string
+          verification_result: boolean
+          verification_time: string | null
+        }
+        Insert: {
+          failure_reason?: string | null
+          id?: string
+          ip_address?: unknown | null
+          user_agent?: string | null
+          user_id: string
+          verification_result: boolean
+          verification_time?: string | null
+        }
+        Update: {
+          failure_reason?: string | null
+          id?: string
+          ip_address?: unknown | null
+          user_agent?: string | null
+          user_id?: string
+          verification_result?: boolean
+          verification_time?: string | null
+        }
+        Relationships: []
+      }
       conversations: {
         Row: {
           created_at: string
@@ -881,6 +911,17 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_get_schools_summary_only: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          school_name: string
+          signup_count: number
+        }[]
+      }
+      admin_get_waitlist_count_only: {
+        Args: Record<PropertyKey, never>
+        Returns: number
+      }
       can_view_profile: {
         Args: { profile_user_id: string; viewer_id: string }
         Returns: boolean
@@ -1078,6 +1119,10 @@ export type Database = {
           sender_id: string
           sender_name: string
         }[]
+      }
+      log_admin_verification_attempt: {
+        Args: { reason?: string; success: boolean }
+        Returns: undefined
       }
       log_waitlist_access: {
         Args: {
