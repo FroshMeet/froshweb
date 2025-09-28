@@ -152,7 +152,7 @@ export default function SchoolDashboard() {
         const { data: instagramData, error: instagramError } = await supabase
           .from('instagram_profiles')
           .select('*')
-          .eq('school', school.toUpperCase())
+          .eq('school', school)
           .order('created_at', { ascending: false });
 
         if (instagramError) throw instagramError;

@@ -106,7 +106,7 @@ export default function SchoolCampusHub() {
         const {
           data,
           error
-        } = await supabase.from('instagram_profiles').select('*').eq('school', school.toUpperCase()).eq('paid_for_instagram', true).order('created_at', {
+        } = await supabase.from('instagram_profiles').select('*').eq('school', school).eq('paid_for_instagram', true).order('created_at', {
           ascending: false
         }).limit(20);
         if (error) throw error;

@@ -38,7 +38,7 @@ export default function SchoolPage() {
         const { data, error } = await supabase
           .from('instagram_profiles')
           .select('*')
-          .eq('school', school.toUpperCase())
+          .eq('school', school)
           .order('created_at', { ascending: false });
 
         if (error) throw error;
@@ -103,7 +103,7 @@ export default function SchoolPage() {
               </h1>
               <div className="w-16 h-0.5 bg-primary mx-auto"></div>
               <p className="text-lg text-primary font-medium tracking-wide uppercase">
-                {school?.toUpperCase()}
+                {schoolName}
               </p>
             </div>
             

@@ -18,13 +18,31 @@ export const getCorrectSchoolSlug = (school: School): string => {
     'sierra-college': 'sierra',
     'yuba-college': 'yuba',
     
-    // Other major universities with mismatches
-    'uop': 'pacific',  // University of the Pacific
-    'psu': 'pennstate', // Penn State
-    'umiami': 'miami',  // University of Miami
+    // California CSU System mappings
+    'cal-poly-pomona': 'cpp',        // Cal Poly Pomona
+    'chico-state': 'csuchico',       // Chico State  
+    'cal-poly-slo': 'calpolyslo',    // Cal Poly SLO
+    
+    // Major universities with mismatches
+    'uop': 'pacific',          // University of the Pacific
+    'psu': 'pennstate',        // Penn State
+    'umiami': 'miami',         // University of Miami
+    'uoft': 'utoronto',        // University of Toronto
+    'ucincinnati': 'ucincy',   // University of Cincinnati
+    'cu-boulder': 'cuboulder', // University of Colorado Boulder
+    'uw-madison': 'uwmadison', // University of Wisconsin-Madison
+    'iu': 'indiana',           // Indiana University Bloomington
+    'ut-austin': 'utaustin',   // University of Texas at Austin
+    'uw': 'uwashington',       // University of Washington
+    'ole-miss': 'olemiss',     // University of Mississippi
+    'boise-state': 'boisestate',  // Boise State University  
+    'uark': 'uarkansas',       // University of Arkansas
+    'virginia-tech': 'vt',     // Virginia Tech
+    'usc-columbia': 'uscsc',   // University of South Carolina
+    'uk': 'uky',               // University of Kentucky
     
     // Additional mappings found during audit
-    'uf': 'ufl',       // University of Florida
+    'uf': 'ufl',               // University of Florida
     
     // Add other mappings as needed
   };
