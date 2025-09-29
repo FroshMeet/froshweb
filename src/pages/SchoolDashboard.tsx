@@ -132,8 +132,8 @@ export default function SchoolDashboard() {
   // Get school data using reverse lookup for proper mapping
   const schoolData = getSchoolByApprovedSlug(school as string);
   const approvedSchoolData = schoolData ? getApprovedSchoolData(schoolData) : null;
-  const schoolName = approvedSchoolData?.displayName || 
-                    (schoolData ? (schoolData.shortName || schoolData.name) : '') ||
+  const schoolName = (schoolData ? (schoolData.shortName || schoolData.name) : '') ||
+                    approvedSchoolData?.displayName || 
                     school || '';
   const schoolDisplayName = schoolName;
   const instagramUsername = approvedSchool?.instagramUsername || null;

@@ -56,8 +56,8 @@ export default function SchoolCampusHub() {
   // Get school data using reverse lookup for proper mapping
   const schoolData = getSchoolByApprovedSlug(school as string);
   const approvedSchool = schoolData ? getApprovedSchoolData(schoolData) : null;
-  const schoolName = approvedSchool?.displayName || 
-                    (schoolData ? (schoolData.shortName || schoolData.name) : '') ||
+  const schoolName = (schoolData ? (schoolData.shortName || schoolData.name) : '') ||
+                    approvedSchool?.displayName || 
                     school || '';
   const instagramHandle = approvedSchool?.instagramUsername;
   const schoolLogo = getSchoolLogo(schoolName || school || '');

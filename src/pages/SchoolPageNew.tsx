@@ -32,9 +32,9 @@ export default function SchoolPage() {
   const schoolData = getSchoolByApprovedSlug(school as string);
   const approvedSchoolData = schoolData ? getApprovedSchoolData(schoolData) : null;
   
-  // Get display name with proper fallbacks
-  const finalDisplayName = approvedSchoolData?.displayName || 
-                          (schoolData ? (schoolData.shortName || schoolData.name) : '') ||
+  // Get display name with proper fallbacks - prioritize shortName like community page
+  const finalDisplayName = (schoolData ? (schoolData.shortName || schoolData.name) : '') ||
+                          approvedSchoolData?.displayName || 
                           getSchoolName(school as string);
 
   useEffect(() => {
