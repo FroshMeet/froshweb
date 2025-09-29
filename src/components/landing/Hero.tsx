@@ -6,9 +6,11 @@ import { Button } from '@/components/ui/button';
 import { SmartSchoolSearch } from '@/components/SmartSchoolSearch';
 import { School } from '@/data/schools';
 import { getCorrectSchoolSlug } from '@/utils/schoolNavigation';
+import { useIsMobile } from '@/hooks/use-mobile';
 import phoneMockup from '@/assets/phone-mockup.png';
 export default function Hero() {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   const [selectedSchool, setSelectedSchool] = useState<School | null>(null);
 
   const handleSchoolSelect = (school: School) => {
@@ -69,14 +71,30 @@ export default function Hero() {
         </div>
 
         {/* Phone mockup image */}
-        <div className="flex justify-center animate-scale-in" style={{
+        <div className="flex flex-col items-center animate-scale-in" style={{
         animationDelay: '0.05s'
       }}>
           <img 
             src={phoneMockup} 
             alt="FroshMeet App Mockup" 
-            className="w-[340px] lg:w-[380px] h-[660px] lg:h-[740px] object-contain drop-shadow-2xl"
+            className="w-[425px] lg:w-[475px] h-[825px] lg:h-[925px] object-contain drop-shadow-2xl"
           />
+          
+          {/* CTA below phone - responsive */}
+          <div className="mt-6 text-center">
+            {isMobile ? (
+              <Button 
+                onClick={() => navigate('/app')}
+                className="px-6 py-3 text-base rounded-2xl font-semibold bg-primary hover:bg-primary/90"
+              >
+                Fresh Meat 📱 App Coming <span className="text-[#0661d8]">Feb 15</span>
+              </Button>
+            ) : (
+              <p className="text-lg font-semibold text-white">
+                Fresh Meat 📱 App Coming <span className="text-[#0661d8]">Feb 15</span>
+              </p>
+            )}
+          </div>
         </div>
       </div>
     </section>;
