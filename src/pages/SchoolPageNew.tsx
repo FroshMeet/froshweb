@@ -8,7 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { getSchoolName } from "@/config/schoolNameMapping";
 import { schools } from "@/data/schools";
 import { APPROVED_SCHOOLS } from "@/config/approvedSchools";
-import { getCorrectSchoolSlug, getApprovedSchoolData } from "@/utils/schoolNavigation";
+import { getSchoolByApprovedSlug, getApprovedSchoolData } from "@/utils/schoolNavigation";
 
 
 interface Profile {
@@ -28,10 +28,9 @@ export default function SchoolPage() {
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [loading, setLoading] = useState(true);
   
-  // Use navigation utility to get correct school slug and data
-  const schoolData = schools.find(s => s.id === school);
-  const correctSlug = schoolData ? getCorrectSchoolSlug(schoolData) : school as string;
-  const approvedSchoolData = getApprovedSchoolData(schoolData || { id: school as string, name: '', aliases: [] });
+  // Get school data using reverse lookup for proper mapping
+  const schoolData = getSchoolByApprovedSlug(school as string);
+  const approvedSchoolData = schoolData ? getApprovedSchoolData(schoolData) : null;
   
   // Get display name with proper fallbacks
   const finalDisplayName = approvedSchoolData?.displayName || 

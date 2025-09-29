@@ -27,8 +27,7 @@ import {
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { getSchoolName } from "@/config/schoolNameMapping";
-import { schools } from "@/data/schools";
-import { getCorrectSchoolSlug, getApprovedSchoolData } from "@/utils/schoolNavigation";
+import { getSchoolByApprovedSlug, getApprovedSchoolData } from "@/utils/schoolNavigation";
 import { getInstagramUsername } from "@/config/schoolInstagramMapping";
 import { getSchoolDisplayName } from "@/config/schoolDisplayMapping";
 import { isApprovedSchool, getApprovedSchool } from "@/config/approvedSchools";
@@ -130,9 +129,8 @@ export default function SchoolDashboard() {
     );
   }
   
-  // Get school data using navigation utility for proper mapping
-  const schoolData = schools.find(s => s.id === school);
-  const correctSlug = schoolData ? getCorrectSchoolSlug(schoolData) : school as string;
+  // Get school data using reverse lookup for proper mapping
+  const schoolData = getSchoolByApprovedSlug(school as string);
   const approvedSchoolData = schoolData ? getApprovedSchoolData(schoolData) : null;
   const schoolName = approvedSchoolData?.displayName || 
                     (schoolData ? (schoolData.shortName || schoolData.name) : '') ||

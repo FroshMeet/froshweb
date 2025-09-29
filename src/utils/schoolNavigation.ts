@@ -1,4 +1,4 @@
-import { School } from '@/data/schools';
+import { School, schools } from '@/data/schools';
 import { APPROVED_SCHOOLS } from '@/config/approvedSchools';
 
 /**
@@ -91,4 +91,32 @@ export const validateSchoolNavigation = (school: School): {
 export const getApprovedSchoolData = (school: School) => {
   const correctSlug = getCorrectSchoolSlug(school);
   return APPROVED_SCHOOLS[correctSlug] || null;
+};
+
+/**
+ * Reverse lookup: finds a school object from schools.ts by approved slug
+ * This handles cases where URL slug (like 'utoronto') needs to map back to school ID ('uoft')
+ */
+export const getSchoolByApprovedSlug = (approvedSlug: string): School | null => {
+  // First check if any school maps to this approved slug
+  for (const school of schools) {
+    if (getCorrectSchoolSlug(school) === approvedSlug) {
+      return school;
+    }
+  }
+  
+  // If no mapping found, check if there's a school with this ID directly
+  const directMatch = schools.find(s => s.id === approvedSlug);
+  if (directMatch && APPROVED_SCHOOLS[approvedSlug]) {
+    return directMatch;
+  }
+  
+  return null;
+};
+
+/**
+ * Validates if a slug corresponds to a valid school that should work
+ */
+export const isValidSchoolSlug = (slug: string): boolean => {
+  return !!getSchoolByApprovedSlug(slug);
 };

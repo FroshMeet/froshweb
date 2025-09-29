@@ -7,8 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Instagram, Search, ExternalLink, Smartphone, Users, MessageSquare, Star, Heart, Globe, Zap, QrCode, ArrowRight, Play, Home, ArrowLeft } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { schools } from "@/data/schools";
-import { getApprovedSchool } from "@/config/approvedSchools";
-import { getCorrectSchoolSlug, getApprovedSchoolData } from "@/utils/schoolNavigation";
+import { getSchoolByApprovedSlug, getApprovedSchoolData } from "@/utils/schoolNavigation";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { getSchoolLogo } from "@/utils/schoolLogos";
 import { useToast } from "@/hooks/use-toast";
@@ -54,9 +53,8 @@ export default function SchoolCampusHub() {
   const [showPhoneModal, setShowPhoneModal] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
 
-  // Get school data using navigation utility for proper mapping
-  const schoolData = schools.find(s => s.id === school);
-  const correctSlug = schoolData ? getCorrectSchoolSlug(schoolData) : school as string;
+  // Get school data using reverse lookup for proper mapping
+  const schoolData = getSchoolByApprovedSlug(school as string);
   const approvedSchool = schoolData ? getApprovedSchoolData(schoolData) : null;
   const schoolName = approvedSchool?.displayName || 
                     (schoolData ? (schoolData.shortName || schoolData.name) : '') ||
