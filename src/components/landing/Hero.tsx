@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { SmartSchoolSearch } from '@/components/SmartSchoolSearch';
 import { School } from '@/data/schools';
 import { getCorrectSchoolSlug } from '@/utils/schoolNavigation';
+import phoneMockup from '@/assets/phone-mockup.png';
 export default function Hero() {
   const navigate = useNavigate();
   const [selectedSchool, setSelectedSchool] = useState<School | null>(null);
@@ -67,43 +68,15 @@ export default function Hero() {
           <div className="mt-5 text-xs text-zinc-400">⚠️ FroshMeet is a student-run platform and is not officially affiliated with or endorsed by any college or university.</div>
         </div>
 
-        {/* Phone/UI preview (built in code; crisp without external asset) */}
+        {/* Phone mockup image */}
         <div className="flex justify-center animate-scale-in" style={{
         animationDelay: '0.05s'
       }}>
-          <div className="relative w-[340px] lg:w-[380px] h-[660px] lg:h-[740px] rounded-[2rem] bg-[#0f1410] border border-white/10 shadow-[0_25px_80px_rgba(0,0,0,.6)] overflow-hidden">
-            <div className="absolute left-1/2 -translate-x-1/2 top-3 w-28 h-6 rounded-full bg-black/60" />
-            <div className="p-4 flex flex-col gap-4">
-              <div className="flex items-center gap-2">
-                <div className="px-3 py-1 rounded-full text-xs bg-white/10 border border-white/10">Meet</div>
-                <div className="px-3 py-1 rounded-full text-xs bg-white/5 border border-white/10 text-zinc-300">Discover</div>
-                <div className="px-3 py-1 rounded-full text-xs bg-white/5 border border-white/10 text-zinc-300">Chat</div>
-              </div>
-              <div className="bg-[#121811] border border-white/10 rounded-xl p-3 shadow-[0_8px_40px_rgba(0,0,0,.35)]">
-                <div className="h-64 lg:h-72 rounded-xl bg-[url('https://images.unsplash.com/photo-1541233349642-6e425fe6190e?q=80&w=1200&auto=format&fit=crop')] bg-cover bg-center" />
-                <div className="mt-3 flex items-center justify-between">
-                  <div>
-                    <div className="font-bold">Alex • Class of 2030</div>
-                    <div className="text-xs text-zinc-400">Computer Science @ State U</div>
-                  </div>
-                  <div className="flex gap-2">
-                    <button className="w-12 h-12 rounded-full bg-white/10 grid place-items-center border border-white/10">✖</button>
-                    <button className="w-12 h-12 rounded-full bg-[#0661d8]">❤</button>
-                  </div>
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="bg-[#121811] border border-white/10 rounded-xl p-3">
-                  <div className="h-20 lg:h-24 rounded-lg bg-[url('https://images.unsplash.com/photo-1502685104226-ee32379fefbe?q=80&w=1200&auto=format&fit=crop')] bg-cover bg-center" />
-                  <div className="mt-2 text-xs text-zinc-300">Find Roommates</div>
-                </div>
-                <div className="bg-[#121811] border border-white/10 rounded-xl p-3">
-                  <div className="h-20 lg:h-24 rounded-lg bg-[url('https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=1200&auto=format&fit=crop')] bg-cover bg-center" />
-                  <div className="mt-2 text-xs text-zinc-300">Join Group Chats</div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <img 
+            src={phoneMockup} 
+            alt="FroshMeet App Mockup" 
+            className="w-[340px] lg:w-[380px] h-[660px] lg:h-[740px] object-contain drop-shadow-2xl"
+          />
         </div>
       </div>
     </section>;
