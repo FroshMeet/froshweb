@@ -75,7 +75,7 @@ export default function Hero() {
           <img 
             src={phoneMockup} 
             alt="FroshMeet App Mockup" 
-            className="w-[340px] lg:w-[380px] h-[660px] lg:h-[740px] object-contain drop-shadow-2xl"
+            className="w-[408px] lg:w-[456px] h-[792px] lg:h-[888px] object-contain drop-shadow-2xl"
           />
         </div>
       </div>
