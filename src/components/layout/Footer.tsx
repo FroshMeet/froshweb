@@ -1,5 +1,6 @@
 import { Instagram, Music2, Youtube, Mail } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import froshmeetLogoSmall from "@/assets/froshmeet-logo-small-optimized.webp";
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ const Footer = () => {
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <img 
-                src="/lovable-uploads/a880e910-33fe-4ce7-b556-01f73d623057.png" 
+                src={froshmeetLogoSmall} 
                 alt="FroshMeet" 
                 className="h-6 md:h-7" 
               />

@@ -8,6 +8,7 @@ import { ArrowLeft, UserPlus } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { TopNavCTA } from "@/components/layout/TopNavCTA";
+import froshmeetLogo from "@/assets/froshmeet-logo-optimized.webp";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -84,7 +85,7 @@ export default function SignUp() {
             <TopNavCTA />
             <div className="flex items-center space-x-3">
               <img 
-                src="/lovable-uploads/fresh_meat_app_icon-4.png"
+                src={froshmeetLogo}
                 alt="FroshMeet Logo" 
                 className="h-12 w-auto"
               />

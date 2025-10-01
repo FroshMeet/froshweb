@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { TopNavCTA } from "@/components/layout/TopNavCTA";
+import froshmeetLogo from "@/assets/froshmeet-logo-optimized.webp";
 
 interface SharedNavigationProps {
   currentPage?: string;
@@ -52,7 +53,7 @@ const SharedNavigation = ({ currentPage }: SharedNavigationProps) => {
             onClick={() => navigate('/')}
           >
             <img 
-              src="/lovable-uploads/fresh_meat_app_icon-4.png"
+              src={froshmeetLogo}
               alt="FroshMeet Logo" 
               className={isMobile ? "h-10 w-auto" : "h-16 w-auto"}
             />

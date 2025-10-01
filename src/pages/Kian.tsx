@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Youtube, Linkedin } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import froshmeetLogoSmall from "@/assets/froshmeet-logo-small-optimized.webp";
 const Kian = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
@@ -15,7 +16,7 @@ const Kian = () => {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate('/')}>
-              <img src={isMobile ? "/lovable-uploads/a880e910-33fe-4ce7-b556-01f73d623057.png" : "/lovable-uploads/e9020b20-5a8d-4a80-a4e0-9d917c7c5e5c.png"} alt="FroshMeet Logo" className={isMobile ? "h-10 w-auto" : "h-16 w-auto"} />
+              <img src={froshmeetLogoSmall} alt="FroshMeet Logo" className={isMobile ? "h-10 w-auto" : "h-16 w-auto"} />
             </div>
             
             {/* Centered Navigation */}

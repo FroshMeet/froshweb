@@ -12,6 +12,7 @@ import Hero from '@/components/landing/Hero';
 import { getCorrectSchoolSlug } from '@/utils/schoolNavigation';
 import { schools } from '@/data/schools';
 import { useIsMobile } from '@/hooks/use-mobile';
+import froshmeetLogo from "@/assets/froshmeet-logo-optimized.webp";
 // Use only approved schools to ensure all links work
 const SCHOOL_DATABASE = [
   // Ivy League
@@ -488,7 +489,7 @@ const Homepage = () => {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate('/')}>
-              <img src="/lovable-uploads/fresh_meat_app_icon-4.png" alt="FroshMeet Logo" className={isMobile ? "h-10 w-auto" : "h-16 w-auto"} />
+              <img src={froshmeetLogo} alt="FroshMeet Logo" className={isMobile ? "h-10 w-auto" : "h-16 w-auto"} />
             </div>
             
             {/* Centered Navigation - Desktop Only */}

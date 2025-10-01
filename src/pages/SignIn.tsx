@@ -9,6 +9,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { TopNavCTA } from "@/components/layout/TopNavCTA";
+import froshmeetLogo from "@/assets/froshmeet-logo-optimized.webp";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -77,7 +78,7 @@ const SignIn = () => {
             <TopNavCTA />
             <div className="flex items-center space-x-3">
               <img 
-                src="/lovable-uploads/fresh_meat_app_icon-4.png"
+                src={froshmeetLogo}
                 alt="FroshMeet Logo" 
                 className={isMobile ? "h-8 w-auto" : "h-12 w-auto"}
               />

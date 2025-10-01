@@ -12,6 +12,7 @@ import { getSchoolName } from "@/config/schoolNameMapping";
 import { schools } from "@/data/schools";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { getSchoolByApprovedSlug, getApprovedSchoolData } from "@/utils/schoolNavigation";
+import froshmeetLogoSmall from "@/assets/froshmeet-logo-small-optimized.webp";
 
 const EnhancedSchoolPage = () => {
   const { school } = useParams<{ school: string }>();
@@ -188,7 +189,7 @@ const EnhancedSchoolPage = () => {
                 onClick={() => navigate('/')}
               >
                 <img 
-                  src={isMobile ? "/lovable-uploads/a880e910-33fe-4ce7-b556-01f73d623057.png" : "/lovable-uploads/e9020b20-5a8d-4a80-a4e0-9d917c7c5e5c.png"}
+                  src={froshmeetLogoSmall}
                   alt="FroshMeet Logo" 
                   className={isMobile ? "h-8 w-auto" : "h-12 w-auto"}
                 />

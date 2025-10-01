@@ -11,6 +11,7 @@ import { toast } from "@/components/ui/use-toast";
 import { Instagram, ArrowLeft } from "lucide-react";
 import freshMeatIcon from "@/assets/FreshMeat_Transparent.png";
 import { useIsMobile } from "@/hooks/use-mobile";
+import froshmeetLogo from "@/assets/froshmeet-logo-optimized.webp";
 
 export default function AppLanding() {
   const navigate = useNavigate();
@@ -144,7 +145,7 @@ export default function AppLanding() {
                 </Button>
                 <div className="flex items-center space-x-3">
                   <img 
-                    src="/lovable-uploads/fresh_meat_app_icon-4.png"
+                    src={froshmeetLogo}
                     alt="FroshMeet Logo" 
                     className={isMobile ? "h-10 w-auto" : "h-16 w-auto"}
                   />
@@ -204,7 +205,7 @@ export default function AppLanding() {
               </Button>
               <div className="flex items-center space-x-3">
                 <img 
-                  src="/lovable-uploads/fresh_meat_app_icon-4.png"
+                  src={froshmeetLogo}
                   alt="FroshMeet Logo" 
                   className={isMobile ? "h-10 w-auto" : "h-16 w-auto"}
                 />
