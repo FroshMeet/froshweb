@@ -1,21 +1,21 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 
-// Import logos (same as Community.tsx)
-import harvardLogo from "@/assets/logos/harvard.png";
-import stanfordLogo from "@/assets/logos/stanford.png";
-import mitLogo from "@/assets/logos/mit.png";
-import uclaLogo from "@/assets/logos/ucla.png";
-import yaleLogo from "@/assets/logos/yale.png";
-import uscLogo from "@/assets/logos/usc.png";
-import ucBerkeleyLogo from "@/assets/logos/uc-berkeley.png";
-import nyuLogo from "@/assets/logos/nyu.png";
-import umichLogo from "@/assets/logos/umich.png";
-import dukeLogo from "@/assets/logos/duke.png";
-import princetonLogo from "@/assets/logos/princeton.png";
-import northwesternLogo from "@/assets/logos/northwestern.png";
-import upennLogo from "@/assets/logos/upenn.png";
-import columbiaLogo from "@/assets/logos/columbia.png";
+// Import optimized WebP logos
+import harvardLogo from "@/assets/logos/harvard.webp";
+import stanfordLogo from "@/assets/logos/stanford.webp";
+import mitLogo from "@/assets/logos/mit.webp";
+import uclaLogo from "@/assets/logos/ucla.webp";
+import yaleLogo from "@/assets/logos/yale.webp";
+import uscLogo from "@/assets/logos/usc.webp";
+import ucBerkeleyLogo from "@/assets/logos/uc-berkeley.webp";
+import nyuLogo from "@/assets/logos/nyu.webp";
+import umichLogo from "@/assets/logos/umich.webp";
+import dukeLogo from "@/assets/logos/duke.webp";
+import princetonLogo from "@/assets/logos/princeton.webp";
+import northwesternLogo from "@/assets/logos/northwestern.webp";
+import upennLogo from "@/assets/logos/upenn.webp";
+import columbiaLogo from "@/assets/logos/columbia.webp";
 
 interface SchoolCarouselProps {
   schools: Array<{ name: string; slug: string; acronym: string; }>;
@@ -52,18 +52,18 @@ export const SwipeableSchoolCarousel: React.FC<SchoolCarouselProps> = ({
     const schoolId = getSchoolId(slug);
     const logoMap: Record<string, string> = {
       'harvard': harvardLogo,
-      'stanford': '/lovable-uploads/Stanford_Logo.png',
+      'stanford': stanfordLogo,
       'mit': mitLogo,
-      'ucla': '/lovable-uploads/UCLA_Logo.png',
+      'ucla': uclaLogo,
       'yale': yaleLogo,
-      'usc': '/lovable-uploads/USC_Logo.png',
+      'usc': uscLogo,
       'uc-berkeley': ucBerkeleyLogo,
       'nyu': nyuLogo,
       'umich': umichLogo,
       'duke': dukeLogo,
-      'princeton': '/lovable-uploads/Princeton_Logo.png',
+      'princeton': princetonLogo,
       'northwestern': northwesternLogo,
-      'upenn': '/lovable-uploads/UPenn_Logo.png',
+      'upenn': upennLogo,
       'columbia': columbiaLogo,
     };
     return logoMap[schoolId];

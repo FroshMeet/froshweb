@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { SmartSchoolSearch } from '@/components/SmartSchoolSearch';
 import { School } from '@/data/schools';
 import { getCorrectSchoolSlug } from '@/utils/schoolNavigation';
-import phoneMockup from '@/assets/phone-mockup.png';
+import phoneMockup from '@/assets/phone-mockup-optimized.webp';
 export default function Hero() {
   const navigate = useNavigate();
   const [selectedSchool, setSelectedSchool] = useState<School | null>(null);

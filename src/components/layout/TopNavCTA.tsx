@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import freshMeatIcon from "@/assets/fresh-meat-app-icon.png";
+import freshMeatIcon from "@/assets/fresh-meat-app-icon-optimized.webp";
 
 export const TopNavCTA = () => {
   return (
