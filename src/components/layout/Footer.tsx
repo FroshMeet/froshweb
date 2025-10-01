@@ -132,7 +132,7 @@ const Footer = () => {
       {/* Micro-bar */}
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-3">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-2 text-xs md:text-[13px] text-zinc-400/70">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-2 text-xs md:text-[13px] text-zinc-300/90">
             <p className="text-center md:text-left">
               FroshMeet is student-run and not affiliated with any college or university. Use of this website constitutes acceptance of our Privacy Policy and Terms of Service.
             </p>

@@ -31,7 +31,7 @@ export default function Hero() {
           {/* Headline split to give "Class of 2030" its own row */}
           <h1 className="font-extrabold leading-[1.05] animate-fade-in">
             <span className="block text-5xl md:text-7xl">Meet</span>
-            <span className="text-[#0661d8] text-5xl md:text-7xl">Class of 2030</span>
+            <span className="text-[#1a7ae6] text-5xl md:text-7xl">Class of 2030</span>
             <span className="block text-5xl md:text-7xl">before Day One</span>
           </h1>
 
@@ -41,7 +41,7 @@ export default function Hero() {
             Find roommates, group chats, and new friends at your school — before the year even starts.
           </p>
 
-          <p className="mt-3 font-semibold text-[#0661d8] text-base md:text-lg animate-fade-in" style={{
+          <p className="mt-3 font-semibold text-[#1a7ae6] text-base md:text-lg animate-fade-in" style={{
           animationDelay: '0.18s'
         }}>
             🎓 Launching for Class of 2030 at 100+ colleges.
