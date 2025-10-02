@@ -717,6 +717,66 @@ export type Database = {
         }
         Relationships: []
       }
+      security_audit_log: {
+        Row: {
+          action: string
+          created_at: string | null
+          details: Json | null
+          id: string
+          ip_address: unknown | null
+          resource: string | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          created_at?: string | null
+          details?: Json | null
+          id?: string
+          ip_address?: unknown | null
+          resource?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          created_at?: string | null
+          details?: Json | null
+          id?: string
+          ip_address?: unknown | null
+          resource?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      submission_rate_limits: {
+        Row: {
+          attempt_count: number | null
+          created_at: string | null
+          id: string
+          identifier: string
+          submission_type: string
+          window_start: string | null
+        }
+        Insert: {
+          attempt_count?: number | null
+          created_at?: string | null
+          id?: string
+          identifier: string
+          submission_type: string
+          window_start?: string | null
+        }
+        Update: {
+          attempt_count?: number | null
+          created_at?: string | null
+          id?: string
+          identifier?: string
+          submission_type?: string
+          window_start?: string | null
+        }
+        Relationships: []
+      }
       submissions: {
         Row: {
           bio: string
@@ -908,7 +968,60 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      safe_profiles: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          class_year: string | null
+          college_email: string | null
+          created_at: string | null
+          id: string | null
+          interests: string[] | null
+          looking_for_roommate: boolean | null
+          major: string | null
+          name: string | null
+          phone_number: string | null
+          school: string | null
+          updated_at: string | null
+          user_id: string | null
+          verified: boolean | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          class_year?: string | null
+          college_email?: never
+          created_at?: string | null
+          id?: string | null
+          interests?: string[] | null
+          looking_for_roommate?: boolean | null
+          major?: string | null
+          name?: string | null
+          phone_number?: never
+          school?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+          verified?: boolean | null
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          class_year?: string | null
+          college_email?: never
+          created_at?: string | null
+          id?: string | null
+          interests?: string[] | null
+          looking_for_roommate?: boolean | null
+          major?: string | null
+          name?: string | null
+          phone_number?: never
+          school?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+          verified?: boolean | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       admin_get_schools_summary_only: {
@@ -940,6 +1053,15 @@ export type Database = {
           max_attempts?: number
           time_window_minutes?: number
           user_identifier: string
+        }
+        Returns: boolean
+      }
+      check_submission_rate_limit: {
+        Args: {
+          identifier_param: string
+          max_attempts?: number
+          submission_type_param: string
+          window_minutes?: number
         }
         Returns: boolean
       }
@@ -1062,6 +1184,10 @@ export type Database = {
         Args: { user_id_param?: string }
         Returns: boolean
       }
+      is_admin_simple: {
+        Args: { user_id_param?: string }
+        Returns: boolean
+      }
       join_school_group_chat: {
         Args: { conversation_id_param: string; user_id_param: string }
         Returns: boolean
@@ -1122,6 +1248,14 @@ export type Database = {
       }
       log_admin_verification_attempt: {
         Args: { reason?: string; success: boolean }
+        Returns: undefined
+      }
+      log_security_event: {
+        Args: {
+          action_param: string
+          details_param?: Json
+          resource_param?: string
+        }
         Returns: undefined
       }
       log_waitlist_access: {
