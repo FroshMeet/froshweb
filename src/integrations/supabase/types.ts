@@ -968,60 +968,7 @@ export type Database = {
       }
     }
     Views: {
-      safe_profiles: {
-        Row: {
-          avatar_url: string | null
-          bio: string | null
-          class_year: string | null
-          college_email: string | null
-          created_at: string | null
-          id: string | null
-          interests: string[] | null
-          looking_for_roommate: boolean | null
-          major: string | null
-          name: string | null
-          phone_number: string | null
-          school: string | null
-          updated_at: string | null
-          user_id: string | null
-          verified: boolean | null
-        }
-        Insert: {
-          avatar_url?: string | null
-          bio?: string | null
-          class_year?: string | null
-          college_email?: never
-          created_at?: string | null
-          id?: string | null
-          interests?: string[] | null
-          looking_for_roommate?: boolean | null
-          major?: string | null
-          name?: string | null
-          phone_number?: never
-          school?: string | null
-          updated_at?: string | null
-          user_id?: string | null
-          verified?: boolean | null
-        }
-        Update: {
-          avatar_url?: string | null
-          bio?: string | null
-          class_year?: string | null
-          college_email?: never
-          created_at?: string | null
-          id?: string | null
-          interests?: string[] | null
-          looking_for_roommate?: boolean | null
-          major?: string | null
-          name?: string | null
-          phone_number?: never
-          school?: string | null
-          updated_at?: string | null
-          user_id?: string | null
-          verified?: boolean | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       admin_get_schools_summary_only: {

@@ -77,6 +77,7 @@ export default function GuestInstagramPost() {
   };
 
   const handlePayment = async () => {
+    // Enhanced validation
     if (!formData.name || !formData.class_year || !formData.instagram_handle || formData.photos.length === 0) {
       toast({
         title: "Please complete all required fields",
@@ -86,18 +87,76 @@ export default function GuestInstagramPost() {
       return;
     }
 
+    // Validate name length (2-100 characters)
+    if (formData.name.trim().length < 2 || formData.name.trim().length > 100) {
+      toast({
+        title: "Invalid name",
+        description: "Name must be between 2 and 100 characters",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Validate Instagram handle format (alphanumeric, dots, underscores, 1-30 chars)
+    const instagramRegex = /^[a-zA-Z0-9._]{1,30}$/;
+    const cleanHandle = formData.instagram_handle.replace('@', '').trim();
+    if (!instagramRegex.test(cleanHandle)) {
+      toast({
+        title: "Invalid Instagram handle",
+        description: "Use only letters, numbers, dots, and underscores (1-30 characters)",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Validate bio length (max 500 characters)
+    if (formData.bio && formData.bio.trim().length > 500) {
+      toast({
+        title: "Bio too long",
+        description: "Bio must be 500 characters or less",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setLoading(true);
     try {
-      // First create the profile entry
+      // Check rate limit using Instagram handle as identifier
+      const identifier = cleanHandle.toLowerCase();
+      
+      const { data: rateLimitCheck, error: rateLimitError } = await supabase
+        .rpc('check_submission_rate_limit', {
+          identifier_param: identifier,
+          submission_type_param: 'instagram_guest_submission',
+          max_attempts: 3,
+          window_minutes: 60
+        });
+
+      if (rateLimitError) {
+        console.error('Rate limit check error:', rateLimitError);
+        // Continue anyway, don't block user if rate limit check fails
+      }
+
+      if (rateLimitCheck === false) {
+        toast({
+          title: "Too many submissions",
+          description: "Please wait an hour before submitting again",
+          variant: "destructive",
+        });
+        setLoading(false);
+        return;
+      }
+
+      // Create the profile entry with sanitized data
       const profileData = {
-        name: formData.name,
-        bio: formData.bio || null,
+        name: formData.name.trim(),
+        bio: formData.bio?.trim() || null,
         class_year: formData.class_year,
-        instagram_handle: formData.instagram_handle,
+        instagram_handle: cleanHandle,
         school: schoolDisplayName || '',
         photos: formData.photos,
-        user_id: null, // Guest user
-        paid_for_instagram: false, // Will be updated after payment
+        user_id: null,
+        paid_for_instagram: false,
         posted_to_instagram: false
       };
 
@@ -107,14 +166,40 @@ export default function GuestInstagramPost() {
         .select()
         .single();
 
-      if (profileError) throw profileError;
+      if (profileError) {
+        // Handle specific constraint violations with user-friendly messages
+        if (profileError.message.includes('check_instagram_handle_format')) {
+          toast({
+            title: "Invalid Instagram handle",
+            description: "Please use only letters, numbers, dots, and underscores",
+            variant: "destructive",
+          });
+        } else if (profileError.message.includes('check_name_length')) {
+          toast({
+            title: "Invalid name length",
+            description: "Name must be between 2 and 100 characters",
+            variant: "destructive",
+          });
+        } else if (profileError.message.includes('check_bio_length')) {
+          toast({
+            title: "Bio too long",
+            description: "Bio must be 500 characters or less",
+            variant: "destructive",
+          });
+        } else {
+          throw profileError;
+        }
+        setLoading(false);
+        return;
+      }
 
-      // Now initiate payment
+      // Initiate payment
       const { data: paymentData, error: paymentError } = await supabase.functions.invoke(
         'create-guest-payment',
         {
           body: {
-            school: schoolDisplayName || ''
+            school: schoolDisplayName || '',
+            profileId: profile.id
           }
         }
       );
@@ -124,12 +209,14 @@ export default function GuestInstagramPost() {
       // Redirect to Stripe checkout
       if (paymentData?.url) {
         window.open(paymentData.url, '_blank');
+      } else {
+        throw new Error("Payment URL not received");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error processing payment:', error);
       toast({
         title: "Payment failed",
-        description: "Please try again or contact support",
+        description: error.message || "Please try again or contact support",
         variant: "destructive",
       });
     } finally {
