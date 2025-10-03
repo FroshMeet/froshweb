@@ -124,7 +124,7 @@ const SharedNavigation = ({ currentPage }: SharedNavigationProps) => {
               {/* App CTA - Top Option */}
               <Button 
                 onClick={() => {
-                  navigate('/app');
+                  navigate('/waitlist');
                   setIsMobileMenuOpen(false);
                 }}
                 className="w-full text-left justify-start text-lg py-4 bg-primary text-primary-foreground hover:bg-primary/90 font-semibold shadow-lg shadow-primary/25"

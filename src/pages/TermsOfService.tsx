@@ -63,8 +63,8 @@ const TermsOfService = () => {
               <h3 className="text-xl font-semibold text-foreground mb-3">Contact Us:</h3>
               <p className="text-muted-foreground leading-relaxed">
                 For questions, reach out to{" "}
-                <a href="mailto:support@getfrosh.com" className="text-primary hover:text-primary/80 underline">
-                  support@getfrosh.com
+                <a href="mailto:support@frosh.app" className="text-primary hover:text-primary/80 underline">
+                  support@frosh.app
                 </a>
                 .
               </p>

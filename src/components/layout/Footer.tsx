@@ -47,7 +47,7 @@ const Footer = () => {
               </button>
               <button
                 aria-label="Email"
-                onClick={() => window.open('mailto:hello@getfrosh.com')}
+                onClick={() => window.open('mailto:hello@frosh.app')}
                 className="opacity-80 hover:opacity-100 hover:text-[#015cd2] focus:outline-none focus:ring-2 focus:ring-[#015cd2] rounded transition-all duration-200"
               >
                 <Mail className="h-5 w-5" />

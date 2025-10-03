@@ -43,8 +43,8 @@ const PrivacyPolicy = () => {
               
               <p>
                 Users may request the correction or deletion of their profile and personal data at any time by contacting{" "}
-                <a href="mailto:support@getfrosh.com" className="text-primary hover:text-primary/80 underline font-semibold">
-                  support@getfrosh.com
+                <a href="mailto:support@frosh.app" className="text-primary hover:text-primary/80 underline font-semibold">
+                  support@frosh.app
                 </a>
                 .
               </p>
@@ -58,8 +58,8 @@ const PrivacyPolicy = () => {
           <div className="border-t border-border/40 pt-8">
             <p className="text-sm text-muted-foreground">
               If you have any questions about this Privacy Policy, please contact us at{" "}
-              <a href="mailto:support@getfrosh.com" className="text-primary hover:text-primary/80 underline">
-                support@getfrosh.com
+              <a href="mailto:support@frosh.app" className="text-primary hover:text-primary/80 underline">
+                support@frosh.app
               </a>
             </p>
           </div>

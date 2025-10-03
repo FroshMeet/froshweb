@@ -143,8 +143,8 @@ const Contact = () => {
                         <div className="flex-1">
                           <h3 className="font-bold text-foreground mb-2">Email Support</h3>
                           <p className="text-muted-foreground mb-2">For general inquiries and support</p>
-                          <a href="mailto:support@getfrosh.com" className="text-primary hover:text-primary/80 transition-colors">
-                            support@getfrosh.com
+                          <a href="mailto:support@frosh.app" className="text-primary hover:text-primary/80 transition-colors">
+                            support@frosh.app
                           </a>
                           <p className="text-xs text-muted-foreground mt-2">We typically respond within 72 hours</p>
                         </div>

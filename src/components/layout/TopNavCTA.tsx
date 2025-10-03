@@ -5,7 +5,7 @@ import freshMeatIcon from "@/assets/fresh-meat-app-icon-optimized.webp";
 
 export const TopNavCTA = () => {
   return (
-    <Link to="/app">
+    <Link to="/waitlist">
       <Button 
         variant="outline" 
         className="bg-card/50 border-border/40 hover:bg-card/70 text-foreground hover:text-foreground select-none flex items-center gap-2 px-4 py-2 h-auto"
