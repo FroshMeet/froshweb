@@ -30,11 +30,11 @@ const CookiePolicy = () => {
               </p>
               
               <p>
-                FroshMeet uses essential cookies to ensure website functionality and to enhance the user experience. These cookies support core features such as user navigation and secure access.
+                Frosh uses essential cookies to ensure website functionality and to enhance the user experience. These cookies support core features such as user navigation and secure access.
               </p>
               
               <p>
-                FroshMeet does not use cookies for advertising or behavioral tracking. However, third-party analytics tools (such as Plausible or Google Analytics) may utilize anonymized data to help us understand how users interact with the platform and to improve performance.
+                Frosh does not use cookies for advertising or behavioral tracking. However, third-party analytics tools (such as Plausible or Google Analytics) may utilize anonymized data to help us understand how users interact with the platform and to improve performance.
               </p>
               
               <p>
@@ -43,8 +43,8 @@ const CookiePolicy = () => {
               
               <p>
                 If you have any questions or concerns regarding this Cookie Policy, please contact us at{" "}
-                <a href="mailto:support@froshmeet.com" className="text-primary hover:text-primary/80 underline font-semibold">
-                  support@froshmeet.com
+                <a href="mailto:support@getfrosh.com" className="text-primary hover:text-primary/80 underline font-semibold">
+                  support@getfrosh.com
                 </a>
                 .
               </p>
@@ -54,8 +54,8 @@ const CookiePolicy = () => {
           <div className="border-t border-border/40 pt-8">
             <p className="text-sm text-muted-foreground">
               If you have any questions about this Cookie Policy, please contact us at{" "}
-              <a href="mailto:support@froshmeet.com" className="text-primary hover:text-primary/80 underline">
-                support@froshmeet.com
+              <a href="mailto:support@getfrosh.com" className="text-primary hover:text-primary/80 underline">
+                support@getfrosh.com
               </a>
             </p>
           </div>

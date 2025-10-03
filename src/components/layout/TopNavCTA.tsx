@@ -12,10 +12,10 @@ export const TopNavCTA = () => {
       >
         <img 
           src={freshMeatIcon} 
-          alt="Fresh Meat" 
+          alt="Frosh" 
           className="w-5 h-5 select-none"
         />
-        <span className="font-medium">Fresh Meat 📱 App Coming <span className="text-[#015cd2]">Feb 15</span></span>
+        <span className="font-medium">Frosh 📱 App Coming <span className="text-[#015cd2]">Feb 15</span></span>
       </Button>
     </Link>
   );

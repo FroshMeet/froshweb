@@ -54,7 +54,7 @@ const SharedNavigation = ({ currentPage }: SharedNavigationProps) => {
           >
             <img 
               src={froshmeetLogo}
-              alt="FroshMeet Logo" 
+              alt="Frosh Logo" 
               className={isMobile ? "h-10 w-auto" : "h-16 w-auto"}
             />
           </div>
@@ -100,7 +100,7 @@ const SharedNavigation = ({ currentPage }: SharedNavigationProps) => {
               Sign In
             </Button>
             <Button onClick={() => navigate('/signup')} className="bg-primary hover:bg-primary/90">
-              Join FroshMeet Now
+              Join Frosh Now
             </Button>
           </div>
 
@@ -129,7 +129,7 @@ const SharedNavigation = ({ currentPage }: SharedNavigationProps) => {
                 }}
                 className="w-full text-left justify-start text-lg py-4 bg-primary text-primary-foreground hover:bg-primary/90 font-semibold shadow-lg shadow-primary/25"
               >
-                FreshMeat App 📱
+                Frosh App 📱
               </Button>
               
               <Button 
@@ -192,7 +192,7 @@ const SharedNavigation = ({ currentPage }: SharedNavigationProps) => {
                   }}
                   className="w-full py-3 text-base bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg shadow-primary/25"
                 >
-                  Join FroshMeet Now
+                  Join Frosh Now
                 </Button>
               </div>
             </nav>

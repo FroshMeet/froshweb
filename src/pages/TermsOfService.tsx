@@ -18,7 +18,7 @@ const TermsOfService = () => {
           </div>
           
           <div className="prose prose-invert max-w-none space-y-8">
-            <p className="text-lg text-muted-foreground leading-relaxed">Welcome to FroshMeet. By using our platform, whether you are submitting a student profile or making a purchase, you agree to the following terms:</p>
+            <p className="text-lg text-muted-foreground leading-relaxed">Welcome to Frosh. By using our platform, whether you are submitting a student profile or making a purchase, you agree to the following terms:</p>
             
             <div className="space-y-6">
               <div>
@@ -35,17 +35,17 @@ const TermsOfService = () => {
               
               <div>
                 <h2 className="text-2xl font-semibold text-foreground mb-3">3. Authorization to Use Your Content</h2>
-                <p className="text-muted-foreground leading-relaxed">You grant FroshMeet full permission to use your submitted name, photo, school information, bio, and any other content for student discovery, social media posts, and marketing purposes. You confirm that you have the necessary rights to share the content you submit.</p>
+                <p className="text-muted-foreground leading-relaxed">You grant Frosh full permission to use your submitted name, photo, school information, bio, and any other content for student discovery, social media posts, and marketing purposes. You confirm that you have the necessary rights to share the content you submit.</p>
               </div>
               
               <div>
                 <h2 className="text-2xl font-semibold text-foreground mb-3">4. Content Standards</h2>
-                <p className="text-muted-foreground leading-relaxed">Users are responsible for ensuring that their submissions are accurate and appropriate. FroshMeet reserves the right to reject or remove any content that violates our guidelines or standards at our sole discretion.</p>
+                <p className="text-muted-foreground leading-relaxed">Users are responsible for ensuring that their submissions are accurate and appropriate. Frosh reserves the right to reject or remove any content that violates our guidelines or standards at our sole discretion.</p>
               </div>
               
               <div>
                 <h2 className="text-2xl font-semibold text-foreground mb-3">5. Service Changes</h2>
-                <p className="text-muted-foreground leading-relaxed">FroshMeet reserves the right to modify, suspend, or discontinue any features, pricing, or services at any time, with or without notice.</p>
+                <p className="text-muted-foreground leading-relaxed">Frosh reserves the right to modify, suspend, or discontinue any features, pricing, or services at any time, with or without notice.</p>
               </div>
               
               <div>
@@ -63,13 +63,13 @@ const TermsOfService = () => {
               <h3 className="text-xl font-semibold text-foreground mb-3">Contact Us:</h3>
               <p className="text-muted-foreground leading-relaxed">
                 For questions, reach out to{" "}
-                <a href="mailto:support@froshmeet.com" className="text-primary hover:text-primary/80 underline">
-                  support@froshmeet.com
+                <a href="mailto:support@getfrosh.com" className="text-primary hover:text-primary/80 underline">
+                  support@getfrosh.com
                 </a>
                 .
               </p>
               <p className="text-muted-foreground leading-relaxed mt-4">
-                By using FroshMeet, you agree to these Terms.
+                By using Frosh, you agree to these Terms.
               </p>
             </div>
           </div>

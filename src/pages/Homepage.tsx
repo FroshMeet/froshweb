@@ -517,7 +517,7 @@ const Homepage = () => {
                 Sign In
               </Button>
               <Button onClick={() => navigate('/signup')} className="bg-primary hover:bg-primary/90">
-                Join FroshMeet Now
+                Join Frosh Now
               </Button>
             </div>
 
@@ -549,7 +549,7 @@ const Homepage = () => {
                   }}
                   className="w-full text-left justify-start text-lg py-4 bg-primary text-primary-foreground hover:bg-primary/90 font-semibold shadow-lg shadow-primary/25"
                 >
-                  FreshMeat App 📱
+                  Frosh App 📱
                 </Button>
                 
                 <Button 
@@ -612,7 +612,7 @@ const Homepage = () => {
                     }}
                     className="w-full py-3 text-base bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg shadow-primary/25"
                   >
-                    Join FroshMeet Now
+                    Join Frosh Now
                   </Button>
                 </div>
               </nav>
@@ -635,7 +635,7 @@ const Homepage = () => {
               Popular Schools
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Join students from these top universities already connecting on FroshMeet
+              Join students from these top universities already connecting on Frosh
             </p>
           </div>
           
@@ -656,7 +656,7 @@ const Homepage = () => {
               Everything you need to connect
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Discover the features that make FroshMeet the perfect platform for college freshmen
+              Discover the features that make Frosh the perfect platform for college freshmen
             </p>
           </div>
           
@@ -712,7 +712,7 @@ const Homepage = () => {
               See what's happening
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Follow @FroshMeet on Instagram for student stories, tips, and community highlights
+              Follow @getfrosh on Instagram for student stories, tips, and community highlights
             </p>
           </div>
           
@@ -720,15 +720,15 @@ const Homepage = () => {
             <div className="glass-card">
               <Card className="glass-content bg-card/50 border-border/40 p-8 text-center">
                 <Instagram className="h-16 w-16 text-primary mx-auto mb-6 select-none" />
-                <h3 className="inline-block text-2xl font-bold text-foreground leading-tight">@FroshMeet Instagram Feed</h3>
+                <h3 className="inline-block text-2xl font-bold text-foreground leading-tight">@getfrosh Instagram Feed</h3>
                 <div className="mt-4 mb-6">
                   <p className="text-muted-foreground leading-tight">
-                    Connect with us on Instagram to see real student stories and stay updated with the latest from the FroshMeet community
+                    Connect with us on Instagram to see real student stories and stay updated with the latest from the Frosh community
                   </p>
                 </div>
-                <Button variant="outline" className="bg-gradient-to-r from-pink-500 to-purple-500 border-0 text-white hover:from-pink-600 hover:to-purple-600 select-none" onClick={() => window.open('https://instagram.com/froshmeet', '_blank')}>
+                <Button variant="outline" className="bg-gradient-to-r from-pink-500 to-purple-500 border-0 text-white hover:from-pink-600 hover:to-purple-600 select-none" onClick={() => window.open('https://instagram.com/getfrosh', '_blank')}>
                   <Instagram className="h-5 w-5 mr-2" />
-                  Follow @FroshMeet
+                  Follow @getfrosh
                 </Button>
               </Card>
             </div>

@@ -77,7 +77,7 @@ const Contact = () => {
               </span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Have questions, feedback, or need support? Our team is here to help you make the most of your FroshMeet experience.
+              Have questions, feedback, or need support? Our team is here to help you make the most of your Frosh experience.
             </p>
           </div>
         </div>
@@ -143,8 +143,8 @@ const Contact = () => {
                         <div className="flex-1">
                           <h3 className="font-bold text-foreground mb-2">Email Support</h3>
                           <p className="text-muted-foreground mb-2">For general inquiries and support</p>
-                          <a href="mailto:support@froshmeet.com" className="text-primary hover:text-primary/80 transition-colors">
-                            support@froshmeet.com
+                          <a href="mailto:support@getfrosh.com" className="text-primary hover:text-primary/80 transition-colors">
+                            support@getfrosh.com
                           </a>
                           <p className="text-xs text-muted-foreground mt-2">We typically respond within 72 hours</p>
                         </div>
@@ -159,8 +159,8 @@ const Contact = () => {
                         <div className="flex-1">
                           <h3 className="font-bold text-foreground mb-2">Social Media</h3>
                           <p className="text-muted-foreground mb-2">Follow us for updates and community highlights</p>
-                          <a href="https://instagram.com/froshmeet" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80 transition-colors">
-                            @FroshMeet
+                          <a href="https://instagram.com/getfrosh" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80 transition-colors">
+                            @getfrosh
                           </a>
                           <p className="text-xs text-muted-foreground mt-2">Join our growing community</p>
                         </div>
@@ -183,15 +183,15 @@ const Contact = () => {
                         <p className="text-muted-foreground text-sm">You'll need your university email address and student ID during registration.</p>
                       </div>
                       <div>
-                        <p className="font-medium text-foreground mb-2">Is FroshMeet free to use?</p>
-                        <p className="text-muted-foreground text-sm">Yes! FroshMeet is completely free for all college students.</p>
+                        <p className="font-medium text-foreground mb-2">Is Frosh free to use?</p>
+                        <p className="text-muted-foreground text-sm">Yes! Frosh is completely free for all college students.</p>
                       </div>
                       <div>
                         <p className="font-medium text-foreground mb-2">How do you ensure user safety?</p>
                         <p className="text-muted-foreground text-sm">We verify all users, moderate conversations, and have strict community guidelines.</p>
                       </div>
                       <div>
-                        <p className="font-medium text-foreground mb-2">What universities does FroshMeet support?</p>
+                        <p className="font-medium text-foreground mb-2">What universities does Frosh support?</p>
                         <p className="text-muted-foreground text-sm">We support all major universities and colleges in the US. Check our university list during signup.</p>
                       </div>
                       <div>

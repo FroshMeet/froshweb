@@ -149,7 +149,7 @@ export default function AppLanding() {
                     alt="FroshMeet Logo" 
                     className={isMobile ? "h-10 w-auto" : "h-16 w-auto"}
                   />
-                  <span className="text-xl font-bold text-foreground">FroshMeet</span>
+                  <span className="text-xl font-bold text-foreground">Frosh</span>
                 </div>
               </div>
             </div>
@@ -162,7 +162,7 @@ export default function AppLanding() {
                 <div className="mb-8">
                   <img 
                     src={freshMeatIcon} 
-                    alt="Fresh Meat App" 
+                    alt="Frosh App"
                     className="w-[7.2rem] h-[7.2rem] mx-auto mb-6 select-none"
                   />
                 </div>
@@ -175,10 +175,10 @@ export default function AppLanding() {
                 <Button 
                   variant="outline" 
                   className="bg-gradient-to-r from-pink-500 to-purple-500 border-0 text-white hover:from-pink-600 hover:to-purple-600 select-none"
-                  onClick={() => window.open('https://instagram.com/freshmeatapp', '_blank')}
+                  onClick={() => window.open('https://instagram.com/getfrosh', '_blank')}
                 >
                   <Instagram className="h-5 w-5 mr-2 select-none" />
-                  Follow @freshmeatapp
+                  Follow @getfrosh
                 </Button>
               </Card>
             </div>
@@ -209,7 +209,7 @@ export default function AppLanding() {
                   alt="FroshMeet Logo" 
                   className={isMobile ? "h-10 w-auto" : "h-16 w-auto"}
                 />
-                <span className="text-xl font-bold text-foreground">FroshMeet</span>
+                <span className="text-xl font-bold text-foreground">Frosh</span>
               </div>
             </div>
           </div>
@@ -222,7 +222,7 @@ export default function AppLanding() {
             {/* Left Side - Hero Content */}
             <div className="space-y-6">
               <h1 className="text-5xl font-bold text-foreground leading-tight">
-                📱 FreshMeat App<br />launching <span className="text-[#015cd2]">February 15th.</span>
+                📱 Frosh App<br />launching <span className="text-[#015cd2]">February 15th.</span>
               </h1>
               <p className="text-xl text-muted-foreground leading-relaxed">
                 {getSubtext()}
@@ -316,7 +316,7 @@ export default function AppLanding() {
                 <div className="glass-content p-8 text-center">
                   <img 
                     src={freshMeatIcon} 
-                    alt="Fresh Meat App" 
+                    alt="Frosh App" 
                     className="w-[9.6rem] h-[9.6rem] mx-auto mb-6 select-none"
                   />
                   <h3 className="text-2xl font-bold text-foreground mb-4">

@@ -45,8 +45,8 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send email to support
     const emailResponse = await resend.emails.send({
-      from: "FroshMeet Contact <contact@froshmeet.com>",
-      to: ["support@froshmeet.com"],
+      from: "Frosh Contact <contact@getfrosh.com>",
+      to: ["support@getfrosh.com"],
       replyTo: email,
       subject: `Contact Form Submission from ${name}`,
       html: `
@@ -68,7 +68,7 @@ const handler = async (req: Request): Promise<Response> => {
           
           <div style="margin-top: 20px; padding: 15px; background-color: #e3f2fd; border-radius: 8px;">
             <p style="margin: 0; font-size: 14px; color: #666;">
-              This message was sent through the FroshMeet contact form.
+              This message was sent through the Frosh contact form.
               You can reply directly to this email to respond to ${name}.
             </p>
           </div>
@@ -80,12 +80,12 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send confirmation email to user
     await resend.emails.send({
-      from: "FroshMeet Support <support@froshmeet.com>",
+      from: "Frosh Support <support@getfrosh.com>",
       to: [email],
-      subject: "We received your message - FroshMeet",
+      subject: "We received your message - Frosh",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #007bff;">Thank you for contacting FroshMeet!</h2>
+          <h2 style="color: #007bff;">Thank you for contacting Frosh!</h2>
           
           <p>Hi ${name},</p>
           
@@ -96,10 +96,10 @@ const handler = async (req: Request): Promise<Response> => {
             <div style="white-space: pre-wrap; line-height: 1.6; color: #666;">${message}</div>
           </div>
           
-          <p>In the meantime, feel free to explore FroshMeet and connect with your future classmates!</p>
+          <p>In the meantime, feel free to explore Frosh and connect with your future classmates!</p>
           
           <p>Best regards,<br>
-          <strong>The FroshMeet Team</strong></p>
+          <strong>The Frosh Team</strong></p>
           
           <hr style="border: none; border-top: 1px solid #ddd; margin: 30px 0;">
           <p style="font-size: 12px; color: #999;">

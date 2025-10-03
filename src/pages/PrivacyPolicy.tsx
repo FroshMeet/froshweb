@@ -30,27 +30,27 @@ const PrivacyPolicy = () => {
               </p>
               
               <p>
-                FroshMeet collects limited personal information provided voluntarily by users, including name, school, graduation year, and profile media. This information is used for the purpose of showcasing student profiles and enabling social discovery.
+                Frosh collects limited personal information provided voluntarily by users, including name, school, graduation year, and profile media. This information is used for the purpose of showcasing student profiles and enabling social discovery.
               </p>
               
               <p>
-                Submitted data may also be used for promotional purposes, such as being featured on Instagram accounts affiliated with FroshMeet.
+                Submitted data may also be used for promotional purposes, such as being featured on Instagram accounts affiliated with Frosh.
               </p>
               
               <p>
-                All user data is securely stored through Supabase. FroshMeet does not sell, rent, or share personal information with third parties for marketing purposes.
+                All user data is securely stored through Supabase. Frosh does not sell, rent, or share personal information with third parties for marketing purposes.
               </p>
               
               <p>
                 Users may request the correction or deletion of their profile and personal data at any time by contacting{" "}
-                <a href="mailto:support@froshmeet.com" className="text-primary hover:text-primary/80 underline font-semibold">
-                  support@froshmeet.com
+                <a href="mailto:support@getfrosh.com" className="text-primary hover:text-primary/80 underline font-semibold">
+                  support@getfrosh.com
                 </a>
                 .
               </p>
               
               <p>
-                By using FroshMeet, you consent to the collection and use of your information as described in this Privacy Policy.
+                By using Frosh, you consent to the collection and use of your information as described in this Privacy Policy.
               </p>
             </div>
           </div>
@@ -58,8 +58,8 @@ const PrivacyPolicy = () => {
           <div className="border-t border-border/40 pt-8">
             <p className="text-sm text-muted-foreground">
               If you have any questions about this Privacy Policy, please contact us at{" "}
-              <a href="mailto:support@froshmeet.com" className="text-primary hover:text-primary/80 underline">
-                support@froshmeet.com
+              <a href="mailto:support@getfrosh.com" className="text-primary hover:text-primary/80 underline">
+                support@getfrosh.com
               </a>
             </p>
           </div>

@@ -276,7 +276,7 @@ const WelcomeScreen = ({ onUserCreate, onGuestContinue }) => {
               <Zap className="h-10 w-10 text-primary" />
             </div>
             <CardTitle className="text-4xl font-bold text-foreground capital-a-glow mb-2">
-              FroshMeet
+              Frosh
             </CardTitle>
             <p className="text-muted-foreground font-medium text-lg">
               Connect with your college classmates
@@ -315,7 +315,7 @@ const WelcomeScreen = ({ onUserCreate, onGuestContinue }) => {
             </p>
             
             <p className="text-xs text-muted-foreground/60 text-center border-t border-border pt-4">
-              FroshMeet is not affiliated with or endorsed by any university. By signing up, you agree to our Terms and Privacy Policy.
+              Frosh is not affiliated with or endorsed by any university. By signing up, you agree to our Terms and Privacy Policy.
             </p>
           </CardContent>
         </Card>

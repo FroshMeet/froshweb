@@ -15,7 +15,7 @@ const Footer = () => {
             <div className="flex items-center gap-2">
               <img 
                 src={froshmeetLogoSmall} 
-                alt="FroshMeet" 
+                alt="Frosh" 
                 className="h-6 md:h-7" 
               />
             </div>
@@ -26,28 +26,28 @@ const Footer = () => {
             <div className="flex items-center gap-3">
               <button
                 aria-label="Instagram"
-                onClick={() => window.open('https://www.instagram.com/froshmeet/', '_blank', 'noopener,noreferrer')}
+                onClick={() => window.open('https://www.instagram.com/getfrosh/', '_blank', 'noopener,noreferrer')}
                 className="opacity-80 hover:opacity-100 hover:text-[#015cd2] focus:outline-none focus:ring-2 focus:ring-[#015cd2] rounded transition-all duration-200"
               >
                 <Instagram className="h-5 w-5" />
               </button>
               <button
                 aria-label="TikTok"
-                onClick={() => window.open('https://www.tiktok.com/@froshmeet', '_blank', 'noopener,noreferrer')}
+                onClick={() => window.open('https://www.tiktok.com/@getfrosh', '_blank', 'noopener,noreferrer')}
                 className="opacity-80 hover:opacity-100 hover:text-[#015cd2] focus:outline-none focus:ring-2 focus:ring-[#015cd2] rounded transition-all duration-200"
               >
                 <Music2 className="h-5 w-5" />
               </button>
               <button
                 aria-label="YouTube"
-                onClick={() => window.open('https://www.youtube.com/@FroshMeet', '_blank', 'noopener,noreferrer')}
+                onClick={() => window.open('https://www.youtube.com/@getfrosh', '_blank', 'noopener,noreferrer')}
                 className="opacity-80 hover:opacity-100 hover:text-[#015cd2] focus:outline-none focus:ring-2 focus:ring-[#015cd2] rounded transition-all duration-200"
               >
                 <Youtube className="h-5 w-5" />
               </button>
               <button
                 aria-label="Email"
-                onClick={() => window.open('mailto:hello@froshmeet.com')}
+                onClick={() => window.open('mailto:hello@getfrosh.com')}
                 className="opacity-80 hover:opacity-100 hover:text-[#015cd2] focus:outline-none focus:ring-2 focus:ring-[#015cd2] rounded transition-all duration-200"
               >
                 <Mail className="h-5 w-5" />
@@ -135,7 +135,7 @@ const Footer = () => {
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-3">
           <div className="flex flex-col md:flex-row items-center justify-between gap-2 text-xs md:text-[13px] text-zinc-300/90">
             <p className="text-center md:text-left">
-              FroshMeet is student-run and not affiliated with any college or university. Use of this website constitutes acceptance of our Privacy Policy and Terms of Service.
+              Frosh is student-run and not affiliated with any college or university. Use of this website constitutes acceptance of our Privacy Policy and Terms of Service.
             </p>
         <p className="text-right text-xs md:text-[13px] text-zinc-400/75">
           Built for the class of 2030 🎓
