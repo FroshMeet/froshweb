@@ -10,6 +10,8 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useSchoolSearch } from '@/hooks/useSchoolSearch';
 import { schools, School } from '@/data/schools';
 import { getCorrectSchoolSlug } from '@/utils/schoolNavigation';
+import { SEO } from '@/components/seo/SEO';
+import { websiteSchema } from '@/utils/seoSchema';
 
 // Import optimized WebP logos
 import harvardLogo from "@/assets/logos/harvard.webp";
@@ -77,6 +79,13 @@ const Community = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-primary/5">
+      <SEO
+        title="Community - Find Your College | Frosh"
+        description="Explore Frosh communities at Harvard, Stanford, MIT, UCLA, USC, Yale, and more. Connect with Class of 2030 students at your university."
+        keywords="college community, Harvard Class of 2030, Stanford freshmen, MIT students, UCLA freshmen, college networking, university social, freshman community"
+        canonical="/community"
+        schema={websiteSchema}
+      />
       <SharedNavigation currentPage="community" />
 
       {/* Main Content */}
@@ -182,7 +191,7 @@ const Community = () => {
                 Don't see your school?
               </h2>
               <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-                We're constantly adding new schools to FroshMeet. Let us know which school you'd like to see next!
+                We're constantly adding new schools to Frosh. Let us know which school you'd like to see next!
               </p>
               <Button 
                 size="lg" 

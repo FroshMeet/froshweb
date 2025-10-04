@@ -6,10 +6,19 @@ import { Badge } from "@/components/ui/badge";
 import { Users, MessageSquare, Calendar, Shield, Search, Heart, Zap, Star } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import SharedNavigation from "@/components/layout/SharedNavigation";
+import { SEO } from "@/components/seo/SEO";
+import { organizationSchema, websiteSchema } from "@/utils/seoSchema";
 const Features = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   return <div className="min-h-screen bg-background">
+      <SEO
+        title="Features - Frosh College App"
+        description="Discover Frosh features: smart matching, secure messaging, verified students, event discovery, and more. Everything you need to connect with college freshmen."
+        keywords="college app features, student matching, roommate finder, college events, verified students, freshman networking, college messaging"
+        canonical="/features"
+        schema={organizationSchema}
+      />
       <SharedNavigation currentPage="features" />
 
       {/* Hero Section */}
@@ -25,8 +34,8 @@ const Features = () => {
                 connect & thrive
               </span>
             </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Discover all the powerful features that make FroshMeet the perfect platform 
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Discover all the powerful features that make Frosh the perfect platform 
               for college freshmen to build meaningful connections before day one.
             </p>
           </div>
@@ -159,7 +168,7 @@ const Features = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16 animate-fade-in">
-              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">How FroshMeet Works</h2>
+              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">How Frosh Works</h2>
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
                 Get started in three simple steps and find your college community
               </p>
@@ -213,7 +222,7 @@ const Features = () => {
                 Ready to experience all these features?
               </h2>
               <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Join thousands of students who are already using FroshMeet to build their college community
+                Join thousands of students who are already using Frosh to build their college community
               </p>
               <Button size="lg" onClick={() => navigate('/community')} className="bg-primary hover:bg-primary/90 text-lg px-8 py-4 h-auto">
                 Get Started Free

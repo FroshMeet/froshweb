@@ -12,6 +12,8 @@ import Hero from '@/components/landing/Hero';
 import { getCorrectSchoolSlug } from '@/utils/schoolNavigation';
 import { schools } from '@/data/schools';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { SEO } from '@/components/seo/SEO';
+import { organizationSchema, websiteSchema, mobileAppSchema } from '@/utils/seoSchema';
 import froshmeetLogo from "@/assets/froshmeet-logo-optimized.webp";
 // Use only approved schools to ensure all links work
 const SCHOOL_DATABASE = [
@@ -482,6 +484,16 @@ const Homepage = () => {
   
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Frosh - College Freshman Social App | Meet Your Class of 2030"
+        description="Connect with college freshmen before day one. Frosh helps Class of 2030 students meet classmates, find roommates, and build friendships at Harvard, Stanford, MIT, UCLA, USC, Yale, and more top universities."
+        keywords="frosh, frosh app, college freshman app, Class of 2030, meet classmates, find roommates, college social app, Harvard freshmen, Stanford freshmen, MIT students, UCLA freshmen, college networking"
+        canonical="/"
+        schema={{
+          "@context": "https://schema.org",
+          "@graph": [organizationSchema, websiteSchema, mobileAppSchema]
+        }}
+      />
       {/* Header */}
       <div className="glass-card sticky top-0 border-b border-border/40 z-50">
         <header className="glass-content bg-background/80">
@@ -489,7 +501,7 @@ const Homepage = () => {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate('/')}>
-              <img src={froshmeetLogo} alt="FroshMeet Logo" className={isMobile ? "h-10 w-auto" : "h-16 w-auto"} />
+              <img src={froshmeetLogo} alt="Frosh - College Freshman Social App Logo" className={isMobile ? "h-10 w-auto" : "h-16 w-auto"} />
             </div>
             
             {/* Centered Navigation - Desktop Only */}

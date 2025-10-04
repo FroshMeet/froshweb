@@ -6,10 +6,19 @@ import { Badge } from "@/components/ui/badge";
 import { GraduationCap, Shield, Heart, Target, Users } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import SharedNavigation from "@/components/layout/SharedNavigation";
+import { SEO } from "@/components/seo/SEO";
+import { organizationSchema, faqSchema } from "@/utils/seoSchema";
 const About = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   return <div className="min-h-screen bg-background">
+      <SEO
+        title="About Frosh - Our Story & Mission"
+        description="Learn about Frosh, the college freshman social platform. Discover our mission to help Class of 2030 students connect, find roommates, and build lasting friendships before college starts."
+        keywords="about frosh, college social platform, freshman networking mission, student community, college connections, Class of 2030"
+        canonical="/about"
+        schema={organizationSchema}
+      />
       <SharedNavigation currentPage="about" />
 
       {/* Hero Section */}

@@ -5,11 +5,19 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Youtube, Linkedin } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { SEO } from "@/components/seo/SEO";
 import froshIcon from "@/assets/fresh-meat-app-icon-optimized.webp";
 const Kian = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   return <div className="min-h-screen bg-background">
+      <SEO
+        title="Kian - Founder of Frosh"
+        description="Meet Kian, the 18-year-old founder of Frosh. Learn about his vision to help college freshmen connect and build community before day one."
+        keywords="kian frosh, frosh founder, college entrepreneur, student founder, frosh ceo"
+        canonical="/kian"
+        ogType="profile"
+      />
       {/* Header */}
       <header className="sticky top-0 border-b border-border/40 bg-background/80 backdrop-blur-xl z-50">
         <div className="container mx-auto px-4 py-4">

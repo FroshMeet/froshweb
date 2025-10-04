@@ -10,6 +10,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import SharedNavigation from "@/components/layout/SharedNavigation";
+import { SEO } from "@/components/seo/SEO";
 const Contact = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
@@ -61,6 +62,12 @@ const Contact = () => {
     }));
   };
   return <div className="min-h-screen bg-background">
+      <SEO
+        title="Contact Us - Frosh"
+        description="Get in touch with the Frosh team. Request your school, report issues, or share feedback about the college freshman social platform."
+        keywords="contact frosh, support, customer service, request school, feedback, college app help"
+        canonical="/contact"
+      />
       <SharedNavigation currentPage="contact" />
 
       {/* Hero Section */}
