@@ -13,7 +13,7 @@ export const GetFeaturedModalHeader: React.FC = () => {
         Get Featured on Instagram
       </DialogTitle>
       <DialogDescription>
-        Share your story or photo to be featured on your school's FroshMeet Instagram account!
+        Share your story or photo to be featured on your school's Frosh Instagram account!
       </DialogDescription>
     </DialogHeader>
   );

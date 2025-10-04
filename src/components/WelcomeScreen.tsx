@@ -503,7 +503,7 @@ const WelcomeScreen = ({ onUserCreate, onGuestContinue }) => {
                 <CheckCircle className="h-10 w-10 text-green-400" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-foreground mb-2">You're officially part of FroshMeet!</h3>
+                <h3 className="text-xl font-bold text-foreground mb-2">You're officially part of Frosh!</h3>
                 <p className="text-muted-foreground">Let's meet your people.</p>
               </div>
             </div>

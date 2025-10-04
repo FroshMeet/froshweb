@@ -26,7 +26,7 @@ const About = () => {
               </span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              FroshMeet was born from the simple idea that college should be about more than just classes. 
+              Frosh was born from the simple idea that college should be about more than just classes. 
               It's about finding your people, building meaningful relationships, and creating memories that shape your future.
             </p>
           </div>
@@ -46,10 +46,10 @@ const About = () => {
             
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="animate-fade-in">
-                <h3 className="text-3xl font-bold text-foreground mb-6">Why FroshMeet Exists</h3>
+                <h3 className="text-3xl font-bold text-foreground mb-6">Why Frosh Exists</h3>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-6">
                   Starting college can be overwhelming. You're entering a new environment, meeting hundreds of new people, 
-                  and trying to figure out where you belong. That's where FroshMeet comes in.
+                  and trying to figure out where you belong. That's where Frosh comes in.
                 </p>
                 <p className="text-lg text-muted-foreground leading-relaxed">
                   We created a safe, verified platform specifically for incoming freshmen to connect with their future 
@@ -81,7 +81,7 @@ const About = () => {
             <div className="text-center mb-16 animate-fade-in">
               <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Our Core Values</h2>
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                The principles that guide everything we do at FroshMeet
+                The principles that guide everything we do at Frosh
               </p>
             </div>
             
@@ -134,7 +134,7 @@ const About = () => {
               </blockquote>
                <p className="text-lg text-muted-foreground">
                  <Button variant="link" onClick={() => navigate('/kian')} className="text-primary hover:text-primary/80 p-0 h-auto font-normal text-lg underline-offset-4">
-                   - kian, Founder of FroshMeet
+                   - kian, Founder of Frosh
                  </Button>
                </p>
             </div>
@@ -151,7 +151,7 @@ const About = () => {
                 Ready to find your college community?
               </h2>
               <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Join thousands of students who have already found their people through FroshMeet
+                Join thousands of students who have already found their people through Frosh
               </p>
               <Button size="lg" onClick={() => navigate('/community')} className="bg-primary hover:bg-primary/90 text-lg px-8 py-4 h-auto">
                 Start Connecting Today

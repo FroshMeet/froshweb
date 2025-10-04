@@ -32,7 +32,7 @@ const GuestMessageDialog = ({ isOpen, onClose, onCreateAccount }: GuestMessageDi
           </div>
           <DialogTitle className="text-foreground">Create an Account to Message Classmates</DialogTitle>
           <DialogDescription className="text-muted-foreground">
-            Join FroshMeet to start conversations and connect with your fellow students.
+            Join Frosh to start conversations and connect with your fellow students.
           </DialogDescription>
         </DialogHeader>
         

@@ -18,7 +18,7 @@ const AppHeader = ({ displayUser, isGuest }: AppHeaderProps) => {
           </div>
           <div>
             <h1 className="text-xl font-display font-bold text-foreground">
-              FroshMeet
+              Frosh
             </h1>
             <p className="text-xs text-muted-foreground font-medium">
               {displayUser.college}

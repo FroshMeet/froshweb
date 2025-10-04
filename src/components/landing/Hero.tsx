@@ -65,7 +65,7 @@ export default function Hero() {
             </Button>
           </div>
 
-          <div className="mt-5 text-xs text-zinc-400">⚠️ FroshMeet is a student-run platform and is not officially affiliated with or endorsed by any college or university.</div>
+          <div className="mt-5 text-xs text-zinc-400">⚠️ Frosh is a student-run platform and is not officially affiliated with or endorsed by any college or university.</div>
         </div>
 
         {/* Phone mockup image */}
@@ -74,7 +74,7 @@ export default function Hero() {
       }}>
           <img 
             src={phoneMockup} 
-            alt="FroshMeet App Mockup" 
+            alt="Frosh App Mockup" 
             className="w-[408px] lg:w-[456px] h-[792px] lg:h-[888px] object-contain drop-shadow-2xl"
           />
         </div>

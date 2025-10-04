@@ -324,7 +324,7 @@ export default function PublicProfileBrowser({ onGuestAction, isMobile = false, 
       
       <div className="text-center">
         <Button onClick={onGuestAction} className="bg-primary hover:bg-primary/90">
-          Join FroshMeet to See More Profiles
+          Join Frosh to See More Profiles
         </Button>
       </div>
     </div>

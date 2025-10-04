@@ -90,7 +90,7 @@ const STEPS = [
   { id: 'handle', title: 'Instagram Handle', description: 'Your @username for tagging' },
   { id: 'bio', title: 'Tell Your Story', description: 'Share a bit about yourself' },
   { id: 'photos', title: 'Upload Photos', description: 'Show your personality' },
-  { id: 'integration', title: 'School Page Integration', description: 'Appear on your school\'s FroshMeet page' },
+  { id: 'integration', title: 'School Page Integration', description: 'Appear on your school\'s Frosh page' },
   { id: 'payment', title: 'Get Featured', description: 'Secure your spot for $5' }
 ];
 
@@ -453,7 +453,7 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
           <div className="space-y-6">
             <div className="text-center mb-8">
               <h2 className="text-2xl font-bold text-foreground mb-2">School Page Integration</h2>
-              <p className="text-muted-foreground">Want your profile shown on your school's FroshMeet page?</p>
+              <p className="text-muted-foreground">Want your profile shown on your school's Frosh page?</p>
             </div>
             
             <Card className="p-6 border border-primary/20">
@@ -463,7 +463,7 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
                     Show on School Page
                   </Label>
                   <p className="text-sm text-muted-foreground">
-                    Your profile will appear on the {SCHOOL_DATABASE.find(s => s.slug === selectedSchool)?.name} FroshMeet page
+                    Your profile will appear on the {SCHOOL_DATABASE.find(s => s.slug === selectedSchool)?.name} Frosh page
                   </p>
                 </div>
                 <Switch
@@ -479,7 +479,7 @@ export const GetFeaturedFlow: React.FC<GetFeaturedFlowProps> = ({ open, onOpenCh
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>✨ Featured on your school's Instagram story</li>
                 <li>📱 Tagged in the post with your @username</li>
-                {showOnSchoolPage && <li>🎓 Profile displayed on your school's FroshMeet page</li>}
+                {showOnSchoolPage && <li>🎓 Profile displayed on your school's Frosh page</li>}
                 <li>🤝 Connect with other students from your school</li>
               </ul>
             </div>

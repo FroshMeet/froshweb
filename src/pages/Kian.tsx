@@ -16,7 +16,7 @@ const Kian = () => {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate('/')}>
-              <img src={froshmeetLogoSmall} alt="FroshMeet Logo" className={isMobile ? "h-10 w-auto" : "h-16 w-auto"} />
+              <img src={froshmeetLogoSmall} alt="Frosh Logo" className={isMobile ? "h-10 w-auto" : "h-16 w-auto"} />
             </div>
             
             {/* Centered Navigation */}
@@ -43,7 +43,7 @@ const Kian = () => {
                 Sign In
               </Button>
               <Button onClick={() => navigate('/community')} className="bg-primary hover:bg-primary/90">
-                Join FroshMeet Now
+                Join Frosh Now
               </Button>
             </div>
           </div>
@@ -76,7 +76,7 @@ const Kian = () => {
             
             <Card className="bg-card/50 border-border/40 animate-fade-in mb-8">
               <CardContent className="p-12">
-                <p className="text-xl text-muted-foreground leading-relaxed">Hi, I'm kian. I'm 18 years old, originally from Iran, and currently a student at UC Santa Cruz. I created FroshMeet because I saw how hard it can be to meet people when you're just starting college. Everyone's new, everyone's online, but no one really knows how to break the ice. I wanted to build something that made those first connections easier. FroshMeet helps you find your people before the awkward intros, before the first day, and before college starts to feel lonely.</p>
+                <p className="text-xl text-muted-foreground leading-relaxed">Hi, I'm kian. I'm 18 years old, originally from Iran, and currently a student at UC Santa Cruz. I created Frosh because I saw how hard it can be to meet people when you're just starting college. Everyone's new, everyone's online, but no one really knows how to break the ice. I wanted to build something that made those first connections easier. Frosh helps you find your people before the awkward intros, before the first day, and before college starts to feel lonely.</p>
               </CardContent>
             </Card>
 
