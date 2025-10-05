@@ -7,11 +7,11 @@ const Footer = () => {
 
   return (
     <footer className="bg-[#0c1008] text-[#e5e7eb]/90 border-t border-white/10">
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-5">
-        <div className="grid gap-4 md:gap-3 md:grid-cols-[1fr_2fr] items-center">
+      <div className="max-w-7xl mx-auto px-5 md:px-6 py-8 md:py-5">
+        <div className="grid gap-8 md:gap-3 md:grid-cols-[1fr_2fr] items-start md:items-center">
           
           {/* Brand + Social */}
-          <div className="space-y-2">
+          <div className="space-y-3 md:space-y-2">
             <div className="flex items-center gap-2">
               <img 
                 src={froshIcon} 
@@ -19,11 +19,11 @@ const Footer = () => {
                 className="h-6 md:h-7" 
               />
             </div>
-            <p className="text-[13px] md:text-sm text-zinc-400/75 max-w-md leading-5">
+            <p className="text-[13px] md:text-sm text-zinc-400/75 max-w-md leading-relaxed">
               The trusted platform for college freshmen to connect, network, and build lasting friendships 
               before stepping foot on campus.
             </p>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 pt-1">
               <button
                 aria-label="Instagram"
                 onClick={() => window.open('https://www.instagram.com/getfrosh/', '_blank', 'noopener,noreferrer')}
@@ -57,14 +57,14 @@ const Footer = () => {
 
           {/* Navigation Links */}
           <nav className="md:self-center">
-            <div className="flex flex-row items-start justify-center md:justify-end gap-6 md:gap-8 md:pr-4">
+            <div className="flex flex-col md:flex-row items-start md:items-start md:justify-end gap-8 md:gap-8 md:pr-4">
               
               {/* Company Links Column */}
-              <div className="text-center md:text-left">
-                <h3 className="text-xs uppercase tracking-wide text-zinc-400/75 font-medium mb-3">
+              <div className="w-full md:w-auto text-left">
+                <h3 className="text-xs uppercase tracking-wide text-zinc-400/75 font-medium mb-4 md:mb-3">
                   Company
                 </h3>
-                <ul className="space-y-2">
+                <ul className="space-y-2.5 md:space-y-2">
                   <li>
                     <button 
                       onClick={() => navigate('/about')} 
@@ -93,11 +93,11 @@ const Footer = () => {
               </div>
               
               {/* Legal Links Column */}
-              <div className="text-center md:text-left">
-                <h3 className="text-xs uppercase tracking-wide text-zinc-400/75 font-medium mb-3">
+              <div className="w-full md:w-auto text-left">
+                <h3 className="text-xs uppercase tracking-wide text-zinc-400/75 font-medium mb-4 md:mb-3">
                   Legal
                 </h3>
-                <ul className="space-y-2">
+                <ul className="space-y-2.5 md:space-y-2">
                   <li>
                     <button 
                       onClick={() => navigate('/privacy-policy')} 
@@ -132,14 +132,14 @@ const Footer = () => {
 
       {/* Micro-bar */}
       <div className="border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-2 text-xs md:text-[13px] text-zinc-300/90">
-            <p className="text-center md:text-left">
+        <div className="max-w-7xl mx-auto px-5 md:px-6 py-4 md:py-3">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-2 text-xs md:text-[13px] text-zinc-300/90">
+            <p className="text-left leading-relaxed">
               Frosh is student-run and not affiliated with any college or university. Use of this website constitutes acceptance of our Privacy Policy and Terms of Service.
             </p>
-        <p className="text-right text-xs md:text-[13px] text-zinc-400/75">
-          Built for the class of 2030 🎓
-        </p>
+            <p className="text-left md:text-right text-xs md:text-[13px] text-zinc-400/75 md:whitespace-nowrap">
+              Built for the class of 2030 🎓
+            </p>
           </div>
         </div>
       </div>
