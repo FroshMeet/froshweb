@@ -7,8 +7,8 @@ const Footer = () => {
 
   return (
     <footer className="bg-[#0c1008] text-[#e5e7eb]/90 border-t border-white/10">
-      <div className="max-w-7xl mx-auto px-5 md:px-6 py-8 md:py-5">
-        <div className="grid gap-8 md:gap-3 md:grid-cols-[1fr_2fr] items-start md:items-center">
+      <div className="max-w-7xl mx-auto px-5 md:px-6 py-6 md:py-5">
+        <div className="grid gap-6 md:gap-3 md:grid-cols-[1fr_2fr] items-start md:items-center">
           
           {/* Brand + Social */}
           <div className="space-y-3 md:space-y-2">
@@ -57,14 +57,14 @@ const Footer = () => {
 
           {/* Navigation Links */}
           <nav className="md:self-center">
-            <div className="flex flex-col md:flex-row items-start md:items-start md:justify-end gap-8 md:gap-8 md:pr-4">
+            <div className="flex flex-row items-start justify-start md:justify-end gap-12 md:gap-8 md:pr-4">
               
               {/* Company Links Column */}
-              <div className="w-full md:w-auto text-left">
-                <h3 className="text-xs uppercase tracking-wide text-zinc-400/75 font-medium mb-4 md:mb-3">
+              <div className="flex-1 md:flex-none md:w-auto text-left">
+                <h3 className="text-xs uppercase tracking-wide text-zinc-400/75 font-medium mb-3">
                   Company
                 </h3>
-                <ul className="space-y-2.5 md:space-y-2">
+                <ul className="space-y-2">
                   <li>
                     <button 
                       onClick={() => navigate('/about')} 
@@ -93,11 +93,11 @@ const Footer = () => {
               </div>
               
               {/* Legal Links Column */}
-              <div className="w-full md:w-auto text-left">
-                <h3 className="text-xs uppercase tracking-wide text-zinc-400/75 font-medium mb-4 md:mb-3">
+              <div className="flex-1 md:flex-none md:w-auto text-left">
+                <h3 className="text-xs uppercase tracking-wide text-zinc-400/75 font-medium mb-3">
                   Legal
                 </h3>
-                <ul className="space-y-2.5 md:space-y-2">
+                <ul className="space-y-2">
                   <li>
                     <button 
                       onClick={() => navigate('/privacy-policy')} 
@@ -137,7 +137,7 @@ const Footer = () => {
             <p className="text-left leading-relaxed">
               Frosh is student-run and not affiliated with any college or university. Use of this website constitutes acceptance of our Privacy Policy and Terms of Service.
             </p>
-            <p className="text-left md:text-right text-xs md:text-[13px] text-zinc-400/75 md:whitespace-nowrap">
+            <p className="text-center md:text-right text-xs md:text-[13px] text-zinc-400/75 md:whitespace-nowrap w-full md:w-auto">
               Built for the class of 2030 🎓
             </p>
           </div>
