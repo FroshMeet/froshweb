@@ -14,7 +14,7 @@ import { schools } from '@/data/schools';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { SEO } from '@/components/seo/SEO';
 import { organizationSchema, websiteSchema, mobileAppSchema } from '@/utils/seoSchema';
-import froshmeetLogo from "@/assets/froshmeet-logo-optimized.webp";
+import froshLogo from "@/assets/frosh-logo-transparent.png";
 // Use only approved schools to ensure all links work
 const SCHOOL_DATABASE = [
   // Ivy League
@@ -501,7 +501,7 @@ const Homepage = () => {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate('/')}>
-              <img src={froshmeetLogo} alt="Frosh - College Freshman Social App Logo" className={isMobile ? "h-10 w-auto" : "h-16 w-auto"} />
+              <img src={froshLogo} alt="Frosh - College Freshman Social App Logo" className={isMobile ? "h-10 w-auto" : "h-16 w-auto"} />
             </div>
             
             {/* Centered Navigation - Desktop Only */}

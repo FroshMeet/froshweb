@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import freshMeatIcon from "@/assets/fresh-meat-app-icon-optimized.webp";
+import froshIcon from "@/assets/frosh-logo-transparent.png";
 
 export const TopNavCTA = () => {
   return (
@@ -11,7 +11,7 @@ export const TopNavCTA = () => {
         className="bg-card/50 border-border/40 hover:bg-card/70 text-foreground hover:text-foreground select-none flex items-center gap-2 px-4 py-2 h-auto"
       >
         <img 
-          src={freshMeatIcon} 
+          src={froshIcon} 
           alt="Frosh" 
           className="w-5 h-5 select-none"
         />

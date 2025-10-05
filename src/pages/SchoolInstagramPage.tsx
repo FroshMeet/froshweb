@@ -5,7 +5,7 @@ import { Instagram, ExternalLink, ArrowLeft, AlertCircle } from "lucide-react";
 import { getInstagramUsername, isSchoolSupported } from "@/config/schoolInstagramMapping";
 import { schools } from "@/data/schools";
 import { useIsMobile } from "@/hooks/use-mobile";
-import froshmeetLogoSmall from "@/assets/froshmeet-logo-small-optimized.webp";
+import froshLogo from "@/assets/frosh-logo-transparent.png";
 
 const SchoolInstagramPage = () => {
   const { school } = useParams<{ school: string }>();
@@ -57,8 +57,8 @@ const SchoolInstagramPage = () => {
                   onClick={() => navigate('/')}
                 >
                   <img 
-                    src={froshmeetLogoSmall}
-                    alt="FroshMeet Logo" 
+                    src={froshLogo}
+                    alt="Frosh Logo" 
                     className={isMobile ? "h-8 w-auto" : "h-12 w-auto"}
                   />
                 </div>
@@ -116,8 +116,8 @@ const SchoolInstagramPage = () => {
                   onClick={() => navigate('/')}
                 >
                   <img 
-                    src={froshmeetLogoSmall}
-                    alt="FroshMeet Logo" 
+                    src={froshLogo}
+                    alt="Frosh Logo" 
                     className={isMobile ? "h-8 w-auto" : "h-12 w-auto"}
                   />
                 </div>

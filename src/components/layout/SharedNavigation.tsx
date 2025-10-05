@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { TopNavCTA } from "@/components/layout/TopNavCTA";
-import froshIcon from "@/assets/fresh-meat-app-icon-optimized.webp";
+import froshIcon from "@/assets/frosh-logo-transparent.png";
 
 interface SharedNavigationProps {
   currentPage?: string;

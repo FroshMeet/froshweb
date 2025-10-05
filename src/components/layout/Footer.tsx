@@ -1,6 +1,6 @@
 import { Instagram, Music2, Youtube, Mail } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import froshIcon from "@/assets/fresh-meat-app-icon-optimized.webp";
+import froshIcon from "@/assets/frosh-logo-transparent.png";
 
 const Footer = () => {
   const navigate = useNavigate();

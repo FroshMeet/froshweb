@@ -9,9 +9,8 @@ import { School, schools } from "@/data/schools";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/use-toast";
 import { Instagram, ArrowLeft } from "lucide-react";
-import freshMeatIcon from "@/assets/FreshMeat_Transparent.png";
+import froshLogo from "@/assets/frosh-logo-transparent.png";
 import { useIsMobile } from "@/hooks/use-mobile";
-import froshmeetLogo from "@/assets/froshmeet-logo-optimized.webp";
 
 export default function AppLanding() {
   const navigate = useNavigate();
@@ -145,8 +144,8 @@ export default function AppLanding() {
                 </Button>
                 <div className="flex items-center space-x-3">
                   <img 
-                    src={froshmeetLogo}
-                    alt="FroshMeet Logo" 
+                    src={froshLogo}
+                    alt="Frosh Logo" 
                     className={isMobile ? "h-10 w-auto" : "h-16 w-auto"}
                   />
                   <span className="text-xl font-bold text-foreground">Frosh</span>
@@ -161,7 +160,7 @@ export default function AppLanding() {
               <Card className="glass-content bg-card/50 border-border/40 p-12">
                 <div className="mb-8">
                   <img 
-                    src={freshMeatIcon} 
+                    src={froshLogo} 
                     alt="Frosh App"
                     className="w-[7.2rem] h-[7.2rem] mx-auto mb-6 select-none"
                   />
@@ -205,8 +204,8 @@ export default function AppLanding() {
               </Button>
               <div className="flex items-center space-x-3">
                 <img 
-                  src={froshmeetLogo}
-                  alt="FroshMeet Logo" 
+                  src={froshLogo}
+                  alt="Frosh Logo" 
                   className={isMobile ? "h-10 w-auto" : "h-16 w-auto"}
                 />
                 <span className="text-xl font-bold text-foreground">Frosh</span>
@@ -315,7 +314,7 @@ export default function AppLanding() {
               <div className="glass-card">
                 <div className="glass-content p-8 text-center">
                   <img 
-                    src={freshMeatIcon} 
+                    src={froshLogo} 
                     alt="Frosh App" 
                     className="w-[9.6rem] h-[9.6rem] mx-auto mb-6 select-none"
                   />

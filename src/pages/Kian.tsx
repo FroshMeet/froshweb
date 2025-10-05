@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Youtube, Linkedin } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { SEO } from "@/components/seo/SEO";
-import froshIcon from "@/assets/fresh-meat-app-icon-optimized.webp";
+import froshIcon from "@/assets/frosh-logo-transparent.png";
 const Kian = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
