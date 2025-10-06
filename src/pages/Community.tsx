@@ -13,21 +13,6 @@ import { getCorrectSchoolSlug } from '@/utils/schoolNavigation';
 import { SEO } from '@/components/seo/SEO';
 import { websiteSchema } from '@/utils/seoSchema';
 
-// Import optimized WebP logos
-import harvardLogo from "@/assets/logos/harvard.webp";
-import stanfordLogo from "@/assets/logos/stanford.webp";
-import mitLogo from "@/assets/logos/mit.webp";
-import uclaLogo from "@/assets/logos/ucla.webp";
-import yaleLogo from "@/assets/logos/yale.webp";
-import uscLogo from "@/assets/logos/usc.webp";
-import ucBerkeleyLogo from "@/assets/logos/uc-berkeley.webp";
-import nyuLogo from "@/assets/logos/nyu.webp";
-import umichLogo from "@/assets/logos/umich.webp";
-import dukeLogo from "@/assets/logos/duke.webp";
-import princetonLogo from "@/assets/logos/princeton.webp";
-import northwesternLogo from "@/assets/logos/northwestern.webp";
-import upennLogo from "@/assets/logos/upenn.webp";
-import columbiaLogo from "@/assets/logos/columbia.webp";
 
 const Community = () => {
   const navigate = useNavigate();
@@ -55,26 +40,6 @@ const Community = () => {
     const displayName = schools.find(s => s.name === name)?.shortName || name;
     if (displayName.length <= 3) return displayName;
     return displayName.split(' ').map(word => word[0]).join('').slice(0, 3);
-  };
-
-  const getSchoolLogo = (id: string) => {
-    const logoMap: Record<string, string> = {
-      'harvard': harvardLogo,
-      'stanford': stanfordLogo,
-      'mit': mitLogo,
-      'ucla': uclaLogo,
-      'yale': yaleLogo,
-      'usc': uscLogo,
-      'uc-berkeley': ucBerkeleyLogo,
-      'nyu': nyuLogo,
-      'umich': umichLogo,
-      'duke': dukeLogo,
-      'princeton': princetonLogo,
-      'northwestern': northwesternLogo,
-      'upenn': upennLogo,
-      'columbia': columbiaLogo,
-    };
-    return logoMap[id];
   };
 
   return (
@@ -135,19 +100,11 @@ const Community = () => {
                 <div className="bg-card/50 backdrop-blur-sm rounded-3xl p-8 text-center transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-primary/30 border-2 border-primary/20 hover:border-primary/50 card-shadow group-hover:bg-card/80 frosted-card">
                   {/* School Circle */}
                   <div className="w-24 h-24 mx-auto mb-6 rounded-full overflow-hidden group-hover:neon-glow-strong transition-all duration-300 border-2 border-primary/30 group-hover:border-primary/60">
-                    {getSchoolLogo(school.id) ? (
-                      <img 
-                        src={getSchoolLogo(school.id)} 
-                        alt={`${school.name} logo`}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gradient-to-r from-primary to-primary/70 flex items-center justify-center">
-                        <span className="text-primary-foreground font-bold text-xl">
-                          {getSchoolInitials(school.name)}
-                        </span>
-                      </div>
-                    )}
+                    <div className="w-full h-full bg-gradient-to-r from-primary to-primary/70 flex items-center justify-center">
+                      <span className="text-primary-foreground font-bold text-xl">
+                        {getSchoolInitials(school.name)}
+                      </span>
+                    </div>
                   </div>
                   
                   {/* School Info */}
