@@ -93,9 +93,10 @@ const Footer = () => {
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-5 md:px-6 py-4 md:py-3">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-2 text-xs md:text-[13px] text-zinc-300/90">
-            <p className="text-left leading-relaxed">By using Frosh, you agree to our Privacy Policy & Terms. © 2025 Frosh™. All rights reserved.
-
-          </p>
+            <p className="text-left leading-relaxed">
+              By using Frosh, you agree to our Privacy Policy & Terms. <br className="md:hidden" />
+              © 2025 Frosh™. All rights reserved.
+            </p>
             <p className="text-center md:text-right text-xs md:text-[13px] text-zinc-400/75 md:whitespace-nowrap w-full md:w-auto">
               Built for the class of 2030 🎓
             </p>
