@@ -9,6 +9,7 @@ import { getSchoolName } from "@/config/schoolNameMapping";
 import { schools } from "@/data/schools";
 import { APPROVED_SCHOOLS } from "@/config/approvedSchools";
 import { getSchoolByApprovedSlug, getApprovedSchoolData } from "@/utils/schoolNavigation";
+import { SchoolPageSEO } from "@/components/seo/SchoolPageSEO";
 
 
 interface Profile {
@@ -83,6 +84,12 @@ export default function SchoolPage() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SchoolPageSEO 
+        schoolName={finalDisplayName}
+        schoolSlug={school || ''}
+        studentCount={profiles.length}
+      />
+      
       {/* Header */}
       <div className="bg-background py-16">
         <div className="max-w-6xl mx-auto px-6">
@@ -106,7 +113,7 @@ export default function SchoolPage() {
             {/* Title Section */}
             <div className="space-y-3">
             <h1 className="text-5xl md:text-6xl font-bold text-white tracking-tight leading-tight">
-              {finalDisplayName}
+              Meet the {finalDisplayName} Class of 2030
             </h1>
             <div className="w-16 h-0.5 bg-primary mx-auto"></div>
             <p className="text-lg text-primary font-medium tracking-wide uppercase">
@@ -203,8 +210,9 @@ export default function SchoolPage() {
                       <div className="aspect-square relative overflow-hidden">
                         <img
                           src={profile.photos[0]}
-                          alt={`${profile.name}'s photo`}
+                          alt={`${profile.name}, ${finalDisplayName} Class of ${profile.class_year} student profile photo`}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                          loading="lazy"
                         />
                         {profile.photos.length > 1 && (
                           <Badge 

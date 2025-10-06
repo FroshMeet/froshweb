@@ -7,6 +7,9 @@ import { Instagram, ExternalLink, Users, ArrowLeft } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { getSchoolName } from '@/config/schoolNameMapping';
 import { schools } from '@/data/schools';
+import { APPROVED_SCHOOLS } from '@/config/approvedSchools';
+import { getSchoolByApprovedSlug, getApprovedSchoolData } from '@/utils/schoolNavigation';
+import { SchoolPageSEO } from '@/components/seo/SchoolPageSEO';
 
 interface InstagramProfile {
   id: string;
@@ -26,8 +29,12 @@ export default function SchoolInstagramPosts() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const schoolData = schools.find(s => s.id === school);
-  const schoolName = schoolData ? (schoolData.shortName || schoolData.name) : '';
+  // Get school data using reverse lookup for proper mapping
+  const schoolData = getSchoolByApprovedSlug(school as string);
+  const approvedSchoolData = schoolData ? getApprovedSchoolData(schoolData) : null;
+  const finalDisplayName = (schoolData ? (schoolData.shortName || schoolData.name) : '') ||
+                          approvedSchoolData?.displayName || 
+                          school || '';
 
   useEffect(() => {
     const fetchProfiles = async () => {
@@ -35,7 +42,7 @@ export default function SchoolInstagramPosts() {
         const { data, error } = await supabase
           .from('instagram_profiles')
           .select('*')
-          .eq('school', schoolName)
+          .eq('school', finalDisplayName)
           .eq('paid_for_instagram', true)
           .order('created_at', { ascending: false });
 
@@ -50,7 +57,7 @@ export default function SchoolInstagramPosts() {
     };
 
     fetchProfiles();
-  }, [schoolName]);
+  }, [finalDisplayName]);
 
   if (loading) {
     return (
@@ -109,6 +116,14 @@ export default function SchoolInstagramPosts() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SchoolPageSEO 
+        schoolName={finalDisplayName}
+        schoolSlug={school || ''}
+        studentCount={profiles.length}
+      />
+      
+      <h1 className="sr-only">Meet the {finalDisplayName} Class of 2030 on Instagram</h1>
+      
       {/* Header */}
       <div className="max-w-6xl mx-auto px-4 pt-6">
         <Button 
@@ -128,7 +143,7 @@ export default function SchoolInstagramPosts() {
         <div className="max-w-6xl mx-auto px-4 text-center">
           <div className="flex items-center justify-center gap-3 mb-4">
             <Instagram className="h-8 w-8 text-primary" />
-            <h1 className="text-3xl font-bold">{schoolName} Instagram Features</h1>
+            <h2 className="text-3xl font-bold">{finalDisplayName} Instagram Features</h2>
           </div>
           <p className="text-lg text-muted-foreground mb-6">
             Meet students featured on @{school}2030class Instagram account
@@ -146,7 +161,7 @@ export default function SchoolInstagramPosts() {
             <Instagram className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
             <h3 className="text-xl font-semibold mb-2">No profiles yet</h3>
             <p className="text-muted-foreground mb-6">
-              Be the first student from {schoolName} to get featured!
+              Be the first student from {finalDisplayName} to get featured!
             </p>
             <Button onClick={() => window.location.href = '/create-profile'}>
               Create Your Profile
@@ -161,8 +176,9 @@ export default function SchoolInstagramPosts() {
                     <div className="aspect-square relative">
                       <img
                         src={profile.photos[0]}
-                        alt={`${profile.name}'s photo`}
+                        alt={`${profile.name}, ${finalDisplayName} Class of ${profile.class_year} student profile photo`}
                         className="w-full h-full object-cover"
+                        loading="lazy"
                       />
                       {profile.photos.length > 1 && (
                         <Badge 
@@ -182,7 +198,7 @@ export default function SchoolInstagramPosts() {
                       <CardTitle className="text-lg">{profile.name}</CardTitle>
                       <CardDescription>Class of {profile.class_year}</CardDescription>
                     </div>
-                    <Badge variant="outline">{schoolName}</Badge>
+                    <Badge variant="outline">{finalDisplayName}</Badge>
                   </div>
                 </CardHeader>
                 
@@ -212,6 +228,7 @@ export default function SchoolInstagramPosts() {
                             src={photo}
                             alt={`${profile.name} photo ${index + 2}`}
                             className="w-full h-full object-cover rounded"
+                            loading="lazy"
                           />
                         </div>
                       ))}

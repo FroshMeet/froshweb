@@ -14,6 +14,7 @@ import { useToast } from "@/hooks/use-toast";
 import Footer from "@/components/layout/Footer";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { APPROVED_SCHOOLS } from "@/config/approvedSchools";
+import { SchoolPageSEO } from "@/components/seo/SchoolPageSEO";
 interface InstagramPost {
   id: string;
   caption: string;
@@ -187,6 +188,15 @@ export default function SchoolCampusHub() {
       </div>;
   }
   return <div className="min-h-screen bg-background">
+      <SchoolPageSEO 
+        schoolName={schoolName}
+        schoolSlug={school || ''}
+        studentCount={studentProfiles.length}
+      />
+      
+      {/* Visually hidden H1 for SEO */}
+      <h1 className="sr-only">Meet the {schoolName} Class of 2030</h1>
+      
       {/* Back to Home Button */}
       <div className="fixed top-6 left-6 z-50">
         <Button 
@@ -219,9 +229,9 @@ export default function SchoolCampusHub() {
           </div>
 
           {/* School Name & Class */}
-          <h1 className="text-6xl md:text-7xl font-black text-foreground mb-4 tracking-tight">
+          <div className="text-6xl md:text-7xl font-black text-foreground mb-4 tracking-tight" role="heading" aria-level={2}>
             {schoolName}
-          </h1>
+          </div>
           <div className="flex items-center justify-center gap-2 mb-6">
             <Badge variant="outline" className="text-primary border-primary/30 px-4 py-2 text-lg font-bold">
               Class of 2030
@@ -262,7 +272,12 @@ export default function SchoolCampusHub() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             {instagramPosts.map(post => <Card key={post.id} className="group cursor-pointer overflow-hidden bg-card/50 border-border/40 hover:bg-card/70 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-primary/10" onClick={() => window.open(post.permalink, '_blank')}>
                 <div className="aspect-square relative overflow-hidden">
-                  <img src={post.media_url} alt={post.caption} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
+                  <img 
+                    src={post.media_url} 
+                    alt={`${schoolName} Class of 2030 Instagram post: ${post.caption}`}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    loading="lazy"
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <p className="text-white text-sm font-medium line-clamp-2">

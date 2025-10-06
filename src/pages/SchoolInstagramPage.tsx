@@ -6,6 +6,7 @@ import { getInstagramUsername, isSchoolSupported } from "@/config/schoolInstagra
 import { schools } from "@/data/schools";
 import { useIsMobile } from "@/hooks/use-mobile";
 import froshLogo from "@/assets/frosh-logo-transparent.png";
+import { SchoolPageSEO } from "@/components/seo/SchoolPageSEO";
 
 const SchoolInstagramPage = () => {
   const { school } = useParams<{ school: string }>();
@@ -96,6 +97,13 @@ const SchoolInstagramPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-muted/50">
+        <SchoolPageSEO 
+          schoolName={schoolName}
+          schoolSlug={school || ''}
+        />
+        
+        <h1 className="sr-only">{schoolName} Class of 2030 Instagram Feed</h1>
+        
         <header className="sticky top-0 border-b bg-background/80 backdrop-blur-xl z-50">
           <div className="container mx-auto px-4 py-4">
             <div className="flex items-center justify-between">
@@ -149,9 +157,9 @@ const SchoolInstagramPage = () => {
           <div className="text-center mb-8">
             <div className="flex items-center justify-center space-x-3 mb-4">
               <Instagram className="h-8 w-8 text-primary" />
-              <h1 className="text-3xl md:text-4xl font-bold text-foreground">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground">
                 {schoolName} Campus Life
-              </h1>
+              </h2>
             </div>
             <p className="text-lg text-muted-foreground">
               Stay connected with what's happening at {schoolName}
