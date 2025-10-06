@@ -135,7 +135,7 @@ const Footer = () => {
         <div className="max-w-7xl mx-auto px-5 md:px-6 py-4 md:py-3">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-2 text-xs md:text-[13px] text-zinc-300/90">
             <p className="text-left leading-relaxed">
-              Frosh is student-run and not affiliated with any college or university. Use of this website constitutes acceptance of our Privacy Policy and Terms of Service.
+              By using Frosh, you agree to our Privacy Policy & Terms. © 2025 Frosh™. All rights reserved.
             </p>
             <p className="text-center md:text-right text-xs md:text-[13px] text-zinc-400/75 md:whitespace-nowrap w-full md:w-auto">
               Built for the class of 2030 🎓
