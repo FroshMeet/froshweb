@@ -1,4 +1,4 @@
-import { Instagram, Music2, Youtube, Mail } from "lucide-react";
+import { Instagram, Music2, Youtube } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import froshIcon from "@/assets/frosh-logo-transparent.png";
 const Footer = () => {
@@ -25,9 +25,6 @@ const Footer = () => {
               </button>
               <button aria-label="YouTube" onClick={() => window.open('https://www.youtube.com/@getfrosh', '_blank', 'noopener,noreferrer')} className="opacity-80 hover:opacity-100 hover:text-[#015cd2] focus:outline-none focus:ring-2 focus:ring-[#015cd2] rounded transition-all duration-200">
                 <Youtube className="h-5 w-5" />
-              </button>
-              <button aria-label="Email" onClick={() => window.open('mailto:hello@frosh.app')} className="opacity-80 hover:opacity-100 hover:text-[#015cd2] focus:outline-none focus:ring-2 focus:ring-[#015cd2] rounded transition-all duration-200">
-                <Mail className="h-5 w-5" />
               </button>
             </div>
           </div>
