@@ -11,6 +11,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { ArrowLeft, Plus, X } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
+import froshLogo from "@/assets/frosh-logo-new.png";
 
 const ProfileSetup = () => {
   const navigate = useNavigate();
@@ -127,11 +128,10 @@ const ProfileSetup = () => {
           </Button>
           <div className="flex items-center space-x-3">
             <img 
-              src="/lovable-uploads/aae3dcfc-f3d8-4318-9704-4e40ab0380fd.png"
-              alt="FroshMeet Logo" 
+              src={froshLogo}
+              alt="Frosh Logo" 
               className="h-12 w-auto"
             />
-            <span className="text-xl font-bold text-foreground">FroshMeet</span>
           </div>
         </div>
       </header>

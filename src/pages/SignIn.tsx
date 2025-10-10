@@ -9,7 +9,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { TopNavCTA } from "@/components/layout/TopNavCTA";
-import froshLogo from "@/assets/frosh-logo-transparent.png";
+import froshLogo from "@/assets/frosh-logo-new.png";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -82,7 +82,6 @@ const SignIn = () => {
                 alt="Frosh Logo" 
                 className={isMobile ? "h-8 w-auto" : "h-12 w-auto"}
               />
-              <span className="text-xl font-bold text-foreground">Frosh</span>
             </div>
           </div>
         </div>

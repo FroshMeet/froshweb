@@ -1,6 +1,6 @@
 import { Instagram, Music2, Youtube } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import froshIcon from "@/assets/frosh-logo-transparent.png";
+import froshIcon from "@/assets/frosh-logo-new.png";
 const Footer = () => {
   const navigate = useNavigate();
   return <footer className="bg-[#0c1008] text-[#e5e7eb]/90 border-t border-white/10">
@@ -10,7 +10,7 @@ const Footer = () => {
           {/* Brand + Social */}
           <div className="space-y-3 md:space-y-2">
             <div className="flex items-center gap-2">
-              <img src={froshIcon} alt="Frosh" className="h-6 md:h-7" />
+              <img src={froshIcon} alt="Frosh" className="h-7 md:h-8 w-auto" />
             </div>
             <p className="text-[13px] md:text-sm text-zinc-400/75 max-w-md leading-relaxed">
               The trusted platform for college freshmen to connect, network, and build lasting friendships 

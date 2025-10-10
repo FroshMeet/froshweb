@@ -15,7 +15,7 @@ import { schools } from '@/data/schools';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { SEO } from '@/components/seo/SEO';
 import { organizationSchema, websiteSchema, mobileAppSchema } from '@/utils/seoSchema';
-import froshLogo from "@/assets/frosh-logo-transparent.png";
+import froshLogo from "@/assets/frosh-logo-new.png";
 // Use only approved schools to ensure all links work
 const SCHOOL_DATABASE = [
   // Ivy League

@@ -9,7 +9,7 @@ import { School, schools } from "@/data/schools";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/use-toast";
 import { Instagram, ArrowLeft } from "lucide-react";
-import froshLogo from "@/assets/frosh-logo-transparent.png";
+import froshLogo from "@/assets/frosh-logo-new.png";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function AppLanding() {
@@ -148,7 +148,6 @@ export default function AppLanding() {
                     alt="Frosh Logo" 
                     className={isMobile ? "h-10 w-auto" : "h-16 w-auto"}
                   />
-                  <span className="text-xl font-bold text-foreground">Frosh</span>
                 </div>
               </div>
             </div>
@@ -208,7 +207,6 @@ export default function AppLanding() {
                   alt="Frosh Logo" 
                   className={isMobile ? "h-10 w-auto" : "h-16 w-auto"}
                 />
-                <span className="text-xl font-bold text-foreground">Frosh</span>
               </div>
             </div>
           </div>

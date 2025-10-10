@@ -8,7 +8,7 @@ import { ArrowLeft, UserPlus } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { TopNavCTA } from "@/components/layout/TopNavCTA";
-import froshLogo from "@/assets/frosh-logo-transparent.png";
+import froshLogo from "@/assets/frosh-logo-new.png";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -89,7 +89,6 @@ export default function SignUp() {
                 alt="Frosh Logo" 
                 className="h-12 w-auto"
               />
-              <span className="text-xl font-bold text-foreground">Frosh</span>
             </div>
           </div>
         </div>

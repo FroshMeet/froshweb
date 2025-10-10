@@ -5,7 +5,7 @@ import { Instagram, ExternalLink, ArrowLeft, AlertCircle } from "lucide-react";
 import { getInstagramUsername, isSchoolSupported } from "@/config/schoolInstagramMapping";
 import { schools } from "@/data/schools";
 import { useIsMobile } from "@/hooks/use-mobile";
-import froshLogo from "@/assets/frosh-logo-transparent.png";
+import froshLogo from "@/assets/frosh-logo-new.png";
 import { SchoolPageSEO } from "@/components/seo/SchoolPageSEO";
 
 const SchoolInstagramPage = () => {

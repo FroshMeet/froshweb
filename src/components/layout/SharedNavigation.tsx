@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { TopNavCTA } from "@/components/layout/TopNavCTA";
-import froshIcon from "@/assets/frosh-logo-transparent.png";
+import froshIcon from "@/assets/frosh-logo-new.png";
 
 interface SharedNavigationProps {
   currentPage?: string;
@@ -55,7 +55,7 @@ const SharedNavigation = ({ currentPage }: SharedNavigationProps) => {
             <img 
               src={froshIcon}
               alt="Frosh Logo" 
-              className={isMobile ? "h-10 w-auto" : "h-16 w-auto"}
+              className={isMobile ? "h-8 w-auto" : "h-12 w-auto"}
             />
           </div>
           

@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import froshIcon from "@/assets/frosh-logo-transparent.png";
+import froshIcon from "@/assets/frosh-logo-new.png";
 
 export const TopNavCTA = () => {
   return (
@@ -13,9 +13,9 @@ export const TopNavCTA = () => {
         <img 
           src={froshIcon} 
           alt="Frosh" 
-          className="w-5 h-5 select-none"
+          className="h-5 w-auto select-none"
         />
-        <span className="font-medium">Frosh 📱 App Coming <span className="text-[#015cd2]">Feb 15</span></span>
+        <span className="font-medium">📱 App Coming <span className="text-[#015cd2]">Feb 15</span></span>
       </Button>
     </Link>
   );

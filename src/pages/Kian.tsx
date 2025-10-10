@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Youtube, Linkedin } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { SEO } from "@/components/seo/SEO";
-import froshIcon from "@/assets/frosh-logo-transparent.png";
+import froshIcon from "@/assets/frosh-logo-new.png";
 const Kian = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
@@ -24,7 +24,7 @@ const Kian = () => {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate('/')}>
-              <img src={froshIcon} alt="Frosh Logo" className={isMobile ? "h-10 w-auto" : "h-16 w-auto"} />
+              <img src={froshIcon} alt="Frosh Logo" className={isMobile ? "h-8 w-auto" : "h-12 w-auto"} />
             </div>
             
             {/* Centered Navigation */}

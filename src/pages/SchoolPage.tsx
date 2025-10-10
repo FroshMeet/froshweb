@@ -12,7 +12,7 @@ import { getSchoolName } from "@/config/schoolNameMapping";
 import { schools } from "@/data/schools";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { getSchoolByApprovedSlug, getApprovedSchoolData } from "@/utils/schoolNavigation";
-import froshLogo from "@/assets/frosh-logo-transparent.png";
+import froshLogo from "@/assets/frosh-logo-new.png";
 
 const EnhancedSchoolPage = () => {
   const { school } = useParams<{ school: string }>();
