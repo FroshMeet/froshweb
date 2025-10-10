@@ -10,6 +10,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/use-toast";
 import { Instagram, ArrowLeft } from "lucide-react";
 import froshLogo from "@/assets/frosh-logo-new.png";
+import froshAppIcon from "@/assets/frosh-app-icon-waitlist.png";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function AppLanding() {
@@ -312,7 +313,7 @@ export default function AppLanding() {
               <div className="glass-card">
                 <div className="glass-content p-8 text-center">
                   <img 
-                    src={froshLogo} 
+                    src={froshAppIcon} 
                     alt="Frosh App" 
                     className="w-[9.6rem] h-[9.6rem] mx-auto mb-6 select-none"
                   />
