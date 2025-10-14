@@ -68,6 +68,8 @@ Deno.serve(async (req) => {
     // Parse request
     const requestData: HiringApplicationRequest = await req.json();
     const idempotencyKey = req.headers.get('x-idempotency-key') || requestData.idempotencyKey;
+    
+    console.log('Received application for:', requestData.university);
 
     // Server-side validation
     if (!requestData.fullName || requestData.fullName.length < 2 || requestData.fullName.length > 100) {
@@ -93,6 +95,7 @@ Deno.serve(async (req) => {
       );
     }
     const schoolCode = generateSchoolCode(requestData.university);
+    console.log('Generated school code:', schoolCode, 'for university:', requestData.university);
 
     // Validate graduation year
     const validYears = ['2026', '2027', '2028', '2029', '2030'];
@@ -233,7 +236,7 @@ Deno.serve(async (req) => {
       throw insertError;
     }
 
-    console.log(`Created new application: ${newApp.id} for ${requestData.university}`);
+    console.log(`Created new application: ${newApp.id} for ${requestData.university} (code: ${schoolCode})`);
 
     return new Response(
       JSON.stringify({ 
