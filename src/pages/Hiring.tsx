@@ -15,7 +15,8 @@ import { School } from "@/data/schools";
 import froshLogo from "@/assets/frosh-logo-new.png";
 const formSchema = z.object({
   fullName: z.string().min(2, "Please enter your full name").max(100),
-  contact: z.string().min(3, "Please enter your Instagram handle or email").max(255),
+  instagramHandle: z.string().max(255).optional(),
+  email: z.string().max(255).optional(),
   university: z.string().min(1, "Please select your university"),
   graduationYear: z.string().min(1, "Please select your graduation year"),
   timeCommitment: z.enum(["yes", "no"], {
@@ -33,6 +34,9 @@ const formSchema = z.object({
   agreementRepresent: z.boolean().refine(val => val === true, {
     message: "You must agree to continue"
   })
+}).refine(data => data.instagramHandle || data.email, {
+  message: "Please provide either an Instagram handle or email",
+  path: ["instagramHandle"]
 });
 type FormData = z.infer<typeof formSchema>;
 const Hiring = () => {
@@ -44,7 +48,8 @@ const Hiring = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       fullName: "",
-      contact: "",
+      instagramHandle: "",
+      email: "",
       university: "",
       graduationYear: "",
       whyFit: "",
@@ -137,15 +142,27 @@ const Hiring = () => {
                       <FormMessage />
                     </FormItem>} />
 
-                <FormField control={form.control} name="contact" render={({
+                <FormField control={form.control} name="instagramHandle" render={({
                 field
               }) => <FormItem>
-                      <FormLabel>Instagram Handle or Email *</FormLabel>
+                      <FormLabel>Instagram Handle</FormLabel>
                       <FormControl>
-                        <Input placeholder="@johndoe or john@email.com" {...field} />
+                        <Input placeholder="@johndoe" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>} />
+
+                <FormField control={form.control} name="email" render={({
+                field
+              }) => <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input placeholder="john@email.com" type="email" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>} />
+                
+                <p className="text-sm text-muted-foreground">* At least one contact method is required</p>
 
                 <FormField control={form.control} name="university" render={({
                 field
