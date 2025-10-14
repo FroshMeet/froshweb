@@ -22,24 +22,15 @@ interface HiringApplicationRequest {
   idempotencyKey?: string;
 }
 
-// School validation mapping - matches the canonical school list
-const VALID_SCHOOLS: Record<string, string> = {
-  'boston-university': 'Boston University',
-  'harvard': 'Harvard University',
-  'mit': 'MIT',
-  'ucla': 'UCLA',
-  'uc-berkeley': 'UC Berkeley',
-  'stanford': 'Stanford University',
-  'yale': 'Yale University',
-  'princeton': 'Princeton University',
-  'columbia': 'Columbia University',
-  'nyu': 'NYU',
-  'upenn': 'University of Pennsylvania',
-  'northwestern': 'Northwestern University',
-  'duke': 'Duke University',
-  'umich': 'University of Michigan',
-  'usc': 'USC',
-};
+// Generate school code from school name (slug format)
+function generateSchoolCode(schoolName: string): string {
+  return schoolName
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '') // Remove special chars except spaces and hyphens
+    .replace(/\s+/g, '-')          // Replace spaces with hyphens
+    .replace(/-+/g, '-')           // Replace multiple hyphens with single
+    .replace(/^-|-$/g, '');        // Remove leading/trailing hyphens
+}
 
 // Normalize Instagram handle (remove @, lowercase, trim)
 function normalizeInstagram(handle: string | undefined): string | null {
@@ -53,15 +44,6 @@ function normalizeEmail(email: string | undefined): string | null {
   return email.trim().toLowerCase();
 }
 
-// Get school code from name
-function getSchoolCode(schoolName: string): string | null {
-  for (const [code, name] of Object.entries(VALID_SCHOOLS)) {
-    if (name === schoolName) {
-      return code;
-    }
-  }
-  return null;
-}
 
 // Create submission hash for deduplication (school_code + contact)
 async function createSubmissionHash(schoolCode: string, contact: string): Promise<string> {
@@ -103,14 +85,14 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Validate school
-    const schoolCode = getSchoolCode(requestData.university);
-    if (!schoolCode) {
+    // Validate and generate school code
+    if (!requestData.university || requestData.university.length < 2) {
       return new Response(
-        JSON.stringify({ error: 'Invalid school selection. Please select a valid university from the list.' }),
+        JSON.stringify({ error: 'Please select your university' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
+    const schoolCode = generateSchoolCode(requestData.university);
 
     // Validate graduation year
     const validYears = ['2026', '2027', '2028', '2029', '2030'];
