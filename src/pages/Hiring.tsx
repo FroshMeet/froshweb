@@ -101,8 +101,9 @@ const Hiring = () => {
       <div className="bg-gradient-to-b from-background to-background/95 py-12 px-4 border-b border-border/40">
         <div className="max-w-4xl mx-auto text-center">
           <img src={froshLogo} alt="Frosh Logo" className="h-20 mx-auto mb-8 animate-pulse drop-shadow-[0_0_15px_rgba(1,92,210,0.6)]" />
-          <h1 className="text-3xl md:text-4xl font-bold text-primary mb-4">
-            Frosh Student Marketing & Social Media Representative
+          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+            Apply to Become a Frosh Student Marketing & Social Media
+            Representative
           </h1>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
             Help connect your campus before it begins. Represent your school,
