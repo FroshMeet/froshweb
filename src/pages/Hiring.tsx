@@ -302,9 +302,7 @@ const Hiring = () => {
                       </FormControl>
                       <div className="space-y-1 leading-none">
                         <FormLabel>
-                          I understand this role includes revenue sharing (40%
-                          of my school's account earnings) and may lead to
-                          future paid positions with Frosh. *
+                          I understand this role is compensated through revenue sharing (40% of my school's account earnings). *
                         </FormLabel>
                         <FormMessage />
                       </div>
