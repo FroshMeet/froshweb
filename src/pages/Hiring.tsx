@@ -133,7 +133,7 @@ const Hiring = () => {
     return <div className="min-h-screen bg-background flex items-center justify-center p-4">
         <SEO title="Application Submitted | Frosh Hiring" description="Thank you for applying to become a Frosh Student Representative" canonical="https://frosh.app/hiring" />
         <div className="relative">
-          <div className="absolute inset-0 bg-primary/30 rounded-2xl blur-3xl animate-pulse -z-10"></div>
+          <div className="absolute -inset-8 bg-primary/30 rounded-3xl blur-3xl animate-pulse -z-10"></div>
           <Card className="relative max-w-2xl w-full text-center shadow-2xl border-border/40 bg-card z-10">
             <CardContent className="pt-12 pb-12">
             <div className="text-6xl mb-6">🎉</div>
