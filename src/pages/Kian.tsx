@@ -90,11 +90,11 @@ const Kian = () => {
 
             {/* Social Media Icons */}
             <div className="flex justify-center space-x-6 animate-fade-in">
-              <a href="https://www.youtube.com/@kiandom" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors duration-200">
-                <Youtube className="h-8 w-8" />
-              </a>
               <a href="https://www.linkedin.com/in/kianhabibi/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors duration-200">
                 <Linkedin className="h-8 w-8" />
+              </a>
+              <a href="https://www.youtube.com/@kiandom" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors duration-200">
+                <Youtube className="h-8 w-8" />
               </a>
             </div>
           </div>
