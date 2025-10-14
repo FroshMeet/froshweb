@@ -93,18 +93,27 @@ const Hiring = () => {
         return;
       }
 
-      if (result?.error) {
+      // Check for ok: true response
+      if (result?.ok === true) {
+        console.log("Application submitted successfully:", result);
+        setSubmitted(true);
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+        return;
+      }
+
+      // Handle error response
+      if (result?.ok === false && result?.error) {
         toast.error(result.error);
         setIsSubmitting(false);
         return;
       }
 
-      console.log("Application submitted successfully:", result);
-      setSubmitted(true);
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
+      // Fallback error
+      toast.error('Failed to submit application. Please try again.');
+      setIsSubmitting(false);
     } catch (err) {
       console.error('Unexpected error:', err);
       toast.error('An error occurred while submitting your application. Please try again.');
