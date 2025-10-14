@@ -178,6 +178,81 @@ export type Database = {
         }
         Relationships: []
       }
+      hiring_applications: {
+        Row: {
+          agreement_represent: boolean
+          agreement_revenue: boolean
+          created_at: string
+          email: string | null
+          full_name: string
+          graduation_year: string
+          id: string
+          idempotency_key: string | null
+          instagram_familiarity: string
+          instagram_handle: string | null
+          ip_address: unknown | null
+          school_code: string
+          school_name: string
+          social_media_details: string | null
+          social_media_experience: string
+          status: string
+          submission_hash: string
+          time_commitment: string
+          updated_at: string
+          user_agent: string | null
+          user_id: string | null
+          why_fit: string
+        }
+        Insert: {
+          agreement_represent?: boolean
+          agreement_revenue?: boolean
+          created_at?: string
+          email?: string | null
+          full_name: string
+          graduation_year: string
+          id?: string
+          idempotency_key?: string | null
+          instagram_familiarity: string
+          instagram_handle?: string | null
+          ip_address?: unknown | null
+          school_code: string
+          school_name: string
+          social_media_details?: string | null
+          social_media_experience: string
+          status?: string
+          submission_hash: string
+          time_commitment: string
+          updated_at?: string
+          user_agent?: string | null
+          user_id?: string | null
+          why_fit: string
+        }
+        Update: {
+          agreement_represent?: boolean
+          agreement_revenue?: boolean
+          created_at?: string
+          email?: string | null
+          full_name?: string
+          graduation_year?: string
+          id?: string
+          idempotency_key?: string | null
+          instagram_familiarity?: string
+          instagram_handle?: string | null
+          ip_address?: unknown | null
+          school_code?: string
+          school_name?: string
+          social_media_details?: string | null
+          social_media_experience?: string
+          status?: string
+          submission_hash?: string
+          time_commitment?: string
+          updated_at?: string
+          user_agent?: string | null
+          user_id?: string | null
+          why_fit?: string
+        }
+        Relationships: []
+      }
       instagram_profiles: {
         Row: {
           bio: string | null

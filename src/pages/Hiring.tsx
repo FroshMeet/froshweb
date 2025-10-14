@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -12,6 +12,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { SEO } from "@/components/seo/SEO";
 import { SmartSchoolSearch } from "@/components/SmartSchoolSearch";
 import { School } from "@/data/schools";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 import froshLogo from "@/assets/frosh-logo-new.png";
 const formSchema = z.object({
   fullName: z.string().min(2, "Please enter your full name").max(100),
@@ -43,6 +45,8 @@ const Hiring = () => {
   const [submitted, setSubmitted] = useState(false);
   const [showSocialDetails, setShowSocialDetails] = useState(false);
   const [selectedSchool, setSelectedSchool] = useState<School | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [idempotencyKey] = useState(() => crypto.randomUUID());
   
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -59,13 +63,53 @@ const Hiring = () => {
     }
   });
   const onSubmit = async (data: FormData) => {
-    console.log("Form submitted:", data);
-    // Here you would typically send the data to your backend
-    setSubmitted(true);
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
+    if (isSubmitting) return;
+    
+    setIsSubmitting(true);
+    
+    try {
+      const { data: result, error } = await supabase.functions.invoke('submit-hiring-application', {
+        body: {
+          fullName: data.fullName,
+          instagramHandle: data.instagramHandle,
+          email: data.email,
+          university: data.university,
+          graduationYear: data.graduationYear,
+          timeCommitment: data.timeCommitment,
+          whyFit: data.whyFit,
+          instagramFamiliarity: data.instagramFamiliarity,
+          socialMediaExperience: data.socialMediaExperience,
+          socialMediaDetails: data.socialMediaDetails,
+          agreementRevenue: data.agreementRevenue,
+          agreementRepresent: data.agreementRepresent,
+          idempotencyKey
+        }
+      });
+
+      if (error) {
+        console.error('Submission error:', error);
+        toast.error(error.message || 'Failed to submit application. Please try again.');
+        setIsSubmitting(false);
+        return;
+      }
+
+      if (result?.error) {
+        toast.error(result.error);
+        setIsSubmitting(false);
+        return;
+      }
+
+      console.log("Application submitted successfully:", result);
+      setSubmitted(true);
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    } catch (err) {
+      console.error('Unexpected error:', err);
+      toast.error('An error occurred while submitting your application. Please try again.');
+      setIsSubmitting(false);
+    }
   };
   const scrollToForm = () => {
     document.getElementById("application-form")?.scrollIntoView({
@@ -343,8 +387,13 @@ const Hiring = () => {
             </Card>
 
             <div className="text-center">
-              <Button type="submit" size="lg" className="bg-primary hover:bg-primary/90 shadow-lg px-12 neon-glow">
-                Submit Application
+              <Button 
+                type="submit" 
+                size="lg" 
+                className="bg-primary hover:bg-primary/90 shadow-lg px-12 neon-glow"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'Submitting...' : 'Submit Application'}
               </Button>
             </div>
           </form>
