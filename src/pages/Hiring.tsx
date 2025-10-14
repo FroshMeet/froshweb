@@ -5,14 +5,14 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { SEO } from "@/components/seo/SEO";
-import froshLogo from "@/assets/frosh-logo-transparent.png";
-import { APPROVED_SCHOOLS } from "@/config/approvedSchools";
+import { SmartSchoolSearch } from "@/components/SmartSchoolSearch";
+import { School } from "@/data/schools";
+import froshLogo from "@/assets/frosh-logo-new.png";
 const formSchema = z.object({
   fullName: z.string().min(2, "Please enter your full name").max(100),
   contact: z.string().min(3, "Please enter your Instagram handle or email").max(255),
@@ -38,6 +38,8 @@ type FormData = z.infer<typeof formSchema>;
 const Hiring = () => {
   const [submitted, setSubmitted] = useState(false);
   const [showSocialDetails, setShowSocialDetails] = useState(false);
+  const [selectedSchool, setSelectedSchool] = useState<School | null>(null);
+  
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -68,9 +70,9 @@ const Hiring = () => {
   };
   const graduationYears = ["2026", "2027", "2028", "2029", "2030"];
   if (submitted) {
-    return <div className="min-h-screen bg-white flex items-center justify-center p-4">
+    return <div className="min-h-screen bg-background flex items-center justify-center p-4">
         <SEO title="Application Submitted | Frosh Hiring" description="Thank you for applying to become a Frosh Student Representative" canonical="https://frosh.app/hiring" />
-        <Card className="max-w-2xl w-full text-center shadow-xl">
+        <Card className="max-w-2xl w-full text-center shadow-2xl border-border/40 bg-card/50">
           <CardContent className="pt-12 pb-12">
             <div className="text-6xl mb-6">🎉</div>
             <h1 className="text-3xl font-bold mb-4 text-foreground">
@@ -79,21 +81,24 @@ const Hiring = () => {
             <p className="text-lg text-muted-foreground mb-6">
               We'll reach out via Instagram or email if selected.
             </p>
-            <div className="text-2xl font-semibold text-primary mb-8">
+            <div className="text-2xl font-semibold mb-2">
               💙 Where college begins before campus.
             </div>
-            <Button onClick={() => window.location.href = "/"} size="lg">
+            <p className="text-lg mb-8">
+              Follow us on Instagram <a href="https://www.instagram.com/getfrosh/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-semibold">@getfrosh</a>
+            </p>
+            <Button onClick={() => window.location.href = "/"} size="lg" className="bg-primary hover:bg-primary/90">
               Return to Home
             </Button>
           </CardContent>
         </Card>
       </div>;
   }
-  return <div className="min-h-screen bg-white">
+  return <div className="min-h-screen bg-background">
       <SEO title="Student Representative Application | Frosh Hiring" description="Apply to become a Frosh Student Marketing & Social Media Representative. Represent your school and earn 40% revenue share." canonical="https://frosh.app/hiring" keywords="frosh hiring, student representative, campus marketing, college social media" />
 
       {/* Header Section */}
-      <div className="bg-gradient-to-b from-white to-gray-50 py-12 px-4">
+      <div className="bg-gradient-to-b from-background to-background/95 py-12 px-4 border-b border-border/40">
         <div className="max-w-4xl mx-auto text-center">
           <img src={froshLogo} alt="Frosh Logo" className="h-16 mx-auto mb-8" />
           <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
@@ -104,7 +109,7 @@ const Hiring = () => {
             Help connect your campus before it begins. Represent your school,
             grow your community, and earn 40% of your account's revenue.
           </p>
-          <Button onClick={scrollToForm} size="lg" className="bg-primary hover:bg-primary/90 shadow-lg">
+          <Button onClick={scrollToForm} size="lg" className="bg-primary hover:bg-primary/90 shadow-lg neon-glow">
             Apply Now
           </Button>
         </div>
@@ -115,7 +120,7 @@ const Hiring = () => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             {/* Section 1: Basic Info */}
-            <Card className="shadow-lg rounded-2xl">
+            <Card className="shadow-2xl rounded-2xl border-border/40 bg-card/50">
               <CardHeader>
                 <CardTitle className="text-2xl text-foreground">
                   Basic Information
@@ -146,18 +151,16 @@ const Hiring = () => {
                 field
               }) => <FormItem>
                       <FormLabel>University *</FormLabel>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select your university" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent className="max-h-[300px]">
-                          {Object.values(APPROVED_SCHOOLS).sort((a, b) => a.name.localeCompare(b.name)).map(school => <SelectItem key={school.name} value={school.name}>
-                                {school.name}
-                              </SelectItem>)}
-                        </SelectContent>
-                      </Select>
+                      <FormControl>
+                        <SmartSchoolSearch
+                          onSelect={(school: School) => {
+                            setSelectedSchool(school);
+                            field.onChange(school.name);
+                          }}
+                          placeholder="Search for your university..."
+                          selectedSchool={selectedSchool}
+                        />
+                      </FormControl>
                       <FormMessage />
                     </FormItem>} />
 
@@ -183,7 +186,7 @@ const Hiring = () => {
             </Card>
 
             {/* Section 2: Quick Questions */}
-            <Card className="shadow-lg rounded-2xl">
+            <Card className="shadow-2xl rounded-2xl border-border/40 bg-card/50">
               <CardHeader>
                 <CardTitle className="text-2xl text-foreground">
                   Quick Questions
@@ -284,7 +287,7 @@ const Hiring = () => {
             </Card>
 
             {/* Section 3: Agreement */}
-            <Card className="shadow-lg rounded-2xl">
+            <Card className="shadow-2xl rounded-2xl border-border/40 bg-card/50">
               <CardHeader>
                 <CardTitle className="text-2xl text-foreground">
                   Agreement
@@ -325,7 +328,7 @@ const Hiring = () => {
             </Card>
 
             <div className="text-center">
-              <Button type="submit" size="lg" className="bg-primary hover:bg-primary/90 shadow-lg px-12">
+              <Button type="submit" size="lg" className="bg-primary hover:bg-primary/90 shadow-lg px-12 neon-glow">
                 Submit Application
               </Button>
             </div>
