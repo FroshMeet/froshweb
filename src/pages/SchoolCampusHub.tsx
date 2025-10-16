@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -432,22 +432,13 @@ export default function SchoolCampusHub() {
             </div>
           </div>
 
-          {/* App Store Badges & QR Code */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-8">
-            <div className="flex gap-4">
-              <Button onClick={handleOpenApp} variant="outline" className="border-border/40 bg-card/50 hover:bg-card/70 px-6 py-3 rounded-xl">
-                <Play className="h-5 w-5 mr-2" />
-                Google Play
+          {/* Download App Button */}
+          <div className="flex justify-center mb-8">
+            <Link to="/waitlist">
+              <Button className="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-xl text-lg font-semibold">
+                Download the Frosh App
               </Button>
-              <Button onClick={handleOpenApp} variant="outline" className="border-border/40 bg-card/50 hover:bg-card/70 px-6 py-3 rounded-xl">
-                <Smartphone className="h-5 w-5 mr-2" />
-                App Store
-              </Button>
-            </div>
-            <div className="flex items-center gap-2 text-muted-foreground">
-              <QrCode className="h-5 w-5" />
-              <span className="text-sm">or scan QR code</span>
-            </div>
+            </Link>
           </div>
 
           {/* Switch Schools */}
