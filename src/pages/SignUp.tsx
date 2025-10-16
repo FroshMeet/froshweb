@@ -8,12 +8,14 @@ import { ArrowLeft, UserPlus } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { TopNavCTA } from "@/components/layout/TopNavCTA";
+import { useIsMobile } from "@/hooks/use-mobile";
 import froshLogo from "@/assets/frosh-logo-new.png";
 
 export default function SignUp() {
   const navigate = useNavigate();
   const { signUp } = useAuth();
   const { toast } = useToast();
+  const isMobile = useIsMobile();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -87,7 +89,7 @@ export default function SignUp() {
               <img 
                 src={froshLogo}
                 alt="Frosh Logo" 
-                className="h-12 w-auto"
+                className={isMobile ? "h-10 w-auto" : "h-16 w-auto"}
               />
             </div>
           </div>

@@ -60,7 +60,7 @@ const SchoolInstagramPage = () => {
                   <img 
                     src={froshLogo}
                     alt="Frosh Logo" 
-                    className={isMobile ? "h-8 w-auto" : "h-12 w-auto"}
+                    className={isMobile ? "h-10 w-auto" : "h-16 w-auto"}
                   />
                 </div>
               </div>
@@ -126,7 +126,7 @@ const SchoolInstagramPage = () => {
                   <img 
                     src={froshLogo}
                     alt="Frosh Logo" 
-                    className={isMobile ? "h-8 w-auto" : "h-12 w-auto"}
+                    className={isMobile ? "h-10 w-auto" : "h-16 w-auto"}
                   />
                 </div>
               </div>

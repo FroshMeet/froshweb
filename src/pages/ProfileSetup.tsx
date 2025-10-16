@@ -11,12 +11,14 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { ArrowLeft, Plus, X } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
+import { useIsMobile } from "@/hooks/use-mobile";
 import froshLogo from "@/assets/frosh-logo-new.png";
 
 const ProfileSetup = () => {
   const navigate = useNavigate();
   const { user, userProfile, updateProfile } = useAuth();
   const { toast } = useToast();
+  const isMobile = useIsMobile();
   
   const [formData, setFormData] = useState({
     major: "",
@@ -130,7 +132,7 @@ const ProfileSetup = () => {
             <img 
               src={froshLogo}
               alt="Frosh Logo" 
-              className="h-12 w-auto"
+              className={isMobile ? "h-10 w-auto" : "h-16 w-auto"}
             />
           </div>
         </div>
