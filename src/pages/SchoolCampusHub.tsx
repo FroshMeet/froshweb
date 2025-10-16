@@ -435,7 +435,7 @@ export default function SchoolCampusHub() {
           {/* Download App Button */}
           <div className="flex justify-center mb-8">
             <Link to="/waitlist">
-              <Button className="bg-black hover:bg-black/80 text-white border border-white px-8 py-3 rounded-xl text-lg font-medium">
+              <Button className="bg-black hover:bg-black/80 text-white border border-white px-6 py-2 rounded-lg text-base font-medium">
                 Download the Frosh App
               </Button>
             </Link>
