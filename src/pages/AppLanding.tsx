@@ -173,7 +173,7 @@ export default function AppLanding() {
                 </p>
                 <Button 
                   variant="outline" 
-                  className="bg-gradient-to-r from-pink-500 to-purple-500 border-0 text-white hover:from-pink-600 hover:to-purple-600 select-none"
+                  className="bg-primary border-0 text-white hover:bg-gradient-to-r hover:from-pink-500 hover:to-purple-500 select-none"
                   onClick={() => window.open('https://instagram.com/getfrosh', '_blank')}
                 >
                   <Instagram className="h-5 w-5 mr-2 select-none" />
