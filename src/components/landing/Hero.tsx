@@ -10,10 +10,8 @@ import phoneMockup from '@/assets/phone-mockup-launch.png';
 export default function Hero() {
   const navigate = useNavigate();
   const [selectedSchool, setSelectedSchool] = useState<School | null>(null);
-
   const handleSchoolSelect = (school: School) => {
     setSelectedSchool(school);
-    
     const correctSlug = getCorrectSchoolSlug(school);
     navigate(`/${correctSlug}`);
   };
@@ -37,9 +35,7 @@ export default function Hero() {
 
           <p className="text-zinc-300 mt-4 max-w-xl text-lg md:text-xl animate-fade-in" style={{
           animationDelay: '0.1s'
-        }}>
-            Find roommates, group chats, and new friends at your school — before the year even starts.
-          </p>
+        }}>Find roommates, group chats, and new friends at your school before the year even starts.</p>
 
           <p className="mt-3 font-semibold text-[#1a7ae6] text-base md:text-lg animate-fade-in" style={{
           animationDelay: '0.18s'
@@ -49,15 +45,10 @@ export default function Hero() {
 
           {/* Smart School Search */}
           <div className="mt-7 flex flex-col sm:flex-row gap-3 animate-fade-in" style={{
-            animationDelay: '0.26s'
-          }}>
+          animationDelay: '0.26s'
+        }}>
             <div className="flex-1">
-              <SmartSchoolSearch
-                onSelect={handleSchoolSelect}
-                placeholder="Search for your school…"
-                selectedSchool={selectedSchool}
-                className="w-full"
-              />
+              <SmartSchoolSearch onSelect={handleSchoolSelect} placeholder="Search for your school…" selectedSchool={selectedSchool} className="w-full" />
             </div>
 
             <Button onClick={() => navigate('/community')} className="w-full sm:w-auto px-6 py-4 text-base rounded-2xl font-semibold bg-primary hover:bg-primary/90">
@@ -72,11 +63,7 @@ export default function Hero() {
         <div className="flex justify-center animate-scale-in" style={{
         animationDelay: '0.05s'
       }}>
-          <img 
-            src={phoneMockup} 
-            alt="Frosh App Mockup" 
-            className="w-[408px] lg:w-[456px] h-[792px] lg:h-[888px] object-contain drop-shadow-2xl"
-          />
+          <img src={phoneMockup} alt="Frosh App Mockup" className="w-[408px] lg:w-[456px] h-[792px] lg:h-[888px] object-contain drop-shadow-2xl" />
         </div>
       </div>
     </section>;
