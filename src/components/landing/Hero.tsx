@@ -63,7 +63,14 @@ export default function Hero() {
         <div className="flex justify-center animate-scale-in" style={{
         animationDelay: '0.05s'
       }}>
-          <img src={phoneMockup} alt="Frosh App Mockup" className="w-[408px] lg:w-[456px] h-[792px] lg:h-[888px] object-contain drop-shadow-2xl" />
+          <img 
+            src={phoneMockup} 
+            alt="Frosh App Mockup" 
+            width="456" 
+            height="888"
+            fetchPriority="high"
+            className="w-[408px] lg:w-[456px] h-[792px] lg:h-[888px] object-contain drop-shadow-2xl" 
+          />
         </div>
       </div>
     </section>;

@@ -10,7 +10,13 @@ const Footer = () => {
           {/* Brand + Social */}
           <div className="space-y-3 md:space-y-2">
             <div className="flex items-center gap-2">
-              <img src={froshIcon} alt="Frosh" className="h-7 md:h-8 w-auto" />
+              <img 
+                src={froshIcon} 
+                alt="Frosh" 
+                width="32" 
+                height="32"
+                className="h-7 md:h-8 w-auto" 
+              />
             </div>
             <p className="text-[13px] md:text-sm text-zinc-400/75 max-w-md leading-relaxed">
               The trusted platform for college freshmen to connect, network, and build lasting friendships 

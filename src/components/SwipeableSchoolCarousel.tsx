@@ -96,6 +96,9 @@ export const SwipeableSchoolCarousel: React.FC<SchoolCarouselProps> = ({
                   <img 
                     src={getSchoolLogo(school.slug)} 
                     alt={`${school.name} logo`}
+                    width="48"
+                    height="48"
+                    loading="lazy"
                     className="w-full h-full object-cover"
                   />
                 ) : (
@@ -128,6 +131,9 @@ export const SwipeableSchoolCarousel: React.FC<SchoolCarouselProps> = ({
                   <img 
                     src={getSchoolLogo(school.slug)} 
                     alt={`${school.name} logo`}
+                    width="48"
+                    height="48"
+                    loading="lazy"
                     className="w-full h-full object-cover"
                   />
                 ) : (

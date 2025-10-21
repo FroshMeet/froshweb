@@ -55,6 +55,8 @@ const SharedNavigation = ({ currentPage }: SharedNavigationProps) => {
             <img 
               src={froshIcon}
               alt="Frosh Logo" 
+              width="64"
+              height="64"
               className={isMobile ? "h-10 w-auto" : "h-16 w-auto"}
             />
           </div>
