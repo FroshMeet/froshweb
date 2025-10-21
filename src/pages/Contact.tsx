@@ -11,6 +11,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import SharedNavigation from "@/components/layout/SharedNavigation";
 import { SEO } from "@/components/seo/SEO";
+import { organizationSchema, websiteSchema } from "@/utils/seoSchema";
 const Contact = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
@@ -63,10 +64,14 @@ const Contact = () => {
   };
   return <div className="min-h-screen bg-background">
       <SEO
-        title="Contact Us - Frosh"
-        description="Get in touch with the Frosh team. Request your school, report issues, or share feedback about the college freshman social platform."
-        keywords="contact frosh, support, customer service, request school, feedback, college app help"
+        title="Contact Frosh | Get Support for the College Social App"
+        description="Get in touch with the Frosh team. Request your school, report issues, or share feedback about the college freshman social platform. We're here to help students connect."
+        keywords="contact frosh, frosh support, frosh customer service, request school, frosh feedback, college app help, frosh contact email, student support"
         canonical="/contact"
+        schema={{
+          "@context": "https://schema.org",
+          "@graph": [organizationSchema, websiteSchema]
+        }}
       />
       <SharedNavigation currentPage="contact" />
 

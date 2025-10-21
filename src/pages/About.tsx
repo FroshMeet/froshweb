@@ -7,17 +7,20 @@ import { GraduationCap, Shield, Heart, Target, Users } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import SharedNavigation from "@/components/layout/SharedNavigation";
 import { SEO } from "@/components/seo/SEO";
-import { organizationSchema, faqSchema } from "@/utils/seoSchema";
+import { organizationSchema, websiteSchema, faqSchema } from "@/utils/seoSchema";
 const About = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   return <div className="min-h-screen bg-background">
       <SEO
-        title="About Frosh - Our Story & Mission"
-        description="Learn about Frosh, the college freshman social platform. Discover our mission to help Class of 2030 students connect, find roommates, and build lasting friendships before college starts."
-        keywords="about frosh, college social platform, freshman networking mission, student community, college connections, Class of 2030"
+        title="About Frosh | The Leading College Social App for Students"
+        description="Frosh is the college social app connecting incoming students and the Class of 2030 before Move-In Day. Learn about our mission to help college freshmen find roommates, join communities, and build lasting friendships at universities nationwide."
+        keywords="about frosh, about frosh app, frosh startup, frosh mission, college social platform mission, freshman networking platform, student community app, college connections, Class of 2030, frosh story, frosh company"
         canonical="/about"
-        schema={organizationSchema}
+        schema={{
+          "@context": "https://schema.org",
+          "@graph": [organizationSchema, websiteSchema]
+        }}
       />
       <SharedNavigation currentPage="about" />
 

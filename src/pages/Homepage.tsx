@@ -486,9 +486,9 @@ const Homepage = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Frosh | #1 College App for Class of 2030"
-        description="Frosh helps college freshmen connect before day one — meet classmates, find roommates, and join your Class of 2030 community at top universities nationwide."
-        keywords="frosh, frosh app, college app, Class of 2030, college freshmen, meet classmates, find roommates, college social network, Harvard, Stanford, MIT, UCLA, USC"
+        title="Frosh | The College Social App for Incoming Students"
+        description="Frosh is the college social network where students connect before Move-In Day. Join group chats, match with new friends, find roommates, and start your college journey early with the Class of 2030. Where college begins before campus."
+        keywords="frosh, frosh app, frosh social network, frosh college app, frosh meet, college social app, college freshman app, student networking platform, university social network, college chat app, student matching app, Class of 2030, meet classmates, find roommates, incoming students, freshman community, college networking, student social app"
         canonical="/"
         schema={{
           "@context": "https://schema.org",

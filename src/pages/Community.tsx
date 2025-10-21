@@ -11,7 +11,7 @@ import { useSchoolSearch } from '@/hooks/useSchoolSearch';
 import { schools, School } from '@/data/schools';
 import { getCorrectSchoolSlug } from '@/utils/schoolNavigation';
 import { SEO } from '@/components/seo/SEO';
-import { websiteSchema } from '@/utils/seoSchema';
+import { organizationSchema, websiteSchema } from '@/utils/seoSchema';
 
 
 const Community = () => {
@@ -45,11 +45,14 @@ const Community = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-primary/5">
       <SEO
-        title="Community - Find Your College | Frosh"
-        description="Explore Frosh communities at Harvard, Stanford, MIT, UCLA, USC, Yale, and more. Connect with Class of 2030 students at your university."
-        keywords="college community, Harvard Class of 2030, Stanford freshmen, MIT students, UCLA freshmen, college networking, university social, freshman community"
+        title="Frosh for Colleges | 100+ School Communities Across the U.S."
+        description="Frosh unites over 100 college communities including Harvard, Stanford, MIT, UCLA, USC, Yale, and more. Connect with Class of 2030 students at your university before classes begin. Where college begins before campus."
+        keywords="frosh colleges, frosh universities, college communities, Harvard frosh, Stanford frosh, MIT frosh, UCLA frosh, USC frosh, college Class of 2030, university freshman network, school communities, college social network, university communities"
         canonical="/community"
-        schema={websiteSchema}
+        schema={{
+          "@context": "https://schema.org",
+          "@graph": [organizationSchema, websiteSchema]
+        }}
       />
       <SharedNavigation currentPage="community" />
 

@@ -4,18 +4,34 @@ export const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "Frosh",
-  "alternateName": ["Frosh App", "Frosh College Platform"],
+  "legalName": "Frosh App",
+  "alternateName": ["Frosh App", "Frosh College Platform", "Frosh Social Network", "Frosh Meet", "Frosh Student App", "Frosh College App", "Frosh University Network", "Frosh College Social App"],
   "url": "https://frosh.app",
   "logo": "https://frosh.app/lovable-uploads/fresh_meat_app_icon.png",
-  "description": "Frosh is the #1 college app for freshmen. Connect with your Class of 2030 classmates before day one at top universities nationwide.",
-  "slogan": "Meet Your Class of 2030 Before Day One",
+  "description": "Frosh is the #1 college social app for incoming students and the Class of 2030. Connect with college freshmen, find roommates, join verified school group chats, and build your university community before Move-In Day. Where college begins before campus.",
+  "slogan": "Where College Begins Before Campus",
   "foundingDate": "2024",
   "founders": [
     {
       "@type": "Person",
-      "name": "Kian"
+      "name": "Kian",
+      "jobTitle": "Founder"
     }
   ],
+  "knowsAbout": [
+    "College Freshman Social Networking",
+    "Student Matching",
+    "University Communities",
+    "Roommate Matching",
+    "College Group Chats",
+    "Student Verification",
+    "Campus Connections",
+    "Class of 2030",
+    "College Social Platform",
+    "Student Networking"
+  ],
+  "applicationCategory": ["Social Networking", "Education Technology", "Student Platform"],
+  "keywords": "frosh, frosh app, college social app, college freshman app, student networking platform, university social network, college chat app, student matching app, roommate finder, college community, Class of 2030, incoming students app, college connections, freshman social network, student social app",
   "contactPoint": {
     "@type": "ContactPoint",
     "contactType": "customer support",
@@ -32,6 +48,11 @@ export const organizationSchema = {
   "brand": {
     "@type": "Brand",
     "name": "Frosh"
+  },
+  "audience": {
+    "@type": "EducationalAudience",
+    "educationalRole": "College Freshman",
+    "audienceType": "Incoming College Students"
   }
 };
 
@@ -39,9 +60,13 @@ export const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": "Frosh",
-  "alternateName": "Frosh App",
+  "alternateName": ["Frosh App", "Frosh Social Network", "Frosh College Platform"],
   "url": "https://frosh.app",
-  "description": "Frosh is the #1 college app for freshmen. Connect with your Class of 2030 classmates before day one — meet students, find roommates, and build your college community.",
+  "description": "Frosh is the college social network where incoming students and the Class of 2030 connect before Move-In Day. Meet college freshmen, find roommates, join verified school group chats, and start your university journey early. Where college begins before campus.",
+  "about": {
+    "@type": "Thing",
+    "name": "College Freshman Social Networking Platform"
+  },
   "potentialAction": {
     "@type": "SearchAction",
     "target": {
@@ -50,30 +75,41 @@ export const websiteSchema = {
     },
     "query-input": "required name=search_term_string"
   },
-  "keywords": "frosh, college app, freshman social network, Class of 2030, meet classmates, find roommates"
+  "keywords": "frosh, frosh app, frosh social network, frosh college app, college social app, college freshman app, freshman community, Class of 2030, meet classmates, find roommates, student networking, university social network, college chat app, student matching, incoming students"
 };
 
 export const mobileAppSchema = {
   "@context": "https://schema.org",
   "@type": "MobileApplication",
   "name": "Frosh",
-  "alternateName": "Frosh App",
+  "alternateName": ["Frosh App", "Frosh College Social App", "Frosh Student Network"],
   "applicationCategory": "SocialNetworkingApplication",
   "operatingSystem": "iOS, Android",
-  "description": "Frosh is the #1 social app for college freshmen. Meet your Class of 2030 classmates, find roommates, and connect before day one at top universities.",
+  "description": "Frosh is the college social app that helps incoming students and the Class of 2030 meet new friends, join verified school group chats, find roommates, and connect before arriving on campus. Real connections through verified college communities.",
   "about": {
     "@type": "Thing",
-    "name": "College Freshman Social Networking"
+    "name": "College Freshman Social Networking and Student Matching Platform"
   },
+  "featureList": [
+    "Connect with verified college students",
+    "Find compatible roommates",
+    "Join school-specific group chats",
+    "Meet Class of 2030 classmates",
+    "Secure student messaging",
+    "University community building",
+    "Student matching and discovery",
+    "Campus event coordination"
+  ],
   "audience": {
     "@type": "EducationalAudience",
     "educationalRole": "College Freshman",
-    "audienceType": "Class of 2030"
+    "audienceType": ["Class of 2030", "Incoming College Students", "University Freshmen"]
   },
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "USD"
+    "priceCurrency": "USD",
+    "description": "Free sign-up for verified college students"
   },
   "aggregateRating": {
     "@type": "AggregateRating",
@@ -81,7 +117,7 @@ export const mobileAppSchema = {
     "ratingCount": "1250",
     "bestRating": "5"
   },
-  "keywords": "frosh, college app, freshman social network, Class of 2030"
+  "keywords": "frosh, frosh app, frosh social network, college app, college social app, student networking app, freshman social network, college freshman app, student matching, roommate finder, Class of 2030, university social network, college chat, student community, incoming students app"
 };
 
 export const faqSchema = (faqs: { question: string; answer: string }[]) => ({

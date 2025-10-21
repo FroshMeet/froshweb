@@ -46,13 +46,17 @@ export default function WhatIsFrosh() {
   return (
     <>
       <SEO
-        title="What is Frosh? | The College Freshman Platform Explained"
-        description="Frosh redefines college freshman connections. Learn how Frosh.app transforms 'frosh' from slang into the #1 social platform for Class of 2030 students at top universities."
-        keywords="what is frosh, frosh meaning, frosh app, college freshman, Class of 2030, college social app, freshman networking"
+        title="What is Frosh? | College Social App for Incoming Students Explained"
+        description="Frosh is the college social network for incoming students and the Class of 2030. Learn how Frosh helps you meet classmates, find roommates, join group chats, and connect with college freshmen before Move-In Day. Where college begins before campus."
+        keywords="what is frosh, what is frosh app, frosh explained, frosh meaning, frosh college app, frosh social network, frosh platform, college social app, freshman platform, Class of 2030 app, meet college classmates, college networking app, student social network"
         canonical="/what-is-frosh"
         schema={{
           "@context": "https://schema.org",
-          "@graph": [organizationSchema, websiteSchema, faqSchema]
+          "@graph": [
+            organizationSchema,
+            websiteSchema,
+            faqSchema
+          ]
         }}
       />
       

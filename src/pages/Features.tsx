@@ -13,11 +13,14 @@ const Features = () => {
   const isMobile = useIsMobile();
   return <div className="min-h-screen bg-background">
       <SEO
-        title="Features - Frosh College App"
-        description="Discover Frosh features: smart matching, secure messaging, verified students, event discovery, and more. Everything you need to connect with college freshmen."
-        keywords="college app features, student matching, roommate finder, college events, verified students, freshman networking, college messaging"
+        title="Frosh App Features | Meet, Chat, and Connect Before College"
+        description="Frosh helps incoming college students connect through verified school networks, smart matching, secure group chats, roommate finding, and event discovery. Everything you need to build your university community before Move-In Day."
+        keywords="frosh features, frosh app features, college app features, student matching, roommate finder app, college chat features, verified students, freshman networking tools, college messaging app, student social features, university networking, Class of 2030 features"
         canonical="/features"
-        schema={organizationSchema}
+        schema={{
+          "@context": "https://schema.org",
+          "@graph": [organizationSchema, websiteSchema]
+        }}
       />
       <SharedNavigation currentPage="features" />
 
