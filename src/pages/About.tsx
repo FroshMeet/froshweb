@@ -145,9 +145,7 @@ const About = () => {
                 "College is more fun when it doesn't start with blank faces and awkward dms."
               </blockquote>
                <p className="text-lg text-muted-foreground">
-                 <Button variant="link" onClick={() => navigate('/kian')} className="text-primary hover:text-primary/80 p-0 h-auto font-normal text-lg underline-offset-4">
-                   - kian, Founder of Frosh
-                 </Button>
+                 - kian, Founder of Frosh
                </p>
             </div>
           </div>
