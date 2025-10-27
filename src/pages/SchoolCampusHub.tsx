@@ -391,7 +391,7 @@ export default function SchoolCampusHub() {
       <section className="py-16 px-4 bg-gradient-to-br from-muted/10 to-background">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold text-foreground mb-12">
-            Why Join FroshMeet?
+            Why Join Frosh?
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
