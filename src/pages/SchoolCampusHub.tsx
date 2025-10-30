@@ -150,8 +150,7 @@ export default function SchoolCampusHub() {
     searchStudents(searchQuery);
   }, [searchQuery, searchStudents]);
   const handleOpenApp = () => {
-    // Deep link to app or app store
-    window.open('/app', '_blank');
+    navigate('/waitlist');
   };
   const handleTextMeApp = () => {
     setShowPhoneModal(true);
