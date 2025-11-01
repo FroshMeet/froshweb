@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -14,6 +15,7 @@ import { SmartSchoolSearch } from "@/components/SmartSchoolSearch";
 import { School } from "@/data/schools";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { ChevronRight } from "lucide-react";
 import froshLogo from "@/assets/frosh-logo-new.png";
 const formSchema = z.object({
   fullName: z.string().min(2, "Please enter your full name").max(100),
@@ -41,7 +43,8 @@ const formSchema = z.object({
   path: ["instagramHandle"]
 });
 type FormData = z.infer<typeof formSchema>;
-const Hiring = () => {
+const Representatives = () => {
+  const navigate = useNavigate();
   const [submitted, setSubmitted] = useState(false);
   const [showSocialDetails, setShowSocialDetails] = useState(false);
   const [selectedSchool, setSelectedSchool] = useState<School | null>(null);
@@ -131,7 +134,7 @@ const Hiring = () => {
   const graduationYears = ["2026", "2027", "2028", "2029", "2030"];
   if (submitted) {
     return <div className="min-h-screen bg-background flex items-center justify-center p-4">
-        <SEO title="Application Submitted | Frosh Hiring" description="Thank you for applying to become a Frosh Student Representative" canonical="https://frosh.app/hiring" />
+        <SEO title="Application Submitted | Frosh Hiring" description="Thank you for applying to become a Frosh Student Representative" canonical="https://frosh.app/hiring/representatives" />
         <div className="relative">
           <div className="absolute -inset-8 bg-primary/30 rounded-3xl blur-3xl animate-pulse -z-10"></div>
           <Card className="relative max-w-2xl w-full text-center shadow-2xl border-border/40 bg-card z-10">
@@ -158,10 +161,46 @@ const Hiring = () => {
       </div>;
   }
   return <div className="min-h-screen bg-background">
-      <SEO title="Student Representative Application | Frosh Hiring" description="Apply to become a Frosh Student Marketing & Social Media Representative. Represent your school and earn 40% revenue share." canonical="https://frosh.app/hiring" keywords="frosh hiring, student representative, campus marketing, college social media" />
+      <SEO title="Student Representative Application | Frosh Hiring" description="Apply to become a Frosh Student Marketing & Social Media Representative. Represent your school and earn 40% revenue share." canonical="https://frosh.app/hiring/representatives" keywords="frosh hiring, student representative, campus marketing, college social media" />
+
+      {/* Top Navigation */}
+      <nav className="border-b border-white/10 bg-[#0c1008]/95 backdrop-blur-sm sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <img 
+              src={froshLogo} 
+              alt="Frosh Logo" 
+              className="h-10 cursor-pointer"
+              onClick={() => navigate('/')}
+            />
+            <div className="flex gap-6">
+              <Link to="/" className="text-white hover:text-[#015cd2] transition-colors text-sm font-medium">
+                Home
+              </Link>
+              <Link to="/hiring" className="text-[#015cd2] font-semibold text-sm">
+                Hiring
+              </Link>
+              <Link to="/contact" className="text-white hover:text-[#015cd2] transition-colors text-sm font-medium">
+                Contact
+              </Link>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Breadcrumb */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+        <div className="flex items-center gap-2 text-sm text-white/60">
+          <Link to="/" className="hover:text-[#015cd2] transition-colors">Home</Link>
+          <ChevronRight className="w-4 h-4" />
+          <Link to="/hiring" className="hover:text-[#015cd2] transition-colors">Hiring</Link>
+          <ChevronRight className="w-4 h-4" />
+          <span className="text-white">Representatives</span>
+        </div>
+      </div>
 
       {/* Header Section */}
-      <div className="bg-gradient-to-b from-background to-background/95 py-12 px-4 border-b border-border/40">
+      <div className="bg-gradient-to-b from-background to-background/95 py-12 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <img src={froshLogo} alt="Frosh Logo" className="h-20 mx-auto mb-8 animate-pulse drop-shadow-[0_0_15px_rgba(1,92,210,0.6)]" />
           <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
@@ -418,4 +457,4 @@ const Hiring = () => {
       
     </div>;
 };
-export default Hiring;
+export default Representatives;
