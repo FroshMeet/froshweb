@@ -108,7 +108,7 @@ const HiringHub = () => {
           >
             <div className="absolute -inset-0.5 bg-gradient-to-r from-[#015cd2]/0 via-[#015cd2]/20 to-[#015cd2]/0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity blur"></div>
             
-            <div className="relative">
+            <div className="relative flex flex-col h-full">
               <div className="w-14 h-14 rounded-xl bg-[#015cd2]/20 flex items-center justify-center mb-6 group-hover:bg-[#015cd2]/30 transition-colors">
                 <Sparkles className="w-7 h-7 text-[#015cd2]" />
               </div>
@@ -117,7 +117,7 @@ const HiringHub = () => {
                 Head of Brand & Content Strategy
               </h2>
               
-              <p className="text-white/70 mb-8 leading-relaxed">
+              <p className="text-white/70 mb-8 leading-relaxed flex-1">
                 Own the story. Lead creative, content, and growth for @getfrosh.
               </p>
               
@@ -144,7 +144,7 @@ const HiringHub = () => {
           >
             <div className="absolute -inset-0.5 bg-gradient-to-r from-[#015cd2]/0 via-[#015cd2]/20 to-[#015cd2]/0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity blur"></div>
             
-            <div className="relative">
+            <div className="relative flex flex-col h-full">
               <div className="w-14 h-14 rounded-xl bg-[#015cd2]/20 flex items-center justify-center mb-6 group-hover:bg-[#015cd2]/30 transition-colors">
                 <Megaphone className="w-7 h-7 text-[#015cd2]" />
               </div>
@@ -153,7 +153,7 @@ const HiringHub = () => {
                 Student Representatives
               </h2>
               
-              <p className="text-white/70 mb-8 leading-relaxed">
+              <p className="text-white/70 mb-8 leading-relaxed flex-1">
                 Run your school's Frosh account and earn 40% of revenue.
               </p>
               
