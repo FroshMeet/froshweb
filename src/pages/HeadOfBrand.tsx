@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -43,6 +43,12 @@ const HeadOfBrand = () => {
     }
   });
 
+  useEffect(() => {
+    if (submitted) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [submitted]);
+
   const onSubmit = async (data: FormData) => {
     if (isSubmitting) return;
     
@@ -55,7 +61,6 @@ const HeadOfBrand = () => {
       console.log("Head of Brand Application:", data);
       
       setSubmitted(true);
-      window.scrollTo({ top: 0, behavior: "smooth" });
       
       toast.success("Application submitted successfully!");
     } catch (error) {

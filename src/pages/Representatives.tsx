@@ -65,6 +65,13 @@ const Representatives = () => {
       agreementRepresent: false
     }
   });
+
+  useEffect(() => {
+    if (submitted) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [submitted]);
+
   const onSubmit = async (data: FormData) => {
     if (isSubmitting) return;
     
@@ -100,12 +107,6 @@ const Representatives = () => {
       if (result?.ok === true) {
         console.log("Application submitted successfully:", result);
         setSubmitted(true);
-        setTimeout(() => {
-          window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-          });
-        }, 100);
         return;
       }
 
