@@ -61,20 +61,15 @@ const HiringHub = () => {
         </div>
       </nav>
 
-      {/* Breadcrumb */}
+      {/* Back Button */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-        <div className="flex items-center gap-2 text-sm text-white/60">
-          <Link to="/" className="hover:text-[#015cd2] transition-colors">Home</Link>
-          <ChevronRight className="w-4 h-4" />
-          <span className="text-white">Hiring</span>
-        </div>
         <Button 
           variant="ghost" 
           onClick={() => navigate('/')}
-          className="mt-4 text-white/60 hover:text-white"
+          className="text-white/60 hover:text-white"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to Home
+          Back
         </Button>
       </div>
 
