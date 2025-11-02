@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { SEO } from "@/components/seo/SEO";
-import { Sparkles, Megaphone, ChevronRight } from "lucide-react";
+import { Sparkles, Megaphone, ChevronRight, ArrowLeft } from "lucide-react";
 import froshLogo from "@/assets/frosh-logo-new.png";
 
 const HiringHub = () => {
@@ -68,6 +68,14 @@ const HiringHub = () => {
           <ChevronRight className="w-4 h-4" />
           <span className="text-white">Hiring</span>
         </div>
+        <Button 
+          variant="ghost" 
+          onClick={() => navigate('/')}
+          className="mt-4 text-white/60 hover:text-white"
+        >
+          <ArrowLeft className="h-4 w-4 mr-2" />
+          Back to Home
+        </Button>
       </div>
 
       {/* Hero Section */}

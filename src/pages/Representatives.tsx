@@ -15,7 +15,7 @@ import { SmartSchoolSearch } from "@/components/SmartSchoolSearch";
 import { School } from "@/data/schools";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, ArrowLeft } from "lucide-react";
 import froshLogo from "@/assets/frosh-logo-new.png";
 const formSchema = z.object({
   fullName: z.string().min(2, "Please enter your full name").max(100),
@@ -197,6 +197,14 @@ const Representatives = () => {
           <ChevronRight className="w-4 h-4" />
           <span className="text-white">Representatives</span>
         </div>
+        <Button 
+          variant="ghost" 
+          onClick={() => navigate('/hiring')}
+          className="mt-4 text-white/60 hover:text-white"
+        >
+          <ArrowLeft className="h-4 w-4 mr-2" />
+          Back to Hiring
+        </Button>
       </div>
 
       {/* Header Section */}

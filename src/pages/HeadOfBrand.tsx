@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardContent } from "@/components/ui/card";
 import { SEO } from "@/components/seo/SEO";
-import { ChevronRight, CheckCircle2 } from "lucide-react";
+import { ChevronRight, CheckCircle2, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
 import froshLogo from "@/assets/frosh-logo-new.png";
 
@@ -137,6 +137,14 @@ const HeadOfBrand = () => {
           <ChevronRight className="w-4 h-4" />
           <span className="text-white">Head of Brand</span>
         </div>
+        <Button 
+          variant="ghost" 
+          onClick={() => navigate('/hiring')}
+          className="mt-4 text-white/60 hover:text-white"
+        >
+          <ArrowLeft className="h-4 w-4 mr-2" />
+          Back to Hiring
+        </Button>
       </div>
 
       {/* Header */}
