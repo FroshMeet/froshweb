@@ -72,14 +72,11 @@ const HiringHub = () => {
 
       {/* Hero Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 text-center">
-        <div className="relative inline-block mb-8">
-          <div className="absolute -inset-4 bg-[#015cd2]/30 rounded-full blur-2xl animate-pulse"></div>
-          <img 
-            src={froshLogo} 
-            alt="Frosh Logo" 
-            className="h-24 md:h-32 relative z-10 drop-shadow-[0_0_20px_rgba(1,92,210,0.8)]"
-          />
-        </div>
+        <img 
+          src={froshLogo} 
+          alt="Frosh Logo" 
+          className="h-20 mx-auto mb-8 animate-pulse drop-shadow-[0_0_15px_rgba(1,92,210,0.6)]"
+        />
         
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-4">
           Frosh Hiring
