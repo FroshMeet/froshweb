@@ -141,6 +141,7 @@ const HeadOfBrand = () => {
 
       {/* Header */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
+        <img src={froshLogo} alt="Frosh Logo" className="h-20 mx-auto mb-8 animate-pulse drop-shadow-[0_0_15px_rgba(1,92,210,0.6)]" />
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-4">
           Apply: Head of Brand & Content Strategy
         </h1>
