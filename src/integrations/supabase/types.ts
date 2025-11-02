@@ -69,7 +69,7 @@ export type Database = {
         Row: {
           failure_reason: string | null
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           user_agent: string | null
           user_id: string
           verification_result: boolean
@@ -78,7 +78,7 @@ export type Database = {
         Insert: {
           failure_reason?: string | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           user_agent?: string | null
           user_id: string
           verification_result: boolean
@@ -87,7 +87,7 @@ export type Database = {
         Update: {
           failure_reason?: string | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           user_agent?: string | null
           user_id?: string
           verification_result?: boolean
@@ -180,76 +180,91 @@ export type Database = {
       }
       hiring_applications: {
         Row: {
-          agreement_represent: boolean
-          agreement_revenue: boolean
+          additional_info: string | null
+          agreement_represent: boolean | null
+          agreement_revenue: boolean | null
+          application_type: string | null
           created_at: string
           email: string | null
+          experience: string | null
           full_name: string
-          graduation_year: string
+          graduation_year: string | null
           id: string
           idempotency_key: string | null
-          instagram_familiarity: string
+          instagram_familiarity: string | null
           instagram_handle: string | null
-          ip_address: unknown | null
+          ip_address: unknown
+          portfolio: string | null
           school_code: string
           school_name: string
           social_media_details: string | null
-          social_media_experience: string
+          social_media_experience: string | null
           status: string
           submission_hash: string
-          time_commitment: string
+          time_commitment: string | null
           updated_at: string
           user_agent: string | null
           user_id: string | null
-          why_fit: string
+          viral_idea: string | null
+          why_fit: string | null
         }
         Insert: {
-          agreement_represent?: boolean
-          agreement_revenue?: boolean
+          additional_info?: string | null
+          agreement_represent?: boolean | null
+          agreement_revenue?: boolean | null
+          application_type?: string | null
           created_at?: string
           email?: string | null
+          experience?: string | null
           full_name: string
-          graduation_year: string
+          graduation_year?: string | null
           id?: string
           idempotency_key?: string | null
-          instagram_familiarity: string
+          instagram_familiarity?: string | null
           instagram_handle?: string | null
-          ip_address?: unknown | null
+          ip_address?: unknown
+          portfolio?: string | null
           school_code: string
           school_name: string
           social_media_details?: string | null
-          social_media_experience: string
+          social_media_experience?: string | null
           status?: string
           submission_hash: string
-          time_commitment: string
+          time_commitment?: string | null
           updated_at?: string
           user_agent?: string | null
           user_id?: string | null
-          why_fit: string
+          viral_idea?: string | null
+          why_fit?: string | null
         }
         Update: {
-          agreement_represent?: boolean
-          agreement_revenue?: boolean
+          additional_info?: string | null
+          agreement_represent?: boolean | null
+          agreement_revenue?: boolean | null
+          application_type?: string | null
           created_at?: string
           email?: string | null
+          experience?: string | null
           full_name?: string
-          graduation_year?: string
+          graduation_year?: string | null
           id?: string
           idempotency_key?: string | null
-          instagram_familiarity?: string
+          instagram_familiarity?: string | null
           instagram_handle?: string | null
-          ip_address?: unknown | null
+          ip_address?: unknown
+          portfolio?: string | null
           school_code?: string
           school_name?: string
           social_media_details?: string | null
-          social_media_experience?: string
+          social_media_experience?: string | null
           status?: string
           submission_hash?: string
-          time_commitment?: string
+          time_commitment?: string | null
           updated_at?: string
           user_agent?: string | null
           user_id?: string | null
-          why_fit?: string
+          viral_idea?: string | null
+          why_fit?: string | null
         }
         Relationships: []
       }
@@ -798,7 +813,7 @@ export type Database = {
           created_at: string | null
           details: Json | null
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           resource: string | null
           user_agent: string | null
           user_id: string | null
@@ -808,7 +823,7 @@ export type Database = {
           created_at?: string | null
           details?: Json | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           resource?: string | null
           user_agent?: string | null
           user_id?: string | null
@@ -818,7 +833,7 @@ export type Database = {
           created_at?: string | null
           details?: Json | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           resource?: string | null
           user_agent?: string | null
           user_id?: string | null
@@ -989,7 +1004,7 @@ export type Database = {
           access_time: string | null
           access_type: string
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           user_agent: string | null
           user_id: string | null
         }
@@ -997,7 +1012,7 @@ export type Database = {
           access_time?: string | null
           access_type: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           user_agent?: string | null
           user_id?: string | null
         }
@@ -1005,7 +1020,7 @@ export type Database = {
           access_time?: string | null
           access_type?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           user_agent?: string | null
           user_id?: string | null
         }
@@ -1047,16 +1062,13 @@ export type Database = {
     }
     Functions: {
       admin_get_schools_summary_only: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           school_name: string
           signup_count: number
         }[]
       }
-      admin_get_waitlist_count_only: {
-        Args: Record<PropertyKey, never>
-        Returns: number
-      }
+      admin_get_waitlist_count_only: { Args: never; Returns: number }
       can_view_profile: {
         Args: { profile_user_id: string; viewer_id: string }
         Returns: boolean
@@ -1164,12 +1176,9 @@ export type Database = {
           verified: boolean
         }[]
       }
-      get_user_school_slug: {
-        Args: { user_id_param: string }
-        Returns: string
-      }
+      get_user_school_slug: { Args: { user_id_param: string }; Returns: string }
       get_waitlist_admin_summary: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           recent_signups: number
           schools_count: number
@@ -1202,14 +1211,8 @@ export type Database = {
         Args: { swipe_direction: string; swiper_id: string; target_id: string }
         Returns: Json
       }
-      is_admin: {
-        Args: { user_id_param?: string }
-        Returns: boolean
-      }
-      is_admin_simple: {
-        Args: { user_id_param?: string }
-        Returns: boolean
-      }
+      is_admin: { Args: { user_id_param?: string }; Returns: boolean }
+      is_admin_simple: { Args: { user_id_param?: string }; Returns: boolean }
       join_school_group_chat: {
         Args: { conversation_id_param: string; user_id_param: string }
         Returns: boolean
@@ -1320,10 +1323,7 @@ export type Database = {
         Args: { profile_user_id: string; viewer_id: string }
         Returns: boolean
       }
-      verify_admin_access: {
-        Args: { user_id_param: string }
-        Returns: boolean
-      }
+      verify_admin_access: { Args: { user_id_param: string }; Returns: boolean }
       verify_college_email: {
         Args: { college_email_param: string; user_id_param: string }
         Returns: boolean

@@ -55,14 +55,33 @@ const HeadOfBrand = () => {
     setIsSubmitting(true);
     
     try {
-      // Simulate submission - replace with actual API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const { supabase } = await import("@/integrations/supabase/client");
       
-      console.log("Head of Brand Application:", data);
-      
-      setSubmitted(true);
-      
-      toast.success("Application submitted successfully!");
+      const result = await supabase.functions.invoke("submit-hiring-application", {
+        body: {
+          applicationType: 'head_of_brand',
+          fullName: data.name,
+          email: data.email,
+          university: data.school,
+          portfolio: data.portfolio,
+          experience: data.experience,
+          viralIdea: data.viralIdea,
+          additional: data.additional,
+          idempotencyKey: crypto.randomUUID()
+        }
+      });
+
+      if (result?.data?.ok === true) {
+        console.log("Head of Brand Application submitted successfully:", result);
+        setSubmitted(true);
+        toast.success("Application submitted successfully!");
+        return;
+      }
+
+      const errorMessage = result?.data?.error || result?.error?.message || "Failed to submit application";
+      console.error("Submission error:", errorMessage);
+      toast.error(errorMessage);
+      setIsSubmitting(false);
     } catch (error) {
       console.error("Submission error:", error);
       toast.error("Failed to submit application. Please try again.");

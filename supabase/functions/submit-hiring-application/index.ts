@@ -7,18 +7,24 @@ const corsHeaders = {
 };
 
 interface HiringApplicationRequest {
+  applicationType?: 'representative' | 'head_of_brand';
   fullName: string;
   instagramHandle?: string;
   email?: string;
   university: string;
-  graduationYear: string;
-  timeCommitment: string;
-  whyFit: string;
-  instagramFamiliarity: string;
-  socialMediaExperience: string;
+  graduationYear?: string;
+  timeCommitment?: string;
+  whyFit?: string;
+  instagramFamiliarity?: string;
+  socialMediaExperience?: string;
   socialMediaDetails?: string;
-  agreementRevenue: boolean;
-  agreementRepresent: boolean;
+  agreementRevenue?: boolean;
+  agreementRepresent?: boolean;
+  // Head of Brand specific fields
+  portfolio?: string;
+  experience?: string;
+  viralIdea?: string;
+  additional?: string;
   idempotencyKey?: string;
 }
 
@@ -83,8 +89,9 @@ Deno.serve(async (req) => {
     // Parse request
     const requestData: HiringApplicationRequest = await req.json();
     const idempotencyKey = req.headers.get('x-idempotency-key') || requestData.idempotencyKey;
+    const applicationType = requestData.applicationType || 'representative';
     
-    console.log('Processing application for:', requestData.university);
+    console.log('Processing application for:', requestData.university, 'Type:', applicationType);
 
     // Server-side validation
     if (!requestData.fullName || requestData.fullName.trim().length < 2 || requestData.fullName.length > 100) {
@@ -98,12 +105,21 @@ Deno.serve(async (req) => {
     const normalizedInstagram = normalizeInstagram(requestData.instagramHandle);
     const normalizedEmail = normalizeEmail(requestData.email);
 
-    // Validate at least one contact method
-    if (!normalizedInstagram && !normalizedEmail) {
-      return new Response(
-        JSON.stringify({ ok: false, error: 'Please provide either an Instagram handle or email' }),
-        { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+    // Validate at least one contact method (email required for head of brand)
+    if (applicationType === 'head_of_brand') {
+      if (!normalizedEmail) {
+        return new Response(
+          JSON.stringify({ ok: false, error: 'Email is required' }),
+          { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+    } else {
+      if (!normalizedInstagram && !normalizedEmail) {
+        return new Response(
+          JSON.stringify({ ok: false, error: 'Please provide either an Instagram handle or email' }),
+          { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
     }
 
     // Validate and generate school code
@@ -116,33 +132,44 @@ Deno.serve(async (req) => {
     const schoolCode = generateSchoolCode(requestData.university);
     const schoolName = requestData.university;
 
-    // Validate graduation year (accept 2025-2032)
-    const gradYear = requestData.graduationYear;
-    const gradYearNum = parseInt(gradYear);
-    if (!gradYear || isNaN(gradYearNum) || gradYearNum < 2025 || gradYearNum > 2032) {
-      return new Response(
-        JSON.stringify({ ok: false, error: 'Invalid graduation year (must be 2025-2032)' }),
-        { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
+    // Type-specific validation
+    if (applicationType === 'representative') {
+      // Validate graduation year (accept 2025-2032)
+      const gradYear = requestData.graduationYear;
+      const gradYearNum = parseInt(gradYear || '');
+      if (!gradYear || isNaN(gradYearNum) || gradYearNum < 2025 || gradYearNum > 2032) {
+        return new Response(
+          JSON.stringify({ ok: false, error: 'Invalid graduation year (must be 2025-2032)' }),
+          { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
 
-    // Validate agreements (coerce to boolean)
-    const agreeRevenue = requestData.agreementRevenue === true || requestData.agreementRevenue === 'true';
-    const agreeRepresent = requestData.agreementRepresent === true || requestData.agreementRepresent === 'true';
-    
-    if (!agreeRevenue || !agreeRepresent) {
-      return new Response(
-        JSON.stringify({ ok: false, error: 'You must agree to all terms to continue' }),
-        { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
+      // Validate agreements (coerce to boolean)
+      const agreeRevenue = requestData.agreementRevenue === true || requestData.agreementRevenue === 'true';
+      const agreeRepresent = requestData.agreementRepresent === true || requestData.agreementRepresent === 'true';
+      
+      if (!agreeRevenue || !agreeRepresent) {
+        return new Response(
+          JSON.stringify({ ok: false, error: 'You must agree to all terms to continue' }),
+          { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
 
-    // Validate required fields
-    if (!requestData.timeCommitment || !requestData.whyFit || !requestData.instagramFamiliarity || !requestData.socialMediaExperience) {
-      return new Response(
-        JSON.stringify({ ok: false, error: 'All required fields must be filled' }),
-        { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      // Validate required representative fields
+      if (!requestData.timeCommitment || !requestData.whyFit || !requestData.instagramFamiliarity || !requestData.socialMediaExperience) {
+        return new Response(
+          JSON.stringify({ ok: false, error: 'All required fields must be filled' }),
+          { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+    } else if (applicationType === 'head_of_brand') {
+      // Validate required head of brand fields
+      if (!requestData.experience || !requestData.viralIdea) {
+        return new Response(
+          JSON.stringify({ ok: false, error: 'Experience and viral idea are required' }),
+          { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
     }
 
     // Create contact fingerprint for deduplication
@@ -182,27 +209,39 @@ Deno.serve(async (req) => {
       .maybeSingle();
 
     if (existingByFingerprint) {
+      // Build update object based on application type
+      const updateData: any = {
+        full_name: requestData.fullName.trim(),
+        instagram_handle: normalizedInstagram,
+        email: normalizedEmail,
+        school_name: schoolName,
+        application_type: applicationType,
+        idempotency_key: idempotencyKey,
+        ip_address: ipAddress,
+        user_agent: userAgent,
+        updated_at: new Date().toISOString()
+      };
+
+      if (applicationType === 'representative') {
+        updateData.graduation_year = requestData.graduationYear;
+        updateData.time_commitment = requestData.timeCommitment;
+        updateData.why_fit = requestData.whyFit;
+        updateData.instagram_familiarity = requestData.instagramFamiliarity;
+        updateData.social_media_experience = requestData.socialMediaExperience;
+        updateData.social_media_details = requestData.socialMediaDetails || null;
+        updateData.agreement_revenue = requestData.agreementRevenue === true || requestData.agreementRevenue === 'true';
+        updateData.agreement_represent = requestData.agreementRepresent === true || requestData.agreementRepresent === 'true';
+      } else if (applicationType === 'head_of_brand') {
+        updateData.portfolio = requestData.portfolio || null;
+        updateData.experience = requestData.experience;
+        updateData.viral_idea = requestData.viralIdea;
+        updateData.additional_info = requestData.additional || null;
+      }
+
       // Update existing record
       const { data: updated, error: updateError } = await supabase
         .from('hiring_applications')
-        .update({
-          full_name: requestData.fullName.trim(),
-          instagram_handle: normalizedInstagram,
-          email: normalizedEmail,
-          school_name: schoolName,
-          graduation_year: gradYear,
-          time_commitment: requestData.timeCommitment,
-          why_fit: requestData.whyFit,
-          instagram_familiarity: requestData.instagramFamiliarity,
-          social_media_experience: requestData.socialMediaExperience,
-          social_media_details: requestData.socialMediaDetails || null,
-          agreement_revenue: agreeRevenue,
-          agreement_represent: agreeRepresent,
-          idempotency_key: idempotencyKey,
-          ip_address: ipAddress,
-          user_agent: userAgent,
-          updated_at: new Date().toISOString()
-        })
+        .update(updateData)
         .eq('id', existingByFingerprint.id)
         .select()
         .single();
@@ -226,29 +265,41 @@ Deno.serve(async (req) => {
       );
     }
 
+    // Build insert object based on application type
+    const insertData: any = {
+      full_name: requestData.fullName.trim(),
+      instagram_handle: normalizedInstagram,
+      email: normalizedEmail,
+      school_code: schoolCode,
+      school_name: schoolName,
+      application_type: applicationType,
+      status: 'new',
+      submission_hash: contactFingerprint,
+      idempotency_key: idempotencyKey,
+      ip_address: ipAddress,
+      user_agent: userAgent
+    };
+
+    if (applicationType === 'representative') {
+      insertData.graduation_year = requestData.graduationYear;
+      insertData.time_commitment = requestData.timeCommitment;
+      insertData.why_fit = requestData.whyFit;
+      insertData.instagram_familiarity = requestData.instagramFamiliarity;
+      insertData.social_media_experience = requestData.socialMediaExperience;
+      insertData.social_media_details = requestData.socialMediaDetails || null;
+      insertData.agreement_revenue = requestData.agreementRevenue === true || requestData.agreementRevenue === 'true';
+      insertData.agreement_represent = requestData.agreementRepresent === true || requestData.agreementRepresent === 'true';
+    } else if (applicationType === 'head_of_brand') {
+      insertData.portfolio = requestData.portfolio || null;
+      insertData.experience = requestData.experience;
+      insertData.viral_idea = requestData.viralIdea;
+      insertData.additional_info = requestData.additional || null;
+    }
+
     // Create new application
     const { data: newApp, error: insertError } = await supabase
       .from('hiring_applications')
-      .insert({
-        full_name: requestData.fullName.trim(),
-        instagram_handle: normalizedInstagram,
-        email: normalizedEmail,
-        school_code: schoolCode,
-        school_name: schoolName,
-        graduation_year: gradYear,
-        time_commitment: requestData.timeCommitment,
-        why_fit: requestData.whyFit,
-        instagram_familiarity: requestData.instagramFamiliarity,
-        social_media_experience: requestData.socialMediaExperience,
-        social_media_details: requestData.socialMediaDetails || null,
-        agreement_revenue: agreeRevenue,
-        agreement_represent: agreeRepresent,
-        status: 'new',
-        submission_hash: contactFingerprint,
-        idempotency_key: idempotencyKey,
-        ip_address: ipAddress,
-        user_agent: userAgent
-      })
+      .insert(insertData)
       .select()
       .single();
 
