@@ -173,17 +173,6 @@ const Representatives = () => {
               className="h-10 cursor-pointer"
               onClick={() => navigate('/')}
             />
-            <div className="flex gap-6">
-              <Link to="/" className="text-white hover:text-[#015cd2] transition-colors text-sm font-medium">
-                Home
-              </Link>
-              <Link to="/hiring" className="text-[#015cd2] font-semibold text-sm">
-                Hiring
-              </Link>
-              <Link to="/contact" className="text-white hover:text-[#015cd2] transition-colors text-sm font-medium">
-                Contact
-              </Link>
-            </div>
           </div>
         </div>
       </nav>
