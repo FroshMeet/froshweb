@@ -1,6 +1,5 @@
 import { SEO } from '@/components/seo/SEO';
 import { organizationSchema, websiteSchema } from '@/utils/seoSchema';
-import Footer from '@/components/layout/Footer';
 import SharedNavigation from '@/components/layout/SharedNavigation';
 
 export default function WhatIsFrosh() {
@@ -129,8 +128,6 @@ export default function WhatIsFrosh() {
             </div>
           </article>
         </main>
-
-        <Footer />
       </div>
     </>
   );
