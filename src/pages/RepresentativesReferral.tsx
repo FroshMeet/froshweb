@@ -577,7 +577,7 @@ export default function RepresentativesReferral() {
                         <FormLabel className="text-white/80 text-[14px]">Referral Code (optional)</FormLabel>
                         <FormControl>
                           <Input
-                            placeholder="SCHOOL-1234"
+                            placeholder="FROSH-1234"
                             className="w-full h-11 rounded-xl bg-black/40 border border-white/10 px-4 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#015cd2]/40"
                             {...field}
                             value={field.value || ""}
