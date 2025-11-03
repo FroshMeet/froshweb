@@ -1,14 +1,52 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { Copy, Check } from "lucide-react";
 import SharedNavigation from "@/components/layout/SharedNavigation";
+import { SmartSchoolSearch } from "@/components/SmartSchoolSearch";
+import { School } from "@/data/schools";
+
+const formSchema = z.object({
+  fullName: z.string().min(2, "Please enter your full name").max(100),
+  instagramHandle: z.string().max(255).optional(),
+  email: z.string().max(255).optional(),
+  university: z.string().min(1, "Please select your university"),
+  graduationYear: z.string().min(1, "Please select your graduation year"),
+  timeCommitment: z.enum(["yes", "no"], {
+    required_error: "Please select an option"
+  }),
+  whyFit: z.string().min(20, "Please write at least 2-3 sentences").max(500),
+  instagramFamiliarity: z.enum(["unfamiliar", "familiar", "very-familiar"], {
+    required_error: "Please select your familiarity level"
+  }),
+  socialMediaExperience: z.enum(["yes", "no"]),
+  socialMediaDetails: z.string().optional(),
+  agreementRevenue: z.boolean().refine(val => val === true, {
+    message: "You must agree to continue"
+  }),
+  agreementRepresent: z.boolean().refine(val => val === true, {
+    message: "You must agree to continue"
+  }),
+  referralCode: z.string().optional()
+}).refine(data => data.instagramHandle || data.email, {
+  message: "Please provide either an Instagram handle or email",
+  path: ["instagramHandle"]
+});
+
+type FormData = z.infer<typeof formSchema>;
 
 export default function RepresentativesReferral() {
   const [searchParams] = useSearchParams();
@@ -16,17 +54,27 @@ export default function RepresentativesReferral() {
   const navigate = useNavigate();
 
   // Apply form state
-  const [applyForm, setApplyForm] = useState({
-    name: "",
-    school: "",
-    email: "",
-    instagram: "",
-    tiktok: "",
-    referralCode: ""
-  });
   const [isApplying, setIsApplying] = useState(false);
   const [applySuccess, setApplySuccess] = useState(false);
   const [referralLocked, setReferralLocked] = useState(false);
+  const [showSocialDetails, setShowSocialDetails] = useState(false);
+  const [selectedSchool, setSelectedSchool] = useState<School | null>(null);
+  
+  const form = useForm<FormData>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      fullName: "",
+      instagramHandle: "",
+      email: "",
+      university: "",
+      graduationYear: "",
+      whyFit: "",
+      socialMediaDetails: "",
+      agreementRevenue: false,
+      agreementRepresent: false,
+      referralCode: ""
+    }
+  });
 
   // Invite form state
   const [inviteForm, setInviteForm] = useState({
@@ -50,10 +98,10 @@ export default function RepresentativesReferral() {
   useEffect(() => {
     const refCode = searchParams.get("ref");
     if (refCode) {
-      setApplyForm(prev => ({ ...prev, referralCode: refCode.toUpperCase() }));
+      form.setValue("referralCode", refCode.toUpperCase());
       setReferralLocked(true);
     }
-  }, [searchParams]);
+  }, [searchParams, form]);
 
   // Check for admin param
   useEffect(() => {
@@ -88,32 +136,30 @@ export default function RepresentativesReferral() {
     }
   };
 
-  const handleApplySubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleApplySubmit = async (data: FormData) => {
+    if (isApplying) return;
     setIsApplying(true);
 
     try {
       const socials: any = {};
-      if (applyForm.instagram) socials.instagram = applyForm.instagram;
-      if (applyForm.tiktok) socials.tiktok = applyForm.tiktok;
+      if (data.instagramHandle) socials.instagram = data.instagramHandle;
 
-      const { data, error } = await supabase.rpc("submit_rep_application", {
-        p_name: applyForm.name,
-        p_school: applyForm.school,
-        p_email: applyForm.email,
+      const { data: result, error } = await supabase.rpc("submit_rep_application", {
+        p_name: data.fullName,
+        p_school: data.university,
+        p_email: data.email || "",
         p_socials: socials,
-        p_ref_code: applyForm.referralCode || null
+        p_ref_code: data.referralCode || null
       });
 
       if (error) throw error;
 
-      const result = data as any;
+      const rpcResult = result as any;
 
       // If there's a referral, send confirmation email
-      if (result?.referral_id) {
-        const confirmLink = `${window.location.origin}/hiring/confirm?rid=${result.referral_id}`;
+      if (rpcResult?.referral_id) {
+        const confirmLink = `${window.location.origin}/hiring/confirm?rid=${rpcResult.referral_id}`;
         
-        // Send email via Resend edge function (you'll need to create this)
         await fetch(`https://zdicoswxpkpdnmxnhrrn.supabase.co/functions/v1/send-referral-confirmation`, {
           method: "POST",
           headers: {
@@ -121,10 +167,10 @@ export default function RepresentativesReferral() {
             "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpkaWNvc3d4cGtwZG5teG5ocnJuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA4MjQ4MzYsImV4cCI6MjA2NjQwMDgzNn0.SbKNC7mqGhQTxpAZuJsq4G1y_0DwUDaS2ozmwx4HB9E`
           },
           body: JSON.stringify({
-            to: result.referrer_email,
-            referrerName: result.referrer_name,
-            applicantName: applyForm.name,
-            applicantSchool: applyForm.school,
+            to: rpcResult.referrer_email,
+            referrerName: rpcResult.referrer_name,
+            applicantName: data.fullName,
+            applicantSchool: data.university,
             confirmLink
           })
         }).catch(console.error);
@@ -263,7 +309,7 @@ export default function RepresentativesReferral() {
 
         <div className="grid md:grid-cols-2 gap-8 mb-12">
           {/* Apply Card */}
-          <Card>
+          <Card className="md:col-span-2">
             <CardHeader>
               <CardTitle>Apply to be a Representative</CardTitle>
               <CardDescription>
@@ -271,76 +317,301 @@ export default function RepresentativesReferral() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <form onSubmit={handleApplySubmit} className="space-y-4">
-                <div>
-                  <Label htmlFor="apply-name">Full Name</Label>
-                  <Input
-                    id="apply-name"
-                    value={applyForm.name}
-                    onChange={(e) => setApplyForm({ ...applyForm, name: e.target.value })}
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <Label htmlFor="apply-school">School</Label>
-                  <Input
-                    id="apply-school"
-                    value={applyForm.school}
-                    onChange={(e) => setApplyForm({ ...applyForm, school: e.target.value })}
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <Label htmlFor="apply-email">Email</Label>
-                  <Input
-                    id="apply-email"
-                    type="email"
-                    value={applyForm.email}
-                    onChange={(e) => setApplyForm({ ...applyForm, email: e.target.value })}
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <Label htmlFor="apply-instagram">Instagram (optional)</Label>
-                  <Input
-                    id="apply-instagram"
-                    value={applyForm.instagram}
-                    onChange={(e) => setApplyForm({ ...applyForm, instagram: e.target.value })}
-                    placeholder="@username"
-                  />
-                </div>
-                
-                <div>
-                  <Label htmlFor="apply-tiktok">TikTok (optional)</Label>
-                  <Input
-                    id="apply-tiktok"
-                    value={applyForm.tiktok}
-                    onChange={(e) => setApplyForm({ ...applyForm, tiktok: e.target.value })}
-                    placeholder="@username"
-                  />
-                </div>
-                
-                <div>
-                  <Label htmlFor="apply-ref">Referral Code (optional)</Label>
-                  <Input
-                    id="apply-ref"
-                    value={applyForm.referralCode}
-                    onChange={(e) => setApplyForm({ ...applyForm, referralCode: e.target.value.toUpperCase() })}
-                    readOnly={referralLocked}
-                    placeholder="SCHOOL-1234"
-                  />
-                  <p className="text-xs text-muted-foreground mt-1">
-                    If you have a referral code, enter it here. Codes are issued by Frosh and tied to a referrer's email.
-                  </p>
-                </div>
-                
-                <Button type="submit" className="w-full" disabled={isApplying}>
-                  {isApplying ? "Submitting..." : "Submit Application"}
-                </Button>
-              </form>
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(handleApplySubmit)} className="space-y-8">
+                  {/* Basic Information */}
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-semibold">Basic Information</h3>
+                    
+                    <FormField
+                      control={form.control}
+                      name="fullName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Full Name *</FormLabel>
+                          <FormControl>
+                            <Input placeholder="John Doe" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="instagramHandle"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Instagram Handle</FormLabel>
+                          <FormControl>
+                            <Input placeholder="@johndoe" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Email</FormLabel>
+                          <FormControl>
+                            <Input placeholder="john@email.com" type="email" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <p className="text-sm text-muted-foreground">* At least one contact method is required</p>
+
+                    <FormField
+                      control={form.control}
+                      name="university"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>University *</FormLabel>
+                          <FormControl>
+                            <SmartSchoolSearch
+                              onSelect={(school: School) => {
+                                setSelectedSchool(school);
+                                field.onChange(school.name);
+                              }}
+                              placeholder="Search for your university..."
+                              selectedSchool={selectedSchool}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="graduationYear"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Graduation Year *</FormLabel>
+                          <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select graduation year" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {["2026", "2027", "2028", "2029", "2030"].map(year => (
+                                <SelectItem key={year} value={year}>{year}</SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  {/* Quick Questions */}
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-semibold">Quick Questions</h3>
+                    
+                    <FormField
+                      control={form.control}
+                      name="timeCommitment"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>
+                            Are you able to dedicate 2–4 hours per week to managing your school's Frosh account? *
+                          </FormLabel>
+                          <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select an option" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="yes">Yes</SelectItem>
+                              <SelectItem value="no">No</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="whyFit"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>
+                            What makes you a good fit to represent your school on Frosh? *
+                          </FormLabel>
+                          <FormControl>
+                            <Textarea 
+                              placeholder="Share why you'd be great for this role (2-3 sentences)" 
+                              className="min-h-[100px]" 
+                              {...field} 
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="instagramFamiliarity"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>How familiar are you with Instagram? *</FormLabel>
+                          <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select your familiarity level" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="unfamiliar">Unfamiliar</SelectItem>
+                              <SelectItem value="familiar">Familiar</SelectItem>
+                              <SelectItem value="very-familiar">Very Familiar</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="socialMediaExperience"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>
+                            Have you managed or helped grow any social media pages before? *
+                          </FormLabel>
+                          <Select
+                            onValueChange={(value) => {
+                              field.onChange(value);
+                              setShowSocialDetails(value === "yes");
+                            }}
+                            defaultValue={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select an option" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="yes">Yes</SelectItem>
+                              <SelectItem value="no">No</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    {showSocialDetails && (
+                      <FormField
+                        control={form.control}
+                        name="socialMediaDetails"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Please provide details (optional)</FormLabel>
+                            <FormControl>
+                              <Textarea 
+                                placeholder="Tell us about your social media experience" 
+                                className="min-h-[80px]" 
+                                {...field} 
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    )}
+                  </div>
+
+                  {/* Agreement */}
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-semibold">Agreement</h3>
+                    
+                    <FormField
+                      control={form.control}
+                      name="agreementRevenue"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                          <FormControl>
+                            <Checkbox
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel>
+                              I understand this role is compensated through revenue sharing (40% of my school's account earnings). *
+                            </FormLabel>
+                            <FormMessage />
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="agreementRepresent"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                          <FormControl>
+                            <Checkbox
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel>
+                              I agree to represent my school authentically and professionally as part of the Frosh network. *
+                            </FormLabel>
+                            <FormMessage />
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  {/* Referral Code */}
+                  <div className="space-y-4">
+                    <FormField
+                      control={form.control}
+                      name="referralCode"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Referral Code (optional)</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="SCHOOL-1234"
+                              {...field}
+                              value={field.value || ""}
+                              onChange={(e) => field.onChange(e.target.value.toUpperCase())}
+                              readOnly={referralLocked}
+                            />
+                          </FormControl>
+                          <p className="text-xs text-muted-foreground">
+                            If you have a referral code, enter it here. Codes are issued by Frosh and tied to a referrer's email.
+                          </p>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  <Button type="submit" className="w-full" disabled={isApplying}>
+                    {isApplying ? "Submitting..." : "Submit Application"}
+                  </Button>
+                </form>
+              </Form>
             </CardContent>
           </Card>
 
