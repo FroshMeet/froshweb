@@ -14,9 +14,9 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { Copy, Check, X, CheckCircle2, ArrowLeft } from "lucide-react";
-import SharedNavigation from "@/components/layout/SharedNavigation";
 import { SmartSchoolSearch } from "@/components/SmartSchoolSearch";
 import { School } from "@/data/schools";
+import froshLogo from "@/assets/frosh-logo-new.png";
 
 const formSchema = z.object({
   fullName: z.string().min(2, "Please enter your full name").max(100),
@@ -212,8 +212,20 @@ export default function RepresentativesReferral() {
 
   if (applySuccess) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] text-white">
-        <SharedNavigation />
+      <div className="min-h-screen bg-[#0c1008] text-white">
+        {/* Top Navigation */}
+        <nav className="border-b border-white/10 bg-[#0c1008]/95 backdrop-blur-sm sticky top-0 z-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between h-16">
+              <img 
+                src={froshLogo} 
+                alt="Frosh Logo" 
+                className="h-10 cursor-pointer"
+                onClick={() => navigate('/')}
+              />
+            </div>
+          </div>
+        </nav>
         <div className="mx-auto max-w-[800px] px-6 md:px-10 py-10 md:py-14">
           <div className="rounded-2xl border border-white/10 bg-[#0d0f12] shadow-[0_10px_30px_rgba(0,0,0,0.35)] p-6 md:p-8 text-center">
             <h1 className="text-2xl md:text-3xl font-semibold mb-4">Application Received!</h1>
@@ -233,11 +245,23 @@ export default function RepresentativesReferral() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white">
-      <SharedNavigation />
-      
+    <div className="min-h-screen bg-[#0c1008] text-white">
+      {/* Top Navigation */}
+      <nav className="border-b border-white/10 bg-[#0c1008]/95 backdrop-blur-sm sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <img 
+              src={froshLogo} 
+              alt="Frosh Logo" 
+              className="h-10 cursor-pointer"
+              onClick={() => navigate('/')}
+            />
+          </div>
+        </div>
+      </nav>
+
       {/* Back Button */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
         <Button 
           variant="ghost" 
           onClick={() => navigate('/hiring')}
