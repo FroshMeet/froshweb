@@ -541,6 +541,137 @@ export type Database = {
         }
         Relationships: []
       }
+      referrals: {
+        Row: {
+          application_id: string | null
+          confirmed_at: string | null
+          created_at: string | null
+          id: string
+          referrer_id: string | null
+          status: string | null
+        }
+        Insert: {
+          application_id?: string | null
+          confirmed_at?: string | null
+          created_at?: string | null
+          id?: string
+          referrer_id?: string | null
+          status?: string | null
+        }
+        Update: {
+          application_id?: string | null
+          confirmed_at?: string | null
+          created_at?: string | null
+          id?: string
+          referrer_id?: string | null
+          status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "referrals_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: false
+            referencedRelation: "rep_applications"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "referrals_referrer_id_fkey"
+            columns: ["referrer_id"]
+            isOneToOne: false
+            referencedRelation: "referrers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      referrers: {
+        Row: {
+          code: string
+          created_at: string | null
+          email: string
+          id: string
+          last_issued_at: string | null
+          name: string
+          school: string | null
+        }
+        Insert: {
+          code: string
+          created_at?: string | null
+          email: string
+          id?: string
+          last_issued_at?: string | null
+          name: string
+          school?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string | null
+          email?: string
+          id?: string
+          last_issued_at?: string | null
+          name?: string
+          school?: string | null
+        }
+        Relationships: []
+      }
+      rep_applications: {
+        Row: {
+          created_at: string | null
+          email: string
+          id: string
+          name: string
+          school: string
+          socials: Json | null
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          id?: string
+          name: string
+          school: string
+          socials?: Json | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          id?: string
+          name?: string
+          school?: string
+          socials?: Json | null
+        }
+        Relationships: []
+      }
+      school_accounts: {
+        Row: {
+          created_at: string | null
+          id: string
+          rep_application_id: string | null
+          revenue_cents: number | null
+          school: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          rep_application_id?: string | null
+          revenue_cents?: number | null
+          school: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          rep_application_id?: string | null
+          revenue_cents?: number | null
+          school?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "school_accounts_rep_application_id_fkey"
+            columns: ["rep_application_id"]
+            isOneToOne: false
+            referencedRelation: "rep_applications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       school_chat_members: {
         Row: {
           id: string
@@ -1099,6 +1230,34 @@ export type Database = {
         }
         Returns: boolean
       }
+      confirm_referral: { Args: { p_referral_id: string }; Returns: undefined }
+      gen_ref_code: { Args: { p_school: string }; Returns: string }
+      get_all_referrals: {
+        Args: never
+        Returns: {
+          applicant_email: string
+          applicant_name: string
+          confirmed_at: string
+          created_at: string
+          referral_id: string
+          referrer_email: string
+          referrer_name: string
+          status: string
+        }[]
+      }
+      get_applications_with_referrals: {
+        Args: never
+        Returns: {
+          app_created_at: string
+          app_email: string
+          app_id: string
+          app_name: string
+          app_school: string
+          referral_code: string
+          referral_status: string
+          referrer_email: string
+        }[]
+      }
       get_instagram_profile_safe: {
         Args: { target_user_id: string }
         Returns: {
@@ -1213,6 +1372,10 @@ export type Database = {
       }
       is_admin: { Args: { user_id_param?: string }; Returns: boolean }
       is_admin_simple: { Args: { user_id_param?: string }; Returns: boolean }
+      issue_referral_code: {
+        Args: { p_email: string; p_name: string; p_school: string }
+        Returns: Json
+      }
       join_school_group_chat: {
         Args: { conversation_id_param: string; user_id_param: string }
         Returns: boolean
@@ -1318,6 +1481,20 @@ export type Database = {
           user_b_param: string
         }
         Returns: string
+      }
+      submit_rep_application: {
+        Args: {
+          p_email: string
+          p_name: string
+          p_ref_code?: string
+          p_school: string
+          p_socials: Json
+        }
+        Returns: Json
+      }
+      update_referral_status: {
+        Args: { p_referral_id: string; p_status: string }
+        Returns: undefined
       }
       users_same_school: {
         Args: { profile_user_id: string; viewer_id: string }
