@@ -13,7 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Copy, Check } from "lucide-react";
+import { Copy, Check, X, CheckCircle2 } from "lucide-react";
 import SharedNavigation from "@/components/layout/SharedNavigation";
 import { SmartSchoolSearch } from "@/components/SmartSchoolSearch";
 import { School } from "@/data/schools";
@@ -212,11 +212,11 @@ export default function RepresentativesReferral() {
 
   if (applySuccess) {
     return (
-      <div className="min-h-screen bg-[#0d0d0d]">
+      <div className="min-h-screen bg-[#0a0a0a] text-white">
         <SharedNavigation />
-        <div className="mx-auto max-w-[1200px] px-6 md:px-10 py-10 md:py-14">
+        <div className="mx-auto max-w-[800px] px-6 md:px-10 py-10 md:py-14">
           <div className="rounded-2xl border border-white/10 bg-[#0d0f12] shadow-[0_10px_30px_rgba(0,0,0,0.35)] p-6 md:p-8 text-center">
-            <h1 className="text-2xl md:text-3xl font-semibold text-white mb-4">Application Received!</h1>
+            <h1 className="text-2xl md:text-3xl font-semibold mb-4">Application Received!</h1>
             <p className="text-white/60 mb-8 text-[15px]">
               Thank you for applying. We will review your application and reach out by email soon.
             </p>
@@ -233,33 +233,51 @@ export default function RepresentativesReferral() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0d0d0d]">
+    <div className="min-h-screen bg-[#0a0a0a] text-white">
       <SharedNavigation />
       
-      <div className="mx-auto max-w-[1200px] px-6 md:px-10 py-10 md:py-14">
+      <div className="mx-auto max-w-[800px] px-6 md:px-10 py-10 md:py-14">
         {/* Header */}
-        <div className="mb-8 md:mb-12">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 md:mb-4">
+        <div className="text-center mb-8 md:mb-10">
+          <h1 className="text-3xl md:text-4xl font-bold mb-3">
             Become a Frosh Representative
           </h1>
-          <p className="text-base md:text-lg text-white/60">
-            Or invite someone else and earn up to 500 dollars if they are hired.
+          <p className="text-white/60 text-base md:text-lg">
+            Apply below or invite a student from another school to join the team.
           </p>
         </div>
 
-        {/* Two Column Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-8">
-          {/* Apply Card - Left Column */}
-          <div className="rounded-2xl border border-white/8 bg-[#0d0f12] shadow-[0_10px_30px_rgba(0,0,0,0.35)] p-6 md:p-8">
-            <h2 className="text-[22px] md:text-[24px] font-medium text-white mb-2">
+        {/* Compact Invite Banner */}
+        <div className="mb-8 rounded-2xl border border-white/10 bg-[#0d0f12] shadow-[0_10px_30px_rgba(0,0,0,0.35)] p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div className="flex-1">
+            <h3 className="text-lg font-semibold mb-1">
+              Invite a Student to Apply
+            </h3>
+            <p className="text-white/60 text-sm">
+              Generate a code and earn up to $500 if they're hired.
+            </p>
+          </div>
+          <Button
+            onClick={() => setShowInviteModal(true)}
+            className="w-full md:w-auto h-11 rounded-xl bg-[#015cd2] text-white font-medium transition hover:brightness-95 whitespace-nowrap px-6"
+          >
+            Generate Referral Code
+          </Button>
+        </div>
+
+        {/* Application Form Card */}
+        <div className="rounded-2xl border border-white/10 bg-[#0d0f12] shadow-[0_10px_30px_rgba(0,0,0,0.35)] p-6 md:p-8">
+          <div className="mb-6">
+            <h2 className="text-xl md:text-2xl font-semibold mb-2">
               Apply to be a Representative
             </h2>
-            <p className="text-[14px] text-white/50 mb-6">
-              Join our team and represent Frosh at your school
+            <p className="text-white/60 text-sm">
+              Fill out the form below to join the Frosh team.
             </p>
+          </div>
 
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(handleApplySubmit)} className="space-y-6">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(handleApplySubmit)} className="space-y-6">
                 {/* Basic Information */}
                 <div className="space-y-4">
                   <h3 className="text-[16px] font-medium text-white/90">Basic Information</h3>
@@ -564,153 +582,207 @@ export default function RepresentativesReferral() {
                   />
                 </div>
 
-                <Button 
-                  type="submit" 
-                  className="w-full h-12 rounded-xl bg-[#015cd2] text-white font-medium transition hover:brightness-95 disabled:opacity-60"
-                  disabled={isApplying}
-                  aria-busy={isApplying}
-                >
-                  {isApplying ? "Submitting..." : "Submit Application"}
-                </Button>
-              </form>
-            </Form>
-          </div>
-
-          {/* Invite Card - Right Column */}
-          <div className="rounded-2xl border border-white/8 bg-[#0d0f12] shadow-[0_10px_30px_rgba(0,0,0,0.35)] p-6 md:p-8">
-            <h2 className="text-[22px] md:text-[24px] font-medium text-white mb-2">
-              Invite a Student to Apply
-            </h2>
-            <p className="text-[14px] text-white/50 mb-6">
-              Generate a referral code and earn rewards when they are hired
-            </p>
-
-            <div className="space-y-4 mb-6">
-              <h3 className="text-[16px] font-medium text-white/90">How referrals work</h3>
-              <ul className="space-y-2 text-[15px] text-white/60 pl-5">
-                <li className="list-disc">If we hire your referral and their school's account earns revenue, you receive 10 percent up to 500 dollars</li>
-                <li className="list-disc">Codes are unique and tied to your email</li>
-                <li className="list-disc">Manual names do not qualify</li>
-                <li className="list-disc">Self referrals are not allowed</li>
-                <li className="list-disc">Confirmation by email is required</li>
-              </ul>
-            </div>
-            
-            <Button 
-              onClick={() => setShowInviteModal(true)} 
-              className="w-full h-12 rounded-xl bg-[#015cd2] text-white font-medium transition hover:brightness-95"
-            >
-              Generate Referral Code
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      {/* Invite Modal */}
-      <Dialog open={showInviteModal} onOpenChange={setShowInviteModal}>
-        <DialogContent className="rounded-2xl border border-white/10 bg-[#0d0f12] text-white max-w-md transition-all duration-150 ease-in-out">
-          <DialogHeader>
-            <DialogTitle className="text-[22px] font-medium text-white">
-              {generatedCode ? "Your Referral Code" : "Generate Referral Code"}
-            </DialogTitle>
-            <DialogDescription className="text-white/60">
-              {generatedCode 
-                ? "Share this link with potential representatives"
-                : "Enter your information to generate a unique referral code"
-              }
-            </DialogDescription>
-          </DialogHeader>
-
-          {generatedCode ? (
-            <div className="space-y-4 mt-4">
-              <div className="text-center p-6 bg-black/40 rounded-xl border border-white/10">
-                <div className="text-3xl font-mono font-bold mb-3 text-white">{generatedCode}</div>
-                <div className="text-[13px] text-white/50 break-all">{generatedLink}</div>
-              </div>
-              
-              <Button 
-                onClick={copyLink} 
-                className="w-full h-12 rounded-xl bg-[#015cd2] text-white font-medium transition hover:brightness-95"
-              >
-                {copied ? (
-                  <>
-                    <Check className="w-4 h-4 mr-2" />
-                    Copied!
-                  </>
-                ) : (
-                  <>
-                    <Copy className="w-4 h-4 mr-2" />
-                    Copy Link
-                  </>
-                )}
-              </Button>
-
-              <p className="text-[13px] text-white/40 text-center">
-                Codes are unique and tied to your email. One code per email. Self referrals are not allowed.
-                You will be asked to confirm referrals by email within 7 days.
-              </p>
-
-              <Button 
-                variant="outline" 
-                onClick={() => {
-                  setShowInviteModal(false);
-                  setGeneratedCode(null);
-                  setGeneratedLink(null);
-                  setInviteForm({ name: "", school: "", email: "" });
-                }}
-                className="w-full h-12 rounded-xl border-white/20 hover:bg-white/10"
-              >
-                Close
-              </Button>
-            </div>
-          ) : (
-            <form onSubmit={handleInviteSubmit} className="space-y-4 mt-4">
-              <div>
-                <Label htmlFor="invite-name" className="text-white/80 text-[14px]">Your Name</Label>
-                <Input
-                  id="invite-name"
-                  value={inviteForm.name}
-                  onChange={(e) => setInviteForm({ ...inviteForm, name: e.target.value })}
-                  className="w-full h-11 rounded-xl bg-black/40 border border-white/10 px-4 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#015cd2]/40 mt-2"
-                  required
-                />
-              </div>
-              
-              <div>
-                <Label htmlFor="invite-school" className="text-white/80 text-[14px]">Your School</Label>
-                <Input
-                  id="invite-school"
-                  value={inviteForm.school}
-                  onChange={(e) => setInviteForm({ ...inviteForm, school: e.target.value })}
-                  className="w-full h-11 rounded-xl bg-black/40 border border-white/10 px-4 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#015cd2]/40 mt-2"
-                  required
-                />
-              </div>
-              
-              <div>
-                <Label htmlFor="invite-email" className="text-white/80 text-[14px]">Your Email</Label>
-                <Input
-                  id="invite-email"
-                  type="email"
-                  value={inviteForm.email}
-                  onChange={(e) => setInviteForm({ ...inviteForm, email: e.target.value })}
-                  className="w-full h-11 rounded-xl bg-black/40 border border-white/10 px-4 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#015cd2]/40 mt-2"
-                  required
-                />
-              </div>
-
               <Button 
                 type="submit" 
                 className="w-full h-12 rounded-xl bg-[#015cd2] text-white font-medium transition hover:brightness-95 disabled:opacity-60"
-                disabled={isInviting}
-                aria-busy={isInviting}
+                disabled={isApplying}
+                aria-busy={isApplying}
               >
-                {isInviting ? "Generating..." : "Generate Code"}
+                {isApplying ? "Submitting..." : "Submit Application"}
               </Button>
             </form>
-          )}
-        </DialogContent>
-      </Dialog>
+          </Form>
+        </div>
+
+        {/* Footer */}
+        <div className="mt-8 text-center">
+          <p className="text-white/40 text-sm">
+            For questions or more information, contact{" "}
+            <a href="mailto:kian@frosh.app" className="text-[#015cd2] hover:brightness-110 transition">
+              kian@frosh.app
+            </a>
+          </p>
+        </div>
+      </div>
+
+      {/* Fullscreen Invite Overlay */}
+      {showInviteModal && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 animate-fade-in p-4 overflow-y-auto"
+          onClick={() => {
+            if (!generatedCode) {
+              setShowInviteModal(false);
+            }
+          }}
+        >
+          <div 
+            className="relative w-full max-w-2xl bg-[#0d0f12] rounded-2xl border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.5)] animate-scale-in my-8"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => {
+                setShowInviteModal(false);
+                if (generatedCode) {
+                  setGeneratedCode(null);
+                  setGeneratedLink(null);
+                  setInviteForm({ name: "", school: "", email: "" });
+                }
+              }}
+              className="absolute top-4 left-4 w-8 h-8 flex items-center justify-center text-white/60 hover:text-white transition rounded-lg hover:bg-white/5"
+              aria-label="Close"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="p-8 md:p-10 pt-14">
+              {!generatedCode ? (
+                <>
+                  <div className="mb-6">
+                    <h2 className="text-2xl md:text-3xl font-bold mb-2">
+                      Invite a Student to Apply
+                    </h2>
+                    <p className="text-white/60">
+                      Generate a unique referral code and earn rewards when your referral is hired.
+                    </p>
+                  </div>
+
+                  {/* How Referrals Work */}
+                  <div className="mb-6 space-y-3 bg-black/30 rounded-xl p-6 border border-white/5">
+                    <h3 className="text-lg font-semibold">How Referrals Work</h3>
+                    <ul className="space-y-2.5 text-sm text-white/70">
+                      <li className="flex gap-3">
+                        <span className="text-[#015cd2] select-none mt-0.5">•</span>
+                        <span>If we hire your referral and their school's account earns revenue, you receive 10% (up to $500)</span>
+                      </li>
+                      <li className="flex gap-3">
+                        <span className="text-[#015cd2] select-none mt-0.5">•</span>
+                        <span>Codes are unique and tied to your email</span>
+                      </li>
+                      <li className="flex gap-3">
+                        <span className="text-[#015cd2] select-none mt-0.5">•</span>
+                        <span>Self-referrals are not allowed</span>
+                      </li>
+                      <li className="flex gap-3">
+                        <span className="text-[#015cd2] select-none mt-0.5">•</span>
+                        <span>Confirmation by email is required</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <form onSubmit={handleInviteSubmit} className="space-y-5">
+                    <div className="space-y-1.5">
+                      <Label htmlFor="invite-name" className="text-sm font-medium">
+                        Your Name <span className="text-red-400">*</span>
+                      </Label>
+                      <Input
+                        id="invite-name"
+                        type="text"
+                        value={inviteForm.name}
+                        onChange={(e) => setInviteForm({ ...inviteForm, name: e.target.value })}
+                        required
+                        className="w-full h-11 rounded-xl bg-black/40 border border-white/10 px-4 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#015cd2]/40"
+                        placeholder="Enter your full name"
+                      />
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <Label htmlFor="invite-school" className="text-sm font-medium">
+                        Your School <span className="text-red-400">*</span>
+                      </Label>
+                      <Input
+                        id="invite-school"
+                        type="text"
+                        value={inviteForm.school}
+                        onChange={(e) => setInviteForm({ ...inviteForm, school: e.target.value })}
+                        required
+                        className="w-full h-11 rounded-xl bg-black/40 border border-white/10 px-4 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#015cd2]/40"
+                        placeholder="Enter your university"
+                      />
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <Label htmlFor="invite-email" className="text-sm font-medium">
+                        Your Email <span className="text-red-400">*</span>
+                      </Label>
+                      <Input
+                        id="invite-email"
+                        type="email"
+                        value={inviteForm.email}
+                        onChange={(e) => setInviteForm({ ...inviteForm, email: e.target.value })}
+                        required
+                        className="w-full h-11 rounded-xl bg-black/40 border border-white/10 px-4 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#015cd2]/40"
+                        placeholder="your.email@example.com"
+                      />
+                      <p className="text-xs text-white/50">
+                        Your code will be emailed to you for safekeeping.
+                      </p>
+                    </div>
+
+                    <Button
+                      type="submit"
+                      disabled={isInviting}
+                      className="w-full h-12 rounded-xl bg-[#015cd2] text-white font-medium transition hover:brightness-95 disabled:opacity-60"
+                      aria-busy={isInviting}
+                    >
+                      {isInviting ? "Generating..." : "Generate My Referral Code"}
+                    </Button>
+                  </form>
+                </>
+              ) : (
+                <div className="space-y-6 text-center">
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-500/10 text-green-400 mb-2">
+                    <CheckCircle2 className="w-8 h-8" />
+                  </div>
+                  
+                  <div>
+                    <h3 className="text-xl font-semibold mb-2">Your Referral Code</h3>
+                    <div className="inline-block bg-black/50 px-6 py-3 rounded-xl border border-white/10 mb-4">
+                      <code className="text-2xl font-mono font-bold text-[#015cd2]">
+                        {generatedCode}
+                      </code>
+                    </div>
+                    <p className="text-sm text-white/60 mb-4">
+                      Share this link with potential representatives:
+                    </p>
+                    <div className="bg-black/40 rounded-xl border border-white/10 p-4 mb-4">
+                      <p className="text-sm text-white/80 break-all mb-3">
+                        {generatedLink}
+                      </p>
+                      <Button
+                        onClick={() => {
+                          if (generatedLink) {
+                            navigator.clipboard.writeText(generatedLink);
+                            toast({ title: "Link copied to clipboard!" });
+                          }
+                        }}
+                        className="w-full h-10 rounded-lg bg-white/10 text-white hover:bg-white/20 transition"
+                      >
+                        Copy Link
+                      </Button>
+                    </div>
+                    <p className="text-xs text-white/50 mb-6">
+                      Your code has been emailed to you for safekeeping.
+                    </p>
+                  </div>
+
+                  <Button
+                    onClick={() => {
+                      setShowInviteModal(false);
+                      setGeneratedCode(null);
+                      setGeneratedLink(null);
+                      setInviteForm({ name: "", school: "", email: "" });
+                    }}
+                    className="w-full h-11 rounded-xl bg-white/10 text-white hover:bg-white/20 transition"
+                  >
+                    Close
+                  </Button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
