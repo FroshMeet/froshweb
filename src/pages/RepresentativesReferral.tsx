@@ -13,7 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Copy, Check, X, CheckCircle2 } from "lucide-react";
+import { Copy, Check, X, CheckCircle2, ArrowLeft } from "lucide-react";
 import SharedNavigation from "@/components/layout/SharedNavigation";
 import { SmartSchoolSearch } from "@/components/SmartSchoolSearch";
 import { School } from "@/data/schools";
@@ -235,6 +235,18 @@ export default function RepresentativesReferral() {
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white">
       <SharedNavigation />
+      
+      {/* Back Button */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+        <Button 
+          variant="ghost" 
+          onClick={() => navigate('/hiring')}
+          className="text-white/60 hover:text-white"
+        >
+          <ArrowLeft className="h-4 w-4 mr-2" />
+          Back
+        </Button>
+      </div>
       
       <div className="mx-auto max-w-[800px] px-6 md:px-10 py-10 md:py-14">
         {/* Header */}
