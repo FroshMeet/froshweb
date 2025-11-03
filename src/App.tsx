@@ -35,7 +35,8 @@ import BlogTemplate from "./pages/BlogTemplate";
 import WhatIsFrosh from "./pages/WhatIsFrosh";
 import HiringHub from "./pages/HiringHub";
 import HeadOfBrand from "./pages/HeadOfBrand";
-import Representatives from "./pages/Representatives";
+import RepresentativesReferral from "./pages/RepresentativesReferral";
+import ConfirmReferral from "./pages/ConfirmReferral";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -77,9 +78,10 @@ const AppRouter = () => (
                 <Route path="/cookie-policy" element={<CookiePolicy />} />
                 <Route path="/blog/:slug" element={<BlogTemplate />} />
                 <Route path="/what-is-frosh" element={<WhatIsFrosh />} />
-            <Route path="/hiring" element={<HiringHub />} />
-            <Route path="/hiring/head-of-brand" element={<HeadOfBrand />} />
-            <Route path="/hiring/representatives" element={<Representatives />} />
+                <Route path="/hiring" element={<HiringHub />} />
+                <Route path="/hiring/head-of-brand" element={<HeadOfBrand />} />
+                <Route path="/hiring/representatives" element={<RepresentativesReferral />} />
+                <Route path="/hiring/confirm" element={<ConfirmReferral />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
