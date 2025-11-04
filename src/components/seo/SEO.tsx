@@ -25,6 +25,8 @@ export const SEO = ({
 }: SEOProps) => {
   const siteUrl = 'https://frosh.app';
   const fullTitle = title.includes('Frosh') ? title : `${title} | Frosh`;
+  
+  // Always use frosh.app as canonical domain, even if accessed via getfrosh.com
   const canonicalUrl = canonical ? `${siteUrl}${canonical}` : siteUrl;
 
   return (
