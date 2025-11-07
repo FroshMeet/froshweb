@@ -17,7 +17,7 @@ export const SEO = ({
   description,
   keywords,
   canonical,
-  ogImage = 'https://frosh.app/lovable-uploads/fresh_meat_app_icon.png',
+  ogImage = 'https://frosh.app/frosh-serp-logo.png',
   ogType = 'website',
   twitterCard = 'summary_large_image',
   noindex = false,
