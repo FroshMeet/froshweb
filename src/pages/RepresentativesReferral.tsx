@@ -438,7 +438,7 @@ export default function RepresentativesReferral() {
                           />
                         </FormControl>
                         <div className="space-y-1 leading-none">
-                          <FormLabel className="text-white/80 text-[14px]">
+                          <FormLabel className="text-white/80 text-[13.5px]">
                             I understand this role is compensated through revenue sharing (40% of my school's account earnings). *
                           </FormLabel>
                           <FormMessage className="text-red-400 text-[13px]" />
@@ -460,9 +460,8 @@ export default function RepresentativesReferral() {
                           />
                         </FormControl>
                         <div className="space-y-1 leading-none">
-                          <FormLabel className="text-white/80 text-[14px]">
-                            I agree to represent my school authentically and professionally as part of the Frosh network.{" "}
-                            <span className="whitespace-nowrap">*</span>
+                          <FormLabel className="text-white/80 text-[13.5px]">
+                            I agree to represent my school authentically and professionally as part of the Frosh network. *
                           </FormLabel>
                           <FormMessage className="text-red-400 text-[13px]" />
                         </div>
