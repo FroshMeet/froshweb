@@ -84,31 +84,50 @@ export default function RepresentativesReferral() {
     setIsApplying(true);
 
     try {
-      const socials: any = {};
-      if (data.instagramHandle) socials.instagram = data.instagramHandle;
-
-      const { data: result, error } = await supabase.rpc("submit_rep_application", {
-        p_name: data.fullName,
-        p_school: data.university,
-        p_email: data.email || "",
-        p_socials: socials,
-        p_ref_code: null
+      const result = await supabase.functions.invoke("submit-hiring-application", {
+        body: {
+          applicationType: 'representative',
+          fullName: data.fullName,
+          instagramHandle: data.instagramHandle,
+          email: data.email,
+          university: data.university,
+          graduationYear: data.graduationYear,
+          timeCommitment: data.timeCommitment,
+          whyFit: data.whyFit,
+          instagramFamiliarity: data.instagramFamiliarity,
+          socialMediaExperience: data.socialMediaExperience,
+          socialMediaDetails: data.socialMediaDetails,
+          agreementRevenue: data.agreementRevenue,
+          agreementRepresent: data.agreementRepresent,
+          idempotencyKey: crypto.randomUUID()
+        }
       });
 
-      if (error) throw error;
+      if (result?.data?.ok === true) {
+        console.log("Representative application submitted successfully:", result);
+        setApplySuccess(true);
+        toast({
+          title: "Success!",
+          description: "Application received. We will reach out by email."
+        });
+        return;
+      }
 
-      setApplySuccess(true);
-      toast({
-        title: "Success!",
-        description: "Application received. We will reach out by email."
-      });
-    } catch (error: any) {
+      const errorMessage = result?.data?.error || result?.error?.message || "Failed to submit application";
+      console.error("Submission error:", errorMessage);
       toast({
         title: "Error",
-        description: error.message,
+        description: errorMessage,
         variant: "destructive"
       });
-    } finally {
+      setIsApplying(false);
+    } catch (error: any) {
+      console.error("Submission error:", error);
+      toast({
+        title: "Error",
+        description: error.message || "Failed to submit application. Please try again.",
+        variant: "destructive"
+      });
       setIsApplying(false);
     }
   };
