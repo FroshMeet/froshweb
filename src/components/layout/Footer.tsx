@@ -15,7 +15,7 @@ const Footer = () => {
                 alt="Frosh" 
                 width="32" 
                 height="32"
-                className="h-7 md:h-8 w-auto" 
+                className="h-7 md:h-8 w-auto border border-[#015cd2] rounded-sm" 
               />
             </div>
             <p className="text-[13px] md:text-sm text-zinc-400/75 max-w-md leading-relaxed">
