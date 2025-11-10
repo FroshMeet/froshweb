@@ -461,7 +461,8 @@ export default function RepresentativesReferral() {
                         </FormControl>
                         <div className="space-y-1 leading-none">
                           <FormLabel className="text-white/80 text-[14px]">
-                            I agree to represent my school authentically and professionally as part of the Frosh network. *
+                            I agree to represent my school authentically and professionally as part of the Frosh network.{" "}
+                            <span className="whitespace-nowrap">*</span>
                           </FormLabel>
                           <FormMessage className="text-red-400 text-[13px]" />
                         </div>
