@@ -172,6 +172,7 @@ export default function RepresentativesReferral() {
       <div className="mx-auto max-w-[800px] px-6 md:px-10 py-10 md:py-14">
         {/* Header */}
         <div className="text-center mb-8 md:mb-10">
+          <img src={froshLogo} alt="Frosh Logo" className="h-20 mx-auto mb-8 animate-pulse drop-shadow-[0_0_15px_rgba(1,92,210,0.6)]" />
           <h1 className="text-3xl md:text-4xl font-bold mb-3">
             Become a Frosh Representative
           </h1>
