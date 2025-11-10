@@ -12,8 +12,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, CheckCircle2 } from "lucide-react";
 import { SmartSchoolSearch } from "@/components/SmartSchoolSearch";
 import { School } from "@/data/schools";
 import froshLogo from "@/assets/frosh-logo-new.png";
@@ -72,6 +73,12 @@ export default function RepresentativesReferral() {
     }
   });
 
+  useEffect(() => {
+    if (applySuccess) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [applySuccess]);
+
   const handleApplySubmit = async (data: FormData) => {
     if (isApplying) return;
     setIsApplying(true);
@@ -109,34 +116,24 @@ export default function RepresentativesReferral() {
 
   if (applySuccess) {
     return (
-      <div className="min-h-screen bg-[#0c1008] text-white">
-        {/* Top Navigation */}
-        <nav className="border-b border-white/10 bg-[#0c1008]/95 backdrop-blur-sm sticky top-0 z-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between h-16">
-              <img 
-                src={froshLogo} 
-                alt="Frosh Logo" 
-                className="h-10 cursor-pointer"
-                onClick={() => navigate('/')}
-              />
-            </div>
-          </div>
-        </nav>
-        <div className="mx-auto max-w-[800px] px-6 md:px-10 py-10 md:py-14">
-          <div className="rounded-2xl border border-white/10 bg-[#0d0f12] shadow-[0_10px_30px_rgba(0,0,0,0.35)] p-6 md:p-8 text-center">
-            <h1 className="text-2xl md:text-3xl font-semibold mb-4">Application Received!</h1>
-            <p className="text-white/60 mb-8 text-[15px]">
-              Thank you for applying. We will review your application and reach out by email soon.
+      <div className="min-h-screen bg-[#0c1008] flex items-center justify-center p-4">
+        <Card className="max-w-2xl w-full bg-[#0c1008] border-[#015cd2]/40 shadow-2xl">
+          <CardContent className="pt-12 pb-12 text-center">
+            <CheckCircle2 className="w-16 h-16 text-[#015cd2] mx-auto mb-6" />
+            <h1 className="text-3xl font-display font-bold text-white mb-4">
+              Thanks. We will review and get back to you soon.
+            </h1>
+            <p className="text-white/70 mb-8">
+              We appreciate your interest in becoming a Frosh representative.
             </p>
             <Button 
-              onClick={() => navigate("/")}
-              className="h-12 rounded-xl bg-[#015cd2] text-white font-medium transition hover:brightness-95 px-8"
+              onClick={() => navigate('/')} 
+              className="bg-[#015cd2] hover:bg-[#015cd2]/90 text-white px-8 py-6 rounded-2xl"
             >
-              Back to Home
+              Return to Home
             </Button>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       </div>
     );
   }
