@@ -232,8 +232,8 @@ const Contact = () => {
       </section>
 
       {/* Business & Partnerships Section */}
-      <div className="container mx-auto px-4 pb-20">
-        <div className="max-w-6xl mx-auto mt-12">
+      <div className="container mx-auto px-4 mt-8">
+        <div className="max-w-6xl mx-auto">
           <div className="animate-fade-in">
             <Card className="bg-card/50 border-border/40">
               <CardContent className="p-8">
@@ -284,7 +284,7 @@ const Contact = () => {
       </div>
 
       {/* Join the Team CTA */}
-      <section className="py-16 border-t border-border/20">
+      <section className="py-12">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <Card className="bg-gradient-to-br from-primary/5 via-card/50 to-primary/10 border-primary/20">
