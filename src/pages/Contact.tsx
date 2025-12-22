@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Mail, MessageSquare, Instagram } from "lucide-react";
+import { Mail, MessageSquare, Instagram, Briefcase, ArrowRight } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -226,6 +226,77 @@ const Contact = () => {
                   </CardContent>
                 </Card>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Business & Partnerships Section */}
+      <section className="py-20 border-t border-border/20">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto">
+            <div className="animate-fade-in">
+              <Card className="bg-card/30 border-border/40">
+                <CardContent className="p-10 md:p-12">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+                      <Briefcase className="h-6 w-6 text-primary" />
+                    </div>
+                    <h2 className="text-2xl md:text-3xl font-bold text-foreground">
+                      Business & Partnerships
+                    </h2>
+                  </div>
+                  
+                  <p className="text-muted-foreground leading-relaxed mb-8">
+                    This channel is intended for partnerships, collaborations, media inquiries, 
+                    investment conversations, and individuals interested in working with Frosh at a higher level.
+                  </p>
+
+                  <div className="mb-8">
+                    <ul className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm text-muted-foreground/80">
+                      <li className="flex items-center gap-2">
+                        <span className="w-1 h-1 bg-primary/60 rounded-full" />
+                        Partnerships
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="w-1 h-1 bg-primary/60 rounded-full" />
+                        Media & Press
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="w-1 h-1 bg-primary/60 rounded-full" />
+                        Investment
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="w-1 h-1 bg-primary/60 rounded-full" />
+                        Brand Collaborations
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="w-1 h-1 bg-primary/60 rounded-full" />
+                        Campus Partnerships
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="w-1 h-1 bg-primary/60 rounded-full" />
+                        Working with Frosh
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                    <Button 
+                      asChild
+                      className="bg-primary hover:bg-primary/90 h-12 px-6"
+                    >
+                      <a href="mailto:kian@frosh.app?subject=Business%20Inquiry">
+                        Contact for Business
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </a>
+                    </Button>
+                    <span className="text-sm text-muted-foreground/60">
+                      kian@frosh.app
+                    </span>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </div>
