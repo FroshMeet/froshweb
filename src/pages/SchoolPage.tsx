@@ -12,7 +12,7 @@ import { getSchoolName } from "@/config/schoolNameMapping";
 import { schools } from "@/data/schools";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { getSchoolByApprovedSlug, getApprovedSchoolData } from "@/utils/schoolNavigation";
-import froshLogo from "@/assets/frosh-logo-new.png";
+import FroshLogo from "@/components/ui/FroshLogo";
 
 const EnhancedSchoolPage = () => {
   const { school } = useParams<{ school: string }>();
@@ -184,16 +184,7 @@ const EnhancedSchoolPage = () => {
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Back
               </Button>
-              <div 
-                className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity"
-                onClick={() => navigate('/')}
-              >
-                <img 
-                  src={froshLogo}
-                  alt="Frosh Logo" 
-                  className={isMobile ? "h-10 w-auto" : "h-16 w-auto"}
-                />
-              </div>
+              <FroshLogo size={isMobile ? "sm" : "md"} onClick={() => navigate('/')} />
             </div>
             <Button onClick={() => navigate('/signin')}>
               {isLoggedIn ? "Dashboard" : "Sign In"}

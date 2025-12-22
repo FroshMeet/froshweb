@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { TopNavCTA } from "@/components/layout/TopNavCTA";
-import froshIcon from "@/assets/frosh-logo-new.png";
+import FroshLogo from "@/components/ui/FroshLogo";
 
 interface SharedNavigationProps {
   currentPage?: string;
@@ -48,18 +48,10 @@ const SharedNavigation = ({ currentPage }: SharedNavigationProps) => {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <div 
-            className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity"
-            onClick={() => navigate('/')}
-          >
-            <img 
-              src={froshIcon}
-              alt="Frosh Logo" 
-              width="64"
-              height="64"
-              className={isMobile ? "h-10 w-auto" : "h-16 w-auto"}
-            />
-          </div>
+          <FroshLogo 
+            size={isMobile ? "sm" : "md"} 
+            onClick={() => navigate('/')} 
+          />
           
           {/* Centered Navigation - Desktop Only */}
           <nav className="hidden md:flex items-center justify-center flex-1">

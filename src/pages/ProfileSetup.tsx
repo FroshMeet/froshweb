@@ -12,7 +12,7 @@ import { ArrowLeft, Plus, X } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
-import froshLogo from "@/assets/frosh-logo-new.png";
+import FroshLogo from "@/components/ui/FroshLogo";
 
 const ProfileSetup = () => {
   const navigate = useNavigate();
@@ -128,13 +128,7 @@ const ProfileSetup = () => {
             <ArrowLeft className="h-5 w-5 mr-2" />
             Back
           </Button>
-          <div className="flex items-center space-x-3">
-            <img 
-              src={froshLogo}
-              alt="Frosh Logo" 
-              className={isMobile ? "h-10 w-auto" : "h-16 w-auto"}
-            />
-          </div>
+          <FroshLogo size={isMobile ? "sm" : "md"} />
         </div>
       </header>
 

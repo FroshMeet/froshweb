@@ -17,7 +17,7 @@ import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft, CheckCircle2 } from "lucide-react";
 import { SmartSchoolSearch } from "@/components/SmartSchoolSearch";
 import { School } from "@/data/schools";
-import froshLogo from "@/assets/frosh-logo-new.png";
+import FroshLogo from "@/components/ui/FroshLogo";
 
 const formSchema = z.object({
   fullName: z.string().min(2, "Please enter your full name").max(100),
@@ -163,12 +163,7 @@ export default function RepresentativesReferral() {
       <nav className="border-b border-white/10 bg-[#0c1008]/95 backdrop-blur-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <img 
-              src={froshLogo} 
-              alt="Frosh Logo" 
-              className="h-10 cursor-pointer"
-              onClick={() => navigate('/')}
-            />
+            <FroshLogo size="sm" onClick={() => navigate('/')} />
           </div>
         </div>
       </nav>
@@ -188,7 +183,7 @@ export default function RepresentativesReferral() {
       <div className="mx-auto max-w-[800px] px-6 md:px-10 py-10 md:py-14">
         {/* Header */}
         <div className="text-center mb-8 md:mb-10">
-          <img src={froshLogo} alt="Frosh Logo" className="h-20 mx-auto mb-8 animate-pulse drop-shadow-[0_0_15px_rgba(1,92,210,0.6)]" />
+          <FroshLogo size="lg" className="mx-auto mb-8 animate-pulse drop-shadow-[0_0_15px_rgba(1,92,210,0.6)]" />
           <h1 className="text-3xl md:text-4xl font-bold mb-3">
             Become a Frosh Representative
           </h1>
