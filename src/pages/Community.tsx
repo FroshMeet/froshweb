@@ -75,19 +75,15 @@ const Community = () => {
             </p>
             
             {/* Search Bar with live search */}
-            <div className="relative max-w-md mx-auto">
-              <Search className="absolute left-3 top-3 h-5 w-5 text-primary" />
+            <div className="relative max-w-md mx-auto group">
+              <Search className="absolute left-3 top-3.5 h-5 w-5 text-froshmeet-blue transition-transform duration-200 group-hover:scale-110" />
               <Input
                 placeholder="Search schools..."
                 value={searchQuery}
                 onChange={(e) => {
                   setSearchQuery(e.target.value);
-                  // Trigger search hook with new query
-                  if (e.target.value.trim()) {
-                    // The hook will handle the search automatically
-                  }
                 }}
-                className="pl-10 h-12 text-lg rounded-2xl border-primary/20 focus:border-primary/50 bg-card/50 backdrop-blur-sm"
+                className="pl-10 h-12 text-lg rounded-2xl border-border/30 bg-card/50"
               />
             </div>
           </div>
