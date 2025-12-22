@@ -502,7 +502,7 @@ const Homepage = () => {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate('/')}>
-              <img src={froshLogo} alt="Frosh - College Freshman Social App Logo" width="64" height="64" className={isMobile ? "h-10 w-auto" : "h-16 w-auto"} />
+              <img src={froshLogo} alt="Frosh - College Freshman Social App Logo" width="64" height="64" className={isMobile ? "h-10 w-auto border border-froshmeet-blue/50 rounded-lg" : "h-16 w-auto border border-froshmeet-blue/50 rounded-lg"} />
             </div>
             
             {/* Centered Navigation - Desktop Only */}
