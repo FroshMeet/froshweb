@@ -231,69 +231,46 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Business & Partnerships Section */}
-      <div className="container mx-auto px-4 mt-8 pb-6">
+      {/* Alternative Contact Paths */}
+      <div className="container mx-auto px-4 pb-20">
         <div className="max-w-6xl mx-auto">
-          <Card className="bg-card/40 border-border/30">
-            <CardContent className="p-6 md:p-8">
-              <div className="flex items-center gap-3 mb-3">
-                <Briefcase className="h-5 w-5 text-muted-foreground" />
-                <h2 className="text-xl font-semibold text-foreground">
-                  Business & Partnerships
-                </h2>
-              </div>
-                
-              <p className="text-muted-foreground text-sm leading-relaxed mb-5 max-w-xl">
-                For partnerships, collaborations, media inquiries, investment conversations, 
-                and individuals interested in working with Frosh at a higher level.
-              </p>
-
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                <span className="text-foreground font-medium">
-                  kian@frosh.app
-                </span>
-                <Button 
-                  variant="outline"
-                  size="sm"
-                  asChild
-                  className="text-muted-foreground hover:text-foreground border-border/50"
-                >
-                  <a href="mailto:kian@frosh.app?subject=Business%20Inquiry">
-                    Contact for Business
+          <div className="grid lg:grid-cols-2 gap-6">
+            {/* Business & Partnerships */}
+            <Card className="bg-card/50 border-border/40 p-6">
+              <div className="flex items-start space-x-4">
+                <div className="w-12 h-12 bg-gradient-to-r from-primary/20 to-primary/40 rounded-xl flex items-center justify-center">
+                  <Briefcase className="h-6 w-6 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-bold text-foreground mb-2">Business & Partnerships</h3>
+                  <p className="text-muted-foreground mb-2">For founders, brands, media, and collaborators.</p>
+                  <a href="mailto:kian@frosh.app" className="text-primary hover:text-primary/80 transition-colors">
+                    kian@frosh.app
                   </a>
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-
-      {/* Hiring Section - Secondary */}
-      <div className="container mx-auto px-4 pb-16">
-        <div className="max-w-6xl mx-auto">
-          <div className="border-t border-border/20 pt-6">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 px-2">
-              <div className="flex items-center gap-3">
-                <Users className="h-4 w-4 text-muted-foreground/70" />
-                <div>
-                  <h3 className="text-base font-medium text-foreground">
-                    Join the Frosh Team
-                  </h3>
-                  <p className="text-sm text-muted-foreground/70">
-                    Hiring student representatives and creative roles across U.S. campuses.
-                  </p>
+                  <p className="text-xs text-muted-foreground mt-2">Direct line for serious inquiries</p>
                 </div>
               </div>
-              <Button 
-                variant="ghost"
-                size="sm"
-                onClick={() => navigate('/hiring')}
-                className="text-muted-foreground hover:text-foreground"
-              >
-                View Open Roles
-                <ArrowRight className="ml-2 h-3 w-3" />
-              </Button>
-            </div>
+            </Card>
+
+            {/* Join the Team */}
+            <Card className="bg-card/50 border-border/40 p-6">
+              <div className="flex items-start space-x-4">
+                <div className="w-12 h-12 bg-gradient-to-r from-emerald-500/20 to-teal-500/40 rounded-xl flex items-center justify-center">
+                  <Users className="h-6 w-6 text-emerald-500" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-bold text-foreground mb-2">Join the Frosh Team</h3>
+                  <p className="text-muted-foreground mb-2">Build something real on your campus.</p>
+                  <button 
+                    onClick={() => navigate('/hiring')}
+                    className="text-primary hover:text-primary/80 transition-colors text-left"
+                  >
+                    View open roles →
+                  </button>
+                  <p className="text-xs text-muted-foreground mt-2">Student reps & creative leadership</p>
+                </div>
+              </div>
+            </Card>
           </div>
         </div>
       </div>
