@@ -16,7 +16,7 @@ import { School } from "@/data/schools";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { ChevronRight, ArrowLeft } from "lucide-react";
-import froshLogo from "@/assets/frosh-logo-new.png";
+import FroshLogo from "@/components/ui/FroshLogo";
 const formSchema = z.object({
   fullName: z.string().min(2, "Please enter your full name").max(100),
   instagramHandle: z.string().max(255).optional(),
@@ -168,12 +168,7 @@ const Representatives = () => {
       <nav className="border-b border-white/10 bg-[#0c1008]/95 backdrop-blur-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <img 
-              src={froshLogo} 
-              alt="Frosh Logo" 
-              className="h-10 cursor-pointer"
-              onClick={() => navigate('/')}
-            />
+            <FroshLogo size="sm" onClick={() => navigate('/')} />
           </div>
         </div>
       </nav>
@@ -193,7 +188,7 @@ const Representatives = () => {
       {/* Header Section */}
       <div className="bg-gradient-to-b from-background to-background/95 py-12 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <img src={froshLogo} alt="Frosh Logo" className="h-20 mx-auto mb-8 animate-pulse drop-shadow-[0_0_15px_rgba(1,92,210,0.6)]" />
+          <FroshLogo size="lg" className="mx-auto mb-8 animate-pulse drop-shadow-[0_0_15px_rgba(1,92,210,0.6)]" />
           <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             Apply to Become a Frosh Student Marketing & Social Media
             Representative

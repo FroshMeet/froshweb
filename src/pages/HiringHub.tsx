@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { SEO } from "@/components/seo/SEO";
 import { Sparkles, Megaphone, ChevronRight, ArrowLeft } from "lucide-react";
-import froshLogo from "@/assets/frosh-logo-new.png";
+import FroshLogo from "@/components/ui/FroshLogo";
 
 const HiringHub = () => {
   const navigate = useNavigate();
@@ -40,12 +40,7 @@ const HiringHub = () => {
       <nav className="border-b border-white/10 bg-[#0c1008]/95 backdrop-blur-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <img 
-              src={froshLogo} 
-              alt="Frosh Logo" 
-              className="h-10 cursor-pointer"
-              onClick={() => navigate('/')}
-            />
+            <FroshLogo size="sm" onClick={() => navigate('/')} />
           </div>
         </div>
       </nav>
@@ -66,11 +61,7 @@ const HiringHub = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 text-center">
         <div className="relative inline-block mb-8">
           <div className="absolute -inset-4 bg-[#015cd2]/30 rounded-full blur-2xl animate-pulse"></div>
-          <img 
-            src={froshLogo} 
-            alt="Frosh Logo" 
-            className="h-24 md:h-32 relative z-10 drop-shadow-[0_0_20px_rgba(1,92,210,0.8)]"
-          />
+          <FroshLogo size="xl" className="relative z-10 drop-shadow-[0_0_20px_rgba(1,92,210,0.8)]" />
         </div>
         
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-4">

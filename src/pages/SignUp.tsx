@@ -9,7 +9,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { TopNavCTA } from "@/components/layout/TopNavCTA";
 import { useIsMobile } from "@/hooks/use-mobile";
-import froshLogo from "@/assets/frosh-logo-new.png";
+import FroshLogo from "@/components/ui/FroshLogo";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -85,13 +85,7 @@ export default function SignUp() {
           </Button>
           <div className="flex items-center space-x-4">
             <TopNavCTA />
-            <div className="flex items-center space-x-3">
-              <img 
-                src={froshLogo}
-                alt="Frosh Logo" 
-                className={isMobile ? "h-10 w-auto" : "h-16 w-auto"}
-              />
-            </div>
+            <FroshLogo size={isMobile ? "sm" : "md"} />
           </div>
         </div>
       </header>
