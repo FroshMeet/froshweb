@@ -232,90 +232,71 @@ const Contact = () => {
       </section>
 
       {/* Business & Partnerships Section */}
-      <div className="container mx-auto px-4 mt-8">
+      <div className="container mx-auto px-4 mt-8 pb-6">
         <div className="max-w-6xl mx-auto">
-          <div className="animate-fade-in">
-            <Card className="bg-card/50 border-border/40">
-              <CardContent className="p-8">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
-                    <Briefcase className="h-5 w-5 text-primary" />
-                  </div>
-                  <h2 className="text-2xl font-bold text-foreground">
-                    Business & Partnerships
-                  </h2>
-                </div>
-                  
-                <p className="text-muted-foreground leading-relaxed mb-6 max-w-2xl">
-                  This channel is intended for partnerships, collaborations, media inquiries, 
-                  investment conversations, and individuals interested in working with Frosh at a higher level.
-                </p>
+          <Card className="bg-card/40 border-border/30">
+            <CardContent className="p-6 md:p-8">
+              <div className="flex items-center gap-3 mb-3">
+                <Briefcase className="h-5 w-5 text-muted-foreground" />
+                <h2 className="text-xl font-semibold text-foreground">
+                  Business & Partnerships
+                </h2>
+              </div>
+                
+              <p className="text-muted-foreground text-sm leading-relaxed mb-5 max-w-xl">
+                For partnerships, collaborations, media inquiries, investment conversations, 
+                and individuals interested in working with Frosh at a higher level.
+              </p>
 
-                <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground/70 mb-6">
-                  <span>Partnerships</span>
-                  <span>•</span>
-                  <span>Media & Press</span>
-                  <span>•</span>
-                  <span>Investment</span>
-                  <span>•</span>
-                  <span>Brand Collaborations</span>
-                  <span>•</span>
-                  <span>Campus Partnerships</span>
-                </div>
-
-                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-                  <Button 
-                    asChild
-                    className="bg-primary hover:bg-primary/90"
-                  >
-                    <a href="mailto:kian@frosh.app?subject=Business%20Inquiry">
-                      Contact for Business
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </a>
-                  </Button>
-                  <span className="text-sm text-muted-foreground/50">
-                    kian@frosh.app
-                  </span>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <span className="text-foreground font-medium">
+                  kian@frosh.app
+                </span>
+                <Button 
+                  variant="outline"
+                  size="sm"
+                  asChild
+                  className="text-muted-foreground hover:text-foreground border-border/50"
+                >
+                  <a href="mailto:kian@frosh.app?subject=Business%20Inquiry">
+                    Contact for Business
+                  </a>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
 
-      {/* Join the Team CTA */}
-      <section className="py-12">
-        <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            <Card className="bg-gradient-to-br from-primary/5 via-card/50 to-primary/10 border-primary/20">
-              <CardContent className="p-8 md:p-10">
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center shrink-0">
-                      <Users className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <h2 className="text-xl md:text-2xl font-bold text-foreground mb-2">
-                        Join the Frosh Team
-                      </h2>
-                      <p className="text-muted-foreground max-w-lg">
-                        We're hiring student representatives and creative leadership roles at campuses nationwide.
-                      </p>
-                    </div>
-                  </div>
-                  <Button 
-                    onClick={() => navigate('/hiring')}
-                    className="bg-primary hover:bg-primary/90 shrink-0"
-                  >
-                    View Open Roles
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
+      {/* Hiring Section - Secondary */}
+      <div className="container mx-auto px-4 pb-16">
+        <div className="max-w-6xl mx-auto">
+          <div className="border-t border-border/20 pt-6">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 px-2">
+              <div className="flex items-center gap-3">
+                <Users className="h-4 w-4 text-muted-foreground/70" />
+                <div>
+                  <h3 className="text-base font-medium text-foreground">
+                    Join the Frosh Team
+                  </h3>
+                  <p className="text-sm text-muted-foreground/70">
+                    Hiring student representatives and creative roles across U.S. campuses.
+                  </p>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+              <Button 
+                variant="ghost"
+                size="sm"
+                onClick={() => navigate('/hiring')}
+                className="text-muted-foreground hover:text-foreground"
+              >
+                View Open Roles
+                <ArrowRight className="ml-2 h-3 w-3" />
+              </Button>
+            </div>
           </div>
         </div>
-      </section>
+      </div>
 
       {/* Footer */}
       
