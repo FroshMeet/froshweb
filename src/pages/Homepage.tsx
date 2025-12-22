@@ -471,10 +471,10 @@ const Homepage = () => {
     const schoolObj = schools.find(s => s.name === schoolName);
     if (schoolObj) {
       const correctSlug = getCorrectSchoolSlug(schoolObj);
-      navigate(`/school/${correctSlug}`);
+      navigate(`/${correctSlug}`);
     } else {
       // Fallback for schools not in our main data
-      navigate(`/school/${schoolSlug || schoolName.toLowerCase().replace(/\s+/g, '-')}`);
+      navigate(`/${schoolSlug || schoolName.toLowerCase().replace(/\s+/g, '-')}`);
     }
   };
   const handleGetFeaturedClick = () => {
