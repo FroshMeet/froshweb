@@ -244,9 +244,13 @@ const Contact = () => {
                 <div className="flex-1">
                   <h3 className="font-bold text-foreground mb-2">Business & Partnerships</h3>
                   <p className="text-muted-foreground mb-2">For founders, brands, media, and collaborators.</p>
-                  <a href="mailto:kian@frosh.app" className="text-primary hover:text-primary/80 transition-colors">
-                    kian@frosh.app
-                  </a>
+                  <div className="flex items-center gap-2">
+                    <span className="text-foreground">Kian Habibi</span>
+                    <span className="text-muted-foreground/50">—</span>
+                    <a href="mailto:kian@frosh.app" className="text-primary hover:text-primary/80 transition-colors">
+                      kian@frosh.app
+                    </a>
+                  </div>
                   <p className="text-xs text-muted-foreground mt-2">Direct line for serious inquiries</p>
                 </div>
               </div>
