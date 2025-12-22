@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Mail, MessageSquare, Instagram, Briefcase, ArrowRight } from "lucide-react";
+import { Mail, MessageSquare, Instagram, Briefcase, ArrowRight, Users } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -282,6 +282,40 @@ const Contact = () => {
           </div>
         </div>
       </div>
+
+      {/* Join the Team CTA */}
+      <section className="py-16 border-t border-border/20">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <Card className="bg-gradient-to-br from-primary/5 via-card/50 to-primary/10 border-primary/20">
+              <CardContent className="p-8 md:p-10">
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center shrink-0">
+                      <Users className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                      <h2 className="text-xl md:text-2xl font-bold text-foreground mb-2">
+                        Join the Frosh Team
+                      </h2>
+                      <p className="text-muted-foreground max-w-lg">
+                        We're hiring student representatives and creative leadership roles at campuses nationwide.
+                      </p>
+                    </div>
+                  </div>
+                  <Button 
+                    onClick={() => navigate('/hiring')}
+                    className="bg-primary hover:bg-primary/90 shrink-0"
+                  >
+                    View Open Roles
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
 
       {/* Footer */}
       
