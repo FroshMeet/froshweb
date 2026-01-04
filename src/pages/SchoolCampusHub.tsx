@@ -238,11 +238,11 @@ export default function SchoolCampusHub() {
               <img 
                 src={getSchoolImageUrl(schoolData.id)!} 
                 alt={`${schoolName} profile`}
-                className="h-20 w-20 rounded-2xl object-cover shadow-lg border border-primary/20"
+                className="h-40 w-40 md:h-48 md:w-48 rounded-2xl object-cover shadow-lg border border-primary/20"
               />
             ) : (
-              <div className={`h-20 w-20 bg-gradient-to-br ${schoolLogo} rounded-2xl flex items-center justify-center shadow-lg border border-primary/20`}>
-                <span className="text-2xl font-bold text-foreground drop-shadow-lg">
+              <div className={`h-40 w-40 md:h-48 md:w-48 bg-gradient-to-br ${schoolLogo} rounded-2xl flex items-center justify-center shadow-lg border border-primary/20`}>
+                <span className="text-5xl md:text-6xl font-bold text-foreground drop-shadow-lg">
                   {schoolName.charAt(0)}
                 </span>
               </div>

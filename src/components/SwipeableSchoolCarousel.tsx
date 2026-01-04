@@ -37,13 +37,13 @@ export const SwipeableSchoolCarousel: React.FC<SchoolCarouselProps> = ({
               className="flex-shrink-0 w-40 md:w-48 h-28 md:h-32 flex flex-col items-center justify-center text-sm md:text-base transition-all duration-500 bg-card/40 border-border/40 group relative overflow-hidden hover:shadow-[0_0_30px_rgba(59,130,246,0.4)] hover:border-primary/60 hover:scale-105"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
-              <div className="relative z-10 w-10 md:w-12 h-10 md:h-12 rounded-full flex items-center justify-center mb-2 md:mb-3 transition-all duration-500 overflow-hidden border-2 border-primary/30 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] group-hover:border-primary/60">
+              <div className="relative z-10 w-14 md:w-16 h-14 md:h-16 rounded-full flex items-center justify-center mb-2 md:mb-3 transition-all duration-500 overflow-hidden border-2 border-primary/30 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] group-hover:border-primary/60">
                 {hasSchoolImage(school.slug) ? (
                   <img 
                     src={getSchoolImageUrl(school.slug)!} 
                     alt={`${school.name} profile`}
-                    width="48"
-                    height="48"
+                    width="64"
+                    height="64"
                     loading="lazy"
                     className="w-full h-full object-cover"
                   />
@@ -72,13 +72,13 @@ export const SwipeableSchoolCarousel: React.FC<SchoolCarouselProps> = ({
               className="flex-shrink-0 w-40 md:w-48 h-28 md:h-32 flex flex-col items-center justify-center text-sm md:text-base transition-all duration-500 bg-card/40 border-border/40 group relative overflow-hidden hover:shadow-[0_0_30px_rgba(59,130,246,0.4)] hover:border-primary/60 hover:scale-105"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
-              <div className="relative z-10 w-10 md:w-12 h-10 md:h-12 rounded-full flex items-center justify-center mb-2 md:mb-3 transition-all duration-500 overflow-hidden border-2 border-primary/30 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] group-hover:border-primary/60">
+              <div className="relative z-10 w-14 md:w-16 h-14 md:h-16 rounded-full flex items-center justify-center mb-2 md:mb-3 transition-all duration-500 overflow-hidden border-2 border-primary/30 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] group-hover:border-primary/60">
                 {hasSchoolImage(school.slug) ? (
                   <img 
                     src={getSchoolImageUrl(school.slug)!} 
                     alt={`${school.name} profile`}
-                    width="48"
-                    height="48"
+                    width="64"
+                    height="64"
                     loading="lazy"
                     className="w-full h-full object-cover"
                   />

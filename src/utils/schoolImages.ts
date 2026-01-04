@@ -5,6 +5,11 @@
 
 const STORAGE_BASE = 'https://zdicoswxpkpdnmxnhrrn.supabase.co/storage/v1/object/public/school%20logos';
 
+// Schools with images stored locally in public folder (not yet in Supabase bucket)
+const LOCAL_IMAGES: Record<string, string> = {
+  'unl': '/school-logos/UNL_PFP.png',
+};
+
 /**
  * Mapping of school slug (from schools.ts id) to exact filename in Supabase bucket
  * Based on 99 images uploaded to "school logos" bucket
@@ -128,9 +133,13 @@ const SCHOOL_IMAGE_MAP: Record<string, string> = {
 /**
  * Get the full URL for a school's profile image
  * @param slug - The school slug (id from schools.ts)
- * @returns The full Supabase Storage URL or null if no image exists
+ * @returns The full Supabase Storage URL or local path, or null if no image exists
  */
 export function getSchoolImageUrl(slug: string): string | null {
+  // Check local images first
+  if (LOCAL_IMAGES[slug]) {
+    return LOCAL_IMAGES[slug];
+  }
   const filename = SCHOOL_IMAGE_MAP[slug];
   if (!filename) return null;
   return `${STORAGE_BASE}/${encodeURIComponent(filename)}`;
@@ -139,10 +148,10 @@ export function getSchoolImageUrl(slug: string): string | null {
 /**
  * Check if a school has a profile image
  * @param slug - The school slug (id from schools.ts)
- * @returns true if the school has an image in the bucket
+ * @returns true if the school has an image in the bucket or locally
  */
 export function hasSchoolImage(slug: string): boolean {
-  return slug in SCHOOL_IMAGE_MAP;
+  return slug in SCHOOL_IMAGE_MAP || slug in LOCAL_IMAGES;
 }
 
 /**
