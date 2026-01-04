@@ -26,6 +26,7 @@ import { schools } from "@/data/schools";
 import { getSchoolByApprovedSlug, getApprovedSchoolData } from "@/utils/schoolNavigation";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { getSchoolLogo } from "@/utils/schoolLogos";
+import { getSchoolImageUrl, hasSchoolImage } from "@/utils/schoolImages";
 import { useToast } from "@/hooks/use-toast";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { APPROVED_SCHOOLS } from "@/config/approvedSchools";
@@ -233,11 +234,19 @@ export default function SchoolCampusHub() {
         <div className="max-w-4xl mx-auto text-center relative">
           {/* School Logo */}
           <div className="mb-6 flex justify-center">
-            <div className={`h-20 w-20 bg-gradient-to-br ${schoolLogo} rounded-2xl flex items-center justify-center shadow-lg border border-primary/20`}>
-              <span className="text-2xl font-bold text-foreground drop-shadow-lg">
-                {schoolName.charAt(0)}
-              </span>
-            </div>
+            {schoolData && hasSchoolImage(schoolData.id) ? (
+              <img 
+                src={getSchoolImageUrl(schoolData.id)!} 
+                alt={`${schoolName} profile`}
+                className="h-20 w-20 rounded-2xl object-cover shadow-lg border border-primary/20"
+              />
+            ) : (
+              <div className={`h-20 w-20 bg-gradient-to-br ${schoolLogo} rounded-2xl flex items-center justify-center shadow-lg border border-primary/20`}>
+                <span className="text-2xl font-bold text-foreground drop-shadow-lg">
+                  {schoolName.charAt(0)}
+                </span>
+              </div>
+            )}
           </div>
 
           {/* School Name */}
