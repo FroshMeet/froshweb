@@ -12,6 +12,7 @@ import { schools, School } from '@/data/schools';
 import { getCorrectSchoolSlug } from '@/utils/schoolNavigation';
 import { SEO } from '@/components/seo/SEO';
 import { organizationSchema, websiteSchema } from '@/utils/seoSchema';
+import { getSchoolImageUrl, hasSchoolImage } from '@/utils/schoolImages';
 
 
 const Community = () => {
@@ -99,11 +100,20 @@ const Community = () => {
                 <div className="bg-card/50 backdrop-blur-sm rounded-3xl p-8 text-center transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-primary/30 border-2 border-primary/20 hover:border-primary/50 card-shadow group-hover:bg-card/80 frosted-card">
                   {/* School Circle */}
                   <div className="w-24 h-24 mx-auto mb-6 rounded-full overflow-hidden group-hover:neon-glow-strong transition-all duration-300 border-2 border-primary/30 group-hover:border-primary/60">
-                    <div className="w-full h-full bg-gradient-to-r from-primary to-primary/70 flex items-center justify-center">
-                      <span className="text-primary-foreground font-bold text-xl">
-                        {getSchoolInitials(school.name)}
-                      </span>
-                    </div>
+                    {hasSchoolImage(school.id) ? (
+                      <img 
+                        src={getSchoolImageUrl(school.id)!} 
+                        alt={`${school.shortName || school.name} profile`}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-r from-primary to-primary/70 flex items-center justify-center">
+                        <span className="text-primary-foreground font-bold text-xl">
+                          {getSchoolInitials(school.name)}
+                        </span>
+                      </div>
+                    )}
                   </div>
                   
                   {/* School Info */}
