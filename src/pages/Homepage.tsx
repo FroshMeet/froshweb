@@ -16,389 +16,118 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { SEO } from '@/components/seo/SEO';
 import { organizationSchema, websiteSchema, mobileAppSchema } from '@/utils/seoSchema';
 import FroshLogo from "@/components/ui/FroshLogo";
-// Use only approved schools to ensure all links work
+// 100 schools in exact carousel order (alternating rows: odd=top, even=bottom)
 const SCHOOL_DATABASE = [
-  // Ivy League
-  {
-    name: "Harvard University",
-    acronym: "Harvard",
-    searchTerms: ["harvard", "cambridge"],
-    slug: "harvard"
-  },
-  {
-    name: "University of Pennsylvania",
-    acronym: "UPenn",
-    searchTerms: ["upenn", "penn", "pennsylvania", "philadelphia"],
-    slug: "upenn"
-  },
-  {
-    name: "Princeton University",
-    acronym: "Princeton",
-    searchTerms: ["princeton", "tigers"],
-    slug: "princeton"
-  },
-  {
-    name: "Columbia University",
-    acronym: "Columbia",
-    searchTerms: ["columbia", "new york"],
-    slug: "columbia"
-  },
-  {
-    name: "Yale University",
-    acronym: "Yale",
-    searchTerms: ["yale", "new haven"],
-    slug: "yale"
-  },
-  {
-    name: "Cornell University",
-    acronym: "Cornell",
-    searchTerms: ["cornell", "ithaca"],
-    slug: "cornell"
-  },
-  {
-    name: "Dartmouth College",
-    acronym: "Dartmouth",
-    searchTerms: ["dartmouth", "hanover"],
-    slug: "dartmouth"
-  },
-  {
-    name: "Brown University",
-    acronym: "Brown",
-    searchTerms: ["brown", "providence"],
-    slug: "brown"
-  },
-  
-  // UC System
-  {
-    name: "University of California, Los Angeles",
-    acronym: "UCLA",
-    searchTerms: ["ucla", "los angeles", "westwood"],
-    slug: "ucla"
-  },
-  {
-    name: "University of California, Berkeley",
-    acronym: "UC Berkeley",
-    searchTerms: ["berkeley", "cal", "uc berkeley", "ucb"],
-    slug: "ucberkeley"
-  },
-  {
-    name: "University of California, San Diego",
-    acronym: "UCSD",
-    searchTerms: ["ucsd", "san diego", "uc san diego"],
-    slug: "ucsd"
-  },
-  {
-    name: "University of California, Irvine",
-    acronym: "UCI",
-    searchTerms: ["uci", "irvine", "uc irvine"],
-    slug: "uci"
-  },
-  {
-    name: "University of California, Davis",
-    acronym: "UC Davis",
-    searchTerms: ["ucd", "davis", "uc davis"],
-    slug: "ucdavis"
-  },
-  {
-    name: "University of California, Santa Barbara",
-    acronym: "UCSB",
-    searchTerms: ["ucsb", "santa barbara", "uc santa barbara"],
-    slug: "ucsb"
-  },
-  {
-    name: "University of California, Santa Cruz",
-    acronym: "UCSC",
-    searchTerms: ["ucsc", "santa cruz", "uc santa cruz"],
-    slug: "ucsc"
-  },
-  {
-    name: "University of California, Riverside",
-    acronym: "UCR",
-    searchTerms: ["ucr", "riverside", "uc riverside"],
-    slug: "ucr"
-  },
-  {
-    name: "University of California, Merced",
-    acronym: "UC Merced",
-    searchTerms: ["ucm", "merced", "uc merced"],
-    slug: "ucmerced"
-  },
-  
-  // California Privates & CSU System
-  {
-    name: "Stanford University",
-    acronym: "Stanford",
-    searchTerms: ["stanford", "palo alto"],
-    slug: "stanford"
-  },
-  {
-    name: "California Institute of Technology",
-    acronym: "Caltech",
-    searchTerms: ["caltech", "pasadena", "california institute of technology"],
-    slug: "caltech"
-  },
-  {
-    name: "University of Southern California",
-    acronym: "USC",
-    searchTerms: ["usc", "southern california", "trojans"],
-    slug: "usc"
-  },
-  {
-    name: "San Diego State University",
-    acronym: "SDSU",
-    searchTerms: ["sdsu", "san diego state"],
-    slug: "sdsu"
-  },
-  {
-    name: "San José State University",
-    acronym: "SJSU",
-    searchTerms: ["sjsu", "san jose state"],
-    slug: "sjsu"
-  },
-  {
-    name: "San Francisco State University",
-    acronym: "SFSU",
-    searchTerms: ["sf state", "san francisco state", "sfsu"],
-    slug: "sfsu"
-  },
-  {
-    name: "California Polytechnic State University, San Luis Obispo",
-    acronym: "Cal Poly SLO",
-    searchTerms: ["cal poly", "slo", "san luis obispo", "cal poly slo"],
-    slug: "calpolyslo"
-  },
-  {
-    name: "California State Polytechnic University, Pomona",
-    acronym: "Cal Poly Pomona",
-    searchTerms: ["cal poly pomona", "cpp", "pomona"],
-    slug: "cpp"
-  },
-  {
-    name: "California State University, Long Beach",
-    acronym: "CSULB",
-    searchTerms: ["csulb", "long beach", "cal state long beach"],
-    slug: "csulb"
-  },
-  
-  // Major National Universities
-  {
-    name: "Massachusetts Institute of Technology",
-    acronym: "MIT",
-    searchTerms: ["mit", "massachusetts institute"],
-    slug: "mit"
-  },
-  {
-    name: "Duke University",
-    acronym: "Duke",
-    searchTerms: ["duke", "durham"],
-    slug: "duke"
-  },
-  {
-    name: "Northwestern University",
-    acronym: "Northwestern",
-    searchTerms: ["northwestern", "evanston"],
-    slug: "northwestern"
-  },
-  {
-    name: "University of Chicago",
-    acronym: "UChicago",
-    searchTerms: ["uchicago", "university of chicago", "chicago"],
-    slug: "uchicago"
-  },
-  {
-    name: "Vanderbilt University",
-    acronym: "Vanderbilt",
-    searchTerms: ["vanderbilt", "nashville"],
-    slug: "vanderbilt"
-  },
-  {
-    name: "Georgetown University",
-    acronym: "Georgetown",
-    searchTerms: ["georgetown", "washington dc"],
-    slug: "georgetown"
-  },
-  {
-    name: "Carnegie Mellon University",
-    acronym: "CMU",
-    searchTerms: ["cmu", "carnegie mellon", "pittsburgh"],
-    slug: "cmu"
-  },
-  {
-    name: "Rice University",
-    acronym: "Rice",
-    searchTerms: ["rice", "houston"],
-    slug: "rice"
-  },
-  {
-    name: "New York University",
-    acronym: "NYU",
-    searchTerms: ["nyu", "new york university", "new york"],
-    slug: "nyu"
-  },
-  {
-    name: "Boston University",
-    acronym: "BU",
-    searchTerms: ["bu", "boston university", "boston"],
-    slug: "bu"
-  },
-  {
-    name: "Northeastern University",
-    acronym: "Northeastern",
-    searchTerms: ["northeastern", "boston"],
-    slug: "northeastern"
-  },
-  
-  // Large State Universities
-  {
-    name: "University of Michigan",
-    acronym: "UMich",
-    searchTerms: ["michigan", "ann arbor", "wolverines", "umich"],
-    slug: "umich"
-  },
-  {
-    name: "University of Texas at Austin",
-    acronym: "UT Austin",
-    searchTerms: ["ut", "texas", "austin", "longhorns"],
-    slug: "utaustin"
-  },
-  {
-    name: "University of Florida",
-    acronym: "UF",
-    searchTerms: ["uf", "florida", "gainesville", "gators"],
-    slug: "ufl"
-  },
-  {
-    name: "Pennsylvania State University",
-    acronym: "Penn State",
-    searchTerms: ["penn state", "psu", "university park"],
-    slug: "pennstate"
-  },
-  {
-    name: "Ohio State University",
-    acronym: "Ohio State",
-    searchTerms: ["osu", "ohio state", "columbus"],
-    slug: "osu"
-  },
-  {
-    name: "University of Washington",
-    acronym: "UW",
-    searchTerms: ["uw", "washington", "seattle", "huskies"],
-    slug: "uwashington"
-  },
-  {
-    name: "University of Wisconsin–Madison",
-    acronym: "UW-Madison",
-    searchTerms: ["wisconsin", "madison", "badgers"],
-    slug: "uwmadison"
-  },
-  {
-    name: "University of Illinois Urbana-Champaign",
-    acronym: "UIUC",
-    searchTerms: ["uiuc", "illinois", "urbana champaign"],
-    slug: "uiuc"
-  },
-  {
-    name: "Purdue University",
-    acronym: "Purdue",
-    searchTerms: ["purdue", "west lafayette"],
-    slug: "purdue"
-  },
-  {
-    name: "University of Georgia",
-    acronym: "UGA",
-    searchTerms: ["uga", "georgia", "athens"],
-    slug: "uga"
-  },
-  {
-    name: "University of North Carolina at Chapel Hill",
-    acronym: "UNC",
-    searchTerms: ["unc", "chapel hill", "north carolina"],
-    slug: "unc"
-  },
-  {
-    name: "University of Virginia",
-    acronym: "UVA",
-    searchTerms: ["uva", "virginia", "charlottesville"],
-    slug: "uva"
-  },
-  {
-    name: "Arizona State University",
-    acronym: "ASU",
-    searchTerms: ["asu", "arizona state", "tempe"],
-    slug: "asu"
-  },
-  {
-    name: "University of Arizona",
-    acronym: "UArizona",
-    searchTerms: ["arizona", "tucson"],
-    slug: "uarizona"
-  },
-  {
-    name: "University of Colorado Boulder",
-    acronym: "CU Boulder",
-    searchTerms: ["cu boulder", "colorado boulder", "boulder"],
-    slug: "cuboulder"
-  },
-  {
-    name: "Florida State University",
-    acronym: "FSU",
-    searchTerms: ["fsu", "florida state", "tallahassee"],
-    slug: "fsu"
-  },
-  {
-    name: "University of Central Florida",
-    acronym: "UCF",
-    searchTerms: ["ucf", "central florida", "orlando"],
-    slug: "ucf"
-  },
-  {
-    name: "Texas A&M University",
-    acronym: "Texas A&M",
-    searchTerms: ["texas a&m", "tamu", "college station"],
-    slug: "tamu"
-  },
-  {
-    name: "University of Miami",
-    acronym: "UMiami",
-    searchTerms: ["miami", "coral gables"],
-    slug: "miami"
-  },
-  {
-    name: "University of Alabama",
-    acronym: "Alabama",
-    searchTerms: ["alabama", "tuscaloosa", "roll tide"],
-    slug: "ua"
-  },
-  {
-    name: "Michigan State University",
-    acronym: "MSU",
-    searchTerms: ["msu", "michigan state", "east lansing"],
-    slug: "msu"
-  },
-  {
-    name: "Indiana University Bloomington",
-    acronym: "IU",
-    searchTerms: ["iu", "indiana university", "bloomington"],
-    slug: "indiana"
-  },
-  {
-    name: "University of Minnesota",
-    acronym: "UMN",
-    searchTerms: ["minnesota", "twin cities", "gophers"],
-    slug: "umn"
-  },
-  {
-    name: "University of Oregon",
-    acronym: "Oregon",
-    searchTerms: ["oregon", "eugene", "ducks"],
-    slug: "uoregon"
-  },
-  {
-    name: "Virginia Polytechnic Institute and State University",
-    acronym: "Virginia Tech",
-    searchTerms: ["virginia tech", "vt", "blacksburg"],
-    slug: "vt"
-  }
+  // 1-10
+  { name: "Harvard University", acronym: "Harvard", searchTerms: ["harvard", "cambridge"], slug: "harvard" },
+  { name: "University of California, Los Angeles", acronym: "UCLA", searchTerms: ["ucla", "los angeles", "westwood"], slug: "ucla" },
+  { name: "Stanford University", acronym: "Stanford", searchTerms: ["stanford", "palo alto"], slug: "stanford" },
+  { name: "University of Southern California", acronym: "USC", searchTerms: ["usc", "southern california", "trojans"], slug: "usc" },
+  { name: "New York University", acronym: "NYU", searchTerms: ["nyu", "new york university", "new york"], slug: "nyu" },
+  { name: "University of California, Berkeley", acronym: "UC Berkeley", searchTerms: ["berkeley", "cal", "uc berkeley", "ucb"], slug: "ucberkeley" },
+  { name: "Massachusetts Institute of Technology", acronym: "MIT", searchTerms: ["mit", "massachusetts institute"], slug: "mit" },
+  { name: "University of Michigan", acronym: "UMich", searchTerms: ["michigan", "ann arbor", "wolverines", "umich"], slug: "umich" },
+  { name: "University of Texas at Austin", acronym: "UT Austin", searchTerms: ["ut", "texas", "austin", "longhorns"], slug: "utaustin" },
+  { name: "University of Pennsylvania", acronym: "UPenn", searchTerms: ["upenn", "penn", "pennsylvania", "philadelphia"], slug: "upenn" },
+  // 11-20
+  { name: "Princeton University", acronym: "Princeton", searchTerms: ["princeton", "tigers"], slug: "princeton" },
+  { name: "Columbia University", acronym: "Columbia", searchTerms: ["columbia", "new york"], slug: "columbia" },
+  { name: "Yale University", acronym: "Yale", searchTerms: ["yale", "new haven"], slug: "yale" },
+  { name: "Duke University", acronym: "Duke", searchTerms: ["duke", "durham"], slug: "duke" },
+  { name: "Northwestern University", acronym: "Northwestern", searchTerms: ["northwestern", "evanston"], slug: "northwestern" },
+  { name: "University of North Carolina at Chapel Hill", acronym: "UNC", searchTerms: ["unc", "chapel hill", "north carolina"], slug: "unc" },
+  { name: "Florida State University", acronym: "FSU", searchTerms: ["fsu", "florida state", "tallahassee"], slug: "fsu" },
+  { name: "Ohio State University", acronym: "Ohio State", searchTerms: ["osu", "ohio state", "columbus"], slug: "osu" },
+  { name: "Pennsylvania State University", acronym: "Penn State", searchTerms: ["penn state", "psu", "university park"], slug: "pennstate" },
+  { name: "University of Georgia", acronym: "UGA", searchTerms: ["uga", "georgia", "athens"], slug: "uga" },
+  // 21-30
+  { name: "Cornell University", acronym: "Cornell", searchTerms: ["cornell", "ithaca"], slug: "cornell" },
+  { name: "Brown University", acronym: "Brown", searchTerms: ["brown", "providence"], slug: "brown" },
+  { name: "Dartmouth College", acronym: "Dartmouth", searchTerms: ["dartmouth", "hanover"], slug: "dartmouth" },
+  { name: "Vanderbilt University", acronym: "Vanderbilt", searchTerms: ["vanderbilt", "nashville"], slug: "vanderbilt" },
+  { name: "University of California, San Diego", acronym: "UCSD", searchTerms: ["ucsd", "san diego", "uc san diego"], slug: "ucsd" },
+  { name: "University of California, Santa Barbara", acronym: "UCSB", searchTerms: ["ucsb", "santa barbara", "uc santa barbara"], slug: "ucsb" },
+  { name: "University of Wisconsin–Madison", acronym: "UW-Madison", searchTerms: ["wisconsin", "madison", "badgers"], slug: "uwmadison" },
+  { name: "University of Illinois Urbana-Champaign", acronym: "UIUC", searchTerms: ["uiuc", "illinois", "urbana champaign"], slug: "uiuc" },
+  { name: "Michigan State University", acronym: "MSU", searchTerms: ["msu", "michigan state", "east lansing"], slug: "msu" },
+  { name: "Texas A&M University", acronym: "Texas A&M", searchTerms: ["texas a&m", "tamu", "college station"], slug: "tamu" },
+  // 31-40
+  { name: "University of California, Irvine", acronym: "UCI", searchTerms: ["uci", "irvine", "uc irvine"], slug: "uci" },
+  { name: "University of California, Davis", acronym: "UC Davis", searchTerms: ["ucd", "davis", "uc davis"], slug: "ucdavis" },
+  { name: "University of California, Santa Cruz", acronym: "UCSC", searchTerms: ["ucsc", "santa cruz", "uc santa cruz"], slug: "ucsc" },
+  { name: "University of California, Riverside", acronym: "UCR", searchTerms: ["ucr", "riverside", "uc riverside"], slug: "ucr" },
+  { name: "Arizona State University", acronym: "ASU", searchTerms: ["asu", "arizona state", "tempe"], slug: "asu" },
+  { name: "University of Washington", acronym: "UW", searchTerms: ["uw", "washington", "seattle", "huskies"], slug: "uwashington" },
+  { name: "University of Florida", acronym: "UF", searchTerms: ["uf", "florida", "gainesville", "gators"], slug: "ufl" },
+  { name: "Clemson University", acronym: "Clemson", searchTerms: ["clemson", "tigers"], slug: "clemson" },
+  { name: "Auburn University", acronym: "Auburn", searchTerms: ["auburn", "tigers"], slug: "auburn" },
+  { name: "Northeastern University", acronym: "Northeastern", searchTerms: ["northeastern", "boston"], slug: "northeastern" },
+  // 41-50
+  { name: "Boston University", acronym: "BU", searchTerms: ["bu", "boston university", "boston"], slug: "bu" },
+  { name: "Rutgers University", acronym: "Rutgers", searchTerms: ["rutgers", "new jersey"], slug: "rutgers" },
+  { name: "Purdue University", acronym: "Purdue", searchTerms: ["purdue", "west lafayette"], slug: "purdue" },
+  { name: "Virginia Polytechnic Institute and State University", acronym: "Virginia Tech", searchTerms: ["virginia tech", "vt", "blacksburg"], slug: "vt" },
+  { name: "University of California, Merced", acronym: "UC Merced", searchTerms: ["ucm", "merced", "uc merced"], slug: "ucmerced" },
+  { name: "Loyola Marymount University", acronym: "LMU", searchTerms: ["lmu", "loyola marymount", "los angeles"], slug: "lmu" },
+  { name: "University of Miami", acronym: "UMiami", searchTerms: ["miami", "coral gables"], slug: "miami" },
+  { name: "University of Oregon", acronym: "Oregon", searchTerms: ["oregon", "eugene", "ducks"], slug: "uoregon" },
+  { name: "University of Tennessee", acronym: "Tennessee", searchTerms: ["tennessee", "knoxville", "volunteers"], slug: "utk" },
+  { name: "Georgetown University", acronym: "Georgetown", searchTerms: ["georgetown", "washington dc"], slug: "georgetown" },
+  // 51-60
+  { name: "Rice University", acronym: "Rice", searchTerms: ["rice", "houston"], slug: "rice" },
+  { name: "Wake Forest University", acronym: "Wake Forest", searchTerms: ["wake forest", "winston-salem"], slug: "wakeforest" },
+  { name: "Tufts University", acronym: "Tufts", searchTerms: ["tufts", "medford"], slug: "tufts" },
+  { name: "University of South Carolina", acronym: "USC SC", searchTerms: ["south carolina", "gamecocks", "columbia"], slug: "uscsc" },
+  { name: "University of Kentucky", acronym: "Kentucky", searchTerms: ["kentucky", "wildcats", "lexington"], slug: "uky" },
+  { name: "University of Colorado Boulder", acronym: "CU Boulder", searchTerms: ["cu boulder", "colorado boulder", "boulder"], slug: "cuboulder" },
+  { name: "San Diego State University", acronym: "SDSU", searchTerms: ["sdsu", "san diego state"], slug: "sdsu" },
+  { name: "San José State University", acronym: "SJSU", searchTerms: ["sjsu", "san jose state"], slug: "sjsu" },
+  { name: "San Francisco State University", acronym: "SFSU", searchTerms: ["sf state", "san francisco state", "sfsu"], slug: "sfsu" },
+  { name: "Carnegie Mellon University", acronym: "CMU", searchTerms: ["cmu", "carnegie mellon", "pittsburgh"], slug: "cmu" },
+  // 61-70
+  { name: "Johns Hopkins University", acronym: "JHU", searchTerms: ["jhu", "johns hopkins", "baltimore"], slug: "jhu" },
+  { name: "University of Connecticut", acronym: "UConn", searchTerms: ["uconn", "connecticut", "storrs"], slug: "uconn" },
+  { name: "Kansas State University", acronym: "K-State", searchTerms: ["k-state", "kansas state", "manhattan"], slug: "kstate" },
+  { name: "University of Utah", acronym: "Utah", searchTerms: ["utah", "utes", "salt lake city"], slug: "utah" },
+  { name: "University of Nebraska–Lincoln", acronym: "Nebraska", searchTerms: ["nebraska", "huskers", "lincoln"], slug: "unl" },
+  { name: "University of Cincinnati", acronym: "Cincinnati", searchTerms: ["cincinnati", "bearcats"], slug: "ucincy" },
+  { name: "University of Oklahoma", acronym: "Oklahoma", searchTerms: ["oklahoma", "sooners", "norman"], slug: "ou" },
+  { name: "University of Arkansas", acronym: "Arkansas", searchTerms: ["arkansas", "razorbacks", "fayetteville"], slug: "uarkansas" },
+  { name: "University of Missouri", acronym: "Mizzou", searchTerms: ["mizzou", "missouri", "tigers"], slug: "mizzou" },
+  { name: "Louisiana State University", acronym: "LSU", searchTerms: ["lsu", "louisiana state", "baton rouge", "tigers"], slug: "lsu" },
+  // 71-80
+  { name: "University of Pittsburgh", acronym: "Pitt", searchTerms: ["pitt", "pittsburgh", "panthers"], slug: "pitt" },
+  { name: "Boise State University", acronym: "Boise State", searchTerms: ["boise state", "broncos"], slug: "boisestate" },
+  { name: "California Polytechnic State University, San Luis Obispo", acronym: "Cal Poly SLO", searchTerms: ["cal poly", "slo", "san luis obispo", "cal poly slo"], slug: "calpolyslo" },
+  { name: "California State Polytechnic University, Pomona", acronym: "Cal Poly Pomona", searchTerms: ["cal poly pomona", "cpp", "pomona"], slug: "cpp" },
+  { name: "California State University, Chico", acronym: "Chico State", searchTerms: ["chico state", "chico"], slug: "csuchico" },
+  { name: "California State University, Sacramento", acronym: "Sac State", searchTerms: ["sac state", "sacramento state"], slug: "sacstate" },
+  { name: "California State University, Long Beach", acronym: "CSULB", searchTerms: ["csulb", "long beach", "cal state long beach"], slug: "csulb" },
+  { name: "California State University, Fullerton", acronym: "CSUF", searchTerms: ["csuf", "fullerton", "cal state fullerton"], slug: "csuf" },
+  { name: "Sierra College", acronym: "Sierra", searchTerms: ["sierra college", "rocklin"], slug: "sierra" },
+  { name: "University of the Pacific", acronym: "Pacific", searchTerms: ["pacific", "stockton"], slug: "pacific" },
+  // 81-90
+  { name: "Sacramento City College", acronym: "SCC", searchTerms: ["sacramento city college", "scc"], slug: "scc" },
+  { name: "American River College", acronym: "ARC", searchTerms: ["american river college", "arc"], slug: "arc" },
+  { name: "Folsom Lake College", acronym: "FLC", searchTerms: ["folsom lake college", "flc"], slug: "flc" },
+  { name: "Modesto Junior College", acronym: "MJC", searchTerms: ["modesto junior college", "mjc"], slug: "mjc" },
+  { name: "Lake Tahoe Community College", acronym: "LTCC", searchTerms: ["lake tahoe community college", "ltcc"], slug: "ltcc" },
+  { name: "Yuba College", acronym: "Yuba", searchTerms: ["yuba college", "marysville"], slug: "yuba" },
+  { name: "William Jessup University", acronym: "Jessup", searchTerms: ["jessup", "william jessup"], slug: "jessup" },
+  { name: "California Institute of Technology", acronym: "Caltech", searchTerms: ["caltech", "pasadena", "california institute of technology"], slug: "caltech" },
+  { name: "University of Chicago", acronym: "UChicago", searchTerms: ["uchicago", "university of chicago", "chicago"], slug: "uchicago" },
+  { name: "University of Virginia", acronym: "UVA", searchTerms: ["uva", "virginia", "charlottesville"], slug: "uva" },
+  // 91-100
+  { name: "University of Minnesota", acronym: "UMN", searchTerms: ["minnesota", "twin cities", "gophers"], slug: "umn" },
+  { name: "Indiana University Bloomington", acronym: "IU", searchTerms: ["iu", "indiana university", "bloomington"], slug: "indiana" },
+  { name: "University of Alabama", acronym: "Alabama", searchTerms: ["alabama", "tuscaloosa", "roll tide"], slug: "ua" },
+  { name: "University of Arizona", acronym: "UArizona", searchTerms: ["arizona", "tucson"], slug: "uarizona" },
+  { name: "University of Iowa", acronym: "Iowa", searchTerms: ["iowa", "hawkeyes", "iowa city"], slug: "uiowa" },
+  { name: "University of Central Florida", acronym: "UCF", searchTerms: ["ucf", "central florida", "orlando"], slug: "ucf" },
+  { name: "University of Mississippi", acronym: "Ole Miss", searchTerms: ["ole miss", "mississippi", "oxford"], slug: "olemiss" },
+  { name: "University of Toronto", acronym: "UofT", searchTerms: ["toronto", "uoft", "canada"], slug: "utoronto" },
+  { name: "Texas Tech University", acronym: "Texas Tech", searchTerms: ["texas tech", "red raiders", "lubbock"], slug: "ttu" },
+  { name: "Emory University", acronym: "Emory", searchTerms: ["emory", "atlanta"], slug: "emory" },
 ];
 
 // Smart search function that handles acronyms, nicknames, and partial matches

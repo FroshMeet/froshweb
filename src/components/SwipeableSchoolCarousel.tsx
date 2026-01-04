@@ -74,9 +74,13 @@ export const SwipeableSchoolCarousel: React.FC<SchoolCarouselProps> = ({
     return name.split(' ').map(word => word[0]).join('').slice(0, 3);
   };
 
-  // Double schools for seamless loop
-  const topRowSchools = [...schools, ...schools];
-  const bottomRowSchools = [...schools.slice(10), ...schools, ...schools.slice(0, 10)];
+  // Alternating rows: odd positions (1,3,5...) on top, even positions (2,4,6...) on bottom
+  const topRowBase = schools.filter((_, index) => index % 2 === 0); // indices 0,2,4... = positions 1,3,5...
+  const bottomRowBase = schools.filter((_, index) => index % 2 === 1); // indices 1,3,5... = positions 2,4,6...
+  
+  // Double for seamless loop
+  const topRowSchools = [...topRowBase, ...topRowBase];
+  const bottomRowSchools = [...bottomRowBase, ...bottomRowBase];
 
   return (
     <div className="relative space-y-6 overflow-hidden">
