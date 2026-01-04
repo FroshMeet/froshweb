@@ -30,6 +30,7 @@ import { getSchoolName } from "@/config/schoolNameMapping";
 import { getSchoolByApprovedSlug, getApprovedSchoolData } from "@/utils/schoolNavigation";
 import { getInstagramUsername } from "@/config/schoolInstagramMapping";
 import { getSchoolDisplayName } from "@/config/schoolDisplayMapping";
+import { getSchoolImageUrl, hasSchoolImage } from "@/utils/schoolImages";
 import { isApprovedSchool, getApprovedSchool } from "@/config/approvedSchools";
 import GuestMessageDialog from "@/components/GuestMessageDialog";
 import PublicProfileBrowser from "@/components/PublicProfileBrowser";
@@ -318,6 +319,15 @@ export default function SchoolDashboard() {
           </div>
           
           <div className="text-center">
+            {/* School Profile Image */}
+            {schoolData && hasSchoolImage(schoolData.id) && (
+              <img 
+                src={getSchoolImageUrl(schoolData.id)!} 
+                alt={`${schoolDisplayName} profile`}
+                className="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover mx-auto mb-4 border-2 border-primary/30"
+              />
+            )}
+            
             {/* School name - FroshMeet Blue, Bold, Centered */}
             <h1 className="text-3xl md:text-4xl font-black text-primary mb-2 animate-fade-in-up tracking-tight">
               {schoolDisplayName}
