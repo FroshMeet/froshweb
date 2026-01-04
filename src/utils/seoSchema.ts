@@ -7,7 +7,7 @@ export const organizationSchema = {
   "legalName": "Frosh App",
   "alternateName": ["Frosh App", "Get Frosh", "Frosh College Platform", "Frosh Social Network", "Frosh Meet", "GetFrosh", "Frosh Student App", "Frosh College App", "Frosh University Network", "Frosh College Social App"],
   "url": "https://frosh.app",
-  "logo": "https://frosh.app/lovable-uploads/fresh_meat_app_icon.png",
+  "logo": "https://frosh.app/favicon-512.png",
   "description": "Frosh (Get Frosh) is the #1 college social app for incoming students and the Class of 2030. Connect with college freshmen, find roommates, join verified school group chats, and build your university community before Move-In Day. Where college begins before campus.",
   "slogan": "Where College Begins Before Campus",
   "foundingDate": "2024",

@@ -1,2 +1,0 @@
-
-export { GetFeaturedModal } from "./GetFeaturedModal";
