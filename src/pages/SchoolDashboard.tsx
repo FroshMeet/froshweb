@@ -36,7 +36,7 @@ import PublicProfileBrowser from "@/components/PublicProfileBrowser";
 import { GetFeaturedFlow } from "@/components/GetFeaturedFlow";
 import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
-import SchoolGroupChatCTA from "@/components/SchoolGroupChatCTA";
+
 import { useAppState } from "@/hooks/useAppState";
 import { useDevMode } from "@/components/dev-mode/DevModeProvider";
 import { mockProfiles } from "@/data/mockData";

@@ -191,7 +191,7 @@ const BlogTemplate = () => {
             "name": "Frosh",
             "logo": {
               "@type": "ImageObject",
-              "url": "https://frosh.app/lovable-uploads/fresh_meat_app_icon.png"
+              "url": "https://frosh.app/favicon-512.png"
             }
           }
         }}

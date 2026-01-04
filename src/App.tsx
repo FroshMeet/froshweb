@@ -15,7 +15,7 @@ import Features from "./pages/Features";
 import Contact from "./pages/Contact";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
-import SchoolPage from "./pages/SchoolPage";
+
 import SchoolInstagramPage from "./pages/SchoolInstagramPage";
 import Community from "./pages/Community";
 import CreateProfile from "./pages/CreateProfile";
