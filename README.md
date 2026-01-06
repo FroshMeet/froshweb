@@ -1,73 +1,44 @@
-# Welcome to your Lovable project
+# Frosh
 
-## Project info
+Frosh is a platform built to help incoming college students connect before they arrive on campus.
 
-**URL**: https://lovable.dev/projects/8ef3ff77-1781-4554-b0f8-6dcf4b4eb748
+The Frosh website acts as the public-facing hub for the product. It introduces Frosh, routes traffic from social platforms, hosts school-specific pages, and supports monetization and onboarding flows tied to Frosh’s Instagram network.
 
-## How can I edit this code?
+The goal of the site is simple: turn scattered social traffic into something organized, useful, and scalable.
 
-There are several ways of editing your application.
+## What the website does
 
-**Use Lovable**
+- **Homepage**
+  - Explains Frosh at a high level
+  - Serves as the main entry point for new users
+  - Drives calls-to-action deeper into the ecosystem
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/8ef3ff77-1781-4554-b0f8-6dcf4b4eb748) and start prompting.
+- **School pages**
+  - Dedicated pages for individual universities
+  - Each page corresponds to a Frosh Instagram account
+  - Used as landing pages for traffic coming from Instagram bios, stories, and posts
+  - Carry school-specific context and branding
 
-Changes made via Lovable will be committed automatically to this repo.
+- **Instagram-connected flows**
+  - The website is tightly coupled with Frosh’s class-based Instagram accounts
+  - School pages act as conversion points rather than long-form destinations
+  - Designed for high-volume social traffic
 
-**Use your preferred IDE**
+- **Paid post support**
+  - Students can pay for posts associated with their school’s Frosh Instagram account
+  - The website handles submission and payment
+  - Posting itself happens on Instagram
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- **Account creation**
+  - Users can create accounts and log in
+  - Some product functionality exists on web to support onboarding and early engagement
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## Disclaimer
 
-Follow these steps:
+This codebase reflects a fast-moving project.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+It was built to ship, test real demand, and evolve over time. Some decisions prioritize speed and practicality over perfect structure. Parts of the code are older than others and will continue to be cleaned up as the product grows.
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+This repository represents the current state of the Frosh website.
 
-# Step 3: Install the necessary dependencies.
-npm i
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/8ef3ff77-1781-4554-b0f8-6dcf4b4eb748) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
