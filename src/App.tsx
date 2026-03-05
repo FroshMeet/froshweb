@@ -22,12 +22,9 @@ import CreateProfile from "./pages/CreateProfile";
 import ProfileSetup from "./pages/ProfileSetup";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import ProfileSuccess from "./pages/ProfileSuccess";
-import PostToInstagram from "./pages/PostToInstagram";
 import SchoolInstagramPosts from "./pages/SchoolInstagramPosts";
 import SchoolCampusHub from "./pages/SchoolCampusHub";
 import SchoolDashboard from "./pages/SchoolDashboard";
-import GuestInstagramPost from "./pages/GuestInstagramPost";
-import InstagramSubmission from "./pages/InstagramSubmission";
 import PostFlow from "./pages/PostFlow";
 import AppLanding from "./pages/AppLanding";
 import Download from "./pages/Download";
@@ -73,10 +70,6 @@ const AppRouter = () => (
                 <Route path="/:school" element={<SchoolCampusHub />} />
                 <Route path="/:school/insta" element={<SchoolInstagramPage />} />
                 <Route path="/:school/insta/posts" element={<SchoolInstagramPosts />} />
-                <Route path="/post-to-insta" element={<PostToInstagram />} />
-                <Route path="/guest-post-to-insta" element={<GuestInstagramPost />} />
-                <Route path="/:school/guest-post-to-insta" element={<GuestInstagramPost />} />
-                <Route path="/instagram-submission" element={<InstagramSubmission />} />
                 <Route path="/post" element={<PostFlow />} />
                 <Route path="/:school/post" element={<PostFlow />} />
                 <Route path="/waitlist" element={<AppLanding />} />

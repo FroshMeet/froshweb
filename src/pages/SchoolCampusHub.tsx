@@ -156,7 +156,7 @@ export default function SchoolCampusHub() {
     setPhoneNumber("");
   };
 
-  const handleGetFeatured = () => navigate(`/${school}/guest-post-to-insta`);
+  const handleGetFeatured = () => navigate(`/${school}/post`);
   
   const handleViewInstagram = (handle: string) => {
     window.open(`https://instagram.com/${handle.replace('@', '')}`, '_blank');
