@@ -128,7 +128,7 @@ const Homepage = () => {
           <div className="absolute bottom-[-10%] right-[5%] w-[400px] h-[400px] rounded-full blur-[100px] bg-primary/5" />
         </div>
 
-        <div className="max-w-6xl mx-auto px-5 pt-16 pb-20 md:pt-24 md:pb-32 grid md:grid-cols-2 gap-12 items-center">
+        <div className="max-w-6xl mx-auto px-5 pt-24 pb-32 md:pt-32 md:pb-44 grid md:grid-cols-2 gap-12 items-center min-h-[85vh]">
           <div className="animate-fade-in">
             <h1 className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl leading-[1.08] tracking-tight">
               Meet your future classmates{' '}
@@ -154,7 +154,7 @@ const Homepage = () => {
               <img
                 src={froshLogo}
                 alt="Frosh logo"
-                className="w-[65%] h-auto object-contain"
+                className="w-[85%] h-auto object-contain"
               />
             </div>
           </div>
