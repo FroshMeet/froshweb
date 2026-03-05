@@ -342,33 +342,19 @@ export default function SchoolDashboard() {
             </p>
 
             {/* CTA Row - Horizontal Pills */}
-            <div className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-4 max-w-3xl mx-auto">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-4 max-w-md mx-auto">
               <Button 
-                onClick={handleCreateAccount}
-                className="flex-1 min-w-0 bg-primary hover:bg-primary/90 text-primary-foreground font-bold px-6 py-3 rounded-full neon-glow transition-all duration-300 hover:scale-105"
+                onClick={() => navigate('/download')}
+                className="flex-1 min-w-0 bg-primary hover:bg-primary/90 text-primary-foreground font-bold px-8 py-3 rounded-full shadow-lg shadow-primary/15 transition-all duration-300 hover:-translate-y-0.5"
               >
-                <UserPlus className="h-4 w-4 mr-2 flex-shrink-0" />
-                Sign Up Free
-              </Button>
-              <Button 
-                onClick={() => {
-                  if (!currentUser && !isDevMode) {
-                    navigate('/signup');
-                  } else {
-                    setActiveTab("chat");
-                  }
-                }}
-                className="flex-1 min-w-0 bg-gradient-to-r from-primary/80 to-primary text-primary-foreground font-bold px-6 py-3 rounded-full neon-glow transition-all duration-300 hover:scale-105"
-              >
-                <Users className="h-4 w-4 mr-2 flex-shrink-0" />
-                Join GC
+                Download App
               </Button>
               <Button 
                 onClick={handleGuestInstagramPost}
-                className="flex-1 min-w-0 bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] text-white border-0 hover:opacity-90 font-bold px-6 py-3 rounded-full transition-all duration-300 hover:scale-105"
+                variant="outline"
+                className="flex-1 min-w-0 border-primary text-foreground hover:bg-primary/10 font-bold px-8 py-3 rounded-full transition-all duration-300"
               >
-                <Instagram className="h-4 w-4 mr-2 flex-shrink-0" />
-                Post on Insta
+                Post
               </Button>
             </div>
 
