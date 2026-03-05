@@ -278,24 +278,15 @@ export default function SchoolCampusHub() {
             </Button>
           )}
 
-          {/* Primary CTAs */}
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          {/* Primary CTA */}
+          <div className="flex justify-center">
             <Button 
-              onClick={handleOpenApp} 
+              onClick={handleGetFeatured} 
               size="lg" 
-              className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 rounded-full font-semibold neon-glow"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground px-10 rounded-full font-semibold shadow-lg shadow-primary/15"
             >
-              <Smartphone className="h-5 w-5 mr-2" />
-              Open in App
-            </Button>
-            <Button 
-              onClick={handleTextMeApp} 
-              variant="outline" 
-              size="lg" 
-              className="border-border/60 text-foreground hover:bg-muted/50 px-8 rounded-full"
-            >
-              <MessageSquare className="h-5 w-5 mr-2" />
-              Text Me the App
+              <Instagram className="h-5 w-5 mr-2" />
+              Post to {schoolName}
             </Button>
           </div>
         </div>
@@ -438,16 +429,9 @@ export default function SchoolCampusHub() {
               <CardContent className="py-12 text-center">
                 <Users className="h-10 w-10 text-muted-foreground/40 mx-auto mb-4" />
                 <p className="text-foreground font-medium mb-2">No students have joined this school yet</p>
-                <p className="text-muted-foreground text-sm mb-6">
-                  Be one of the first to create your profile.
+                <p className="text-muted-foreground text-sm">
+                  Be one of the first to post your profile.
                 </p>
-                <Button 
-                  onClick={handleGetFeatured}
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full"
-                >
-                  <UserPlus className="h-4 w-4 mr-2" />
-                  Create Your Profile
-                </Button>
               </CardContent>
             </Card>
           )}
@@ -472,24 +456,24 @@ export default function SchoolCampusHub() {
         </div>
       </section>
 
-      {/* Primary Actions */}
+      {/* Different School Switcher */}
       <section className="py-16 px-4">
-        <div className="max-w-md mx-auto flex flex-col sm:flex-row gap-4 justify-center">
-          <Button
-            onClick={handleOpenApp}
-            size="lg"
-            className="rounded-full px-10 py-6 text-base font-semibold bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/15"
-          >
-            Download App
-          </Button>
-          <Button
-            onClick={handleGetFeatured}
-            size="lg"
-            variant="outline"
-            className="rounded-full px-10 py-6 text-base font-semibold border-primary text-foreground hover:bg-primary/10"
-          >
-            Post
-          </Button>
+        <div className="max-w-md mx-auto text-center">
+          <p className="text-muted-foreground text-sm font-medium mb-4 uppercase tracking-widest">Different School?</p>
+          <Select onValueChange={(slug) => navigate(`/${slug}`)}>
+            <SelectTrigger className="w-full rounded-full border-border/40 bg-card/50 text-foreground h-14 text-base font-medium px-6">
+              <SelectValue placeholder="Switch to another school" />
+            </SelectTrigger>
+            <SelectContent className="max-h-64 bg-card border-border/40 rounded-2xl">
+              {schools
+                .filter(s => s.id !== school)
+                .map(s => (
+                  <SelectItem key={s.id} value={s.id} className="text-foreground hover:bg-primary/10 cursor-pointer">
+                    {s.shortName || s.name}
+                  </SelectItem>
+                ))}
+            </SelectContent>
+          </Select>
         </div>
       </section>
 
