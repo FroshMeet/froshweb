@@ -31,6 +31,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { APPROVED_SCHOOLS } from "@/config/approvedSchools";
 import { SchoolPageSEO } from "@/components/seo/SchoolPageSEO";
+import InstagramSection from "@/components/InstagramSection";
 
 interface StudentProfile {
   id: string;
