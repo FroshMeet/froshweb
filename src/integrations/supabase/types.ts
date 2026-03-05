@@ -397,6 +397,45 @@ export type Database = {
         }
         Relationships: []
       }
+      posts: {
+        Row: {
+          bio: string | null
+          class_year: string
+          created_at: string
+          id: string
+          image_urls: string[]
+          school: string
+          school_slug: string
+          status: string
+          updated_at: string
+          username: string
+        }
+        Insert: {
+          bio?: string | null
+          class_year: string
+          created_at?: string
+          id?: string
+          image_urls?: string[]
+          school: string
+          school_slug: string
+          status?: string
+          updated_at?: string
+          username: string
+        }
+        Update: {
+          bio?: string | null
+          class_year?: string
+          created_at?: string
+          id?: string
+          image_urls?: string[]
+          school?: string
+          school_slug?: string
+          status?: string
+          updated_at?: string
+          username?: string
+        }
+        Relationships: []
+      }
       private_messages: {
         Row: {
           conversation_id: string
