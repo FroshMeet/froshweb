@@ -87,6 +87,7 @@ const AppRouter = () => (
                 <Route path="/hiring/head-of-brand" element={<HeadOfBrand />} />
                 <Route path="/hiring/representatives" element={<RepresentativesReferral />} />
                 <Route path="/hiring/confirm" element={<ConfirmReferral />} />
+                <Route path="/founder" element={<Founder />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
