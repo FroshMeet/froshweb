@@ -341,49 +341,6 @@ export default function SchoolCampusHub() {
         </section>
       )}
 
-      {/* Community Snapshot */}
-      <section className="py-8 px-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-6">
-            <h2 className="text-xl font-bold text-foreground mb-1">Community Snapshot</h2>
-          </div>
-          
-          {studentProfiles.length > 0 ? (
-            <div className="flex justify-center gap-8 md:gap-16">
-              <div className="text-center">
-                <div className="flex items-center justify-center gap-2 mb-1">
-                  <Users className="h-5 w-5 text-primary" />
-                  <span className="text-3xl font-bold text-foreground">{studentProfiles.length}</span>
-                </div>
-                <span className="text-sm text-muted-foreground">Students joined</span>
-              </div>
-              <div className="text-center">
-                <div className="flex items-center justify-center gap-2 mb-1">
-                  <MessageCircle className="h-5 w-5 text-primary" />
-                  <span className="text-3xl font-bold text-foreground">0</span>
-                </div>
-                <span className="text-sm text-muted-foreground">Active chats</span>
-              </div>
-              <div className="text-center">
-                <div className="flex items-center justify-center gap-2 mb-1">
-                  <Star className="h-5 w-5 text-primary" />
-                  <span className="text-3xl font-bold text-foreground">{studentProfiles.length}</span>
-                </div>
-                <span className="text-sm text-muted-foreground">Profiles created</span>
-              </div>
-            </div>
-          ) : (
-            <Card className="bg-card/30 border-border/30 rounded-2xl">
-              <CardContent className="py-8 text-center">
-                <Sparkles className="h-8 w-8 text-muted-foreground/40 mx-auto mb-3" />
-                <p className="text-muted-foreground">
-                  This community is just getting started.
-                </p>
-              </CardContent>
-            </Card>
-          )}
-        </div>
-      </section>
 
       {/* Discover Students */}
       <section className="py-12 px-4">
@@ -515,28 +472,24 @@ export default function SchoolCampusHub() {
         </div>
       </section>
 
-      {/* Get Featured CTA */}
+      {/* Primary Actions */}
       <section className="py-16 px-4">
-        <div className="max-w-3xl mx-auto">
-          <Card className="bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20 rounded-3xl overflow-hidden">
-            <CardContent className="py-12 px-8 text-center">
-              <Star className="h-10 w-10 text-primary mx-auto mb-5" />
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
-                Get Featured on the Class Instagram
-              </h2>
-              <p className="text-muted-foreground mb-8 max-w-lg mx-auto">
-                Create your profile and be seen by your {schoolName} classmates before day one.
-              </p>
-              <Button 
-                onClick={handleGetFeatured} 
-                size="lg" 
-                className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 rounded-full font-semibold neon-glow"
-              >
-                Get Featured
-                <ArrowRight className="h-5 w-5 ml-2" />
-              </Button>
-            </CardContent>
-          </Card>
+        <div className="max-w-md mx-auto flex flex-col sm:flex-row gap-4 justify-center">
+          <Button
+            onClick={handleOpenApp}
+            size="lg"
+            className="rounded-full px-10 py-6 text-base font-semibold bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/15"
+          >
+            Download App
+          </Button>
+          <Button
+            onClick={handleGetFeatured}
+            size="lg"
+            variant="outline"
+            className="rounded-full px-10 py-6 text-base font-semibold border-primary text-foreground hover:bg-primary/10"
+          >
+            Post
+          </Button>
         </div>
       </section>
 
