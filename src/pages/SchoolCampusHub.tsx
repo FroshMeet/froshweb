@@ -23,7 +23,7 @@ import {
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { schools } from "@/data/schools";
-import { getSchoolByApprovedSlug, getApprovedSchoolData } from "@/utils/schoolNavigation";
+import { getSchoolByApprovedSlug, getApprovedSchoolData, getCorrectSchoolSlug } from "@/utils/schoolNavigation";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { getSchoolLogo } from "@/utils/schoolLogos";
 import { getSchoolImageUrl, hasSchoolImage } from "@/utils/schoolImages";
