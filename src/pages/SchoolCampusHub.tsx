@@ -31,6 +31,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { APPROVED_SCHOOLS } from "@/config/approvedSchools";
 import { SchoolPageSEO } from "@/components/seo/SchoolPageSEO";
+import InstagramSection from "@/components/InstagramSection";
 
 interface StudentProfile {
   id: string;
@@ -301,37 +302,9 @@ export default function SchoolCampusHub() {
       </section>
 
       {/* Instagram Feed Section */}
-      <section className="py-12 px-4">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold text-foreground mb-2">
-              {schoolName} Class Instagram
-            </h2>
-            <p className="text-muted-foreground">Real posts from your class account</p>
-          </div>
-
-          {/* Empty State - No mock content */}
-          <Card className="bg-card/50 border-border/40 rounded-2xl">
-            <CardContent className="py-12 text-center">
-              <Instagram className="h-10 w-10 text-muted-foreground/50 mx-auto mb-4" />
-              <p className="text-muted-foreground mb-2">No posts yet</p>
-              <p className="text-muted-foreground/70 text-sm mb-6 max-w-sm mx-auto">
-                This class Instagram is just getting started. Be one of the first to get featured.
-              </p>
-              {instagramHandle && (
-                <Button 
-                  variant="outline" 
-                  onClick={() => handleViewInstagram(instagramHandle)}
-                  className="border-primary/30 text-primary hover:bg-primary/10"
-                >
-                  <Instagram className="h-4 w-4 mr-2" />
-                  Follow @{instagramHandle}
-                </Button>
-              )}
-            </CardContent>
-          </Card>
-        </div>
-      </section>
+      {instagramHandle && (
+        <InstagramSection schoolName={schoolName} instagramHandle={instagramHandle} />
+      )}
 
       {/* School Overview Card */}
       {schoolMeta && (
