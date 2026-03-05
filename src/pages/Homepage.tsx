@@ -1,490 +1,280 @@
-// Frosh Homepage - Updated logo references
-import React, { useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { MapPin, Users, MessageCircle, Instagram, Menu, X, ChevronRight, MessageSquare, Calendar } from 'lucide-react';
-import { SwipeableSchoolCarousel } from '@/components/SwipeableSchoolCarousel';
-import { GetFeaturedFlow } from '@/components/GetFeaturedFlow';
-import GetFeaturedPromo from '@/components/marketing/GetFeaturedPromo';
-import { TopNavCTA } from '@/components/layout/TopNavCTA';
-import Hero from '@/components/landing/Hero';
-import { getCorrectSchoolSlug } from '@/utils/schoolNavigation';
-import { schools } from '@/data/schools';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { Users, MessageCircle, Search, ArrowRight, Linkedin } from 'lucide-react';
 import { SEO } from '@/components/seo/SEO';
 import { organizationSchema, websiteSchema, mobileAppSchema } from '@/utils/seoSchema';
-import FroshLogo from "@/components/ui/FroshLogo";
-// 100 schools in exact carousel order (alternating rows: odd=top, even=bottom)
-const SCHOOL_DATABASE = [
-  // 1-10
-  { name: "Harvard University", acronym: "Harvard", searchTerms: ["harvard", "cambridge"], slug: "harvard" },
-  { name: "University of California, Los Angeles", acronym: "UCLA", searchTerms: ["ucla", "los angeles", "westwood"], slug: "ucla" },
-  { name: "Stanford University", acronym: "Stanford", searchTerms: ["stanford", "palo alto"], slug: "stanford" },
-  { name: "University of Southern California", acronym: "USC", searchTerms: ["usc", "southern california", "trojans"], slug: "usc" },
-  { name: "New York University", acronym: "NYU", searchTerms: ["nyu", "new york university", "new york"], slug: "nyu" },
-  { name: "University of California, Berkeley", acronym: "UC Berkeley", searchTerms: ["berkeley", "cal", "uc berkeley", "ucb"], slug: "ucberkeley" },
-  { name: "Massachusetts Institute of Technology", acronym: "MIT", searchTerms: ["mit", "massachusetts institute"], slug: "mit" },
-  { name: "University of Michigan", acronym: "UMich", searchTerms: ["michigan", "ann arbor", "wolverines", "umich"], slug: "umich" },
-  { name: "University of Texas at Austin", acronym: "UT Austin", searchTerms: ["ut", "texas", "austin", "longhorns"], slug: "utaustin" },
-  { name: "University of Pennsylvania", acronym: "UPenn", searchTerms: ["upenn", "penn", "pennsylvania", "philadelphia"], slug: "upenn" },
-  // 11-20
-  { name: "Princeton University", acronym: "Princeton", searchTerms: ["princeton", "tigers"], slug: "princeton" },
-  { name: "Columbia University", acronym: "Columbia", searchTerms: ["columbia", "new york"], slug: "columbia" },
-  { name: "Yale University", acronym: "Yale", searchTerms: ["yale", "new haven"], slug: "yale" },
-  { name: "Duke University", acronym: "Duke", searchTerms: ["duke", "durham"], slug: "duke" },
-  { name: "Northwestern University", acronym: "Northwestern", searchTerms: ["northwestern", "evanston"], slug: "northwestern" },
-  { name: "University of North Carolina at Chapel Hill", acronym: "UNC", searchTerms: ["unc", "chapel hill", "north carolina"], slug: "unc" },
-  { name: "Florida State University", acronym: "FSU", searchTerms: ["fsu", "florida state", "tallahassee"], slug: "fsu" },
-  { name: "Ohio State University", acronym: "Ohio State", searchTerms: ["osu", "ohio state", "columbus"], slug: "osu" },
-  { name: "Pennsylvania State University", acronym: "Penn State", searchTerms: ["penn state", "psu", "university park"], slug: "pennstate" },
-  { name: "University of Georgia", acronym: "UGA", searchTerms: ["uga", "georgia", "athens"], slug: "uga" },
-  // 21-30
-  { name: "Cornell University", acronym: "Cornell", searchTerms: ["cornell", "ithaca"], slug: "cornell" },
-  { name: "Brown University", acronym: "Brown", searchTerms: ["brown", "providence"], slug: "brown" },
-  { name: "Dartmouth College", acronym: "Dartmouth", searchTerms: ["dartmouth", "hanover"], slug: "dartmouth" },
-  { name: "Vanderbilt University", acronym: "Vanderbilt", searchTerms: ["vanderbilt", "nashville"], slug: "vanderbilt" },
-  { name: "University of California, San Diego", acronym: "UCSD", searchTerms: ["ucsd", "san diego", "uc san diego"], slug: "ucsd" },
-  { name: "University of California, Santa Barbara", acronym: "UCSB", searchTerms: ["ucsb", "santa barbara", "uc santa barbara"], slug: "ucsb" },
-  { name: "University of Wisconsin–Madison", acronym: "UW-Madison", searchTerms: ["wisconsin", "madison", "badgers"], slug: "uwmadison" },
-  { name: "University of Illinois Urbana-Champaign", acronym: "UIUC", searchTerms: ["uiuc", "illinois", "urbana champaign"], slug: "uiuc" },
-  { name: "Michigan State University", acronym: "MSU", searchTerms: ["msu", "michigan state", "east lansing"], slug: "msu" },
-  { name: "Texas A&M University", acronym: "Texas A&M", searchTerms: ["texas a&m", "tamu", "college station"], slug: "tamu" },
-  // 31-40
-  { name: "University of California, Irvine", acronym: "UCI", searchTerms: ["uci", "irvine", "uc irvine"], slug: "uci" },
-  { name: "University of California, Davis", acronym: "UC Davis", searchTerms: ["ucd", "davis", "uc davis"], slug: "ucdavis" },
-  { name: "University of California, Santa Cruz", acronym: "UCSC", searchTerms: ["ucsc", "santa cruz", "uc santa cruz"], slug: "ucsc" },
-  { name: "University of California, Riverside", acronym: "UCR", searchTerms: ["ucr", "riverside", "uc riverside"], slug: "ucr" },
-  { name: "Arizona State University", acronym: "ASU", searchTerms: ["asu", "arizona state", "tempe"], slug: "asu" },
-  { name: "University of Washington", acronym: "UW", searchTerms: ["uw", "washington", "seattle", "huskies"], slug: "uwashington" },
-  { name: "University of Florida", acronym: "UF", searchTerms: ["uf", "florida", "gainesville", "gators"], slug: "ufl" },
-  { name: "Clemson University", acronym: "Clemson", searchTerms: ["clemson", "tigers"], slug: "clemson" },
-  { name: "Auburn University", acronym: "Auburn", searchTerms: ["auburn", "tigers"], slug: "auburn" },
-  { name: "Northeastern University", acronym: "Northeastern", searchTerms: ["northeastern", "boston"], slug: "northeastern" },
-  // 41-50
-  { name: "Boston University", acronym: "BU", searchTerms: ["bu", "boston university", "boston"], slug: "bu" },
-  { name: "Rutgers University", acronym: "Rutgers", searchTerms: ["rutgers", "new jersey"], slug: "rutgers" },
-  { name: "Purdue University", acronym: "Purdue", searchTerms: ["purdue", "west lafayette"], slug: "purdue" },
-  { name: "Virginia Polytechnic Institute and State University", acronym: "Virginia Tech", searchTerms: ["virginia tech", "vt", "blacksburg"], slug: "vt" },
-  { name: "University of California, Merced", acronym: "UC Merced", searchTerms: ["ucm", "merced", "uc merced"], slug: "ucmerced" },
-  { name: "Loyola Marymount University", acronym: "LMU", searchTerms: ["lmu", "loyola marymount", "los angeles"], slug: "lmu" },
-  { name: "University of Miami", acronym: "UMiami", searchTerms: ["miami", "coral gables"], slug: "miami" },
-  { name: "University of Oregon", acronym: "Oregon", searchTerms: ["oregon", "eugene", "ducks"], slug: "uoregon" },
-  { name: "University of Tennessee", acronym: "Tennessee", searchTerms: ["tennessee", "knoxville", "volunteers"], slug: "utk" },
-  { name: "Georgetown University", acronym: "Georgetown", searchTerms: ["georgetown", "washington dc"], slug: "georgetown" },
-  // 51-60
-  { name: "Rice University", acronym: "Rice", searchTerms: ["rice", "houston"], slug: "rice" },
-  { name: "Wake Forest University", acronym: "Wake Forest", searchTerms: ["wake forest", "winston-salem"], slug: "wakeforest" },
-  { name: "Tufts University", acronym: "Tufts", searchTerms: ["tufts", "medford"], slug: "tufts" },
-  { name: "University of South Carolina", acronym: "USC SC", searchTerms: ["south carolina", "gamecocks", "columbia"], slug: "uscsc" },
-  { name: "University of Kentucky", acronym: "Kentucky", searchTerms: ["kentucky", "wildcats", "lexington"], slug: "uky" },
-  { name: "University of Colorado Boulder", acronym: "CU Boulder", searchTerms: ["cu boulder", "colorado boulder", "boulder"], slug: "cuboulder" },
-  { name: "San Diego State University", acronym: "SDSU", searchTerms: ["sdsu", "san diego state"], slug: "sdsu" },
-  { name: "San José State University", acronym: "SJSU", searchTerms: ["sjsu", "san jose state"], slug: "sjsu" },
-  { name: "San Francisco State University", acronym: "SFSU", searchTerms: ["sf state", "san francisco state", "sfsu"], slug: "sfsu" },
-  { name: "Carnegie Mellon University", acronym: "CMU", searchTerms: ["cmu", "carnegie mellon", "pittsburgh"], slug: "cmu" },
-  // 61-70
-  { name: "Johns Hopkins University", acronym: "JHU", searchTerms: ["jhu", "johns hopkins", "baltimore"], slug: "jhu" },
-  { name: "University of Connecticut", acronym: "UConn", searchTerms: ["uconn", "connecticut", "storrs"], slug: "uconn" },
-  { name: "Kansas State University", acronym: "K-State", searchTerms: ["k-state", "kansas state", "manhattan"], slug: "kstate" },
-  { name: "University of Utah", acronym: "Utah", searchTerms: ["utah", "utes", "salt lake city"], slug: "utah" },
-  { name: "University of Nebraska–Lincoln", acronym: "Nebraska", searchTerms: ["nebraska", "huskers", "lincoln"], slug: "unl" },
-  { name: "University of Cincinnati", acronym: "Cincinnati", searchTerms: ["cincinnati", "bearcats"], slug: "ucincy" },
-  { name: "University of Oklahoma", acronym: "Oklahoma", searchTerms: ["oklahoma", "sooners", "norman"], slug: "ou" },
-  { name: "University of Arkansas", acronym: "Arkansas", searchTerms: ["arkansas", "razorbacks", "fayetteville"], slug: "uarkansas" },
-  { name: "University of Missouri", acronym: "Mizzou", searchTerms: ["mizzou", "missouri", "tigers"], slug: "mizzou" },
-  { name: "Louisiana State University", acronym: "LSU", searchTerms: ["lsu", "louisiana state", "baton rouge", "tigers"], slug: "lsu" },
-  // 71-80
-  { name: "University of Pittsburgh", acronym: "Pitt", searchTerms: ["pitt", "pittsburgh", "panthers"], slug: "pitt" },
-  { name: "Boise State University", acronym: "Boise State", searchTerms: ["boise state", "broncos"], slug: "boisestate" },
-  { name: "California Polytechnic State University, San Luis Obispo", acronym: "Cal Poly SLO", searchTerms: ["cal poly", "slo", "san luis obispo", "cal poly slo"], slug: "calpolyslo" },
-  { name: "California State Polytechnic University, Pomona", acronym: "Cal Poly Pomona", searchTerms: ["cal poly pomona", "cpp", "pomona"], slug: "cpp" },
-  { name: "California State University, Chico", acronym: "Chico State", searchTerms: ["chico state", "chico"], slug: "csuchico" },
-  { name: "California State University, Sacramento", acronym: "Sac State", searchTerms: ["sac state", "sacramento state"], slug: "sacstate" },
-  { name: "California State University, Long Beach", acronym: "CSULB", searchTerms: ["csulb", "long beach", "cal state long beach"], slug: "csulb" },
-  { name: "California State University, Fullerton", acronym: "CSUF", searchTerms: ["csuf", "fullerton", "cal state fullerton"], slug: "csuf" },
-  { name: "Sierra College", acronym: "Sierra", searchTerms: ["sierra college", "rocklin"], slug: "sierra" },
-  { name: "University of the Pacific", acronym: "Pacific", searchTerms: ["pacific", "stockton"], slug: "pacific" },
-  // 81-90
-  { name: "Sacramento City College", acronym: "SCC", searchTerms: ["sacramento city college", "scc"], slug: "scc" },
-  { name: "American River College", acronym: "ARC", searchTerms: ["american river college", "arc"], slug: "arc" },
-  { name: "Folsom Lake College", acronym: "FLC", searchTerms: ["folsom lake college", "flc"], slug: "flc" },
-  { name: "Modesto Junior College", acronym: "MJC", searchTerms: ["modesto junior college", "mjc"], slug: "mjc" },
-  { name: "Lake Tahoe Community College", acronym: "LTCC", searchTerms: ["lake tahoe community college", "ltcc"], slug: "ltcc" },
-  { name: "Yuba College", acronym: "Yuba", searchTerms: ["yuba college", "marysville"], slug: "yuba" },
-  { name: "William Jessup University", acronym: "Jessup", searchTerms: ["jessup", "william jessup"], slug: "jessup" },
-  { name: "California Institute of Technology", acronym: "Caltech", searchTerms: ["caltech", "pasadena", "california institute of technology"], slug: "caltech" },
-  { name: "University of Chicago", acronym: "UChicago", searchTerms: ["uchicago", "university of chicago", "chicago"], slug: "uchicago" },
-  { name: "University of Virginia", acronym: "UVA", searchTerms: ["uva", "virginia", "charlottesville"], slug: "uva" },
-  // 91-100
-  { name: "University of Minnesota", acronym: "UMN", searchTerms: ["minnesota", "twin cities", "gophers"], slug: "umn" },
-  { name: "Indiana University Bloomington", acronym: "IU", searchTerms: ["iu", "indiana university", "bloomington"], slug: "indiana" },
-  { name: "University of Alabama", acronym: "Alabama", searchTerms: ["alabama", "tuscaloosa", "roll tide"], slug: "ua" },
-  { name: "University of Arizona", acronym: "UArizona", searchTerms: ["arizona", "tucson"], slug: "uarizona" },
-  { name: "University of Iowa", acronym: "Iowa", searchTerms: ["iowa", "hawkeyes", "iowa city"], slug: "uiowa" },
-  { name: "University of Central Florida", acronym: "UCF", searchTerms: ["ucf", "central florida", "orlando"], slug: "ucf" },
-  { name: "University of Mississippi", acronym: "Ole Miss", searchTerms: ["ole miss", "mississippi", "oxford"], slug: "olemiss" },
-  { name: "University of Toronto", acronym: "UofT", searchTerms: ["toronto", "uoft", "canada"], slug: "utoronto" },
-  { name: "Texas Tech University", acronym: "Texas Tech", searchTerms: ["texas tech", "red raiders", "lubbock"], slug: "ttu" },
-  { name: "Emory University", acronym: "Emory", searchTerms: ["emory", "atlanta"], slug: "emory" },
+import phoneMockup from '@/assets/phone-mockup-launch.png';
+import FroshLogo from '@/components/ui/FroshLogo';
+
+const UNIVERSITIES = [
+  'Stanford', 'USC', 'UCLA', 'Michigan', 'Georgia', 'NYU',
+  'UT Austin', 'Ohio State', 'Arizona State', 'Florida',
+  'Harvard', 'MIT', 'Duke', 'UPenn', 'Cornell', 'Berkeley',
+  'Northwestern', 'Vanderbilt', 'UNC', 'Virginia',
 ];
 
-// Smart search function that handles acronyms, nicknames, and partial matches
-const searchSchools = (query: string) => {
-  if (!query.trim()) return [];
-  const searchTerm = query.toLowerCase().trim();
-  const results = [];
-
-  // First pass: Exact matches (highest priority)
-  for (const school of SCHOOL_DATABASE) {
-    for (const keyword of school.searchTerms) {
-      if (keyword.toLowerCase() === searchTerm) {
-        results.push({
-          school,
-          score: 100,
-          matchType: 'exact'
-        });
-        break;
-      }
-    }
-  }
-
-  // Second pass: Starts with matches
-  if (results.length < 10) {
-    for (const school of SCHOOL_DATABASE) {
-      // Skip if already found in exact matches
-      if (results.some(r => r.school.name === school.name)) continue;
-      for (const keyword of school.searchTerms) {
-        if (keyword.toLowerCase().startsWith(searchTerm)) {
-          results.push({
-            school,
-            score: 75,
-            matchType: 'startsWith'
-          });
-          break;
+function useScrollReveal() {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.classList.add('opacity-100', 'translate-y-0');
+          el.classList.remove('opacity-0', 'translate-y-8');
         }
-      }
-    }
-  }
+      },
+      { threshold: 0.15 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+  return ref;
+}
 
-  // Third pass: Contains matches (lowest priority)
-  if (results.length < 10) {
-    for (const school of SCHOOL_DATABASE) {
-      // Skip if already found
-      if (results.some(r => r.school.name === school.name)) continue;
-      for (const keyword of school.searchTerms) {
-        if (keyword.toLowerCase().includes(searchTerm)) {
-          results.push({
-            school,
-            score: 50,
-            matchType: 'contains'
-          });
-          break;
-        }
-      }
-    }
-  }
+function RevealSection({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+  const ref = useScrollReveal();
+  return (
+    <div ref={ref} className={`opacity-0 translate-y-8 transition-all duration-700 ease-out ${className}`}>
+      {children}
+    </div>
+  );
+}
 
-  // Sort by score (highest first) and return top 10
-  return results.sort((a, b) => b.score - a.score).slice(0, 10).map(r => r.school);
-};
 const Homepage = () => {
   const navigate = useNavigate();
-  const isMobile = useIsMobile();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [showGetFeaturedModal, setShowGetFeaturedModal] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const handleSchoolSelect = (schoolName: string, schoolSlug?: string) => {
-    // Find the school object from our schools data
-    const schoolObj = schools.find(s => s.name === schoolName);
-    if (schoolObj) {
-      const correctSlug = getCorrectSchoolSlug(schoolObj);
-      navigate(`/${correctSlug}`);
-    } else {
-      // Fallback for schools not in our main data
-      navigate(`/${schoolSlug || schoolName.toLowerCase().replace(/\s+/g, '-')}`);
-    }
+
+  const personSchema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Kian Habibi",
+    "jobTitle": "Founder",
+    "worksFor": { "@type": "Organization", "name": "Frosh" },
+    "url": "https://linkedin.com/in/kianhabibi",
+    "sameAs": ["https://linkedin.com/in/kianhabibi"]
   };
-  const handleGetFeaturedClick = () => {
-    console.log("Get Featured button clicked!");
-    setShowGetFeaturedModal(true);
-  };
-  const filteredSchools = searchSchools(searchTerm);
-  
+
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Frosh | The College Social App for Incoming Students"
-        description="Frosh is the college social network where students connect before Move-In Day. Join group chats, match with new friends, find roommates, and start your college journey early with the Class of 2030. Where college begins before campus."
-        keywords="frosh, frosh app, frosh social network, frosh college app, frosh meet, college social app, college freshman app, student networking platform, university social network, college chat app, student matching app, Class of 2030, meet classmates, find roommates, incoming students, freshman community, college networking, student social app"
+        title="Frosh – Meet Your Classmates Before College"
+        description="Frosh is the social app for incoming college freshmen. Meet classmates, find friends, and start chatting before move-in day."
+        keywords="frosh, college app, meet classmates, incoming freshmen, college social app, find roommates, Class of 2030"
         canonical="/"
         schema={{
           "@context": "https://schema.org",
-          "@graph": [organizationSchema, websiteSchema, mobileAppSchema]
+          "@graph": [organizationSchema, websiteSchema, mobileAppSchema, personSchema]
         }}
       />
-      {/* Header */}
-      <div className="glass-card sticky top-0 border-b border-border/40 z-50">
-        <header className="glass-content bg-background/80">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            {/* Logo */}
-            <FroshLogo size={isMobile ? "sm" : "md"} onClick={() => navigate('/')} />
-            
-            {/* Centered Navigation - Desktop Only */}
-            <nav className="hidden md:flex items-center justify-center flex-1">
-              <div className="flex items-center space-x-8">
-                <Button variant="ghost" onClick={() => navigate('/features')} className="text-muted-foreground hover:text-foreground">
-                  Features
-                </Button>
-                <Button variant="ghost" onClick={() => navigate('/community')} className="text-muted-foreground hover:text-foreground">
-                  Community
-                </Button>
-                <Button variant="ghost" onClick={() => navigate('/contact')} className="text-muted-foreground hover:text-foreground">
-                  Contact
-                </Button>
-                <Button variant="ghost" onClick={() => navigate('/about')} className="text-muted-foreground hover:text-foreground">
-                  About
-                </Button>
-              </div>
-            </nav>
-            
-            {/* Desktop Action Buttons */}
-            <div className="hidden md:flex items-center space-x-4">
-              <TopNavCTA />
-              <Button variant="outline" onClick={() => navigate('/signin')}>
-                Sign In
-              </Button>
-              <Button onClick={() => navigate('/signup')} className="bg-primary hover:bg-primary/90">
-                Join Frosh Now
-              </Button>
-            </div>
 
-            {/* Mobile Hamburger Menu Button */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden text-foreground hover:text-primary hover:bg-primary/10 transition-colors"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </Button>
-          </div>
+      {/* ─── Minimal Nav ─── */}
+      <header className="sticky top-0 z-50 border-b border-border/30 bg-background/80 backdrop-blur-xl">
+        <div className="max-w-6xl mx-auto px-5 py-4 flex items-center justify-between">
+          <FroshLogo size="sm" onClick={() => navigate('/')} />
+          <Button
+            onClick={() => navigate('/download')}
+            className="rounded-full px-6 py-2.5 text-sm font-semibold bg-primary hover:bg-primary/90"
+          >
+            Get Frosh
+          </Button>
         </div>
-        </header>
-      </div>
+      </header>
 
-        {/* Mobile Menu Dropdown */}
-        {isMobileMenuOpen && (
-          <div className="glass-card md:hidden absolute top-full left-0 right-0 border-b border-border/40 shadow-2xl z-40 animate-fade-in">
-            <div className="glass-content">
-              <div className="container mx-auto px-4 py-6">
-              <nav className="flex flex-col space-y-4">
-                {/* App CTA - Top Option */}
-                <Button 
-                  onClick={() => {
-                    navigate('/waitlist');
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="w-full text-left justify-start text-lg py-4 bg-primary text-primary-foreground hover:bg-primary/90 font-semibold shadow-lg shadow-primary/25"
-                >
-                  Frosh App 📱
-                </Button>
-                
-                <Button 
-                  variant="ghost" 
-                  onClick={() => {
-                    navigate('/features');
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="w-full text-left justify-start text-lg py-4 text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-all duration-200"
-                >
-                  Features
-                </Button>
-                <Button 
-                  variant="ghost" 
-                  onClick={() => {
-                    navigate('/community');
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="w-full text-left justify-start text-lg py-4 text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-all duration-200"
-                >
-                  Community
-                </Button>
-                <Button 
-                  variant="ghost" 
-                  onClick={() => {
-                    navigate('/contact');
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="w-full text-left justify-start text-lg py-4 text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-all duration-200"
-                >
-                  Contact
-                </Button>
-                <Button 
-                  variant="ghost" 
-                  onClick={() => {
-                    navigate('/about');
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="w-full text-left justify-start text-lg py-4 text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-all duration-200"
-                >
-                  About
-                </Button>
-                
-                {/* Mobile Action Buttons */}
-                <div className="border-t border-border/40 pt-4 mt-4 flex flex-col space-y-3">
-                  <Button 
-                    variant="outline" 
-                    onClick={() => {
-                      navigate('/signin');
-                      setIsMobileMenuOpen(false);
-                    }}
-                    className="w-full py-3 text-base border-primary/30 text-primary hover:bg-primary/10"
-                  >
-                    Sign In
-                  </Button>
-                  <Button 
-                    onClick={() => {
-                      navigate('/signup');
-                      setIsMobileMenuOpen(false);
-                    }}
-                    className="w-full py-3 text-base bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg shadow-primary/25"
-                  >
-                    Join Frosh Now
-                  </Button>
-                </div>
-              </nav>
-              </div>
+      {/* ═══════════════════ HERO ═══════════════════ */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-[-20%] left-[10%] w-[600px] h-[600px] rounded-full blur-[120px] bg-primary/10" />
+          <div className="absolute bottom-[-10%] right-[5%] w-[400px] h-[400px] rounded-full blur-[100px] bg-primary/5" />
+        </div>
+
+        <div className="max-w-6xl mx-auto px-5 pt-16 pb-20 md:pt-24 md:pb-32 grid md:grid-cols-2 gap-12 items-center">
+          <div className="animate-fade-in">
+            <h1 className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl leading-[1.08] tracking-tight">
+              Meet your future classmates{' '}
+              <span className="text-primary">before college.</span>
+            </h1>
+            <p className="mt-5 text-muted-foreground text-lg md:text-xl max-w-lg leading-relaxed">
+              Frosh helps incoming freshmen connect with verified students from their university before move-in day.
+            </p>
+            <div className="mt-8 flex flex-col sm:flex-row gap-3">
+              <Button
+                onClick={() => navigate('/download')}
+                size="lg"
+                className="rounded-full px-8 py-6 text-base font-semibold bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20"
+              >
+                Get Frosh
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
             </div>
           </div>
-        )}
 
-      {/* Hero Section */}
-      <Hero />
-
-      {/* Get Featured Promo */}
-      <GetFeaturedPromo onOpen={handleGetFeaturedClick} />
-
-      {/* Popular Schools Carousel */}
-      <section className="py-20 bg-card/20 overflow-hidden">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16 animate-fade-in">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              Popular Schools
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Join students from these top universities already connecting on Frosh
-            </p>
-          </div>
-          
-          <div className="relative">
-            <SwipeableSchoolCarousel 
-              schools={SCHOOL_DATABASE}
-              onSchoolSelect={handleSchoolSelect}
+          <div className="flex justify-center animate-fade-in" style={{ animationDelay: '0.15s' }}>
+            <img
+              src={phoneMockup}
+              alt="Frosh App showing student profiles and chat"
+              width="420"
+              height="840"
+              fetchPriority="high"
+              className="w-[320px] sm:w-[380px] lg:w-[420px] object-contain drop-shadow-2xl animate-float"
             />
           </div>
         </div>
       </section>
 
-      {/* Features Preview */}
-      <section className="py-20 bg-card/20">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16 animate-fade-in">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              Everything you need to connect
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Discover the features that make Frosh the perfect platform for college freshmen
+      {/* ═══════════════════ SOCIAL PROOF ═══════════════════ */}
+      <section className="py-16 md:py-20 border-t border-border/20">
+        <RevealSection>
+          <div className="max-w-5xl mx-auto px-5 text-center">
+            <p className="text-sm font-medium uppercase tracking-widest text-muted-foreground mb-8">
+              Students from 100+ universities are joining Frosh
             </p>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <Card className="bg-card/50 border-border/40 hover:bg-card/80 transition-all duration-300 hover:scale-105 animate-scale-in">
-              <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 bg-gradient-to-r from-primary/20 to-primary/40 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <Users className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="text-2xl font-bold text-foreground mb-4">Find Your People</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Connect with roommates, study buddies, and friends who share your interests and goals
-                </p>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-card/50 border-border/40 hover:bg-card/80 transition-all duration-300 hover:scale-105 animate-scale-in" style={{
-            animationDelay: '0.1s'
-          }}>
-              <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 bg-gradient-to-r from-primary/20 to-primary/40 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <MessageSquare className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="text-2xl font-bold text-foreground mb-4">Safe Messaging</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Chat securely with verified students from your school in a safe, moderated environment
-                </p>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-card/50 border-border/40 hover:bg-card/80 transition-all duration-300 hover:scale-105 animate-scale-in" style={{
-            animationDelay: '0.2s'
-          }}>
-              <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 bg-gradient-to-r from-primary/20 to-primary/40 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <Calendar className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="text-2xl font-bold text-foreground mb-4">Campus Events</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Discover events, study groups, and activities happening at your school
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Instagram Feed Preview */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16 animate-fade-in">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              See what's happening
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Follow @getfrosh on Instagram for student stories, tips, and community highlights
-            </p>
-          </div>
-          
-          <div className="max-w-4xl mx-auto">
-            <div className="glass-card">
-              <Card className="glass-content bg-card/50 border-border/40 p-8 text-center">
-                <Instagram className="h-16 w-16 text-primary mx-auto mb-6 select-none" />
-                <h3 className="inline-block text-2xl font-bold text-foreground leading-tight">@getfrosh Instagram Feed</h3>
-                <div className="mt-4 mb-6">
-                  <p className="text-muted-foreground leading-tight">
-                    Connect with us on Instagram to see real student stories and stay updated with the latest from the Frosh community
-                  </p>
-                </div>
-                <Button variant="outline" className="bg-primary border-0 text-white hover:bg-gradient-to-r hover:from-pink-500 hover:to-purple-500 select-none" onClick={() => window.open('https://instagram.com/getfrosh', '_blank')}>
-                  <Instagram className="h-5 w-5 mr-2" />
-                  Follow @getfrosh
-                </Button>
-              </Card>
+            <div className="flex flex-wrap justify-center gap-x-6 gap-y-3">
+              {UNIVERSITIES.map((uni) => (
+                <span
+                  key={uni}
+                  className="text-sm md:text-base font-medium text-foreground/70 hover:text-primary transition-colors"
+                >
+                  {uni}
+                </span>
+              ))}
             </div>
           </div>
-        </div>
+        </RevealSection>
       </section>
 
-      {/* Instagram-Style Get Featured Section */}
-      
+      {/* ═══════════════════ HOW IT WORKS ═══════════════════ */}
+      <section className="py-20 md:py-28">
+        <RevealSection>
+          <div className="max-w-5xl mx-auto px-5">
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-16 tracking-tight">
+              How Frosh works
+            </h2>
+            <div className="grid md:grid-cols-3 gap-8 md:gap-12">
+              {[
+                {
+                  icon: Search,
+                  title: 'Meet your class',
+                  desc: 'Browse verified students from your university and connect before the semester begins.',
+                },
+                {
+                  icon: Users,
+                  title: 'Find friends & roommates',
+                  desc: 'See who\u2019s attending your school and start conversations early.',
+                },
+                {
+                  icon: MessageCircle,
+                  title: 'Start chatting instantly',
+                  desc: 'Join group chats and meet your future friends before move-in day.',
+                },
+              ].map((f, i) => (
+                <div
+                  key={i}
+                  className="text-center md:text-left space-y-4 p-6 rounded-2xl border border-border/20 bg-card/40 hover:bg-card/60 transition-colors"
+                >
+                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 text-primary">
+                    <f.icon className="w-6 h-6" strokeWidth={1.5} />
+                  </div>
+                  <h3 className="font-display text-xl font-semibold">{f.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed">{f.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </RevealSection>
+      </section>
 
-      {/* Dark Footer with Navigation */}
-      
+      {/* ═══════════════════ PHONE PREVIEW ═══════════════════ */}
+      <section className="py-20 md:py-28 border-t border-border/20">
+        <RevealSection>
+          <div className="max-w-4xl mx-auto px-5 text-center">
+            <h2 className="font-display text-3xl md:text-4xl font-bold mb-4 tracking-tight">
+              See Frosh in action
+            </h2>
+            <p className="text-muted-foreground text-lg mb-12 max-w-xl mx-auto">
+              Student profiles, chat, and school communities — all in one app.
+            </p>
+            <div className="flex justify-center">
+              <img
+                src={phoneMockup}
+                alt="Frosh app interface showing profiles, chat, and school communities"
+                width="400"
+                height="800"
+                loading="lazy"
+                className="w-[280px] sm:w-[340px] lg:w-[400px] object-contain drop-shadow-2xl"
+              />
+            </div>
+          </div>
+        </RevealSection>
+      </section>
 
+      {/* ═══════════════════ FOUNDER ═══════════════════ */}
+      <section className="py-20 md:py-28 border-t border-border/20">
+        <RevealSection>
+          <div className="max-w-4xl mx-auto px-5">
+            <div className="grid md:grid-cols-[200px_1fr] gap-10 items-start">
+              <div className="flex justify-center md:justify-start">
+                <img
+                  src="/kian-habibi-founder-frosh.jpg"
+                  alt="Kian Habibi founder of Frosh"
+                  width="180"
+                  height="180"
+                  loading="lazy"
+                  className="w-40 h-40 md:w-44 md:h-44 rounded-2xl object-cover border border-border/30"
+                />
+              </div>
+              <div>
+                <p className="text-sm uppercase tracking-widest text-muted-foreground font-medium mb-3">
+                  About the founder
+                </p>
+                <p className="text-foreground text-lg leading-relaxed">
+                  Hi, I'm <strong>Kian</strong>. I built Frosh to make it easier for incoming college students
+                  to meet their classmates before arriving on campus. Starting college can be overwhelming,
+                  and I wanted a way for people to find friends before they even step on campus.
+                </p>
+                <p className="mt-4 text-muted-foreground italic">— Kian</p>
+                <a
+                  href="https://linkedin.com/in/kianhabibi"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 mt-5 text-primary hover:text-primary/80 font-medium transition-colors"
+                >
+                  <Linkedin className="w-4 h-4" />
+                  Connect with Kian on LinkedIn
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </RevealSection>
+      </section>
 
-      {/* Get Featured Flow */}
-      <GetFeaturedFlow open={showGetFeaturedModal} onOpenChange={setShowGetFeaturedModal} />
+      {/* ═══════════════════ FINAL CTA ═══════════════════ */}
+      <section className="relative py-24 md:py-32 overflow-hidden">
+        <div className="absolute inset-0 bg-card/80" />
+        <div className="absolute inset-0 -z-0">
+          <div className="absolute top-[20%] left-[30%] w-[500px] h-[500px] rounded-full blur-[140px] bg-primary/8" />
+        </div>
+        <RevealSection className="relative z-10">
+          <div className="max-w-3xl mx-auto px-5 text-center">
+            <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight mb-5">
+              Start meeting your class today.
+            </h2>
+            <p className="text-muted-foreground text-lg md:text-xl mb-10 max-w-xl mx-auto">
+              Download Frosh and connect with your classmates before move-in day.
+            </p>
+            <Button
+              onClick={() => navigate('/download')}
+              size="lg"
+              className="rounded-full px-10 py-6 text-base font-semibold bg-primary hover:bg-primary/90 shadow-lg shadow-primary/25"
+            >
+              Get Frosh
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
+        </RevealSection>
+      </section>
     </div>
   );
 };
