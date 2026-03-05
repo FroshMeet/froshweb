@@ -220,13 +220,6 @@ const Homepage = () => {
               Get Frosh
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
-            <p className="mt-8 text-muted-foreground text-sm">
-              —{' '}
-              <Link to="/founder" className="text-primary hover:text-primary/80 font-medium transition-colors">
-                Kian
-              </Link>
-              , Founder of Frosh
-            </p>
           </div>
         </RevealSection>
       </section>
