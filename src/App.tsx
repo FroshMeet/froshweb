@@ -28,6 +28,7 @@ import SchoolCampusHub from "./pages/SchoolCampusHub";
 import SchoolDashboard from "./pages/SchoolDashboard";
 import GuestInstagramPost from "./pages/GuestInstagramPost";
 import InstagramSubmission from "./pages/InstagramSubmission";
+import PostFlow from "./pages/PostFlow";
 import AppLanding from "./pages/AppLanding";
 import Download from "./pages/Download";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
