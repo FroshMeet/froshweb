@@ -278,15 +278,23 @@ export default function SchoolCampusHub() {
             </Button>
           )}
 
-          {/* Primary CTA */}
-          <div className="flex justify-center">
+          {/* Primary CTAs */}
+          <div className="flex items-center justify-center gap-4">
             <Button 
               onClick={handleGetFeatured} 
               size="lg" 
-              className="bg-primary hover:bg-primary/90 text-primary-foreground px-10 rounded-full font-semibold shadow-lg shadow-primary/15"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground px-10 rounded-full font-semibold shadow-lg shadow-primary/15 hover:-translate-y-0.5 transition-all duration-200"
             >
               <Instagram className="h-5 w-5 mr-2" />
               Post to {schoolName}
+            </Button>
+            <Button 
+              onClick={() => navigate('/download')} 
+              size="lg" 
+              variant="outline"
+              className="border-white/20 bg-white/5 text-foreground hover:bg-white/10 px-8 rounded-full font-semibold hover:-translate-y-0.5 transition-all duration-200"
+            >
+              Download App
             </Button>
           </div>
         </div>
@@ -466,12 +474,15 @@ export default function SchoolCampusHub() {
             </SelectTrigger>
             <SelectContent className="max-h-64 bg-card border-border/40 rounded-2xl">
               {schools
-                .filter(s => s.id !== school)
-                .map(s => (
-                  <SelectItem key={s.id} value={s.id} className="text-foreground hover:bg-primary/10 cursor-pointer">
-                    {s.shortName || s.name}
-                  </SelectItem>
-                ))}
+                .filter(s => getCorrectSchoolSlug(s) !== school)
+                .map(s => {
+                  const slug = getCorrectSchoolSlug(s);
+                  return (
+                    <SelectItem key={slug} value={slug} className="text-foreground hover:bg-primary/10 cursor-pointer">
+                      {s.shortName || s.name}
+                    </SelectItem>
+                  );
+                })}
             </SelectContent>
           </Select>
         </div>

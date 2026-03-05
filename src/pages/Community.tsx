@@ -97,7 +97,7 @@ const Community = () => {
                 onClick={() => handleSchoolClick(school)}
                 className="group cursor-pointer"
               >
-                <div className="bg-card/50 backdrop-blur-sm rounded-3xl p-8 text-center transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-white/5 border-2 border-white/15 hover:border-white/30 card-shadow group-hover:bg-card/80 frosted-card">
+                <div className="bg-card/50 backdrop-blur-sm rounded-3xl p-8 text-center transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-white/5 border-2 border-white/25 hover:border-white/50 card-shadow group-hover:bg-card/80 frosted-card">
                   {/* School Circle */}
                   <div className="w-24 h-24 mx-auto mb-6 rounded-full overflow-hidden transition-all duration-300 border-2 border-white/20 group-hover:border-white/40">
                     {hasSchoolImage(school.id) ? (
