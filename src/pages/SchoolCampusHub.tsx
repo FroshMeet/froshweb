@@ -31,7 +31,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { APPROVED_SCHOOLS } from "@/config/approvedSchools";
 import { SchoolPageSEO } from "@/components/seo/SchoolPageSEO";
-import InstagramSection from "@/components/InstagramSection";
+import InstagramPostGrid from "@/components/InstagramPostGrid";
 
 interface StudentProfile {
   id: string;
@@ -303,7 +303,7 @@ export default function SchoolCampusHub() {
 
       {/* Instagram Feed Section */}
       {instagramHandle && (
-        <InstagramSection schoolName={schoolName} instagramHandle={instagramHandle} />
+        <InstagramPostGrid handle={instagramHandle} schoolName={schoolName} />
       )}
 
       {/* School Overview Card */}
