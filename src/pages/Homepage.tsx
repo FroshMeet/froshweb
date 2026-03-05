@@ -150,7 +150,7 @@ const Homepage = () => {
           </div>
 
           <div className="flex justify-center animate-fade-in" style={{ animationDelay: '0.15s' }}>
-            <div className="w-[280px] sm:w-[340px] lg:w-[400px] aspect-square rounded-2xl border border-white/20 bg-card/30 backdrop-blur-sm flex items-center justify-center shadow-2xl">
+            <div className="w-[280px] sm:w-[340px] lg:w-[400px] aspect-square rounded-2xl border-[3px] border-white/30 bg-card/30 backdrop-blur-sm flex items-center justify-center shadow-2xl">
               <img
                 src={froshLogo}
                 alt="Frosh logo"
