@@ -145,7 +145,11 @@ const About = () => {
                 "College is more fun when it doesn't start with blank faces and awkward dms."
               </blockquote>
                <p className="text-lg text-muted-foreground">
-                 - kian, Founder of Frosh
+                 —{' '}
+                 <Link to="/founder" className="text-primary hover:text-primary/80 font-medium transition-colors">
+                   Kian
+                 </Link>
+                 , Founder of Frosh
                </p>
             </div>
           </div>
