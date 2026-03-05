@@ -16,7 +16,7 @@ const InstagramSection: React.FC<InstagramSectionProps> = ({ schoolName, instagr
   const cleanHandle = instagramHandle.replace("@", "");
   const profileUrl = `https://www.instagram.com/${cleanHandle}/`;
   // Use the iframe-based embed endpoint with dark theme
-  const embedUrl = `https://www.instagram.com/${cleanHandle}/embed/?cr=1&v=14&wp=540&rd=https%3A%2F%2Ffroshweb.lovable.app&rp=%2F#%7B%22ci%22%3A0%2C%22os%22%3A0%2C%22ls%22%3A0%2C%22le%22%3A0%7D`;
+  const embedUrl = `https://www.instagram.com/${cleanHandle}/embed/`;
 
   const handleIframeLoad = useCallback(() => {
     clearTimeout(timerRef.current);
@@ -39,7 +39,7 @@ const InstagramSection: React.FC<InstagramSectionProps> = ({ schoolName, instagr
         console.warn(`[InstagramSection] Embed timed out for @${cleanHandle}`);
       }
       setStatus("failed");
-    }, 8000);
+    }, 6000);
 
     return () => clearTimeout(timerRef.current);
   }, [cleanHandle]);
@@ -67,7 +67,7 @@ const InstagramSection: React.FC<InstagramSectionProps> = ({ schoolName, instagr
               {!showFallback ? (
                 <div className="relative w-full max-w-[540px] rounded-xl overflow-hidden border border-border/30 bg-card">
                   {/* Dark overlay wrapper to blend with dark theme */}
-                  <div className="relative" style={{ minHeight: 400 }}>
+                <div className="relative" style={{ minHeight: 400 }}>
                     {status === "loading" && (
                       <div className="absolute inset-0 flex items-center justify-center bg-card z-10">
                         <div className="flex flex-col items-center gap-3">
@@ -76,23 +76,28 @@ const InstagramSection: React.FC<InstagramSectionProps> = ({ schoolName, instagr
                         </div>
                       </div>
                     )}
-                    <iframe
-                      ref={iframeRef}
-                      src={embedUrl}
-                      className="w-full border-0"
+                    <div
                       style={{
-                        minHeight: 480,
-                        maxHeight: 600,
-                        background: "hsl(var(--card))",
-                        colorScheme: "dark",
+                        filter: "invert(1) hue-rotate(180deg)",
+                        opacity: 0.95,
                       }}
-                      loading="lazy"
-                      allowTransparency
-                      scrolling="no"
-                      onLoad={handleIframeLoad}
-                      onError={handleIframeError}
-                      title={`Instagram feed for @${cleanHandle}`}
-                    />
+                    >
+                      <iframe
+                        ref={iframeRef}
+                        src={embedUrl}
+                        className="w-full border-0"
+                        style={{
+                          minHeight: 480,
+                          maxHeight: 600,
+                          background: "#ffffff",
+                        }}
+                        loading="lazy"
+                        scrolling="no"
+                        onLoad={handleIframeLoad}
+                        onError={handleIframeError}
+                        title={`Instagram feed for @${cleanHandle}`}
+                      />
+                    </div>
                   </div>
                 </div>
               ) : (
