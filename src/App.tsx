@@ -77,6 +77,8 @@ const AppRouter = () => (
                 <Route path="/guest-post-to-insta" element={<GuestInstagramPost />} />
                 <Route path="/:school/guest-post-to-insta" element={<GuestInstagramPost />} />
                 <Route path="/instagram-submission" element={<InstagramSubmission />} />
+                <Route path="/post" element={<PostFlow />} />
+                <Route path="/:school/post" element={<PostFlow />} />
                 <Route path="/waitlist" element={<AppLanding />} />
                 <Route path="/download" element={<Download />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
