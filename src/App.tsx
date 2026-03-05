@@ -39,6 +39,7 @@ import HiringHub from "./pages/HiringHub";
 import HeadOfBrand from "./pages/HeadOfBrand";
 import RepresentativesReferral from "./pages/RepresentativesReferral";
 import ConfirmReferral from "./pages/ConfirmReferral";
+import Founder from "./pages/Founder";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();

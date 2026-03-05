@@ -1,17 +1,38 @@
 import React, { useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Users, MessageCircle, Search, ArrowRight, Linkedin } from 'lucide-react';
+import { Users, MessageCircle, Search, ArrowRight } from 'lucide-react';
 import { SEO } from '@/components/seo/SEO';
 import { organizationSchema, websiteSchema, mobileAppSchema } from '@/utils/seoSchema';
 import phoneMockup from '@/assets/phone-mockup-launch.png';
 import FroshLogo from '@/components/ui/FroshLogo';
+import { SwipeableSchoolCarousel } from '@/components/SwipeableSchoolCarousel';
 
-const UNIVERSITIES = [
-  'Stanford', 'USC', 'UCLA', 'Michigan', 'Georgia', 'NYU',
-  'UT Austin', 'Ohio State', 'Arizona State', 'Florida',
-  'Harvard', 'MIT', 'Duke', 'UPenn', 'Cornell', 'Berkeley',
-  'Northwestern', 'Vanderbilt', 'UNC', 'Virginia',
+const CAROUSEL_SCHOOLS = [
+  { name: 'Harvard University', slug: 'harvard', acronym: 'Harvard' },
+  { name: 'Stanford University', slug: 'stanford', acronym: 'Stanford' },
+  { name: 'University of Southern California', slug: 'usc', acronym: 'USC' },
+  { name: 'University of California, Los Angeles', slug: 'ucla', acronym: 'UCLA' },
+  { name: 'University of Michigan', slug: 'umich', acronym: 'Michigan' },
+  { name: 'New York University', slug: 'nyu', acronym: 'NYU' },
+  { name: 'Massachusetts Institute of Technology', slug: 'mit', acronym: 'MIT' },
+  { name: 'Duke University', slug: 'duke', acronym: 'Duke' },
+  { name: 'University of Pennsylvania', slug: 'upenn', acronym: 'UPenn' },
+  { name: 'Cornell University', slug: 'cornell', acronym: 'Cornell' },
+  { name: 'UC Berkeley', slug: 'ucberkeley', acronym: 'Berkeley' },
+  { name: 'Northwestern University', slug: 'northwestern', acronym: 'Northwestern' },
+  { name: 'University of Georgia', slug: 'uga', acronym: 'Georgia' },
+  { name: 'University of Texas at Austin', slug: 'utaustin', acronym: 'UT Austin' },
+  { name: 'Ohio State University', slug: 'ohiostate', acronym: 'Ohio State' },
+  { name: 'Arizona State University', slug: 'asu', acronym: 'ASU' },
+  { name: 'University of Florida', slug: 'uf', acronym: 'Florida' },
+  { name: 'Vanderbilt University', slug: 'vanderbilt', acronym: 'Vanderbilt' },
+  { name: 'University of North Carolina', slug: 'unc', acronym: 'UNC' },
+  { name: 'University of Virginia', slug: 'uva', acronym: 'Virginia' },
+  { name: 'Yale University', slug: 'yale', acronym: 'Yale' },
+  { name: 'Princeton University', slug: 'princeton', acronym: 'Princeton' },
+  { name: 'Columbia University', slug: 'columbia', acronym: 'Columbia' },
+  { name: 'University of Wisconsin', slug: 'uwmadison', acronym: 'Wisconsin' },
 ];
 
 function useScrollReveal() {
@@ -123,24 +144,16 @@ const Homepage = () => {
         </div>
       </section>
 
-      {/* ═══════════════════ SOCIAL PROOF ═══════════════════ */}
+      {/* ═══════════════════ SOCIAL PROOF CAROUSEL ═══════════════════ */}
       <section className="py-16 md:py-20 border-t border-border/20">
         <RevealSection>
-          <div className="max-w-5xl mx-auto px-5 text-center">
-            <p className="text-sm font-medium uppercase tracking-widest text-muted-foreground mb-8">
-              Students from 100+ universities are joining Frosh
-            </p>
-            <div className="flex flex-wrap justify-center gap-x-6 gap-y-3">
-              {UNIVERSITIES.map((uni) => (
-                <span
-                  key={uni}
-                  className="text-sm md:text-base font-medium text-foreground/70 hover:text-primary transition-colors"
-                >
-                  {uni}
-                </span>
-              ))}
-            </div>
-          </div>
+          <p className="text-sm font-medium uppercase tracking-widest text-muted-foreground mb-10 text-center">
+            Students from 100+ universities are joining Frosh
+          </p>
+          <SwipeableSchoolCarousel
+            schools={CAROUSEL_SCHOOLS}
+            onSchoolSelect={(name, slug) => navigate(`/${slug}`)}
+          />
         </RevealSection>
       </section>
 
@@ -185,71 +198,6 @@ const Homepage = () => {
         </RevealSection>
       </section>
 
-      {/* ═══════════════════ PHONE PREVIEW ═══════════════════ */}
-      <section className="py-20 md:py-28 border-t border-border/20">
-        <RevealSection>
-          <div className="max-w-4xl mx-auto px-5 text-center">
-            <h2 className="font-display text-3xl md:text-4xl font-bold mb-4 tracking-tight">
-              See Frosh in action
-            </h2>
-            <p className="text-muted-foreground text-lg mb-12 max-w-xl mx-auto">
-              Student profiles, chat, and school communities — all in one app.
-            </p>
-            <div className="flex justify-center">
-              <img
-                src={phoneMockup}
-                alt="Frosh app interface showing profiles, chat, and school communities"
-                width="400"
-                height="800"
-                loading="lazy"
-                className="w-[280px] sm:w-[340px] lg:w-[400px] object-contain drop-shadow-2xl"
-              />
-            </div>
-          </div>
-        </RevealSection>
-      </section>
-
-      {/* ═══════════════════ FOUNDER ═══════════════════ */}
-      <section className="py-20 md:py-28 border-t border-border/20">
-        <RevealSection>
-          <div className="max-w-4xl mx-auto px-5">
-            <div className="grid md:grid-cols-[200px_1fr] gap-10 items-start">
-              <div className="flex justify-center md:justify-start">
-                <img
-                  src="/kian-habibi-founder-frosh.jpg"
-                  alt="Kian Habibi founder of Frosh"
-                  width="180"
-                  height="180"
-                  loading="lazy"
-                  className="w-40 h-40 md:w-44 md:h-44 rounded-2xl object-cover border border-border/30"
-                />
-              </div>
-              <div>
-                <p className="text-sm uppercase tracking-widest text-muted-foreground font-medium mb-3">
-                  About the founder
-                </p>
-                <p className="text-foreground text-lg leading-relaxed">
-                  Hi, I'm <strong>Kian</strong>. I built Frosh to make it easier for incoming college students
-                  to meet their classmates before arriving on campus. Starting college can be overwhelming,
-                  and I wanted a way for people to find friends before they even step on campus.
-                </p>
-                <p className="mt-4 text-muted-foreground italic">— Kian</p>
-                <a
-                  href="https://linkedin.com/in/kianhabibi"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 mt-5 text-primary hover:text-primary/80 font-medium transition-colors"
-                >
-                  <Linkedin className="w-4 h-4" />
-                  Connect with Kian on LinkedIn
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </a>
-              </div>
-            </div>
-          </div>
-        </RevealSection>
-      </section>
-
       {/* ═══════════════════ FINAL CTA ═══════════════════ */}
       <section className="relative py-24 md:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-card/80" />
@@ -272,6 +220,13 @@ const Homepage = () => {
               Get Frosh
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
+            <p className="mt-8 text-muted-foreground text-sm">
+              —{' '}
+              <Link to="/founder" className="text-primary hover:text-primary/80 font-medium transition-colors">
+                Kian
+              </Link>
+              , Founder of Frosh
+            </p>
           </div>
         </RevealSection>
       </section>
