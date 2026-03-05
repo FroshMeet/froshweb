@@ -1,70 +1,50 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Instagram } from "lucide-react";
+import { Instagram, ExternalLink } from "lucide-react";
 
 interface InstagramSectionProps {
   schoolName: string;
   instagramHandle: string;
 }
 
-declare global {
-  interface Window {
-    instgrm?: { Embeds: { process: () => void } };
-  }
-}
-
 const InstagramSection: React.FC<InstagramSectionProps> = ({ schoolName, instagramHandle }) => {
-  const [embedLoaded, setEmbedLoaded] = useState(false);
-  const [embedFailed, setEmbedFailed] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [status, setStatus] = useState<"loading" | "loaded" | "failed">("loading");
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout>>();
 
   const cleanHandle = instagramHandle.replace("@", "");
   const profileUrl = `https://www.instagram.com/${cleanHandle}/`;
+  // Use the iframe-based embed endpoint with dark theme
+  const embedUrl = `https://www.instagram.com/${cleanHandle}/embed/?cr=1&v=14&wp=540&rd=https%3A%2F%2Ffroshweb.lovable.app&rp=%2F#%7B%22ci%22%3A0%2C%22os%22%3A0%2C%22ls%22%3A0%2C%22le%22%3A0%7D`;
+
+  const handleIframeLoad = useCallback(() => {
+    clearTimeout(timerRef.current);
+    setStatus("loaded");
+  }, []);
+
+  const handleIframeError = useCallback(() => {
+    clearTimeout(timerRef.current);
+    if (import.meta.env.DEV) {
+      console.warn(`[InstagramSection] Embed failed for @${cleanHandle}`);
+    }
+    setStatus("failed");
+  }, [cleanHandle]);
 
   useEffect(() => {
-    // Try to load embed script and render profile embed
-    const timeout = setTimeout(() => {
-      if (!embedLoaded) setEmbedFailed(true);
-    }, 6000);
-
-    const loadEmbed = () => {
-      if (window.instgrm) {
-        window.instgrm.Embeds.process();
-        setEmbedLoaded(true);
-        clearTimeout(timeout);
-        return;
+    setStatus("loading");
+    // Timeout fallback: if iframe doesn't load within 8s, show fallback
+    timerRef.current = setTimeout(() => {
+      if (import.meta.env.DEV) {
+        console.warn(`[InstagramSection] Embed timed out for @${cleanHandle}`);
       }
+      setStatus("failed");
+    }, 8000);
 
-      const existing = document.querySelector('script[src*="instagram.com/embed.js"]');
-      if (!existing) {
-        const script = document.createElement("script");
-        script.src = "https://www.instagram.com/embed.js";
-        script.async = true;
-        script.onload = () => {
-          if (window.instgrm) {
-            window.instgrm.Embeds.process();
-            setEmbedLoaded(true);
-            clearTimeout(timeout);
-          }
-        };
-        script.onerror = () => {
-          setEmbedFailed(true);
-          clearTimeout(timeout);
-        };
-        document.body.appendChild(script);
-      }
-    };
+    return () => clearTimeout(timerRef.current);
+  }, [cleanHandle]);
 
-    // Small delay so the blockquote is in the DOM
-    const raf = requestAnimationFrame(loadEmbed);
-    return () => {
-      cancelAnimationFrame(raf);
-      clearTimeout(timeout);
-    };
-  }, [cleanHandle, embedLoaded]);
-
-  const showEmptyState = embedFailed;
+  const showFallback = status === "failed";
 
   return (
     <section
@@ -80,33 +60,60 @@ const InstagramSection: React.FC<InstagramSectionProps> = ({ schoolName, instagr
           <p className="text-muted-foreground">Real posts from your class community</p>
         </div>
 
-        <Card className="bg-card/50 border-border/40 rounded-2xl overflow-hidden">
+        <Card className="bg-card/80 border-border/40 rounded-2xl overflow-hidden shadow-lg">
           <CardContent className="py-8 px-4 md:px-6">
-            {/* Embed area */}
-            <div
-              ref={containerRef}
-              className="flex justify-center mb-6 overflow-hidden max-w-full"
-            >
-              {!showEmptyState ? (
-                <blockquote
-                  className="instagram-media"
-                  data-instgrm-permalink={profileUrl}
-                  data-instgrm-version="14"
-                  style={{
-                    background: "transparent",
-                    border: "0",
-                    margin: "0 auto",
-                    maxWidth: "540px",
-                    width: "100%",
-                    minWidth: "326px",
-                  }}
-                />
+            {/* Embed / Fallback area */}
+            <div className="flex justify-center mb-6 overflow-hidden max-w-full">
+              {!showFallback ? (
+                <div className="relative w-full max-w-[540px] rounded-xl overflow-hidden border border-border/30 bg-card">
+                  {/* Dark overlay wrapper to blend with dark theme */}
+                  <div className="relative" style={{ minHeight: 400 }}>
+                    {status === "loading" && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-card z-10">
+                        <div className="flex flex-col items-center gap-3">
+                          <Instagram className="h-8 w-8 text-muted-foreground/50 animate-pulse" />
+                          <p className="text-sm text-muted-foreground">Loading preview…</p>
+                        </div>
+                      </div>
+                    )}
+                    <iframe
+                      ref={iframeRef}
+                      src={embedUrl}
+                      className="w-full border-0"
+                      style={{
+                        minHeight: 480,
+                        maxHeight: 600,
+                        background: "hsl(var(--card))",
+                        colorScheme: "dark",
+                      }}
+                      loading="lazy"
+                      allowTransparency
+                      scrolling="no"
+                      onLoad={handleIframeLoad}
+                      onError={handleIframeError}
+                      title={`Instagram feed for @${cleanHandle}`}
+                    />
+                  </div>
+                </div>
               ) : (
-                <div className="py-8 text-center w-full">
-                  <Instagram className="h-10 w-10 text-muted-foreground/50 mx-auto mb-4" />
-                  <p className="text-muted-foreground mb-2 font-medium">No posts yet</p>
-                  <p className="text-muted-foreground/70 text-sm max-w-sm mx-auto">
+                <div className="py-10 text-center w-full">
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 mb-5">
+                    <Instagram className="h-8 w-8 text-primary" />
+                  </div>
+                  <p className="text-foreground font-semibold text-lg mb-1">No posts yet</p>
+                  <p className="text-muted-foreground text-sm max-w-sm mx-auto mb-1">
                     This class Instagram is just getting started. Be one of the first to get featured.
+                  </p>
+                  <p className="text-muted-foreground/60 text-xs">
+                    Preview unavailable.{" "}
+                    <a
+                      href={profileUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary hover:underline inline-flex items-center gap-1"
+                    >
+                      Open on Instagram <ExternalLink className="h-3 w-3" />
+                    </a>
                   </p>
                 </div>
               )}
@@ -115,9 +122,8 @@ const InstagramSection: React.FC<InstagramSectionProps> = ({ schoolName, instagr
             {/* Follow CTA — always visible */}
             <div className="flex justify-center">
               <Button
-                variant="outline"
                 onClick={() => window.open(profileUrl, "_blank", "noopener,noreferrer")}
-                className="border-primary/30 text-primary hover:bg-primary/10"
+                className="bg-primary text-primary-foreground hover:bg-primary/90"
               >
                 <Instagram className="h-4 w-4 mr-2" />
                 Follow @{cleanHandle}
