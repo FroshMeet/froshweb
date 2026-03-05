@@ -2,20 +2,39 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ArrowLeft, Bell, Smartphone } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { SEO } from '@/components/seo/SEO';
 import FroshLogo from '@/components/ui/FroshLogo';
-import phoneMockup from '@/assets/phone-mockup-launch.png';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
 const Download = () => {
   const navigate = useNavigate();
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [school, setSchool] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleNotify = (e: React.FormEvent) => {
+  const handleJoinWaitlist = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email.trim()) {
+    if (!name.trim() || !school.trim()) return;
+
+    setLoading(true);
+    try {
+      const { error } = await supabase.from('waitlist_signups').insert({
+        name: name.trim(),
+        school: school.trim(),
+        email: email.trim() || null,
+      });
+
+      if (error) throw error;
       setSubmitted(true);
+    } catch (err: any) {
+      toast.error('Something went wrong. Please try again.');
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -46,8 +65,8 @@ const Download = () => {
       {/* Content */}
       <main className="flex-1 flex items-center justify-center py-16 md:py-24">
         <div className="max-w-lg mx-auto px-5 text-center">
-          <div className="mb-8">
-            <FroshLogo size="lg" />
+          <div className="flex justify-center mb-8">
+            <FroshLogo size="lg" className="!h-[130px] !w-auto" />
           </div>
 
           <h1 className="font-display text-3xl md:text-4xl font-bold tracking-tight mb-4">
@@ -88,20 +107,38 @@ const Download = () => {
 
           <p className="text-sm text-muted-foreground mb-8">Coming soon to the App Store.</p>
 
-          {/* Notify form */}
+          {/* Waitlist form */}
           {!submitted ? (
-            <form onSubmit={handleNotify} className="flex flex-col sm:flex-row gap-3 max-w-sm mx-auto">
+            <form onSubmit={handleJoinWaitlist} className="flex flex-col gap-3 max-w-sm mx-auto">
               <Input
-                type="email"
-                placeholder="your@email.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                type="text"
+                placeholder="Your name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 required
                 className="rounded-full px-5 bg-card border-border/40"
               />
-              <Button type="submit" className="rounded-full px-6 bg-primary hover:bg-primary/90 font-semibold whitespace-nowrap">
-                <Bell className="w-4 h-4 mr-2" />
-                Notify me
+              <Input
+                type="text"
+                placeholder="Your school"
+                value={school}
+                onChange={(e) => setSchool(e.target.value)}
+                required
+                className="rounded-full px-5 bg-card border-border/40"
+              />
+              <Input
+                type="email"
+                placeholder="your@email.com (optional)"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="rounded-full px-5 bg-card border-border/40"
+              />
+              <Button
+                type="submit"
+                disabled={loading}
+                className="rounded-full px-6 bg-primary hover:bg-primary/90 font-semibold whitespace-nowrap"
+              >
+                {loading ? 'Joining...' : 'Join the Waitlist'}
               </Button>
             </form>
           ) : (
