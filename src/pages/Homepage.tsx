@@ -162,6 +162,7 @@ const Homepage = () => {
                   icon: Users,
                   title: 'Find friends & roommates',
                   desc: 'See who\u2019s attending your school and start conversations early.',
+                },
                 {
                   icon: MessageCircle,
                   title: 'Start chatting instantly',
