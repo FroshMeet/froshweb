@@ -122,6 +122,7 @@ const SCHOOL_IMAGE_MAP: Record<string, string> = {
   'purdue': 'PURDUE_PFP.png',
   'msu': 'MSU_PFP.png',
   'osu': 'OSU_PFP.png',
+  'ohiostate': 'OSU_PFP.png',
   'ou': 'OU_PFP.png',
   'cmu': 'CMU_PFP.png',
   'iu': 'IUB_PFP.png',
