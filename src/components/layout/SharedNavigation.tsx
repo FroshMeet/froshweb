@@ -4,7 +4,11 @@ import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import FroshLogo from "@/components/ui/FroshLogo";
 
-const SharedNavigation = () => {
+interface SharedNavigationProps {
+  currentPage?: string;
+}
+
+const SharedNavigation = (_props?: SharedNavigationProps) => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
 
