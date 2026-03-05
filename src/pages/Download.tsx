@@ -46,8 +46,8 @@ const Download = () => {
       {/* Content */}
       <main className="flex-1 flex items-center justify-center py-16 md:py-24">
         <div className="max-w-lg mx-auto px-5 text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 text-primary mb-8">
-            <Smartphone className="w-8 h-8" strokeWidth={1.5} />
+          <div className="mb-8">
+            <FroshLogo size="lg" />
           </div>
 
           <h1 className="font-display text-3xl md:text-4xl font-bold tracking-tight mb-4">
