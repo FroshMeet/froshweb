@@ -39,6 +39,7 @@ import HiringHub from "./pages/HiringHub";
 import HeadOfBrand from "./pages/HeadOfBrand";
 import RepresentativesReferral from "./pages/RepresentativesReferral";
 import ConfirmReferral from "./pages/ConfirmReferral";
+import Founder from "./pages/Founder";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -86,6 +87,7 @@ const AppRouter = () => (
                 <Route path="/hiring/head-of-brand" element={<HeadOfBrand />} />
                 <Route path="/hiring/representatives" element={<RepresentativesReferral />} />
                 <Route path="/hiring/confirm" element={<ConfirmReferral />} />
+                <Route path="/founder" element={<Founder />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
