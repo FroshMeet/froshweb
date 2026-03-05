@@ -29,6 +29,7 @@ import SchoolDashboard from "./pages/SchoolDashboard";
 import GuestInstagramPost from "./pages/GuestInstagramPost";
 import InstagramSubmission from "./pages/InstagramSubmission";
 import AppLanding from "./pages/AppLanding";
+import Download from "./pages/Download";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import CookiePolicy from "./pages/CookiePolicy";
