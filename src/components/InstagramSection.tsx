@@ -76,28 +76,22 @@ const InstagramSection: React.FC<InstagramSectionProps> = ({ schoolName, instagr
                         </div>
                       </div>
                     )}
-                    <div
+                    <iframe
+                      ref={iframeRef}
+                      src={embedUrl}
+                      className="w-full border-0"
                       style={{
-                        filter: "invert(1) hue-rotate(180deg)",
-                        opacity: 0.95,
+                        minHeight: 480,
+                        maxHeight: 600,
+                        filter: "none",
+                        transform: "none",
                       }}
-                    >
-                      <iframe
-                        ref={iframeRef}
-                        src={embedUrl}
-                        className="w-full border-0"
-                        style={{
-                          minHeight: 480,
-                          maxHeight: 600,
-                          background: "#ffffff",
-                        }}
-                        loading="lazy"
-                        scrolling="no"
-                        onLoad={handleIframeLoad}
-                        onError={handleIframeError}
-                        title={`Instagram feed for @${cleanHandle}`}
-                      />
-                    </div>
+                      loading="lazy"
+                      scrolling="no"
+                      onLoad={handleIframeLoad}
+                      onError={handleIframeError}
+                      title={`Instagram feed for @${cleanHandle}`}
+                    />
                   </div>
                 </div>
               ) : (
