@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Users, MessageCircle, Search, ArrowRight } from 'lucide-react';
 import { SEO } from '@/components/seo/SEO';
 import { organizationSchema, websiteSchema, mobileAppSchema } from '@/utils/seoSchema';
-import phoneMockup from '@/assets/phone-mockup-launch.png';
+import froshLogo from '@/assets/frosh-logo-new.png';
 import FroshLogo from '@/components/ui/FroshLogo';
 import { SwipeableSchoolCarousel } from '@/components/SwipeableSchoolCarousel';
 
