@@ -66,6 +66,7 @@ function RevealSection({ children, className = '' }: { children: React.ReactNode
 }
 
 const Homepage = () => {
+  const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const personSchema = {
