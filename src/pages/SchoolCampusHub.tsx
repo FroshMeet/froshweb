@@ -279,6 +279,5 @@ export default function SchoolCampusHub() {
           </div>
         )}
       </div>
-    </TooltipProvider>
   );
 }
