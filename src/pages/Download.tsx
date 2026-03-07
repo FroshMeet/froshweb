@@ -7,7 +7,8 @@ import { SEO } from '@/components/seo/SEO';
 import FroshLogo from '@/components/ui/FroshLogo';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-
+import { SmartSchoolSearch } from '@/components/SmartSchoolSearch';
+import { School } from '@/data/schools';
 const Download = () => {
   const navigate = useNavigate();
   const location = useLocation();
