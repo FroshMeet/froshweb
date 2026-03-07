@@ -23,7 +23,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { APPROVED_SCHOOLS } from "@/config/approvedSchools";
 import { SchoolPageSEO } from "@/components/seo/SchoolPageSEO";
 import StudentPosts from "@/components/StudentPosts";
-import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
 
 const SCHOOL_METADATA: Record<string, { location?: string; type?: string; size?: string }> = {
   'harvard': { location: 'Cambridge, MA', type: 'Private', size: '~7,000 undergrads' },
@@ -88,8 +87,8 @@ export default function SchoolCampusHub() {
   }
 
   return (
-    <TooltipProvider>
       <div className="min-h-screen bg-background">
+        <SchoolPageSEO schoolName={schoolName} schoolSlug={school || ''} />
         <SchoolPageSEO schoolName={schoolName} schoolSlug={school || ''} />
         <h1 className="sr-only">Meet the {schoolName} Class of 2030</h1>
 
@@ -148,23 +147,19 @@ export default function SchoolCampusHub() {
             </p>
 
             <div className="flex items-center justify-center gap-4">
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    onClick={handleGetFeatured}
-                    size="lg"
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground px-10 rounded-full font-semibold shadow-lg shadow-primary/15 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-1 transition-all duration-300"
-                  >
-                    <UserPlus className="h-5 w-5 mr-2" />
-                    Post to {schoolName}
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent side="bottom" className="bg-primary text-primary-foreground border-primary/50 font-semibold">
-                  Free right now ✨
-                </TooltipContent>
-              </Tooltip>
               <Button
-                onClick={() => navigate('/download')}
+                onClick={handleGetFeatured}
+                size="lg"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground px-10 rounded-full font-semibold shadow-lg shadow-primary/15 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-1 transition-all duration-300 gap-2"
+              >
+                <UserPlus className="h-5 w-5" />
+                Post to {schoolName}
+                <span className="ml-1 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-black uppercase bg-white text-primary animate-[fade-scale-in_0.5s_ease-out_0.3s_both] shadow-sm free-badge-pulse">
+                  FREE
+                </span>
+              </Button>
+              <Button
+                onClick={() => navigate('/download', { state: { from: `/${school}` } })}
                 size="lg"
                 variant="outline"
                 className="border-white/20 bg-white/5 text-foreground hover:bg-white/10 px-8 rounded-full font-semibold hover:-translate-y-0.5 transition-all duration-200"
@@ -283,6 +278,5 @@ export default function SchoolCampusHub() {
           </div>
         )}
       </div>
-    </TooltipProvider>
   );
 }
