@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ArrowLeft } from 'lucide-react';
@@ -10,6 +10,19 @@ import { toast } from 'sonner';
 
 const Download = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleBack = () => {
+    // Check if there's a referrer from a school page
+    const referrer = (location.state as any)?.from;
+    if (referrer) {
+      navigate(referrer);
+    } else if (window.history.length > 2) {
+      navigate(-1);
+    } else {
+      navigate('/community');
+    }
+  };
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [school, setSchool] = useState('');
@@ -53,7 +66,7 @@ const Download = () => {
           <FroshLogo size="sm" onClick={() => navigate('/')} />
           <Button
             variant="ghost"
-            onClick={() => navigate('/')}
+            onClick={handleBack}
             className="text-muted-foreground hover:text-foreground gap-2"
           >
             <ArrowLeft className="w-4 h-4" />

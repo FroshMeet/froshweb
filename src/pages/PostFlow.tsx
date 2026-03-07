@@ -126,11 +126,13 @@ const PostFlow: React.FC = () => {
     return Promise.all(uploadPromises);
   };
 
+  const [submittedPostId, setSubmittedPostId] = useState<string | null>(null);
+
   const handleSubmit = async () => {
     setIsSubmitting(true);
     try {
       const imageUrls = await uploadPhotos();
-      const { error } = await supabase.from('posts').insert({
+      const { data: insertedData, error } = await supabase.from('posts').insert({
         username: username.replace('@', '').trim(),
         name: fullName || null,
         school: selectedSchoolData?.name || schoolData?.name || '',
@@ -138,8 +140,9 @@ const PostFlow: React.FC = () => {
         bio: bio.trim() || null,
         class_year: classYear,
         image_urls: imageUrls,
-      });
+      }).select('id').single();
       if (error) throw error;
+      setSubmittedPostId(insertedData?.id || null);
       setIsSuccess(true);
     } catch (error) {
       console.error('Error submitting post:', error);
@@ -185,28 +188,23 @@ const PostFlow: React.FC = () => {
 
           <div className="flex flex-col gap-3 pt-4">
             <Button
-              onClick={() => navigate(schoolSlug ? `/${schoolSlug}` : '/community')}
+              onClick={() => {
+                const slug = selectedSchool || schoolSlug || '';
+                navigate(slug ? `/${slug}?post=${submittedPostId}` : '/community');
+              }}
               className="w-full h-14 text-lg font-bold rounded-2xl bg-primary hover:bg-primary/90"
             >
-              View School Page
+              View Your Post
             </Button>
             <Button
               variant="outline"
               onClick={() => {
-                setIsSuccess(false);
-                setCurrentStepIndex(0);
-                setFirstName('');
-                setLastName('');
-                setUsername('');
-                setBio('');
-                setClassYear('');
-                setPhotos([]);
-                setPhotoPreviews([]);
-                if (!isSchoolPreselected) setSelectedSchool('');
+                const slug = selectedSchool || schoolSlug || '';
+                navigate(slug ? `/${slug}#student-posts` : '/community');
               }}
               className="w-full h-14 text-lg font-bold rounded-2xl border-border hover:bg-card"
             >
-              Submit Another Post
+              See Other Students from {displaySchoolName || 'Your School'}
             </Button>
           </div>
         </div>
