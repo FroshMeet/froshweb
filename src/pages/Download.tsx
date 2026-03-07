@@ -7,7 +7,8 @@ import { SEO } from '@/components/seo/SEO';
 import FroshLogo from '@/components/ui/FroshLogo';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-
+import { SmartSchoolSearch } from '@/components/SmartSchoolSearch';
+import { School } from '@/data/schools';
 const Download = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -25,19 +26,19 @@ const Download = () => {
   };
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [school, setSchool] = useState('');
+  const [selectedSchool, setSelectedSchool] = useState<School | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleJoinWaitlist = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !school.trim()) return;
+    if (!name.trim() || !selectedSchool) return;
 
     setLoading(true);
     try {
       const { error } = await supabase.from('waitlist_signups').insert({
         name: name.trim(),
-        school: school.trim(),
+        school: selectedSchool.name,
         email: email.trim() || null,
       });
 
@@ -131,13 +132,11 @@ const Download = () => {
                 required
                 className="rounded-full px-5 bg-card border-border/40"
               />
-              <Input
-                type="text"
-                placeholder="Your school"
-                value={school}
-                onChange={(e) => setSchool(e.target.value)}
-                required
-                className="rounded-full px-5 bg-card border-border/40"
+              <SmartSchoolSearch
+                onSelect={(school) => setSelectedSchool(school)}
+                selectedSchool={selectedSchool}
+                placeholder="Search for your school…"
+                className="text-left"
               />
               <Input
                 type="email"
