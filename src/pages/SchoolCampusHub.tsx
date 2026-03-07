@@ -154,7 +154,7 @@ export default function SchoolCampusHub() {
               >
                 <UserPlus className="h-5 w-5" />
                 Post to {schoolName}
-                <span className="ml-1 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-black uppercase bg-white text-primary animate-[fade-scale-in_0.5s_ease-out_0.3s_both] shadow-sm">
+                <span className="ml-1 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-black uppercase bg-white text-primary animate-[fade-scale-in_0.5s_ease-out_0.3s_both] shadow-sm free-badge-pulse">
                   FREE
                 </span>
               </Button>
