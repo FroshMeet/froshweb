@@ -38,7 +38,7 @@ const Download = () => {
     try {
       const { error } = await supabase.from('waitlist_signups').insert({
         name: name.trim(),
-        school: school.trim(),
+        school: selectedSchool.name,
         email: email.trim() || null,
       });
 
