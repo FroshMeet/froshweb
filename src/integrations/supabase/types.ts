@@ -404,6 +404,8 @@ export type Database = {
           created_at: string
           id: string
           image_urls: string[]
+          instagram_post_link: string | null
+          name: string | null
           school: string
           school_slug: string
           status: string
@@ -416,6 +418,8 @@ export type Database = {
           created_at?: string
           id?: string
           image_urls?: string[]
+          instagram_post_link?: string | null
+          name?: string | null
           school: string
           school_slug: string
           status?: string
@@ -428,6 +432,8 @@ export type Database = {
           created_at?: string
           id?: string
           image_urls?: string[]
+          instagram_post_link?: string | null
+          name?: string | null
           school?: string
           school_slug?: string
           status?: string
