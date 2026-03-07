@@ -132,13 +132,11 @@ const Download = () => {
                 required
                 className="rounded-full px-5 bg-card border-border/40"
               />
-              <Input
-                type="text"
-                placeholder="Your school"
-                value={school}
-                onChange={(e) => setSchool(e.target.value)}
-                required
-                className="rounded-full px-5 bg-card border-border/40"
+              <SmartSchoolSearch
+                onSelect={(school) => setSelectedSchool(school)}
+                selectedSchool={selectedSchool}
+                placeholder="Search for your school…"
+                className="text-left"
               />
               <Input
                 type="email"
