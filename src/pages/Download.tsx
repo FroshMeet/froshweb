@@ -144,9 +144,10 @@ const Download = () => {
               />
               <Input
                 type="email"
-                placeholder="your@email.com (optional)"
+                placeholder="your@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
                 className="rounded-full px-5 bg-card border-border/40"
               />
               <Button
