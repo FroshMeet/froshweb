@@ -23,7 +23,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { APPROVED_SCHOOLS } from "@/config/approvedSchools";
 import { SchoolPageSEO } from "@/components/seo/SchoolPageSEO";
 import StudentPosts from "@/components/StudentPosts";
-import { APPROVED_SCHOOLS } from "@/config/approvedSchools";
 
 const SCHOOL_METADATA: Record<string, { location?: string; type?: string; size?: string }> = {
   'harvard': { location: 'Cambridge, MA', type: 'Private', size: '~7,000 undergrads' },
