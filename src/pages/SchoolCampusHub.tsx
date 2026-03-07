@@ -1,27 +1,19 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import React, { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Instagram, 
-  Search, 
-  ExternalLink, 
-  Smartphone, 
-  Users, 
-  MessageSquare, 
-  Star, 
-  ArrowRight, 
-  ArrowLeft, 
-  MapPin, 
-  Building2, 
+import {
+  ArrowLeft,
+  ArrowDown,
+  MapPin,
+  Building2,
   GraduationCap,
   MessageCircle,
+  Smartphone,
   UserPlus,
-  Sparkles
 } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
 import { schools } from "@/data/schools";
 import { getSchoolByApprovedSlug, getApprovedSchoolData, getCorrectSchoolSlug } from "@/utils/schoolNavigation";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -31,20 +23,9 @@ import { useToast } from "@/hooks/use-toast";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { APPROVED_SCHOOLS } from "@/config/approvedSchools";
 import { SchoolPageSEO } from "@/components/seo/SchoolPageSEO";
-import InstagramSection from "@/components/InstagramSection";
+import StudentPosts from "@/components/StudentPosts";
 
-interface StudentProfile {
-  id: string;
-  name: string;
-  major: string;
-  class_year: string;
-  bio?: string;
-  instagram_handle?: string;
-  photos: string[];
-  interests?: string[];
-}
-
-// School metadata - in production this would come from a database
+// School metadata
 const SCHOOL_METADATA: Record<string, { location?: string; type?: string; size?: string }> = {
   'harvard': { location: 'Cambridge, MA', type: 'Private', size: '~7,000 undergrads' },
   'stanford': { location: 'Stanford, CA', type: 'Private', size: '~8,000 undergrads' },
@@ -67,105 +48,32 @@ export default function SchoolCampusHub() {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const { toast } = useToast();
-  
-  const [studentProfiles, setStudentProfiles] = useState<StudentProfile[]>([]);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState<StudentProfile[]>([]);
-  const [isSearching, setIsSearching] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+
   const [showPhoneModal, setShowPhoneModal] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
 
-  // Get school data
   const schoolData = getSchoolByApprovedSlug(school as string);
   const approvedSchool = schoolData ? getApprovedSchoolData(schoolData) : null;
   const schoolName = (schoolData ? (schoolData.shortName || schoolData.name) : '') ||
-                    approvedSchool?.displayName || 
+                    approvedSchool?.displayName ||
                     school || '';
   const instagramHandle = approvedSchool?.instagramUsername;
   const schoolLogo = getSchoolLogo(schoolName || school || '');
   const schoolMeta = SCHOOL_METADATA[school || ''];
 
-  // Fetch student profiles
-  useEffect(() => {
-    const fetchStudentProfiles = async () => {
-      if (!school) return;
-      setIsLoading(true);
-      try {
-        const { data, error } = await supabase
-          .from('instagram_profiles')
-          .select('*')
-          .eq('school', school)
-          .eq('paid_for_instagram', true)
-          .order('created_at', { ascending: false })
-          .limit(20);
-        
-        if (error) throw error;
-        
-        const profiles: StudentProfile[] = (data || []).map(profile => ({
-          id: profile.id,
-          name: profile.name,
-          major: 'Student',
-          class_year: profile.class_year,
-          bio: profile.bio,
-          instagram_handle: profile.instagram_handle,
-          photos: profile.photos || []
-        }));
-        setStudentProfiles(profiles);
-      } catch (error) {
-        console.error('Error fetching student profiles:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchStudentProfiles();
-  }, [school]);
-
-  // Search functionality
-  const searchStudents = useCallback(async (query: string) => {
-    if (!query.trim()) {
-      setSearchResults([]);
-      return;
-    }
-    setIsSearching(true);
-    setTimeout(() => {
-      const filtered = studentProfiles.filter(profile => 
-        profile.name.toLowerCase().includes(query.toLowerCase()) || 
-        profile.instagram_handle?.toLowerCase().includes(query.toLowerCase())
-      );
-      setSearchResults(filtered);
-      setIsSearching(false);
-    }, 300);
-  }, [studentProfiles]);
-
-  useEffect(() => {
-    searchStudents(searchQuery);
-  }, [searchQuery, searchStudents]);
-
-  const handleOpenApp = () => navigate('/waitlist');
-  
-  const handleTextMeApp = () => setShowPhoneModal(true);
-  
-  const handleSendSMSLink = () => {
-    if (!phoneNumber) return;
-    toast({
-      title: "SMS Sent! 📱",
-      description: "Check your phone for the FroshMeet app link."
-    });
-    setShowPhoneModal(false);
-    setPhoneNumber("");
-  };
-
   const handleGetFeatured = () => navigate(`/${school}/post`);
-  
-  const handleViewInstagram = (handle: string) => {
-    window.open(`https://instagram.com/${handle.replace('@', '')}`, '_blank');
-  };
 
   const handleSchoolSwitch = (schoolSlug: string) => {
     if (schoolSlug && schoolSlug !== school) {
       navigate(`/${schoolSlug}`);
     }
+  };
+
+  const handleSendSMSLink = () => {
+    if (!phoneNumber) return;
+    toast({ title: "SMS Sent! 📱", description: "Check your phone for the FroshMeet app link." });
+    setShowPhoneModal(false);
+    setPhoneNumber("");
   };
 
   // 404 for unsupported schools
@@ -174,41 +82,25 @@ export default function SchoolCampusHub() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center px-4">
           <h1 className="text-4xl font-bold text-foreground mb-4">School Not Found</h1>
-          <p className="text-muted-foreground mb-6">
-            "{school}" is not available on Frosh yet.
-          </p>
+          <p className="text-muted-foreground mb-6">"{school}" is not available on Frosh yet.</p>
           <Button onClick={() => navigate('/')}>Back to Home</Button>
         </div>
       </div>
     );
   }
 
-  const profilesToShow = searchQuery ? searchResults : studentProfiles;
-
   return (
     <div className="min-h-screen bg-background">
-      <SchoolPageSEO 
-        schoolName={schoolName}
-        schoolSlug={school || ''}
-        studentCount={studentProfiles.length}
-      />
-      
+      <SchoolPageSEO schoolName={schoolName} schoolSlug={school || ''} />
       <h1 className="sr-only">Meet the {schoolName} Class of 2030</h1>
 
-      {/* Top Navigation Bar */}
+      {/* Top Navigation */}
       <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/40">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-          <Button 
-            variant="ghost" 
-            size="sm"
-            onClick={() => navigate('/community')}
-            className="text-muted-foreground hover:text-foreground"
-          >
+          <Button variant="ghost" size="sm" onClick={() => navigate('/community')} className="text-muted-foreground hover:text-foreground">
             <ArrowLeft className="h-4 w-4 mr-2" />
             All Schools
           </Button>
-          
-          {/* School Switcher */}
           <Select value={school || ""} onValueChange={handleSchoolSwitch}>
             <SelectTrigger className="w-[180px] bg-muted/30 border-border/40">
               <SelectValue placeholder="Switch school..." />
@@ -231,13 +123,11 @@ export default function SchoolCampusHub() {
       {/* Hero Section */}
       <section className="relative py-16 md:py-20 px-4 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent" />
-        
         <div className="max-w-4xl mx-auto text-center relative">
-          {/* School Logo */}
           <div className="mb-6 flex justify-center">
             {schoolData && hasSchoolImage(schoolData.id) ? (
-              <img 
-                src={getSchoolImageUrl(schoolData.id)!} 
+              <img
+                src={getSchoolImageUrl(schoolData.id)!}
                 alt={`${schoolName} profile`}
                 className="h-40 w-40 md:h-48 md:w-48 rounded-2xl object-cover shadow-lg border border-primary/20"
               />
@@ -250,47 +140,26 @@ export default function SchoolCampusHub() {
             )}
           </div>
 
-          {/* School Name */}
-          <h2 className="text-5xl md:text-6xl font-black text-foreground mb-3 tracking-tight">
-            {schoolName}
-          </h2>
-          
-          {/* Class Badge */}
+          <h2 className="text-5xl md:text-6xl font-black text-foreground mb-3 tracking-tight">{schoolName}</h2>
           <Badge variant="outline" className="text-primary border-primary/30 px-4 py-1.5 text-sm font-semibold mb-4">
             Class of 2030
           </Badge>
-
-          {/* Descriptor Line */}
-          <p className="text-muted-foreground text-lg mb-6 max-w-xl mx-auto">
+          <p className="text-muted-foreground text-lg mb-8 max-w-xl mx-auto">
             Your incoming Class of 2030 community at {schoolName}
           </p>
 
-          {/* Instagram Handle */}
-          {instagramHandle && (
-            <Button 
-              variant="ghost" 
-              onClick={() => handleViewInstagram(instagramHandle)} 
-              className="text-primary hover:text-primary/80 hover:bg-primary/5 mb-8"
-            >
-              <Instagram className="h-4 w-4 mr-2" />
-              @{instagramHandle}
-              <ExternalLink className="h-3 w-3 ml-1.5 opacity-60" />
-            </Button>
-          )}
-
-          {/* Primary CTAs */}
           <div className="flex items-center justify-center gap-4">
-            <Button 
-              onClick={handleGetFeatured} 
-              size="lg" 
+            <Button
+              onClick={handleGetFeatured}
+              size="lg"
               className="bg-primary hover:bg-primary/90 text-primary-foreground px-10 rounded-full font-semibold shadow-lg shadow-primary/15 hover:-translate-y-0.5 transition-all duration-200"
             >
-              <Instagram className="h-5 w-5 mr-2" />
+              <UserPlus className="h-5 w-5 mr-2" />
               Post to {schoolName}
             </Button>
-            <Button 
-              onClick={() => navigate('/download')} 
-              size="lg" 
+            <Button
+              onClick={() => navigate('/download')}
+              size="lg"
               variant="outline"
               className="border-white/20 bg-white/5 text-foreground hover:bg-white/10 px-8 rounded-full font-semibold hover:-translate-y-0.5 transition-all duration-200"
             >
@@ -300,10 +169,36 @@ export default function SchoolCampusHub() {
         </div>
       </section>
 
-      {/* Instagram Feed Section */}
-      {instagramHandle && (
-        <InstagramSection schoolName={schoolName} instagramHandle={instagramHandle} />
-      )}
+      {/* Free Post CTA */}
+      <section className="py-10 px-4">
+        <div className="max-w-3xl mx-auto">
+          <Card className="bg-card/40 border-border/30 rounded-2xl overflow-hidden">
+            <CardContent className="py-10 text-center">
+              <h2 className="text-2xl font-bold text-foreground mb-2">Post your profile — it's free</h2>
+              <p className="text-muted-foreground max-w-md mx-auto mb-6">
+                Introduce yourself to your incoming class and start meeting future classmates.
+              </p>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                <Button
+                  onClick={() => navigate(`/${school}/post`)}
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 font-semibold"
+                >
+                  <UserPlus className="h-4 w-4 mr-2" />
+                  Create your post
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => document.getElementById('student-posts')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="rounded-full px-6 border-border/40"
+                >
+                  <ArrowDown className="h-4 w-4 mr-2" />
+                  See student posts
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
 
       {/* School Overview Card */}
       {schoolMeta && (
@@ -311,9 +206,7 @@ export default function SchoolCampusHub() {
           <div className="max-w-3xl mx-auto">
             <Card className="bg-card/30 border-border/30 rounded-2xl">
               <CardContent className="py-6 px-6">
-                <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-4">
-                  About {schoolName}
-                </h3>
+                <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-4">About {schoolName}</h3>
                 <div className="flex flex-wrap gap-6 text-sm">
                   {schoolMeta.location && (
                     <div className="flex items-center gap-2 text-foreground/80">
@@ -340,125 +233,33 @@ export default function SchoolCampusHub() {
         </section>
       )}
 
+      {/* Student Posts */}
+      <StudentPosts schoolSlug={school || ''} schoolName={schoolName} instagramHandle={instagramHandle} />
 
-      {/* Discover Students */}
-      <section className="py-12 px-4">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold text-foreground mb-2">Discover Students</h2>
-            <p className="text-muted-foreground">Find your future classmates</p>
-          </div>
-
-          {/* Search */}
-          <div className="max-w-lg mx-auto mb-8">
-            <div className="relative">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input 
-                placeholder="Search by name..." 
-                value={searchQuery} 
-                onChange={e => setSearchQuery(e.target.value)} 
-                className="pl-11 py-3 rounded-full border-border/40 bg-muted/30 focus:bg-card"
-              />
-            </div>
-          </div>
-
-          {/* Loading */}
-          {isLoading ? (
-            <div className="text-center py-12">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4" />
-              <p className="text-muted-foreground">Loading students...</p>
-            </div>
-          ) : profilesToShow.length > 0 ? (
-            <>
-              {/* Student Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-                {profilesToShow.map(profile => (
-                  <Card 
-                    key={profile.id} 
-                    className="bg-card/50 border-border/40 hover:bg-card/70 transition-all duration-200 rounded-xl overflow-hidden"
-                  >
-                    <CardContent className="p-5">
-                      <div className="flex items-start gap-4">
-                        {profile.photos[0] ? (
-                          <img 
-                            src={profile.photos[0]} 
-                            alt={profile.name}
-                            className="w-14 h-14 rounded-full object-cover border-2 border-primary/20"
-                          />
-                        ) : (
-                          <div className="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center border-2 border-primary/20">
-                            <span className="text-primary font-semibold text-lg">
-                              {profile.name.charAt(0)}
-                            </span>
-                          </div>
-                        )}
-                        <div className="flex-1 min-w-0">
-                          <h3 className="font-semibold text-foreground truncate">{profile.name}</h3>
-                          <p className="text-sm text-muted-foreground">Class of {profile.class_year}</p>
-                          {profile.bio && (
-                            <p className="text-sm text-muted-foreground/80 mt-2 line-clamp-2">{profile.bio}</p>
-                          )}
-                        </div>
-                      </div>
-                      {profile.instagram_handle && (
-                        <Button 
-                          variant="ghost" 
-                          size="sm" 
-                          onClick={() => handleViewInstagram(profile.instagram_handle!)}
-                          className="w-full mt-4 text-primary hover:bg-primary/10"
-                        >
-                          <Instagram className="h-4 w-4 mr-2" />
-                          @{profile.instagram_handle}
-                        </Button>
-                      )}
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-
-              {/* DM CTA */}
-              <div className="text-center">
-                <Button 
-                  onClick={handleOpenApp} 
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-6"
-                >
-                  <MessageSquare className="h-4 w-4 mr-2" />
-                  DM them in the app
-                </Button>
-              </div>
-            </>
-          ) : searchQuery ? (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground">No students found for "{searchQuery}"</p>
-            </div>
-          ) : (
-            /* Empty State */
-            <Card className="bg-card/50 border-border/40 rounded-2xl">
-              <CardContent className="py-12 text-center">
-                <Users className="h-10 w-10 text-muted-foreground/40 mx-auto mb-4" />
-                <p className="text-foreground font-medium mb-2">No students have joined this school yet</p>
-                <p className="text-muted-foreground text-sm">
-                  Be one of the first to post your profile.
-                </p>
-              </CardContent>
-            </Card>
-          )}
-        </div>
-      </section>
-
-      {/* Groups & Chats Preview */}
+      {/* Groups & Chats */}
       <section className="py-12 px-4 bg-muted/5">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8">
             <h2 className="text-2xl font-bold text-foreground mb-2">Groups & Chats</h2>
-            <p className="text-muted-foreground">Connect with your community</p>
+            <p className="text-muted-foreground">Connect with your class community.</p>
           </div>
 
           <Card className="bg-card/30 border-border/30 rounded-2xl">
             <CardContent className="py-10 text-center">
               <MessageCircle className="h-10 w-10 text-muted-foreground/40 mx-auto mb-4" />
-              <p className="text-muted-foreground mb-1">Group chats will appear here once students join</p>
-              <p className="text-muted-foreground/60 text-sm">Dorm chats • Major groups • Interest communities</p>
+              <p className="text-foreground font-medium mb-2">
+                Groups & Chats for {schoolName} will be available on the Frosh mobile app.
+              </p>
+              <p className="text-muted-foreground text-sm mb-6">
+                Join group chats, meet classmates, and connect before arriving on campus.
+              </p>
+              <Button
+                onClick={() => navigate('/download')}
+                className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8"
+              >
+                <Smartphone className="h-4 w-4 mr-2" />
+                Download the App
+              </Button>
             </CardContent>
           </Card>
         </div>
@@ -494,27 +295,12 @@ export default function SchoolCampusHub() {
           <Card className="w-full max-w-md bg-card border-border">
             <CardContent className="p-6">
               <h3 className="text-xl font-bold text-foreground mb-2">Get the App Link</h3>
-              <p className="text-muted-foreground mb-6 text-sm">
-                Enter your phone number and we'll text you a link to download Frosh.
-              </p>
+              <p className="text-muted-foreground mb-6 text-sm">Enter your phone number and we'll text you a link to download Frosh.</p>
               <div className="space-y-4">
-                <Input 
-                  placeholder="(555) 123-4567" 
-                  value={phoneNumber} 
-                  onChange={e => setPhoneNumber(e.target.value)} 
-                  className="text-lg"
-                />
+                <Input placeholder="(555) 123-4567" value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)} className="text-lg" />
                 <div className="flex gap-3">
-                  <Button 
-                    onClick={handleSendSMSLink} 
-                    className="flex-1 bg-primary hover:bg-primary/90" 
-                    disabled={!phoneNumber}
-                  >
-                    Send Link
-                  </Button>
-                  <Button variant="outline" onClick={() => setShowPhoneModal(false)}>
-                    Cancel
-                  </Button>
+                  <Button onClick={handleSendSMSLink} className="flex-1 bg-primary hover:bg-primary/90" disabled={!phoneNumber}>Send Link</Button>
+                  <Button variant="outline" onClick={() => setShowPhoneModal(false)}>Cancel</Button>
                 </div>
               </div>
             </CardContent>
