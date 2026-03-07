@@ -33,6 +33,10 @@ const Download = () => {
   const handleJoinWaitlist = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !selectedSchool) return;
+    if (!email.trim()) {
+      toast.error('Please enter your email to join the waitlist.');
+      return;
+    }
 
     setLoading(true);
     try {
@@ -140,9 +144,10 @@ const Download = () => {
               />
               <Input
                 type="email"
-                placeholder="your@email.com (optional)"
+                placeholder="your@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
                 className="rounded-full px-5 bg-card border-border/40"
               />
               <Button
