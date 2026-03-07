@@ -32,7 +32,7 @@ const Download = () => {
 
   const handleJoinWaitlist = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !school.trim()) return;
+    if (!name.trim() || !selectedSchool) return;
 
     setLoading(true);
     try {
