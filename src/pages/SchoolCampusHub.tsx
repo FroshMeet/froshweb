@@ -23,7 +23,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { APPROVED_SCHOOLS } from "@/config/approvedSchools";
 import { SchoolPageSEO } from "@/components/seo/SchoolPageSEO";
 import StudentPosts from "@/components/StudentPosts";
-import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
+import { APPROVED_SCHOOLS } from "@/config/approvedSchools";
 
 const SCHOOL_METADATA: Record<string, { location?: string; type?: string; size?: string }> = {
   'harvard': { location: 'Cambridge, MA', type: 'Private', size: '~7,000 undergrads' },
@@ -88,8 +88,8 @@ export default function SchoolCampusHub() {
   }
 
   return (
-    <TooltipProvider>
       <div className="min-h-screen bg-background">
+        <SchoolPageSEO schoolName={schoolName} schoolSlug={school || ''} />
         <SchoolPageSEO schoolName={schoolName} schoolSlug={school || ''} />
         <h1 className="sr-only">Meet the {schoolName} Class of 2030</h1>
 
