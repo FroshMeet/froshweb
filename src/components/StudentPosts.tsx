@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Instagram, ExternalLink, UserPlus, Users, ChevronLeft, ChevronRight, X } from "lucide-react";
+import { Instagram, ExternalLink, UserPlus, Users, ChevronLeft, ChevronRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 
@@ -158,6 +158,7 @@ const StudentPosts: React.FC<StudentPostsProps> = ({ schoolSlug, schoolName, ins
   const [isLoading, setIsLoading] = useState(true);
   const [selectedPost, setSelectedPost] = useState<StudentPost | null>(null);
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -170,7 +171,20 @@ const StudentPosts: React.FC<StudentPostsProps> = ({ schoolSlug, schoolName, ins
           .order('created_at', { ascending: false });
 
         if (error) throw error;
-        setPosts((data || []) as unknown as StudentPost[]);
+        const fetchedPosts = (data || []) as unknown as StudentPost[];
+        setPosts(fetchedPosts);
+
+        // Deep-link: open a specific post if ?post= is present
+        const postId = searchParams.get('post');
+        if (postId && fetchedPosts.length > 0) {
+          const target = fetchedPosts.find(p => p.id === postId);
+          if (target) {
+            setSelectedPost(target);
+            // Clean URL after opening
+            searchParams.delete('post');
+            setSearchParams(searchParams, { replace: true });
+          }
+        }
       } catch (err) {
         console.error('Error fetching posts:', err);
       } finally {
