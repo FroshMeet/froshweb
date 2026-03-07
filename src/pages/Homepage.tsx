@@ -193,6 +193,38 @@ const Homepage = () => {
         </div>
       </section>
 
+      {/* ═══════════════════ FREE POST CTA ═══════════════════ */}
+      <section className="py-16 md:py-20 border-t border-border/20">
+        <RevealSection>
+          <div className="max-w-3xl mx-auto px-5 text-center">
+            <h2 className="font-display text-3xl md:text-4xl font-bold tracking-tight mb-4">
+              Meet your future classmates before college starts
+            </h2>
+            <p className="text-muted-foreground text-lg md:text-xl max-w-xl mx-auto mb-8">
+              Students across 100+ universities are posting profiles and connecting early.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Button
+                onClick={() => navigate('/post')}
+                size="lg"
+                className="rounded-full px-8 py-6 text-base font-semibold bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20"
+              >
+                Post your profile for free
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+              <Button
+                onClick={() => navigate('/community')}
+                size="lg"
+                variant="outline"
+                className="rounded-full px-8 py-6 text-base font-semibold border-border/40"
+              >
+                Browse schools
+              </Button>
+            </div>
+          </div>
+        </RevealSection>
+      </section>
+
       {/* ═══════════════════ SOCIAL PROOF CAROUSEL ═══════════════════ */}
       <section className="py-16 md:py-20 border-t border-border/20">
         <RevealSection>
