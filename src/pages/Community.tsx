@@ -14,10 +14,9 @@ import { getSchoolImageUrl, hasSchoolImage } from '@/utils/schoolImages';
 
 // Same popularity order used by the homepage carousel
 const POPULARITY_ORDER = [
-  'harvard', 'stanford', 'usc', 'ucla', 'umich', 'nyu', 'mit', 'duke',
-  'upenn', 'cornell', 'ucberkeley', 'northwestern', 'uga', 'utaustin',
-  'ohiostate', 'asu', 'uf', 'vanderbilt', 'unc', 'uva', 'yale',
-  'princeton', 'columbia', 'uwmadison',
+  'stanford', 'usc', 'ucla', 'ucberkeley', 'asu', 'nyu', 'princeton', 'columbia',
+  'mit', 'duke', 'upenn', 'umich', 'harvard', 'cornell', 'northwestern', 'uga',
+  'utaustin', 'ohiostate', 'uf', 'vanderbilt', 'unc', 'uva', 'yale', 'uwmadison',
 ];
 
 function sortByPopularity(list: School[]): School[] {
