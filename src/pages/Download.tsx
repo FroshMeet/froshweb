@@ -33,6 +33,10 @@ const Download = () => {
   const handleJoinWaitlist = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !selectedSchool) return;
+    if (!email.trim()) {
+      toast.error('Please enter your email to join the waitlist.');
+      return;
+    }
 
     setLoading(true);
     try {
