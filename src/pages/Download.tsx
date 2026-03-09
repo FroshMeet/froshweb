@@ -26,6 +26,7 @@ const Download = () => {
   };
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [selectedSchool, setSelectedSchool] = useState<School | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -33,8 +34,8 @@ const Download = () => {
   const handleJoinWaitlist = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !selectedSchool) return;
-    if (!email.trim()) {
-      toast.error('Please enter your email to join the waitlist.');
+    if (!email.trim() && !phone.trim()) {
+      toast.error('Please enter your email or phone number.');
       return;
     }
 
@@ -44,6 +45,7 @@ const Download = () => {
         name: name.trim(),
         school: selectedSchool.name,
         email: email.trim() || null,
+        phone: phone.trim() || null,
       });
 
       if (error) throw error;
@@ -144,10 +146,21 @@ const Download = () => {
               />
               <Input
                 type="email"
-                placeholder="your@email.com"
+                placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                required
+                className="rounded-full px-5 bg-card border-border/40"
+              />
+              <div className="flex items-center gap-3 px-2">
+                <div className="h-px flex-1 bg-border/40" />
+                <span className="text-xs text-muted-foreground">or</span>
+                <div className="h-px flex-1 bg-border/40" />
+              </div>
+              <Input
+                type="tel"
+                placeholder="Phone number"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
                 className="rounded-full px-5 bg-card border-border/40"
               />
               <Button
