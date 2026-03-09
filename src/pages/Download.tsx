@@ -26,6 +26,7 @@ const Download = () => {
   };
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [selectedSchool, setSelectedSchool] = useState<School | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -33,8 +34,8 @@ const Download = () => {
   const handleJoinWaitlist = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !selectedSchool) return;
-    if (!email.trim()) {
-      toast.error('Please enter your email to join the waitlist.');
+    if (!email.trim() && !phone.trim()) {
+      toast.error('Please enter your email or phone number.');
       return;
     }
 
@@ -44,6 +45,7 @@ const Download = () => {
         name: name.trim(),
         school: selectedSchool.name,
         email: email.trim() || null,
+        phone: phone.trim() || null,
       });
 
       if (error) throw error;
