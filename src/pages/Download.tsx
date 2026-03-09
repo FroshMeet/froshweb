@@ -146,10 +146,21 @@ const Download = () => {
               />
               <Input
                 type="email"
-                placeholder="your@email.com"
+                placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                required
+                className="rounded-full px-5 bg-card border-border/40"
+              />
+              <div className="flex items-center gap-3 px-2">
+                <div className="h-px flex-1 bg-border/40" />
+                <span className="text-xs text-muted-foreground">or</span>
+                <div className="h-px flex-1 bg-border/40" />
+              </div>
+              <Input
+                type="tel"
+                placeholder="Phone number"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
                 className="rounded-full px-5 bg-card border-border/40"
               />
               <Button
