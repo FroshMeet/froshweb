@@ -146,15 +146,15 @@ export default function SchoolCampusHub() {
               Your incoming Class of 2030 community at {schoolName}
             </p>
 
-            <div className="flex items-center justify-center gap-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full px-2">
               <Button
                 onClick={handleGetFeatured}
                 size="lg"
-                className="bg-primary hover:bg-primary/90 text-primary-foreground px-10 rounded-full font-semibold shadow-lg shadow-primary/15 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-1 transition-all duration-300 gap-2"
+                className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground px-6 sm:px-10 rounded-full font-semibold shadow-lg shadow-primary/15 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-1 transition-all duration-300 gap-2 text-sm sm:text-base"
               >
-                <UserPlus className="h-5 w-5" />
-                Post to {schoolName}
-                <span className="ml-1 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-black uppercase bg-white text-primary animate-[fade-scale-in_0.5s_ease-out_0.3s_both] shadow-sm free-badge-pulse">
+                <UserPlus className="h-5 w-5 shrink-0" />
+                <span className="truncate">Post to {schoolName}</span>
+                <span className="ml-1 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-black uppercase bg-white text-primary animate-[fade-scale-in_0.5s_ease-out_0.3s_both] shadow-sm free-badge-pulse shrink-0">
                   FREE
                 </span>
               </Button>
@@ -162,7 +162,7 @@ export default function SchoolCampusHub() {
                 onClick={() => navigate('/download', { state: { from: `/${school}` } })}
                 size="lg"
                 variant="outline"
-                className="border-white/20 bg-white/5 text-foreground hover:bg-white/10 px-8 rounded-full font-semibold hover:-translate-y-0.5 transition-all duration-200"
+                className="w-full sm:w-auto border-white/20 bg-white/5 text-foreground hover:bg-white/10 px-6 sm:px-8 rounded-full font-semibold hover:-translate-y-0.5 transition-all duration-200 text-sm sm:text-base"
               >
                 Download App
               </Button>
