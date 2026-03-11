@@ -91,7 +91,7 @@ const Founder = () => {
               excited about starting school but didn't really know anyone yet.
             </p>
             <p>
-              Most platforms weren't designed for that moment — the period between getting accepted
+              Most platforms weren't optimally designed for the period between getting accepted
               and actually arriving on campus.
             </p>
             <p>
@@ -107,12 +107,7 @@ const Founder = () => {
           <h2 className="text-lg font-semibold text-foreground mb-4">About Me</h2>
           <div className="space-y-4 text-foreground/90 text-base leading-relaxed">
             <p>
-              I spend most of my time working on Frosh — thinking about how to make the experience
-              better for students and figuring out what to build next.
-            </p>
-            <p>
-              Outside of that, I'm pretty simple. I like building things, learning from other
-              founders, and staying close to the people who use what I make.
+              I was born in Tehran, Iran and I'm a business major at UC Santa Cruz. I spend most of my time working on Frosh, spending time with friends, or working out at the gym.
             </p>
           </div>
         </section>
