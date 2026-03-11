@@ -91,7 +91,7 @@ const Founder = () => {
               excited about starting school but didn't really know anyone yet.
             </p>
             <p>
-              Most platforms weren't designed for that moment — the period between getting accepted
+              Most platforms weren't optimally designed for the period between getting accepted
               and actually arriving on campus.
             </p>
             <p>
