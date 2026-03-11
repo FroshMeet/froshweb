@@ -8,6 +8,8 @@ export interface Interest {
 export const INTERESTS: Interest[] = [
   // Social
   { id: 'parties', label: 'Parties', emoji: '🎉', category: 'Social' },
+  { id: 'drinking', label: 'Drinking', emoji: '🍻', category: 'Social' },
+  { id: 'smoking', label: 'Smoking', emoji: '🚬', category: 'Social' },
   { id: 'bars', label: 'Bars', emoji: '🍻', category: 'Social' },
   { id: 'clubs', label: 'Clubs', emoji: '🪩', category: 'Social' },
   { id: 'greek-life', label: 'Greek Life', emoji: '🏛️', category: 'Social' },
@@ -57,7 +59,7 @@ export const INTERESTS: Interest[] = [
   { id: 'concerts', label: 'Concerts', emoji: '🎪', category: 'Music' },
   { id: 'djing', label: 'DJing', emoji: '🎛️', category: 'Music' },
   { id: 'music-production', label: 'Music Production', emoji: '🎹', category: 'Music' },
-  { id: 'singing', label: 'Singing', emoji: '🎙️', category: 'Music' },
+  
 
   // Entertainment
   { id: 'movies', label: 'Movies', emoji: '🎬', category: 'Entertainment' },
@@ -80,7 +82,7 @@ export const INTERESTS: Interest[] = [
   { id: 'baking', label: 'Baking', emoji: '🧁', category: 'Food & Drink' },
   { id: 'sushi', label: 'Sushi', emoji: '🍱', category: 'Food & Drink' },
   { id: 'brunch', label: 'Brunch', emoji: '🥞', category: 'Food & Drink' },
-  { id: 'wine', label: 'Wine', emoji: '🍷', category: 'Food & Drink' },
+  
   { id: 'late-night-food', label: 'Late Night Food', emoji: '🌙', category: 'Food & Drink' },
 
   // Travel
@@ -97,7 +99,7 @@ export const INTERESTS: Interest[] = [
   { id: 'startups', label: 'Startups', emoji: '🚀', category: 'Academic' },
   { id: 'entrepreneurship', label: 'Entrepreneurship', emoji: '💡', category: 'Academic' },
   { id: 'investing', label: 'Investing', emoji: '💰', category: 'Academic' },
-  { id: 'finance', label: 'Finance', emoji: '💵', category: 'Academic' },
+  
   { id: 'economics', label: 'Economics', emoji: '📊', category: 'Academic' },
   { id: 'engineering', label: 'Engineering', emoji: '⚙️', category: 'Academic' },
   { id: 'computer-science', label: 'Computer Science', emoji: '💻', category: 'Academic' },
@@ -123,7 +125,7 @@ export const INTERESTS: Interest[] = [
   // Lifestyle
   { id: 'fashion', label: 'Fashion', emoji: '👔', category: 'Lifestyle' },
   { id: 'fitness', label: 'Fitness', emoji: '🏋️', category: 'Lifestyle' },
-  { id: 'self-improvement', label: 'Self Improvement', emoji: '📖', category: 'Lifestyle' },
+  
   { id: 'meditation', label: 'Meditation', emoji: '🧘‍♂️', category: 'Lifestyle' },
   { id: 'skincare', label: 'Skincare', emoji: '✨', category: 'Lifestyle' },
   { id: 'thrifting', label: 'Thrifting', emoji: '🛍️', category: 'Lifestyle' },
@@ -135,7 +137,7 @@ export const INTERESTS: Interest[] = [
   // Tech
   { id: 'coding', label: 'Coding', emoji: '👨‍💻', category: 'Tech' },
   { id: 'ai', label: 'AI', emoji: '🤖', category: 'Tech' },
-  { id: 'crypto', label: 'Crypto', emoji: '🪙', category: 'Tech' },
+  
   { id: 'tech', label: 'Tech', emoji: '📱', category: 'Tech' },
   { id: 'web-dev', label: 'Web Dev', emoji: '🌐', category: 'Tech' },
   { id: 'robotics', label: 'Robotics', emoji: '🦾', category: 'Tech' },
@@ -150,10 +152,6 @@ export const INTERESTS: Interest[] = [
   // College Life
   { id: 'roommate-search', label: 'Roommate Search', emoji: '🏠', category: 'College Life' },
   { id: 'study-groups', label: 'Study Groups', emoji: '📝', category: 'College Life' },
-  { id: 'intramurals', label: 'Intramurals', emoji: '🏅', category: 'College Life' },
-  { id: 'student-orgs', label: 'Student Orgs', emoji: '🎓', category: 'College Life' },
-  { id: 'dorm-life', label: 'Dorm Life', emoji: '🛏️', category: 'College Life' },
-  { id: 'tailgating', label: 'Tailgating', emoji: '🍗', category: 'College Life' },
 ];
 
 export const INTEREST_CATEGORIES = [...new Set(INTERESTS.map(i => i.category))];
