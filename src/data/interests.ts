@@ -123,7 +123,7 @@ export const INTERESTS: Interest[] = [
   // Lifestyle
   { id: 'fashion', label: 'Fashion', emoji: '👔', category: 'Lifestyle' },
   { id: 'fitness', label: 'Fitness', emoji: '🏋️', category: 'Lifestyle' },
-  { id: 'self-improvement', label: 'Self Improvement', emoji: '📖', category: 'Lifestyle' },
+  
   { id: 'meditation', label: 'Meditation', emoji: '🧘‍♂️', category: 'Lifestyle' },
   { id: 'skincare', label: 'Skincare', emoji: '✨', category: 'Lifestyle' },
   { id: 'thrifting', label: 'Thrifting', emoji: '🛍️', category: 'Lifestyle' },
