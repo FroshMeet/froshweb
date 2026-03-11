@@ -57,7 +57,7 @@ export const INTERESTS: Interest[] = [
   { id: 'concerts', label: 'Concerts', emoji: '🎪', category: 'Music' },
   { id: 'djing', label: 'DJing', emoji: '🎛️', category: 'Music' },
   { id: 'music-production', label: 'Music Production', emoji: '🎹', category: 'Music' },
-  { id: 'singing', label: 'Singing', emoji: '🎙️', category: 'Music' },
+  
 
   // Entertainment
   { id: 'movies', label: 'Movies', emoji: '🎬', category: 'Entertainment' },
