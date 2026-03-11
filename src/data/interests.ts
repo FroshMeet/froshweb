@@ -150,10 +150,6 @@ export const INTERESTS: Interest[] = [
   // College Life
   { id: 'roommate-search', label: 'Roommate Search', emoji: '🏠', category: 'College Life' },
   { id: 'study-groups', label: 'Study Groups', emoji: '📝', category: 'College Life' },
-  { id: 'intramurals', label: 'Intramurals', emoji: '🏅', category: 'College Life' },
-  { id: 'student-orgs', label: 'Student Orgs', emoji: '🎓', category: 'College Life' },
-  { id: 'dorm-life', label: 'Dorm Life', emoji: '🛏️', category: 'College Life' },
-  { id: 'tailgating', label: 'Tailgating', emoji: '🍗', category: 'College Life' },
 ];
 
 export const INTEREST_CATEGORIES = [...new Set(INTERESTS.map(i => i.category))];
