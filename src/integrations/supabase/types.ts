@@ -405,9 +405,12 @@ export type Database = {
           id: string
           image_urls: string[]
           instagram_post_link: string | null
+          interests: string[] | null
           name: string | null
           school: string
           school_slug: string
+          song_artist: string | null
+          song_title: string | null
           status: string
           updated_at: string
           username: string
@@ -419,9 +422,12 @@ export type Database = {
           id?: string
           image_urls?: string[]
           instagram_post_link?: string | null
+          interests?: string[] | null
           name?: string | null
           school: string
           school_slug: string
+          song_artist?: string | null
+          song_title?: string | null
           status?: string
           updated_at?: string
           username: string
@@ -433,9 +439,12 @@ export type Database = {
           id?: string
           image_urls?: string[]
           instagram_post_link?: string | null
+          interests?: string[] | null
           name?: string | null
           school?: string
           school_slug?: string
+          song_artist?: string | null
+          song_title?: string | null
           status?: string
           updated_at?: string
           username?: string
