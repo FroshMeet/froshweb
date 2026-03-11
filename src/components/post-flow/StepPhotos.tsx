@@ -61,10 +61,10 @@ const StepPhotos: React.FC<StepProps> = ({ data, onChange }) => {
       </div>
 
       {data.photos.length === 0 ? (
-        <div className="flex justify-center">
-          <label className="w-48 aspect-[3/4] rounded-2xl border-2 border-dashed border-border hover:border-primary/50 bg-card flex flex-col items-center justify-center cursor-pointer transition-all duration-200 hover:bg-card/80">
-            <Plus className="w-10 h-10 text-muted-foreground mb-2" />
-            <span className="text-sm text-muted-foreground font-medium">Add Photo</span>
+        <div className="flex justify-center items-center py-6">
+          <label className="w-52 sm:w-56 aspect-[3/4] rounded-2xl border-2 border-dashed border-border hover:border-primary/50 bg-card flex flex-col items-center justify-center cursor-pointer transition-all duration-200 hover:bg-card/80">
+            <Plus className="w-12 h-12 text-muted-foreground mb-3" />
+            <span className="text-base text-muted-foreground font-medium">Add Photo</span>
             <input type="file" accept="image/*" multiple onChange={handleUpload} className="hidden" />
           </label>
         </div>
