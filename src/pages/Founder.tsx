@@ -1,7 +1,7 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Linkedin, ArrowRight } from 'lucide-react';
+import { ArrowLeft, Linkedin, Youtube, Globe, ArrowRight } from 'lucide-react';
 import { SEO } from '@/components/seo/SEO';
 import FroshLogo from '@/components/ui/FroshLogo';
 
@@ -12,17 +12,25 @@ const Founder = () => {
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Kian Habibi",
+    "url": "https://frosh.app/founder",
     "jobTitle": "Founder",
-    "worksFor": { "@type": "Organization", "name": "Frosh" },
-    "url": "https://linkedin.com/in/kianhabibi",
-    "sameAs": ["https://linkedin.com/in/kianhabibi"]
+    "worksFor": {
+      "@type": "Organization",
+      "name": "Frosh",
+      "url": "https://frosh.app"
+    },
+    "sameAs": [
+      "https://linkedin.com/in/kianhabibi",
+      "https://www.youtube.com/@kian-habibi",
+      "https://kianhabibi.com"
+    ]
   };
 
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Meet the Founder – Kian Habibi | Frosh"
-        description="Meet Kian Habibi, the founder of Frosh — the social app helping incoming college freshmen connect with classmates before move-in day."
+        title="Kian Habibi – Founder of Frosh | frosh.app"
+        description="Kian Habibi is the founder of Frosh, a platform helping incoming college students meet classmates before arriving on campus."
         canonical="/founder"
         schema={personSchema}
       />
@@ -40,7 +48,7 @@ const Founder = () => {
         </div>
       </header>
 
-      <div className="max-w-2xl mx-auto px-5 py-16 md:py-24">
+      <main className="max-w-2xl mx-auto px-5 py-16 md:py-24">
         <button
           onClick={() => navigate('/')}
           className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground text-sm font-medium transition-colors mb-10"
@@ -49,51 +57,118 @@ const Founder = () => {
           Back to home
         </button>
 
-        <p className="text-sm uppercase tracking-widest text-muted-foreground font-medium mb-8">
-          Meet the founder
-        </p>
-
-        {/* Square headshot centered on face */}
+        {/* Photo */}
         <div className="flex justify-center mb-10">
-          <div className="w-56 h-56 md:w-64 md:h-64 rounded-2xl overflow-hidden border border-border/30">
+          <div className="w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-2xl overflow-hidden border border-border/30">
             <img
               src="/kian-habibi-founder-frosh.jpg"
-              alt="Kian Habibi founder of Frosh"
-              width="256"
-              height="256"
+              alt="Kian Habibi, founder of Frosh"
+              width="384"
+              height="384"
               className="w-full h-full object-cover object-[center_20%]"
+              loading="eager"
             />
           </div>
         </div>
 
-        <h1 className="font-display text-3xl md:text-4xl font-bold tracking-tight mb-6">
+        {/* Name & Title */}
+        <h1 className="font-display text-3xl md:text-4xl font-bold tracking-tight mb-2">
           Kian Habibi
         </h1>
+        <h2 className="text-xl md:text-2xl text-muted-foreground font-medium mb-10">
+          Founder of <Link to="/" className="text-primary hover:underline">Frosh</Link>
+        </h2>
 
-        <div className="space-y-5 text-foreground text-lg leading-relaxed">
-          <p>
-            Hi, I'm <strong>Kian</strong>. I built Frosh to make it easier for incoming college students
-            to meet their classmates before arriving on campus.
-          </p>
-          <p>
-            Starting college can be overwhelming, and I wanted a way for people to find friends
-            before they even step on campus.
-          </p>
-        </div>
+        {/* Why I Built Frosh */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-foreground mb-4">Why I Built Frosh</h2>
+          <div className="space-y-4 text-foreground/90 text-base leading-relaxed">
+            <p>
+              I'm Kian Habibi, the founder of <Link to="/" className="text-primary hover:underline">Frosh</Link>.
+            </p>
+            <p>
+              I built Frosh because I kept noticing the same pattern: incoming college students were
+              excited about starting school but didn't really know anyone yet.
+            </p>
+            <p>
+              Most platforms weren't designed for that moment — the period between getting accepted
+              and actually arriving on campus.
+            </p>
+            <p>
+              <Link to="/about" className="text-primary hover:underline">Frosh</Link> is meant to
+              make that transition easier by helping students meet classmates early, find roommates,
+              and start building their community before the first day of school.
+            </p>
+          </div>
+        </section>
 
-        <p className="mt-6 text-muted-foreground italic">— Kian</p>
+        {/* About Me */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-foreground mb-4">About Me</h2>
+          <div className="space-y-4 text-foreground/90 text-base leading-relaxed">
+            <p>
+              I spend most of my time working on Frosh — thinking about how to make the experience
+              better for students and figuring out what to build next.
+            </p>
+            <p>
+              Outside of that, I'm pretty simple. I like building things, learning from other
+              founders, and staying close to the people who use what I make.
+            </p>
+          </div>
+        </section>
 
-        <a
-          href="https://linkedin.com/in/kianhabibi"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 mt-8 text-primary hover:text-primary/80 font-medium transition-colors"
-        >
-          <Linkedin className="w-4 h-4" />
-          Connect with Kian on LinkedIn
-          <ArrowRight className="w-3.5 h-3.5" />
-        </a>
-      </div>
+        {/* Around the Web */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-foreground mb-6">Around the Web</h2>
+          <div className="space-y-4">
+            <a
+              href="https://linkedin.com/in/kianhabibi"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 text-primary hover:text-primary/80 font-medium transition-colors"
+            >
+              <Linkedin className="w-5 h-5" />
+              LinkedIn
+              <ArrowRight className="w-3.5 h-3.5 ml-auto" />
+            </a>
+            <a
+              href="https://www.youtube.com/@kian-habibi"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 text-primary hover:text-primary/80 font-medium transition-colors"
+            >
+              <Youtube className="w-5 h-5" />
+              YouTube
+              <ArrowRight className="w-3.5 h-3.5 ml-auto" />
+            </a>
+            <a
+              href="https://kianhabibi.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 text-primary hover:text-primary/80 font-medium transition-colors"
+            >
+              <Globe className="w-5 h-5" />
+              kianhabibi.com
+              <ArrowRight className="w-3.5 h-3.5 ml-auto" />
+            </a>
+          </div>
+        </section>
+
+        {/* Internal links */}
+        <section className="border-t border-border/30 pt-8">
+          <div className="flex flex-wrap gap-4 text-sm">
+            <Link to="/about" className="text-muted-foreground hover:text-primary transition-colors">
+              About Frosh
+            </Link>
+            <Link to="/post" className="text-muted-foreground hover:text-primary transition-colors">
+              Create a post
+            </Link>
+            <Link to="/download" className="text-muted-foreground hover:text-primary transition-colors">
+              Download Frosh
+            </Link>
+          </div>
+        </section>
+      </main>
     </div>
   );
 };
