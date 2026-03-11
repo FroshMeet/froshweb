@@ -60,7 +60,7 @@ const StepPhotos: React.FC<StepProps> = ({ data, onChange }) => {
         </p>
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
+      <div className={`grid grid-cols-2 gap-3 ${data.photos.length === 0 ? 'justify-items-center max-w-[200px] mx-auto' : ''}`}>
         {data.photoPreviews.map((preview, index) => (
           <div
             key={index}

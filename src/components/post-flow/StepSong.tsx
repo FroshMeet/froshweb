@@ -34,7 +34,7 @@ const StepSong: React.FC<StepProps> = ({ data, onChange }) => {
         <Input
           value={data.songTitle}
           onChange={(e) => onChange({ songTitle: e.target.value })}
-          placeholder="MY EYES — Travis Scott"
+          placeholder="Your Favorite Song"
           className="h-14 text-base rounded-2xl bg-card border-border focus:border-primary"
         />
         <Input
@@ -47,7 +47,7 @@ const StepSong: React.FC<StepProps> = ({ data, onChange }) => {
 
       <p className="text-xs text-muted-foreground text-center">
         Songs must exist on Instagram.<br />
-        If unavailable we may choose a similar track.
+        If unavailable your post may not include a song.
       </p>
     </div>
   );

@@ -10,7 +10,7 @@ export const INTERESTS: Interest[] = [
   { id: 'parties', label: 'Parties', emoji: '🎉', category: 'Social' },
   { id: 'drinking', label: 'Drinking', emoji: '🍻', category: 'Social' },
   { id: 'smoking', label: 'Smoking', emoji: '🚬', category: 'Social' },
-  { id: 'bars', label: 'Bars', emoji: '🍻', category: 'Social' },
+  
   { id: 'clubs', label: 'Clubs', emoji: '🪩', category: 'Social' },
   { id: 'greek-life', label: 'Greek Life', emoji: '🏛️', category: 'Social' },
   { id: 'hangouts', label: 'Hangouts', emoji: '🤙', category: 'Social' },
