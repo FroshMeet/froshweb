@@ -80,7 +80,7 @@ export const INTERESTS: Interest[] = [
   { id: 'baking', label: 'Baking', emoji: '🧁', category: 'Food & Drink' },
   { id: 'sushi', label: 'Sushi', emoji: '🍱', category: 'Food & Drink' },
   { id: 'brunch', label: 'Brunch', emoji: '🥞', category: 'Food & Drink' },
-  { id: 'wine', label: 'Wine', emoji: '🍷', category: 'Food & Drink' },
+  
   { id: 'late-night-food', label: 'Late Night Food', emoji: '🌙', category: 'Food & Drink' },
 
   // Travel
