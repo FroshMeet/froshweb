@@ -135,7 +135,7 @@ export const INTERESTS: Interest[] = [
   // Tech
   { id: 'coding', label: 'Coding', emoji: '👨‍💻', category: 'Tech' },
   { id: 'ai', label: 'AI', emoji: '🤖', category: 'Tech' },
-  { id: 'crypto', label: 'Crypto', emoji: '🪙', category: 'Tech' },
+  
   { id: 'tech', label: 'Tech', emoji: '📱', category: 'Tech' },
   { id: 'web-dev', label: 'Web Dev', emoji: '🌐', category: 'Tech' },
   { id: 'robotics', label: 'Robotics', emoji: '🦾', category: 'Tech' },
