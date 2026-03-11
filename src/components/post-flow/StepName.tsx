@@ -8,7 +8,7 @@ const StepName: React.FC<StepProps> = ({ data, onChange }) => {
       <div>
         <h2 className="text-2xl sm:text-3xl font-black text-foreground">Post Yourself to Meet Classmates</h2>
         <p className="text-muted-foreground mt-2 text-sm">
-          <span className="text-primary font-semibold">It's free.</span> Introduce yourself to your incoming class.
+          <span className="text-primary font-semibold text-base sm:text-lg">It's Free.</span> Introduce yourself to your incoming class.
         </p>
       </div>
 

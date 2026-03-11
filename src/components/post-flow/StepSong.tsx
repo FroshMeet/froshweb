@@ -47,7 +47,7 @@ const StepSong: React.FC<StepProps> = ({ data, onChange }) => {
 
       <p className="text-xs text-muted-foreground text-center">
         Songs must exist on Instagram.<br />
-        If unavailable we may choose a similar track.
+        If unavailable your post may not include a song.
       </p>
     </div>
   );
