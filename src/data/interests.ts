@@ -97,7 +97,7 @@ export const INTERESTS: Interest[] = [
   { id: 'startups', label: 'Startups', emoji: '🚀', category: 'Academic' },
   { id: 'entrepreneurship', label: 'Entrepreneurship', emoji: '💡', category: 'Academic' },
   { id: 'investing', label: 'Investing', emoji: '💰', category: 'Academic' },
-  { id: 'finance', label: 'Finance', emoji: '💵', category: 'Academic' },
+  
   { id: 'economics', label: 'Economics', emoji: '📊', category: 'Academic' },
   { id: 'engineering', label: 'Engineering', emoji: '⚙️', category: 'Academic' },
   { id: 'computer-science', label: 'Computer Science', emoji: '💻', category: 'Academic' },
