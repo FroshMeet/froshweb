@@ -18,7 +18,7 @@ const StepBio: React.FC<StepProps> = ({ data, onChange }) => {
           onChange={(e) => {
             if (e.target.value.length <= BIO_LIMIT) onChange({ bio: e.target.value });
           }}
-          placeholder="Hey I'm Kian — incoming business major from LA. Love startups, gym, and late night food runs."
+          placeholder="Hey I'm Jake. I'm an incoming freshman from San Diego. I love surfing, gym, and late night food runs. Excited to meet people before move-in."
           className="min-h-[180px] text-base rounded-2xl bg-card border-border resize-none p-4 leading-relaxed"
           maxLength={BIO_LIMIT}
           autoFocus
