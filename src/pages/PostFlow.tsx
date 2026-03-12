@@ -66,6 +66,8 @@ const PostFlow: React.FC = () => {
         return data.schoolSlug.length > 0;
       case 'name':
         return data.firstName.trim().length > 0 && data.username.trim().length > 0;
+      case 'classYear':
+        return data.classYear.length > 0;
       case 'photos':
         return data.photos.length >= 1;
       case 'bio':
