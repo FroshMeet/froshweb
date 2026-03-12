@@ -26,7 +26,7 @@ const PostFlow: React.FC = () => {
   const steps = useMemo(() => {
     const s: string[] = [];
     if (!isSchoolPreselected) s.push('school');
-    s.push('name', 'photos', 'bio', 'song', 'interests', 'review');
+    s.push('name', 'classYear', 'photos', 'bio', 'song', 'interests', 'review');
     return s;
   }, [isSchoolPreselected]);
 
