@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 import { PostFormData } from '@/components/post-flow/types';
 import StepSchool from '@/components/post-flow/StepSchool';
 import StepName from '@/components/post-flow/StepName';
+import StepClassYear from '@/components/post-flow/StepClassYear';
 import StepPhotos from '@/components/post-flow/StepPhotos';
 import StepBio from '@/components/post-flow/StepBio';
 import StepSong from '@/components/post-flow/StepSong';
@@ -25,7 +26,7 @@ const PostFlow: React.FC = () => {
   const steps = useMemo(() => {
     const s: string[] = [];
     if (!isSchoolPreselected) s.push('school');
-    s.push('name', 'photos', 'bio', 'song', 'interests', 'review');
+    s.push('name', 'classYear', 'photos', 'bio', 'song', 'interests', 'review');
     return s;
   }, [isSchoolPreselected]);
 
@@ -35,6 +36,7 @@ const PostFlow: React.FC = () => {
     firstName: '',
     lastName: '',
     username: '',
+    classYear: '2030',
     photos: [],
     photoPreviews: [],
     bio: '',
@@ -64,6 +66,8 @@ const PostFlow: React.FC = () => {
         return data.schoolSlug.length > 0;
       case 'name':
         return data.firstName.trim().length > 0 && data.username.trim().length > 0;
+      case 'classYear':
+        return data.classYear.length > 0;
       case 'photos':
         return data.photos.length >= 1;
       case 'bio':
@@ -119,7 +123,7 @@ const PostFlow: React.FC = () => {
         school: selectedSchoolData?.name || schoolData?.name || '',
         school_slug: data.schoolSlug,
         bio: data.bio.trim() || null,
-        class_year: '2030',
+        class_year: data.classYear || '2030',
         image_urls: imageUrls,
       };
 
@@ -212,6 +216,8 @@ const PostFlow: React.FC = () => {
         return <StepSchool data={data} onChange={handleChange} />;
       case 'name':
         return <StepName data={data} onChange={handleChange} />;
+      case 'classYear':
+        return <StepClassYear data={data} onChange={handleChange} />;
       case 'photos':
         return <StepPhotos data={data} onChange={handleChange} />;
       case 'bio':

@@ -80,7 +80,7 @@ const StepReview: React.FC<StepReviewProps> = ({ data, onGoToStep }) => {
               <h3 className="text-xl font-black text-foreground">{fullName || 'Your Name'}</h3>
               {handle && <p className="text-primary font-medium text-sm">@{handle}</p>}
               <p className="text-muted-foreground text-xs mt-1">
-                {school?.displayName || 'Your School'} · Class of 2030
+                {school?.displayName || 'Your School'} · {data.classYear?.includes('Transfer') ? data.classYear : `Class of ${data.classYear || '2030'}`}
               </p>
             </div>
             <button
