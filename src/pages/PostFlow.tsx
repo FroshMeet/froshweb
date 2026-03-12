@@ -123,7 +123,7 @@ const PostFlow: React.FC = () => {
         school: selectedSchoolData?.name || schoolData?.name || '',
         school_slug: data.schoolSlug,
         bio: data.bio.trim() || null,
-        class_year: '2030',
+        class_year: data.classYear || '2030',
         image_urls: imageUrls,
       };
 
