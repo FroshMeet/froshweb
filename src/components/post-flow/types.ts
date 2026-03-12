@@ -3,6 +3,7 @@ export interface PostFormData {
   firstName: string;
   lastName: string;
   username: string;
+  classYear: string;
   photos: File[];
   photoPreviews: string[];
   bio: string;

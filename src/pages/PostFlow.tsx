@@ -216,6 +216,8 @@ const PostFlow: React.FC = () => {
         return <StepSchool data={data} onChange={handleChange} />;
       case 'name':
         return <StepName data={data} onChange={handleChange} />;
+      case 'classYear':
+        return <StepClassYear data={data} onChange={handleChange} />;
       case 'photos':
         return <StepPhotos data={data} onChange={handleChange} />;
       case 'bio':
