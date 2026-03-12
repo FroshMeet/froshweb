@@ -36,6 +36,7 @@ const PostFlow: React.FC = () => {
     firstName: '',
     lastName: '',
     username: '',
+    classYear: '2030',
     photos: [],
     photoPreviews: [],
     bio: '',
