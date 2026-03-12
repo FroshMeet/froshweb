@@ -186,6 +186,10 @@ const Homepage = () => {
               <img
                 src={froshLogo}
                 alt="Frosh logo"
+                width="340"
+                height="340"
+                fetchPriority="high"
+                decoding="async"
                 className="w-[85%] h-auto object-contain"
               />
             </div>
