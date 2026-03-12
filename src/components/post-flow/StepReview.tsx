@@ -82,7 +82,6 @@ const StepReview: React.FC<StepReviewProps> = ({ data, onGoToStep }) => {
               <p className="text-muted-foreground text-xs mt-1">
                 {school?.displayName || 'Your School'} · {data.classYear?.includes('Transfer') ? data.classYear : `Class of ${data.classYear || '2030'}`}
               </p>
-              </p>
             </div>
             <button
               onClick={() => onGoToStep('name')}
