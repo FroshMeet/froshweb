@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 import { PostFormData } from '@/components/post-flow/types';
 import StepSchool from '@/components/post-flow/StepSchool';
 import StepName from '@/components/post-flow/StepName';
+import StepClassYear from '@/components/post-flow/StepClassYear';
 import StepPhotos from '@/components/post-flow/StepPhotos';
 import StepBio from '@/components/post-flow/StepBio';
 import StepSong from '@/components/post-flow/StepSong';
